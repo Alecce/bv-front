@@ -1,0 +1,379 @@
+
+<form [formGroup]="form">
+  <table class="table" formArrayName="relatons">
+    <thead>
+    <tr class="bonvino-table-head">
+      <th scope="col">
+        <div class="d-flex justify-content-center">
+          <app-text page="relations_subscreen" default="Type" class="lines-2"></app-text>
+        </div>
+      </th>
+      <th scope="col">
+        <div class="d-flex justify-content-center">
+          <app-text page="relations_subscreen" default="Parent" class="lines-2"></app-text>
+        </div>
+      </th>
+      <th scope="col">
+        <div class="d-flex justify-content-center">
+          <app-text page="relations_subscreen" default="From" class="lines-2"></app-text>
+        </div>
+      </th>
+      <th scope="col">
+        <div class="d-flex justify-content-center">
+          <app-text page="relations_subscreen" default="To" class="lines-2"></app-text>
+        </div>
+      </th>
+      <th scope="col">
+        <span></span>
+      </th>
+      <th scope="col">
+        <span></span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let relation of relatons.controls; let i = index" [formGroupName]="i">
+
+      <td *ngIf="!relation.value.changeable">
+        {{relation.value.type}}
+      </td>
+      <td *ngIf="relation.value.changeable">
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-select-bonvino formControlName_="type" [form]="relatons.at(i)" #_type>
+            <div select-title>
+              <app-text page="relations_subscreen" default="Select" *ngIf="relatons.at(i).get('type').value == 'select'"></app-text>
+              <app-text page="relations_subscreen" default="Part of network" *ngIf="relatons.at(i).get('type').value == 'Part of network'"></app-text>
+              <app-text page="relations_subscreen" default="Part of co-operative" *ngIf="relatons.at(i).get('type').value == 'Part of co-operative'"></app-text>
+              <app-text page="relations_subscreen" default="Negotiate" *ngIf="relatons.at(i).get('type').value == 'Negotiate'"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_type.choose('select')">
+                <app-text page="relations_subscreen" default="Select"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_type.choose('Part of network')">
+                <app-text page="relations_subscreen" default="Part of network"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_type.choose('Part of co-operative')">
+                <app-text page="relations_subscreen" default="Part of co-operative"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_type.choose('Negotiate')">
+                <app-text page="relations_subscreen" default="Negotiate"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="relations_subscreen" default="Select"></app-text>
+            <app-text page="relations_subscreen" default="Part of network"></app-text>
+            <app-text page="relations_subscreen" default="Part of co-operative"></app-text>
+            <app-text page="relations_subscreen" default="Negotiate"></app-text>
+          </div>
+        </div>
+
+      </td>
+      <td *ngIf="!relation.value.changeable">
+        {{relation.value.parentName}}
+      </td>
+      <td *ngIf="relation.value.changeable">
+
+        <div class="d-flex flex-column">
+          <div>
+            <app-superlist-designed [searchApi]="'getParentBusiness'" [pageForSearch]="'relations_subscreen'"
+                                    [placeForSearch]="'select_business'" [defaultForSearch]="'Select business'"
+                                    [getRowName]="getRowNameBusiness" [chosenItem]="parentsArr[i]"></app-superlist-designed>
+          </div>
+
+
+          <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngIf="relation.value.parentName">
+            <div>
+              <span>{{relation.value.parentName}}</span>
+            </div>
+            <div>
+              <button class="btn m-0 p-0" (click)="clearParent(i)">
+                <app-icon-bonvino svgIcon="icn-close-bonvine" class="icon-close" link="fill"></app-icon-bonvino>
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!--<div class="row" *ngIf="relation.value.parent">-->
+          <!--<div class="col">-->
+            <!--{{relation.value.parentName}}-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<button class="btn btn-outline-danger btn-sm" (click)="clearParent(i)">-->
+              <!--<app-text page="specialist_subscreen" default="Clear"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+
+
+        <!--<div class="field align-self-stretch d-flex flex-column">-->
+          <!--<app-select-search-bonvino formControlName_="wineryHelper" [form]="form" #_winery>-->
+            <!--<div select-title>-->
+
+            <!--</div>-->
+            <!--<div options class="d-flex flex-column align-items-start select-list-options-full">-->
+              <!--<button *ngFor="let winery of wineryList | paginate: { id: 'pagination-business', itemsPerPage: 10, currentPage: wineryPage, totalItems: wineryTotal}"-->
+                      <!--class="btn btn-option"-->
+                      <!--(click)="selectWinery(winery.id); _winery.close();">-->
+                <!--<span>{{getWineryName(winery)}}</span>-->
+              <!--</button>-->
+              <!--<pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-business" (pageChange)="setWineryPage($event)"></pagination-controls>-->
+
+            <!--</div>-->
+          <!--</app-select-search-bonvino>-->
+        <!--</div>-->
+
+
+        <!--<div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngIf="chosenWinery">-->
+          <!--<div>-->
+            <!--<span>{{getWineryName(chosenWinery)}}</span>-->
+          <!--</div>-->
+          <!--<div>-->
+            <!--<button class="btn m-0 p-0" (click)="selectWinery('')">-->
+              <!--<mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+
+      </td>
+      <td *ngIf="!relation.value.changeable">
+        {{relation.value.dateStart}}
+      </td>
+      <td *ngIf="relation.value.changeable">
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <!--<app-text page="relations_subscreen" default="From" class="field-hint"></app-text>-->
+          <input type="date" class="field-input align-self-stretch" formControlName="dateStart">
+        </div>
+      </td>
+      <td *ngIf="!relation.value.changeable">
+        {{relation.value.dateEnd}}
+      </td>
+      <td *ngIf="relation.value.changeable">
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <!--<app-text page="relations_subscreen" default="To" class="field-hint"></app-text>-->
+          <input type="date" class="field-input align-self-stretch" formControlName="dateEnd">
+        </div>
+      </td>
+      <td *ngIf="!relation.value.changeable">
+        <button class="btn btn-type-2 text-uppercase field-content" (click)="openRelation(i)">
+          <app-text page="specialist_subscreen" default="Change"></app-text>
+        </button>
+      </td>
+      <td *ngIf="relation.value.changeable">
+        <button class="btn btn-type-2 text-uppercase field-content" (click)="changeRelation(i)">
+          <app-text page="specialist_subscreen" default="Set"></app-text>
+        </button>
+      </td>
+      <td>
+
+        <button class="btn m-0 p-0" (click)="deleteRelation(i)">
+          <app-icon-bonvino svgIcon="icn-close-bonvine" class="icon-close" link="fill"></app-icon-bonvino>
+        </button>
+        <!--<button class="btn btn-type-2 text-uppercase field-content" (click)="deleteRelation(i)">-->
+          <!--<app-text page="specialist_subscreen" default="Delete"></app-text>-->
+        <!--</button>-->
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+
+  <div class="d-flex margin-bottom-32 justify-content-center">
+    <button class="btn m-0 p-0" (click)="addNewRelation()">
+      <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+    </button>
+  </div>
+
+</form>
+
+
+
+<div>
+
+  <!--<form [formGroup]="form">-->
+    <!--<div class="row mx-2">-->
+      <!--<div class="col" formArrayName="relatons">-->
+        <!--<div class="row">-->
+          <!--<div class="col">-->
+            <!--<app-text page="relations_subscreen" default="Type" class="text-muted"></app-text>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<app-text page="relations_subscreen" default="Parent" class="small text-muted"></app-text>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<app-text page="relations_subscreen" default="From" class="small text-muted"></app-text>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+            <!--<app-text page="relations_subscreen" default="To" class="small text-muted"></app-text>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+  <!---->
+          <!--</div>-->
+          <!--<div class="col">-->
+  <!---->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row border-top" *ngFor="let relation of relatons.controls; let i = index" [formGroupName]="i">-->
+          <!--<div class="col">-->
+            <!--<div class="row" *ngIf="relation.value.changeable">-->
+              <!--<div class="form-group col">-->
+                <!--&lt;!&ndash;<input type="text" class="form-control form-control-sm rounded-0" formControlName="type"&ndash;&gt;-->
+                       <!--&lt;!&ndash;[placeholder]="langService.getPlaceholder('relations_subscreen', '', 'Type')">&ndash;&gt;-->
+  <!---->
+                <!--<div class="form-group col">-->
+                  <!--<app-text page="relations_subscreen" default="Type" class="small text-muted"></app-text>-->
+                  <!--<select class="form-control form-control-sm rounded-0" formControlName="type">-->
+                    <!--<option value="select">-->
+                      <!--<app-text page="relations_subscreen" default="Select"></app-text>-->
+                    <!--</option>-->
+                    <!--<option value="Part of network">-->
+                      <!--<app-text page="relations_subscreen" default="Part of network"></app-text>-->
+                    <!--</option>-->
+                    <!--<option value="Part of co-operative">-->
+                      <!--<app-text page="relations_subscreen" default="Part of co-operative"></app-text>-->
+                    <!--</option>-->
+                    <!--<option value="Negotiate">-->
+                      <!--<app-text page="relations_subscreen" default="Negotiate"></app-text>-->
+                    <!--</option>-->
+                  <!--</select>-->
+                  <!--<div *ngIf="langService.editable">-->
+                    <!--<app-text page="relations_subscreen" default="Select"></app-text>-->
+                    <!--<app-text page="relations_subscreen" default="Part of network"></app-text>-->
+                    <!--<app-text page="relations_subscreen" default="Part of co-operative"></app-text>-->
+                    <!--<app-text page="relations_subscreen" default="Negotiate"></app-text>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+  <!---->
+              <!--<div class="form-group col">-->
+                <!--&lt;!&ndash;<input type="text" class="form-control form-control-sm rounded-0" formControlName="parent"&ndash;&gt;-->
+                       <!--&lt;!&ndash;[placeholder]="langService.getPlaceholder('relations_subscreen', '', 'Parent')">&ndash;&gt;-->
+                <!--<div class="row">-->
+                  <!--<div class="col">-->
+                    <!--<app-superlist-designed [searchApi]="'getParentBusiness'" [pageForSearch]="'relations_subscreen'"-->
+                                            <!--[placeForSearch]="'select_business'" [defaultForSearch]="'Select business'"-->
+                                            <!--[getRowName]="getRowNameBusiness" [chosenItem]="parentsArr[i]"></app-superlist-designed>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row" *ngIf="relation.value.parent">-->
+                  <!--<div class="col">-->
+                    <!--{{relation.value.parentName}}-->
+                  <!--</div>-->
+                  <!--<div class="col">-->
+                    <!--<button class="btn btn-outline-danger btn-sm" (click)="clearParent(i)">-->
+                      <!--<app-text page="specialist_subscreen" default="Clear"></app-text>-->
+                    <!--</button>-->
+                  <!--</div>-->
+                <!--</div>-->
+  <!---->
+              <!--</div>-->
+  <!---->
+              <!--<div class="form-group col">-->
+                <!--<input type="date" class="form-control form-control-sm rounded-0" formControlName="dateStart"-->
+                       <!--[placeholder]="langService.getPlaceholder('relations_subscreen', '', 'From')">-->
+              <!--</div>-->
+  <!---->
+              <!--<div class="form-group col">-->
+                <!--<input type="date" class="form-control form-control-sm rounded-0" formControlName="dateEnd"-->
+                       <!--[placeholder]="langService.getPlaceholder('relations_subscreen', '', 'To')">-->
+              <!--</div>-->
+  <!---->
+              <!--<div class="form-group col">-->
+                <!--<button class="btn btn-outline-primary btn-sm" (click)="changeRelation(i)">-->
+                  <!--<app-text page="specialist_subscreen" default="Set"></app-text>-->
+                <!--</button>-->
+              <!--</div>-->
+              <!--<div class="col">-->
+                <!--<button class="btn btn-outline-danger btn-sm" (click)="deleteRelation(i)">-->
+                  <!--<app-text page="specialist_subscreen" default="Delete"></app-text>-->
+                <!--</button>-->
+  <!---->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row" *ngIf="!relation.value.changeable">-->
+              <!--<div class="col">-->
+                <!--{{relation.value.type}}-->
+              <!--</div>-->
+              <!--<div class="col">-->
+                <!--{{relation.value.parentName}}-->
+              <!--</div>-->
+  <!---->
+              <!--<div class="col">-->
+                <!--{{relation.value.dateStart}}-->
+              <!--</div>-->
+  <!---->
+              <!--<div class="col">-->
+                <!--{{relation.value.dateEnd}}-->
+              <!--</div>-->
+  <!---->
+              <!--<div class="form-group col">-->
+                <!--<button class="btn btn-outline-primary btn-sm" (click)="openRelation(i)">-->
+                  <!--<app-text page="specialist_subscreen" default="Change"></app-text>-->
+                <!--</button>-->
+              <!--</div>-->
+              <!--<div class="col">-->
+  <!---->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+  <!---->
+  <!---->
+          <!--&lt;!&ndash;<div class="form-group col">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Type" class="small text-muted"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;<select class="form-control form-control-sm rounded-0" formControlName="type">&ndash;&gt;-->
+          <!--&lt;!&ndash;<option value="select">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Select"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;</option>&ndash;&gt;-->
+          <!--&lt;!&ndash;<option value="Independent">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Independent"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;</option>&ndash;&gt;-->
+          <!--&lt;!&ndash;<option value="Network">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Network"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;</option>&ndash;&gt;-->
+          <!--&lt;!&ndash;<option value="Co-operative">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Co-operative"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;</option>&ndash;&gt;-->
+          <!--&lt;!&ndash;</select>&ndash;&gt;-->
+          <!--&lt;!&ndash;<div *ngIf="langService.editable">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Select"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Independent"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Network"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="business" default="Co-operative"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!---->
+          <!--&lt;!&ndash;<div class="form-group col-auto">&ndash;&gt;-->
+          <!--&lt;!&ndash;<button class="btn btn-link btn-sm" (click)="removeSpecialist(i)">&ndash;&gt;-->
+          <!--&lt;!&ndash;<mat-icon svgIcon="close" class="icon mdi mdi-close"></mat-icon>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+      <!--<div class="col">-->
+        <!--<button class="btn btn-outline-primary btn-sm" (click)="addNewRelation()">-->
+          <!--<app-text page="specialist_subscreen" default="Add"></app-text>-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</form>-->
+</div>
+
+<div class="d-flex justify-content-end" mat-dialog-actions>
+  <div class="my-auto float-right p-2">
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+      <app-text page="specialist_subscreen" default="Cancel"></app-text>
+    </button>
+  </div>
+</div>

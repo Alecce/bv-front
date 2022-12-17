@@ -1,0 +1,54 @@
+<form [formGroup]="form">
+  <div *ngIf="system.value=='system100'">
+
+    <table class="table table-borderless" formGroupName="full">
+      <thead>
+      <tr>
+        <!--<th scope="col"></th>-->
+        <th scope="col"></th>
+        <th scope="col" *ngFor="let option of system100[0].selects[0].options; let i=index" class="width-20" [ngClass]="i == 0 ? 'text-left' : 'text-right'"
+        [hidden]="i == 1 || i == 3" [attr.colspan]="(i == 0 || i == 4) ? '2' : '1'">
+          <app-text page="wines_votes" place="{{langService.morphStr(system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name)}}"
+                    default="{{system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name}}" class="lines-1 font-weight-bold"></app-text>
+
+        </th>
+
+      </tr>
+      </thead>
+      <tbody *ngFor="let system of systemToShow">
+
+      <tr *ngFor="let select of system.selects; let j=index" [hidden]="!fullData.get(system.part + '_' + select.criteria).value">
+        <!--<td>-->
+          <!--<app-text page="wines_votes" place="{{langService.morphStr(system.part)}}" default="{{system.part}}" class="lines-1 font-weight-bold" *ngIf="j == 0"></app-text>-->
+        <!--</td>-->
+        <td class="px-0">
+          <div class="d-flex align-items-start">
+            <app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}" class="lines-1 font-weight-bold"></app-text>
+          </div>
+          </td>
+        <td *ngFor="let option of select.options; let i=index" class="width-20 px-0">
+          <div class="d-flex">
+            <div class="border-bottom-4-chrome my-auto h-50 flex-fill" *ngIf="i != 0"></div>
+            <div class="my-auto h-50 flex-fill" *ngIf="i == 0"></div>
+            <app-radio-bonvino formControlName_="{{system.part + '_' + select.criteria}}"
+                               [form]="fullData" value_="{{select.options[select.options.length - 1 - i].cost}}" [nomargin]="true" #_radio>
+            </app-radio-bonvino>
+
+            <div class="my-auto h-50 flex-fill" *ngIf="i == 4"></div>
+            <div class="border-bottom-4-chrome my-auto h-50 flex-fill" *ngIf="i != 4"></div>
+          </div>
+        </td>
+      </tr>
+      <!--</div>-->
+      </tbody>
+    </table>
+
+  </div>
+</form>
+
+<!--Words for translater-->
+<div [hidden]="true">
+
+  <!--no need-->
+
+</div>

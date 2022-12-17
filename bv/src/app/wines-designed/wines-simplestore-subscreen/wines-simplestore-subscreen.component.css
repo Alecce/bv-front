@@ -1,0 +1,21 @@
+
+.margin-right-20 {
+  margin-right: 20px;
+}
+.margin-right-36 {
+  margin-right: 36px;
+}
+.margin-bottom-32 {
+  margin-bottom: 32px;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+form.scrollbar {
+  max-height: calc(80vh - 64px);
+  padding-right: 16px;
+}
+.margin-32-8-32-32 {
+  margin: 32px 8px 32px 32px;
+}

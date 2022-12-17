@@ -1,0 +1,197 @@
+
+<!--<app-map-open-layers ></app-map-open-layers>-->
+<div class="d-flex flex-column margin-64" *ngIf="wineryDeleted">
+  <app-winery-deleted [userId]="userId"></app-winery-deleted>
+</div>
+
+<div class="d-flex flex-column margin-64" *ngIf="!wineryDeleted">
+  <div class="d-flex">
+    <div class="d-flex page-title">
+      <div  class="heading-1" *ngIf="!routeData.download">
+        <app-text page="winery_add" default="Add a winery"></app-text>
+      </div>
+      <div  class="heading-1" *ngIf="routeData.download">
+        <app-text page="winery_add" default="Edit a winery"></app-text>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content-end w-100">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between main-menu menu-first">
+          <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.menu)" (click)="chose(tabs.menu)">
+            <app-text page="winery_add" default="Menu"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.basic)" (click)="chose(tabs.basic)">
+            <app-text page="winery_add" place="basic_info" default="Basic info"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.second)" (click)="chose(tabs.second)">
+            <app-text page="winery_add" default="Brands"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getSubTabColor('')"
+                  (click)="chose(tabs.additional); choseSubtab('')" [hidden]="!isTabExist('')">
+            <app-text page="winery_add" default="Additional"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular mr-0" *ngFor="let subTab of subTabs; let i = index" [ngClass]="getSubTabColor(subTab)"
+                  (click)="chose(tabs.additional); choseSubtab(subTab)" [hidden]="!isTabExist(subTab)">
+            <app-text page="subtabs" [default]="subTab"></app-text>
+          </button>
+        </div>
+        <div class="d-flex flex-wrap">
+
+
+          <!--<div *ngIf="wineryDataInput">-->
+
+            <!--<a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : wineryEditLink()">-->
+              <!--<app-text page="wines" default="To winery"></app-text>-->
+            <!--</a>-->
+          <!--</div>-->
+
+          <div *ngIf="!wineryDataInput">
+
+            <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : backLink()">
+              <app-text page="wines" default="Cancel"></app-text>
+            </a>
+          </div>
+
+          <div *ngIf="!wineryDataInput">
+
+            <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : changelogLink()"
+               *ngIf="accountService.isAdmin()">
+              <app-text page="wines" default="Changelog"></app-text>
+            </a>
+          </div>
+
+          <div *ngIf="!wineryDataInput">
+
+            <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : historyLink()"
+               *ngIf="accountService.isAdmin()">
+              <app-text page="wines" default="History"></app-text>
+            </a>
+          </div>
+
+          <!--<div *ngIf="!wineryDataInput && routeData.download">-->
+            <!--<button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="restoreWinery()">-->
+              <!--<app-text page="wines" default="Restore"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+
+          <div *ngIf="!wineryDataInput && routeData.download">
+            <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="deleteWinery()">
+              <app-text page="wines" default="Delete"></app-text>
+            </button>
+          </div>
+
+          <div>
+            <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="saveHistory()">
+              <app-text page="wines" default="Save historical snapshot"></app-text>
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-type-1 text-uppercase field-content" (click)="create()"  *ngIf="!routeData.download">
+              <app-text page="wines" default="Create"></app-text>
+            </button>
+            <button class="btn btn-type-1 text-uppercase field-content" (click)="create()" *ngIf="routeData.download">
+              <app-text page="wines" default="Save changes"></app-text>
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end error margin-top-8 margin-bottom-16" *ngIf="isInvalid() && showNoValidation">
+      <div class="d-flex flex-row no-validation">
+        <div class="margin-left-8 margin-right-8">
+          <app-icon-bonvino svgIcon="icn-error-white" class="icn-error"></app-icon-bonvino>
+        </div>
+        <div class="margin-right-8 d-flex align-items-center Error-message-The-b">
+          <app-text page="validation" default="Some fields are invalid"></app-text>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex">
+
+    <app-winery-basic [downloadedData]="downloadedData" [hidden]="!showTab(tabs.basic)" [structureData]="additionalStructure"
+                      [isParentShowNoValidation]="showNoValidation" class="w-100"></app-winery-basic>
+    <app-wineries-second [downloadedData]="downloadedData" [hidden]="!showTab(tabs.second)" [structureData]="additionalStructure"
+                       class="w-100"></app-wineries-second>
+    <app-winery-additional [downloadedData]="downloadedData" [menuData]="menuData" [structureData]="additionalStructure"
+                           [hidden]="!showTab(tabs.additional)" [additionalTabs]="additionalTabsSubject" [currentSubTab]="currentSubTab" class="w-100"></app-winery-additional>
+    <app-wineries-menu [downloadedData]="downloadedData" [hidden]="!showTab(tabs.menu)" [structureData]="additionalStructure"
+                       class="w-100"></app-wineries-menu>
+
+  </div>
+
+</div>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="winery_add" default="Add a winery"></app-text>
+
+  <app-text page="winery_add" default="Edit a winery"></app-text>
+
+  <app-text page="winery_add" default="Menu"></app-text>
+
+  <app-text page="winery_add" place="basic_info" default="Basic info"></app-text>
+
+  <app-text page="winery_add" default="Additional"></app-text>
+
+  <app-text page="wines" default="To winery"></app-text>
+
+  <app-text page="wines" default="Cancel"></app-text>
+
+  <app-text page="wines" default="Changelog"></app-text>
+
+  <app-text page="wines" default="History"></app-text>
+
+  <app-text page="wines" default="Delete"></app-text>
+
+  <app-text page="wines" default="Save historical snapshot"></app-text>
+
+  <app-text page="wines" default="Create"></app-text>
+
+  <app-text page="wines" default="Save changes"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

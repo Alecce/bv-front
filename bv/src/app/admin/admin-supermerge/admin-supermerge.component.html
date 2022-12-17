@@ -1,0 +1,173 @@
+<form [formGroup]="form">
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let col of tableCols">
+        <th scope="row">
+          <span class="align-middle">
+            <app-text page="{{langService.morphStr(api)}}" place="{{langService.morphStr(col.name)}}"
+                      default="{{col.name}}"></app-text>
+          </span>
+        </th>
+        <td [formGroupName]="CHECK" [class]="getFieldColor(col, FIRST)">
+          <div>
+            <div>
+              <!--<input type="checkbox" [formControlName]="col.variable">-->
+              <div class="pretty p-icon p-smooth">
+                <input type="checkbox" [formControlName]="col.variable"
+                       [checked]="form.get(CHECK).get(col.variable).value"
+                       (click)="form.get(CHECK).get(col.variable).setValue(!form.get(CHECK).get(col.variable).value)"/>
+                <div class="state p-primary">
+                  <mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>
+                  <label>
+
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td [formGroupName]="FIRST" [class]="getFieldColor(col, FIRST)">
+          <div *ngIf="col.variable == 'id'">
+            <div *ngIf="!col.type">
+              <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+            </div>
+          </div>
+          <div *ngIf="col.variable != 'id'">
+            <div *ngIf="!lists[col.variable]">
+              <div *ngIf="!col.type">
+                <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+              </div>
+              <div *ngIf="col.type == 'textarea'">
+                <textarea [formControlName]="col.variable" [cols]="col.cols || 70"></textarea>
+              </div>
+              <div *ngIf="col.type == 'link'">
+                <a href="{{col.href + firstRow[col.hrefId]}}">{{firstRow[col.variable]}}</a>
+              </div>
+              <div *ngIf="col.type == 'disabled'">
+                {{form.value[FIRST][col.variable]}}
+              </div>
+              <div *ngIf="col.type == 'checkbox'">
+                <input type="checkbox" [formControlName]="col.variable">
+              </div>
+
+              <div *ngIf="col.type == 'translate'">
+                <app-text [page]="col.translatePage" [place]="col.translatePlace(firstRow)"
+                          [default]="col.translateDefault(firstRow)"></app-text>
+              </div>
+              <div *ngIf="col.type == 'subtable'">
+                <button class="btn btn-secondary" (click)="openDialog(col, firstRow)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <div *ngIf="col.type == 'special'">
+                <button class="btn btn-secondary" (click)="openSpecialDialog(col, firstRow)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <div *ngIf="col.type == 'image'">
+
+                <img (click)="openImageDialog(col, FIRST)" class="img-thumbnail max-size-150px"
+                     [src]="getImagePath(col, firstRow)"
+                     onError="this.src=noImage">
+              </div>
+
+            </div>
+            <div *ngIf="lists[col.variable]">
+              <select [formControlName]="col.variable">
+                <option *ngFor="let option of lists[col.variable]" value="{{option.id}}">
+                  <!--<app-text page="wines_common_info" place="select" default="Select"></app-text>-->
+                  {{option.name}}
+                </option>
+              </select>
+              <!--<input type="text" class="form-control" [formControlName]="col.variable">-->
+            </div>
+          </div>
+        </td>
+        <td [formGroupName]="SECOND" [class]="getFieldColor(col, SECOND)">
+          <div *ngIf="col.variable == 'id'">
+            <div *ngIf="!col.type">
+              <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+            </div>
+          </div>
+          <div *ngIf="col.variable != 'id'">
+            <div *ngIf="!lists[col.variable]">
+              <div *ngIf="!col.type">
+                <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+              </div>
+              <div *ngIf="col.type == 'textarea'">
+                <textarea [formControlName]="col.variable" [cols]="col.cols || 70"></textarea>
+              </div>
+              <div *ngIf="col.type == 'link'">
+                <a href="{{col.href + secondRow[col.hrefId]}}">{{secondRow[col.variable]}}</a>
+              </div>
+              <div *ngIf="col.type == 'disabled'">
+                {{form.value[SECOND][col.variable]}}
+              </div>
+              <div *ngIf="col.type == 'checkbox'">
+                <input type="checkbox" [formControlName]="col.variable">
+              </div>
+
+              <div *ngIf="col.type == 'translate'">
+                <app-text [page]="col.translatePage" [place]="col.translatePlace(secondRow)"
+                          [default]="col.translateDefault(secondRow)"></app-text>
+              </div>
+              <div *ngIf="col.type == 'subtable'">
+                <button class="btn btn-secondary" (click)="openDialog(col, secondRow)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <div *ngIf="col.type == 'special'">
+                <button class="btn btn-secondary" (click)="openSpecialDialog(col, secondRow)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <div *ngIf="col.type == 'image'">
+
+                <img (click)="openImageDialog(col, SECOND)" class="img-thumbnail max-size-150px"
+                     [src]="getImagePath(col, secondRow)"
+                     onError="this.src=noImage">
+              </div>
+
+            </div>
+            <div *ngIf="lists[col.variable]">
+              <select [formControlName]="col.variable">
+                <option *ngFor="let option of lists[col.variable]" value="{{option.id}}">
+                  <!--<app-text page="wines_common_info" place="select" default="Select"></app-text>-->
+                  {{option.name}}
+                </option>
+              </select>
+              <!--<input type="text" class="form-control" [formControlName]="col.variable">-->
+            </div>
+          </div>
+        </td>
+        <td [formGroupName]="CHECK" [class]="getFieldColor(col, SECOND)">
+          <div>
+            <div>
+              <!--<input type="checkbox" [formControlName]="col.variable">-->
+              <div class="pretty p-icon p-smooth">
+                <input type="checkbox"
+                       [checked]="!form.get(CHECK).get(col.variable).value"
+                       (click)="form.get(CHECK).get(col.variable).setValue(!form.get(CHECK).get(col.variable).value)"/>
+                <div class="state p-primary">
+                  <mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>
+                  <label>
+
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<div class="row">
+  <div class="col-4 offset-4">
+    <button class="btn btn-block" (click)="send()" ngClass="{{form.touched ? 'btn-success' : 'btn-secondary'}}" [disabled]="!(firstRow.valid && secondRow.valid)">
+      <!--Return back-->
+      <app-text page="supermerge" place="Send" default="Send"></app-text>
+
+    </button>
+  </div>
+</div>

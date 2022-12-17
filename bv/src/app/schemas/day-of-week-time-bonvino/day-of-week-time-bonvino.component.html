@@ -1,0 +1,49 @@
+<div>
+
+  <form [formGroup]="formVisitTime">
+
+    <div *ngFor="let day of daysKeys; let i = index" class="form-group">
+      <div formArrayName="{{day}}">
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <div class="d-flex align-items-center">
+                <app-text page="winery_visittime" place="{{langService.morphStr(DAYS_OF_WEEK[day])}}" default="{{DAYS_OF_WEEK[day]}}"></app-text>
+              </div>
+
+              <div class="icon-margin margin-left-8">
+                <button class="btn m-0 p-0" (click)="addTimeRange(day)">
+                  <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+                </button>
+              </div>
+            </div>
+            <div class="d-flex flex-column">
+              <div class="d-flex" *ngFor="let time of times(day).controls; let j = index">
+                <div class="d-flex align-items-center" *ngIf="j % 2 == 0">
+                  <div class="d-flex">
+                    <app-input-time-bonvino [formControl_]="times(day).at(j)" *ngIf="times(day).at(j)"></app-input-time-bonvino>
+                  </div>
+                  <div class="d-flex defis">
+                    <span> - </span>
+                  </div>
+                  <div class="d-flex">
+                    <app-input-time-bonvino [formControl_]="times(day).at(j + 1)" *ngIf="times(day).at(j + 1)"></app-input-time-bonvino>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center margin-left-8">
+
+                    <div class="icon-margin">
+                      <button class="btn m-0 p-0" (click)="removeTimeRange(day, j)">
+                        <app-icon-bonvino svgIcon="icn-close-bonvine" class="icon-close" link="fill"></app-icon-bonvino>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

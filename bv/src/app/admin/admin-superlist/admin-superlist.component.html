@@ -1,0 +1,217 @@
+<form [formGroup]="form">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col" *ngFor="let col of tableCols" [hidden]="!chosenOptionForm.get(col.searchFormControlName).value">
+        <button class="btn btn-block btn-secondary" (click)="changeOrder(col.variable)">
+          <span class="align-middle">
+            <app-text page="{{langService.morphStr(api)}}" place="{{langService.morphStr(col.name)}}" default="{{col.name}}"></app-text>
+          </span>
+          <mat-icon class="align-middle" *ngIf="this.order.name === col.variable && this.order.direction">arrow_downward</mat-icon>
+          <mat-icon class="align-middle" *ngIf="this.order.name === col.variable && !this.order.direction">arrow_upward</mat-icon>
+        </button>
+      </th>
+      <td>
+          <app-text page="{{langService.morphStr(api)}}" place="change" default="Change"></app-text>
+      </td>
+      <td>
+          <app-text page="{{langService.morphStr(api)}}" place="delete" default="Delete"></app-text>
+      </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th *ngFor="let col of tableCols"  [hidden]="!chosenOptionForm.get(col.searchFormControlName).value"><input type="text" class="form-control" formControlName="{{col.searchFormControlName}}"></th>
+    </tr>
+
+    <tr [formGroupName]="'newRow'">
+      <td class="text-center" *ngFor="let col of tableCols"  [hidden]="!chosenOptionForm.get(col.searchFormControlName).value">
+        <div *ngIf="col.variable != 'id'">
+          <div *ngIf="!lists[col.variable]">
+            <div *ngIf="!col.type">
+              <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+            </div>
+            <div *ngIf="col.type == 'textarea'">
+              <textarea [formControlName]="col.variable" [cols]="col.cols || 70"></textarea>
+            </div>
+            <div *ngIf="col.type == 'link'">
+
+              <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+            </div>
+            <div *ngIf="col.type == 'disabled'">
+              {{form.value[newLineAsRow.id + ''][col.variable]}}
+            </div>
+            <div *ngIf="col.type == 'checkbox'">
+              <input type="checkbox" [formControlName]="col.variable" >
+            </div>
+            <div *ngIf="col.type == 'subtable'">
+              <button class="btn btn-secondary" (click)="openDialog(col, newLineAsRow)">
+                <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+              </button>
+            </div>
+            <div *ngIf="col.type == 'special'">
+              <button class="btn btn-secondary" (click)="openSpecialDialog(col, newLineAsRow)">
+                <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+              </button>
+            </div>
+            <div *ngIf="col.type == 'image'">
+
+              <img  (click)="openImageDialog(col, newLineAsRow)" class="img-thumbnail max-size-150px" [src]="getImagePath(col, newLineAsRow)" onError="this.src=noImage">
+            </div>
+
+          </div>
+          <div *ngIf="lists[col.variable]">
+
+            <!--<select [formControlName]="col.variable" [disabled]="col.type == 'disabled'">-->
+              <!--<option *ngFor="let option of lists[col.variable]" value="{{option.id}}" >-->
+                <!--&lt;!&ndash;<app-text page="wines_common_info" place="select" default="Select"></app-text>&ndash;&gt;-->
+                <!--{{option.name}}-->
+              <!--</option>-->
+            <!--</select>-->
+
+            <div *ngIf="col.type != 'multicheckbox'">
+              <select [formControlName]="col.variable">
+                <option *ngFor="let option of lists[col.variable]" value="{{option.id}}" >
+                  <!--<app-text page="wines_common_info" place="select" default="Select"></app-text>-->
+                  {{option.name}}
+                </option>
+              </select>
+            </div>
+
+            <div *ngIf="col.type == 'multicheckbox'">
+              <button class="btn btn-secondary" (click)="openMultiselectDialog(col, newLineAsRow)">
+                <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+              </button>
+            </div>
+            <!--<div *ngIf="col.type == 'disabled'">-->
+              <!--{{form.value[newLineAsRow.id + ''][col.variable]}}-->
+            <!--</div>-->
+            <!--<input type="text" class="form-control" [formControlName]="col.variable">-->
+          </div>
+        </div>
+      </td>
+      <td>
+
+        <button class="btn btn-block" [ngClass]="getButtonColor(newLineAsRow.id + '')" (click)="addRow(service, newLineAsRow.id + '')">
+          <app-text page="{{langService.morphStr(api)}}" place="add" default="Add"></app-text>
+        </button>
+      </td>
+    </tr>
+      <tr *ngFor="let row of list | paginate: { id: listId, itemsPerPage: 10, currentPage: order.page, totalItems: total}; let i = index"  [formGroupName]="row.id + ''">
+        <td class="text-center" *ngFor="let col of tableCols"  [hidden]="!chosenOptionForm.get(col.searchFormControlName).value">
+          <!--<div *ngIf="!col.link && !col.image">{{row[col.variable]}}</div>-->
+          <!--<div *ngIf="!col.sorting">-->
+          <!--<a href="{{col.href + row[col.hrefId]}}">{{row[col.variable]}}</a>-->
+          <!--</div>-->
+          <!--</div>-->
+          <div *ngIf="col.variable == 'id'">
+            <div *ngIf="!col.link && !col.image">{{row[col.variable]}}</div>
+            <div *ngIf="col.link">
+              <div *ngIf="col.sorting">
+                <button type="button" class="btn btn-link" (click)="addSorting(col.searchFormControlName, row[col.variable])">{{row[col.variable]}}</button>
+              </div>
+              <div *ngIf="!col.sorting">
+                <a href="{{col.href + row[col.hrefId]}}">{{row[col.variable]}}</a>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="col.variable != 'id'">
+            <div *ngIf="!lists[col.variable]">
+              <div *ngIf="!col.type">
+                <input type="text" [formControlName]="col.variable" [size]="getSizeOfElement(col.variable)">
+              </div>
+              <div *ngIf="col.type == 'textarea'">
+                <textarea [formControlName]="col.variable" [cols]="col.cols || 70"></textarea>
+              </div>
+              <div *ngIf="col.type == 'link'">
+                <a href="{{col.href + row[col.hrefId]}}">{{row[col.variable]}}</a>
+              </div>
+              <div *ngIf="col.type == 'disabled'">
+                {{form.value[row.id + ''][col.variable]}}
+              </div>
+              <div *ngIf="col.type == 'checkbox'">
+                <input type="checkbox" [formControlName]="col.variable" >
+              </div>
+
+              <div *ngIf="col.type == 'translate'">
+                <!--{{col.translateLanguage(row)}}-->
+                <app-text [page]="col.translatePage" [place]="col.translatePlace(row)" [language]="col.translateLanguage(row)" [default]="col.translateDefault(row)"></app-text>
+              </div>
+              <div *ngIf="col.type == 'subtable'">
+                <button class="btn btn-secondary" (click)="openDialog(col, row)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <div *ngIf="col.type == 'special'">
+                <button class="btn btn-secondary" (click)="openSpecialDialog(col, row)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <div *ngIf="col.type == 'image'">
+
+                <img  (click)="openImageDialog(col, row)" class="img-thumbnail max-size-150px" [src]="getImagePath(col, row)" onError="this.src=noImage">
+                <!--*ngIf="!row[col.variable].new">-->
+
+                <!--<img  (click)="openImageDialog(col, row)" class="img-thumbnail max-size-150px" [src]="getImagePath(col, row)" onError="this.src=noImage"-->
+                      <!--*ngIf="row[col.variable].new">-->
+                <!--<button class="btn btn-secondary" (click)="openSpecialDialog(col, row)">-->
+                  <!--<app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>-->
+                <!--</button>-->
+              </div>
+
+            </div>
+            <div *ngIf="lists[col.variable]">
+              <div *ngIf="col.type != 'multicheckbox'">
+                <select [formControlName]="col.variable">
+                  <option *ngFor="let option of lists[col.variable]" value="{{option.id}}" >
+                    <!--<app-text page="wines_common_info" place="select" default="Select"></app-text>-->
+                    {{option.name}}
+                  </option>
+                </select>
+              </div>
+
+              <div *ngIf="col.type == 'multicheckbox'">
+                <button class="btn btn-secondary" (click)="openMultiselectDialog(col, row)">
+                  <app-text page="{{langService.morphStr(api)}}" place="open_subtable" default="Open subtable"></app-text>
+                </button>
+              </div>
+              <!--<input type="text" class="form-control" [formControlName]="col.variable">-->
+            </div>
+          </div>
+        </td>
+        <td>
+
+          <button class="btn btn-block" [ngClass]="getButtonColor(row.id + '')" (click)="sendRow(service, row.id + '')">
+            <app-text page="{{langService.morphStr(api)}}" place="change" default="Change"></app-text>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-block btn-danger" (click)="deleteRow(service, row.id + '')">
+            <app-text page="{{langService.morphStr(api)}}" place="delete" default="Delete"></app-text>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<pagination-controls class="text-center" id="{{listId}}" (pageChange)="setPage($event)"></pagination-controls>
+
+<form [formGroup]="chosenOptionForm">
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto">
+      <app-text page="{{langService.morphStr(api)}}" place="options_list" default="List of shown options:"></app-text>
+    </label>
+
+    <button class="btn" [ngClass]="getOptionsButtonColor()" (click)="sendAdminOptions(api)">
+      <app-text page="{{langService.morphStr(api)}}" place="save" default="Save options for this tab"></app-text>
+    </button>
+  </div>
+  <div class="form-group row" *ngFor="let col of tableCols">
+    <input class="col-4 text-right my-auto" type="checkbox" [formControlName]="col.searchFormControlName">
+    <label class="my-auto">
+      <app-text page="{{langService.morphStr(api)}}" place="{{langService.morphStr(col.searchFormControlName)}}" default="{{col.name}}"></app-text>
+      <app-text page="admin" place="participate in sorting" default=" (participate in sorting)" [hidden]="!isParticipate(col)"></app-text>
+    </label>
+    <!--{{chosenOptionForm.get(col.name).value}}-->
+  </div>
+</form>

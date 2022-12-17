@@ -1,0 +1,68 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col" *ngFor="let col of tableCols">
+            <button class="btn btn-block btn-secondary" (click)="changeOrder(col.variable)">
+              <span class="align-middle">
+                <app-text page="{{langService.morphStr(api)}}" place="{{langService.morphStr(col.name)}}" default="{{col.name}}"></app-text>
+              </span>
+              <mat-icon class="align-middle" *ngIf="this.order.name === col.variable && this.order.direction">arrow_downward</mat-icon>
+              <mat-icon class="align-middle" *ngIf="this.order.name === col.variable && !this.order.direction">arrow_upward</mat-icon>
+            </button>
+          </th>
+          <td *ngIf="addRadio || addCheckbox">
+            <!--<div class="h-100">-->
+              <!--<span class="align-middle">Checked</span>-->
+            <!--</div>-->
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th *ngFor="let col of tableCols"><input type="text" class="form-control" formControlName="{{col.searchFormControlName}}"></th>
+          <th *ngIf="addRadio || addCheckbox">
+
+          </th>
+        </tr>
+        <tr *ngFor="let row of list | paginate: { id: listId, itemsPerPage: 10, currentPage: order.page, totalItems: total}; let i = index">
+          <td class="text-center" *ngFor="let col of tableCols">
+            <div *ngIf="!col.link && !col.image && !col.translateGroup && !col.complexElement">{{row[col.variable]}}</div>
+            <div *ngIf="col.link">
+              <div *ngIf="col.sorting">
+                <button type="button" class="btn btn-link" (click)="addSorting(col.searchFormControlName, row[col.variable])">{{row[col.variable]}}</button>
+              </div>
+              <div *ngIf="!col.sorting">
+                <a href="{{col.href + row[col.hrefId]}}">{{row[col.variable]}}</a>
+              </div>
+            </div>
+
+            <div *ngIf="col.translateGroup && !col.complexElement">
+              <app-text page="{{col.translateGroup}}" place="{{row[col.translateId]}}" default="{{row[col.variable]}}"></app-text>
+            </div>
+
+
+
+            <!--<div *ngIf="col.complexElement == 'grape with synonym'">-->
+              <!--<app-grape-name [data]="row"></app-grape-name>-->
+            <!--</div>-->
+
+            <div *ngIf="col.image">
+              <img  class="img-thumbnail max-size-150px" [src]="getImagePath(row[col.variable], col.imagePath + row.id + '_' + row[col.variable] + '.png')" onError="this.src=noImage">
+            </div>
+          </td>
+          <th *ngIf="addRadio">
+            <input class="my-auto" type="radio" value="{{row.id}}" formControlName="radio" (click)="clickRadio(row)">
+          </th>
+          <th *ngIf="addCheckbox" formGroupName="checkboxes">
+            <input class="my-auto" type="checkbox" formControlName="{{row.id + ''}}" (click)="clickCheckbox(row)">
+          </th>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+<pagination-controls class="text-center" id="{{listId}}" (pageChange)="setPage($event)"></pagination-controls>

@@ -1,0 +1,31 @@
+.padding-32 {
+ padding: 8px;
+  margin-bottom: 12px;
+  overflow-y: auto;
+  margin-right: 4px;
+  max-height: 468px;
+}
+.padding-32::-webkit-scrollbar {
+  width: 8px;
+}
+.padding-32::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: rgba(0,0,0,0.1);
+}
+.padding-32::-webkit-scrollbar-thumb {
+  height: 35px;
+  border-radius: 4px;
+  background-color: var(--chrome);
+}
+
+.heading-1 {
+  margin-bottom: 36px;
+}
+.heading-2 {
+  margin-bottom: 20px;
+  border-left: 8px solid var(--wine);
+  padding-left: 8px;
+}
+.lines-1 {
+
+}

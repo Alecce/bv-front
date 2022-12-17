@@ -1,0 +1,622 @@
+<form [formGroup]="form">
+  <div class="d-flex flex-column">
+    <!--<div class="d-flex page-title margin-bottom-32">-->
+      <!--<div  class="heading-1" *ngIf="!routeData.download">-->
+        <!--<app-text page="shop_add" default="Add a shop"></app-text>-->
+      <!--</div>-->
+      <!--<div  class="heading-1" *ngIf="routeData.download">-->
+        <!--<app-text page="shop_add" default="Edit a shop"></app-text>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="d-flex align-items-start">
+      <div class="d-flex flex-column align-items-start flex-even margin-right-32">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="shop_add" default="Main options"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="wines_common_info" default="Language" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="language" [form]="form" #_language>
+            <div select-title>
+              <div *ngFor="let l of languageArr">
+                <app-text page="language" default="{{l.name}}" *ngIf="l.value == language.value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" *ngFor="let l of languageArr" (click)="_language.choose(l.value)">
+                <app-text page="language" default="{{l.name}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+
+        <div class="d-flex align-items-end w-100">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column w-100">
+            <app-text page="shop_add" default="Shop name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="name_national">
+          </div>
+        </div>
+
+
+
+        <div class="d-flex align-items-end w-100">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column w-100">
+            <app-text page="shop_add" default="Shop name in English" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="name_international">
+          </div>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="shop_add" default="Owner" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="owner">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="(cookies | async).id == userId.value || !userId.value || langService.editable">
+          <app-checkbox-bonvino formControlName_="yours" [form]="form" #_yours>
+            <app-text page="shop_add" default="Claim yours" (click)="_yours.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column"  *ngIf="(cookies | async).sequrity == 4 && !yours.value || langService.editable">
+          <app-text page="shop_add" default="Set redactor Id" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="userId">
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column"  *ngIf="(cookies | async).sequrity != 4 && ((cookies | async).id != userId.value && userId.value) || langService.editable">
+          <a href="profile/{{userId.value}}" *ngIf="!langService.editable">
+            <app-text page="shop_add" default="Redactor page"></app-text>
+          </a>
+
+          <app-text page="shop_add" default="Redactor page" class="hyperlink" *ngIf="langService.editable"></app-text>
+        </div>
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="shop_add"  default="Address"></app-text>
+        </div>
+
+
+
+        <div>
+          <button class="btn btn-type-2 text-uppercase field-content" (click)="openPlaceOfOrigin()">
+            <app-text page="shop_add" default="Choose country/region"></app-text>
+          </button>
+        </div>
+
+
+        <div class="lines-1 place-of-origin-text">
+          <div class="d-inline">
+            <app-text page="country_names" place="{{countriesMap.get(country.value)}}" default="{{countriesMap.get(country.value)}}"></app-text>
+          </div>
+          <div class="d-inline" *ngFor="let region of regionsForm.value; let i = index">
+            <span *ngIf="region"> > </span>
+            <app-text page="country_names" place="{{regionesMap.get(region * 1)}}"
+                      default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+          </div>
+        </div>
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="wine_list" default="Emblem"></app-text>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div *ngIf="routeData.download && !fileToUploadEmblem && imageLinkEmblem">
+            <img class="cover-image" [src]="getImageEmblem()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+          <div *ngIf="fileToUploadEmblem">
+            <img  class="cover-image" [src]="urlEmblem">
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <div>
+                <label class="btn btn-type-2 text-uppercase field-content" for="emblem">
+                  <app-text page="wine_list" default="Select"></app-text>
+                </label>
+
+
+                <input hidden="true" id="emblem" type='file' (change)="onSelectFileEmblem($event)" formControlName="emblem">
+              </div>
+              <div *ngIf="fileToUploadEmblem || imageLinkEmblem">
+
+                <button class="btn btn-type-2 text-uppercase field-content" for="image" (click)="deleteImageEmblem()">
+                  <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="fileToUploadEmblem" class="lines-1 place-of-origin-text margin-left-16">
+              <span>{{fileToUploadEmblem.name}}</span>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="d-flex flex-column align-items-start flex-even margin-right-32">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="shop_add" default="Contact us"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="Address" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="address">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="ZIP" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="zip">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="Phone" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="phone">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="Mobile" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="mobile">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="Fax" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="fax">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="Email" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="email">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="winery_add" default="Website" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="web">
+        </div>
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="winery_add" default="Visiting hours"></app-text>
+        </div>
+
+
+
+        <div>
+
+          <form [formGroup]="formVisitTime">
+
+            <div *ngFor="let day of daysKeys; let i = index" class="form-group">
+              <div formArrayName="{{day}}">
+                <div class="d-flex flex-column">
+                  <div class="d-flex flex-column">
+                    <div class="d-flex">
+                      <div class="d-flex align-items-center">
+                        <app-text page="winery_visittime" place="{{langService.morphStr(DAYS_OF_WEEK[day])}}" default="{{DAYS_OF_WEEK[day]}}"></app-text>
+                      </div>
+
+                      <div class="icon-margin">
+                        <button class="btn m-0 p-0" (click)="addTimeRange(day)">
+                          <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                      <div class="d-flex" *ngFor="let time of times(day).controls; let j = index">
+                        <div class="d-flex align-items-center" *ngIf="j % 2 == 0">
+                          <div class="d-flex">
+                            <app-input-time-bonvino [formControl_]="times(day).at(j)"></app-input-time-bonvino>
+                          </div>
+                          <div class="d-flex defis">
+                            <span> - </span>
+                          </div>
+                          <div class="d-flex">
+                            <app-input-time-bonvino [formControl_]="times(day).at(j + 1)"></app-input-time-bonvino>
+                          </div>
+                          <div class="d-flex justify-content-center align-items-start">
+
+                            <div class="icon-margin">
+                              <button class="btn m-0 p-0" (click)="removeTimeRange(day, j)">
+                                <app-icon-bonvino svgIcon="icn-close-bonvine" class="icon-close" link="fill"></app-icon-bonvino>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+      <div class="d-flex flex-column align-items-start flex-even">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="shop_add" default="Secondary options"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="parking" [form]="form" #_parking>
+            <app-text page="shop_add" default="Parking" (click)="_parking.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="wine_list" default="Type" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="type" [form]="form" #_type>
+            <div select-title>
+              <app-text page="shop_add" *ngFor="let shopType of shopTypes" [default]="shopType.defaultText" [hidden]="type.value != shopType.value"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_type.choose('select')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let shopType of shopTypes" (click)="_type.choose(shopType.value)">
+                <app-text page="shop_add" [default]="shopType.defaultText"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable" >
+            <app-text page="shop_add" default="Clear input"></app-text>
+            <app-text page="shop_add" *ngFor="let shopType of shopTypes" [default]="shopType.defaultText"></app-text>
+          </div>
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="branch" [form]="form" #_branch>
+            <app-text page="shop_add" default="Part of branch" (click)="_branch.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="wine_list" default="Unique bottles" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="unique" [form]="form" #_unique>
+            <div select-title>
+              <!--<app-text page="shop_add" default="Select" [hidden]="unique.value != 'select'"></app-text>-->
+              <app-text page="shop_add" *ngFor="let option of shopUniqueBottles" [default]="option.defaultText" [hidden]="unique.value != option.value"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_unique.choose('select')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let option of shopUniqueBottles" (click)="_unique.choose(option.value)">
+                <app-text page="shop_add" [default]="option.defaultText"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="shop_add" default="Clear input"></app-text>
+            <app-text page="shop_add" *ngFor="let option of shopUniqueBottles" [default]="option.defaultText"></app-text>
+          </div>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="shop_add" default="Refrigerator" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="refrigerator" [form]="form" #_refrigerator>
+            <div select-title>
+              <!--<app-text page="shop_add" default="Select" [hidden]="refrigerator.value != 'select'"></app-text>-->
+              <app-text page="shop_add" *ngFor="let option of shopRefrigerator" [default]="option.defaultText" [hidden]="refrigerator.value != option.value"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_refrigerator.choose('select')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let option of shopRefrigerator" (click)="_refrigerator.choose(option.value)">
+                <app-text page="shop_add" [default]="option.defaultText" ></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="shop_add" default="Clear input"></app-text>
+            <app-text page="shop_add" *ngFor="let option of shopRefrigerator" [default]="option.defaultText"></app-text>
+          </div>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="wine_list" default="Store area" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="area" [form]="form" #_area>
+            <div select-title>
+              <!--<app-text page="shop_add" default="Select" [hidden]="area.value != 'select'"></app-text>-->
+              <app-text page="shop_add" *ngFor="let option of shopArea" [default]="option.defaultText" [hidden]="area.value != option.value"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_area.choose('select')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let option of shopArea" (click)="_area.choose(option.value)">
+                <app-text page="shop_add" [default]="option.defaultText"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="shop_add" default="Clear input"></app-text>
+            <app-text page="shop_add" *ngFor="let option of shopArea" [default]="option.defaultText"></app-text>
+          </div>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="wine_list" default="Wine" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="quality" [form]="form" #_quality>
+            <div select-title>
+              <!--<app-text page="shop_add" default="Select" [hidden]="quality.value != 'select'"></app-text>-->
+              <app-text page="shop_add" *ngFor="let option of shopQuality" [default]="option.defaultText" [hidden]="quality.value != option.value"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_quality.choose('select')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let option of shopQuality" (click)="_quality.choose(option.value)">
+                <app-text page="shop_add" [default]="option.defaultText"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="shop_add" default="Clear input"></app-text>
+            <app-text page="shop_add" *ngFor="let option of shopQuality" [default]="option.defaultText"></app-text>
+          </div>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="tasting" [form]="form" #_tasting>
+            <app-text page="shop_add" default="Tasting place" (click)="_tasting.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="venue" [form]="form" #_venue>
+            <app-text page="shop_add" default="Venue" (click)="_venue.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="consultant" [form]="form" #_consultant>
+            <app-text page="shop_add" default="Consultant" (click)="_consultant.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-checkbox-bonvino formControlName_="delivery" [form]="form" #_delivery>-->
+        <!--<app-text page="shop_add" default="Delivery" (click)="_delivery.check()"></app-text>-->
+        <!--</app-checkbox-bonvino>-->
+        <!--</div>-->
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="shop_add" default="Delivery" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="delivery" [form]="form" #_delivery>
+            <div select-title>
+              <app-text page="shop_add" *ngFor="let shopPurchaseOption of shopPurchase" [default]="shopPurchaseOption.defaultText" [hidden]="delivery.value != shopPurchaseOption.value"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_delivery.choose('select')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let shopPurchaseOption of shopPurchase" (click)="_delivery.choose(shopPurchaseOption.value)">
+                <app-text page="shop_add" [default]="shopPurchaseOption.defaultText"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="shop_add" default="Clear input"></app-text>
+            <app-text page="shop_add" *ngFor="let shopPurchaseOption of shopPurchase" [default]="shopPurchaseOption.defaultText"></app-text>
+          </div>
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="delivery.value == 'purchase'">
+          <app-text page="winery_add" default="Purchase on" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="delivery_upon_purchase">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="delivery.value == 'purchase' || delivery.value == 'Cost'">
+          <app-text page="winery_add" default="Delivery cost" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="delivery_cost">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="strongAlcohol" [form]="form" #_strongAlcohol>
+            <app-text page="shop_add" default="Strong alcohol" (click)="_strongAlcohol.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="beer" [form]="form" #_beer>
+            <app-text page="shop_add" default="Beer" (click)="_beer.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="tobacco" [form]="form" #_tobacco>
+            <app-text page="shop_add" default="Tobacco" (click)="_tobacco.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="cheese" [form]="form" #_cheese>
+            <app-text page="shop_add" default="Cheese" (click)="_cheese.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="meat" [form]="form" #_meat>
+            <app-text page="shop_add" default="Meat" (click)="_meat.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="bread" [form]="form" #_bread>
+            <app-text page="shop_add" default="Bread" (click)="_bread.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="shop_add" default="Main options"></app-text>
+
+  <app-text page="wines_common_info" default="Language" class="field-hint"></app-text>
+
+  <div *ngFor="let l of languageArr">
+    <app-text page="language" default="{{l.name}}" ></app-text>
+  </div>
+
+  <app-text page="shop_add" default="Shop name" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Shop name in English" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Owner" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Claim yours"></app-text>
+
+  <app-text page="shop_add" default="Set redactor Id" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Redactor page"></app-text>
+
+  <app-text page="shop_add" default="Redactor page" class="hyperlink"></app-text>
+
+  <app-text page="shop_add"  default="Address"></app-text>
+
+  <app-text page="shop_add" default="Choose country/region"></app-text>
+
+  <app-text page="wine_list" default="Emblem"></app-text>
+
+  <app-text page="wine_list" default="Select"></app-text>
+
+  <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+
+  <app-text page="shop_add" default="Contact us"></app-text>
+
+  <app-text page="winery_add" default="Address" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="ZIP" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Phone" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Mobile" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Fax" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Email" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Website" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Visiting hours"></app-text>
+
+  <div *ngFor="let day of daysKeys; let i = index" class="form-group">
+    <app-text page="winery_visittime" place="{{langService.morphStr(DAYS_OF_WEEK[day])}}" default="{{DAYS_OF_WEEK[day]}}"></app-text>
+  </div>
+
+
+  <app-text page="shop_add" default="Secondary options"></app-text>
+
+  <app-text page="shop_add" default="Parking" (click)="_parking.check()"></app-text>
+
+  <app-text page="wine_list" default="Type" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Clear input"></app-text>
+  <app-text page="shop_add" *ngFor="let shopType of shopTypes" [default]="shopType.defaultText"></app-text>
+
+  <app-text page="shop_add" default="Part of branch" (click)="_branch.check()"></app-text>
+
+  <app-text page="wine_list" default="Unique bottles" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Clear input"></app-text>
+  <app-text page="shop_add" *ngFor="let option of shopUniqueBottles" [default]="option.defaultText"></app-text>
+
+  <app-text page="shop_add" default="Refrigerator" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Clear input"></app-text>
+  <app-text page="shop_add" *ngFor="let option of shopRefrigerator" [default]="option.defaultText"></app-text>
+
+  <app-text page="wine_list" default="Store area" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Clear input"></app-text>
+  <app-text page="shop_add" *ngFor="let option of shopArea" [default]="option.defaultText"></app-text>
+
+  <app-text page="wine_list" default="Wine" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Clear input"></app-text>
+  <app-text page="shop_add" *ngFor="let option of shopQuality" [default]="option.defaultText"></app-text>
+
+  <app-text page="shop_add" default="Tasting place" (click)="_tasting.check()"></app-text>
+
+  <app-text page="shop_add" default="Venue" (click)="_venue.check()"></app-text>
+
+  <app-text page="shop_add" default="Consultant" (click)="_consultant.check()"></app-text>
+
+  <app-text page="shop_add" default="Delivery" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Clear input"></app-text>
+  <app-text page="shop_add" *ngFor="let shopPurchaseOption of shopPurchase" [default]="shopPurchaseOption.defaultText"></app-text>
+
+
+  <app-text page="winery_add" default="Purchase on" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Delivery cost" class="field-hint"></app-text>
+
+  <app-text page="shop_add" default="Strong alcohol" (click)="_strongAlcohol.check()"></app-text>
+
+  <app-text page="shop_add" default="Beer" (click)="_beer.check()"></app-text>
+
+  <app-text page="shop_add" default="Tobacco" (click)="_tobacco.check()"></app-text>
+
+  <app-text page="shop_add" default="Cheese" (click)="_cheese.check()"></app-text>
+
+  <app-text page="shop_add" default="Meat" (click)="_meat.check()"></app-text>
+
+  <app-text page="shop_add" default="Bread" (click)="_bread.check()"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

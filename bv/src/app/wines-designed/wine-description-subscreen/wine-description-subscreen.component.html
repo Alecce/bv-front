@@ -1,0 +1,36 @@
+<div class="d-flex flex-column margin-top-64 margin-right-64 margin-left-64 margin-bottom-64 h-100 noscrolling">
+  <div class="d-flex" *ngIf="accountService.isAdmin() || accountService.specialBengatCondition()">
+    <div class="d-flex flex-row justify-content-between w-100 margin-bottom-32">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <app-tabs-bar [tabsData]="tabsData" [chosenTab]="chosenTab" [tabSubject]="tabSubject"></app-tabs-bar>
+        </div>
+      </div>
+
+
+      <div class="d-flex justify-content-between">
+
+        <button class="btn btn-type-1 text-uppercase field-content margin-right-36"  (click)="close()">
+          <app-text page="description" default="Close"></app-text>
+        </button>
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="submit()" [disabled]="!accountService.ifSpecialist()">
+          <app-text page="description"  default="Send description"></app-text>
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="d-flex scrollbar pr-4">
+    <app-wine-autodecription [downloadedData]="downloadedData"
+                             [descriptionsSubject]="descriptionsSubject" [generatedDescriptionSubject]="generatedDescriptionSubject"
+                             [hidden]="!showTab(tabs.autodescription)" class="w-100"></app-wine-autodecription>
+    <app-wine-description [descriptionsSubject]="descriptionsSubject" [generatedDescriptionSubject]="generatedDescriptionSubject"
+                          [downloadedData]="downloadedData" [isSelect]="false"
+                          [hidden]="!showTab(tabs.descriptionSelect)" class="w-100"></app-wine-description>
+
+  </div>
+
+  <!--<div class="d-flex justify-content-end align-items-center margin-top-32">-->
+
+  <!--</div>-->
+</div>

@@ -1,0 +1,10 @@
+<div class="m-auto">
+  <app-supermap-open-layers class="map"
+                            [center]="[lg,lt]"
+                            [zoom]="zoom"
+                            [routerData]="routeData" [currentData]="currentData"
+                            [reloadSubj]="reloadSubj"
+                            *ngIf="shown"
+  ></app-supermap-open-layers>
+
+</div>

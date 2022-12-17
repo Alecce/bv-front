@@ -1,0 +1,179 @@
+<div class="d-flex flex-column margin-64">
+  <div class="d-flex">
+
+    <div  class="heading-1" [ngClass]="isBigScreen() ? 'margin-bottom-36' : 'margin-bottom-12'">
+      <div *ngIf="!routeData.download">
+        <app-text page="wines" place="add_a_wine" default="Add a wine"></app-text>
+      </div>
+      <div  *ngIf="routeData.download">
+        <app-text page="wines" default="Edit a wine"></app-text>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-column justify-content-end w-100 margin-bottom-32">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <app-tabs-bar [tabsData]="tabsData" [chosenTab]="chosenTab" [tabSubject]="tabSubject"></app-tabs-bar>
+        </div>
+        <div class="d-flex justify-content-between">
+
+          <app-button-row>
+
+            <div high-width>
+
+              <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : backLink()">
+                <app-text page="wines" default="Cancel"></app-text>
+              </a>
+              <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : changelogLink()">
+                <app-text page="wines" default="Changelog"></app-text>
+              </a>
+              <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="create()" *ngIf="!routeData.download">
+                <app-text page="wines" default="Create"></app-text>
+              </button>
+              <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="create()" *ngIf="routeData.download">
+                <app-text page="wines" default="Save changes"></app-text>
+                <mat-spinner [diameter]="15" class="d-inline-block" *ngIf="loadingService.loading"></mat-spinner>
+              </button>
+
+            </div>
+
+            <div low-width>
+
+              <div class="">
+                <a [routerLink]="langService.editable ? null : backLink()" class="hyperlink">
+                  <app-text page="wines" default="Cancel"></app-text>
+                </a>
+              </div>
+              <div class="">
+                <a [routerLink]="langService.editable ? null : changelogLink()" class="hyperlink">
+                  <app-text page="wines" default="Changelog"></app-text>
+                </a>
+              </div>
+              <div class="">
+                <a [routerLink]="null" class="hyperlink" (click)="create()" *ngIf="!routeData.download">
+                  <app-text page="wines" default="Create"></app-text>
+                </a>
+              </div>
+              <div class="">
+                <a [routerLink]="null" class="hyperlink" (click)="create()" *ngIf="routeData.download">
+                  <app-text page="wines" default="Save changes"></app-text>
+                  <mat-spinner [diameter]="15" class="d-inline-block" *ngIf="loadingService.loading"></mat-spinner>
+                </a>
+              </div>
+            </div>
+
+          </app-button-row>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end error margin-top-8 margin-bottom-16" *ngIf="isInvalid() && showNoValidation">
+      <div class="d-flex flex-row no-validation">
+        <div class="margin-left-8 margin-right-8">
+          <app-icon-bonvino svgIcon="icn-error-white" class="icn-error"></app-icon-bonvino>
+        </div>
+        <div class="margin-right-8 d-flex align-items-center Error-message-The-b">
+          <app-text page="validation" default="Some fields are invalid"></app-text>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex">
+
+    <app-wines-menu-designed [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject" [hidden]="!showTab(tabs.menu)" class="w-100"></app-wines-menu-designed>
+    <app-wines-basic-designed [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject" [hidden]="!showTab(tabs.basic)"
+                              [isParentShowNoValidation]="showNoValidation" class="w-100"></app-wines-basic-designed>
+    <app-wines-advanced-designed [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject"
+                                 [hidden]="!showTab(tabs.advanced)" class="w-100"></app-wines-advanced-designed>
+    <app-wines-grapes-designed [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject" [hidden]="!showTab(tabs.grapes)" class="w-100"></app-wines-grapes-designed>
+    <app-wines-serving-designed [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject" [hidden]="!showTab(tabs.serving)" class="w-100"></app-wines-serving-designed>
+    <app-wine-autodecription [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject"
+                             [descriptionsSubject]="descriptionsSubject" [generatedDescriptionSubject]="generatedDescriptionSubject"
+                                  [hidden]="!showTab(tabs.autodescription)" class="w-100"></app-wine-autodecription>
+    <app-description-grades-add [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject" [hidden]="!showTab(tabs.description)" class="w-100"></app-description-grades-add>
+    <app-wine-description [descriptionsSubject]="descriptionsSubject" [generatedDescriptionSubject]="generatedDescriptionSubject"
+                          [downloadedData]="downloadedData" [isWineryOwnerSubject]="isWineryOwnerSubject" [isSelect]="true"
+                          [hidden]="!showTab(tabs.descriptionSelect)" class="w-100"></app-wine-description>
+
+  </div>
+
+</div>
+
+
+
+<!--<div class="row m-2 p-2">-->
+  <!--<div class="col">-->
+    <!--<div class="row my-2 py-1">-->
+      <!--<div class="form-group col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines" place="add_a_wine" default="Add a wine" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row my-2 py-1">-->
+      <!--<div class="form-group col-auto border-bottom-2 ml-2 pl-0">-->
+
+        <!--<button class="btn btn-sm rounded-top mr-2" [ngClass]="getTabColor(tabs.basic)" (click)="chose(tabs.basic)">-->
+          <!--<app-text page="wines" place="basic_info" default="Basic info"></app-text>-->
+        <!--</button>-->
+
+        <!--<button class="btn btn-sm rounded-top mx-2" [ngClass]="getTabColor(tabs.advanced)" (click)="chose(tabs.advanced)">-->
+          <!--<app-text page="wines" place="advanced" default="Advanced features"></app-text>-->
+        <!--</button>-->
+
+        <!--<button class="btn btn-sm rounded-top mx-2" [ngClass]="getTabColor(tabs.grapes)" (click)="chose(tabs.grapes)">-->
+          <!--<app-text page="wines" place="grapes" default="Grapes"></app-text>-->
+        <!--</button>-->
+
+        <!--<button class="btn btn-sm rounded-top mx-2" [ngClass]="getTabColor(tabs.serving)" (click)="chose(tabs.serving)">-->
+          <!--<app-text page="wines" default="Serving"></app-text>-->
+        <!--</button>-->
+
+        <!--<button class="btn btn-sm rounded-top mx-2" [ngClass]="getTabColor(tabs.vote)" (click)="chose(tabs.vote)">-->
+          <!--<app-text page="wines" default="Rating"></app-text>-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row my-2 py-1">-->
+      <!--<div class="form-group col">-->
+        <!--<app-wines-basic-designed [downloadedData]="downloadedData" [hidden]="!showTab(tabs.basic)"></app-wines-basic-designed>-->
+        <!--<app-wines-advanced-designed [downloadedData]="downloadedData" [hidden]="!showTab(tabs.advanced)"></app-wines-advanced-designed>-->
+        <!--<app-wines-grapes-designed [downloadedData]="downloadedData" [hidden]="!showTab(tabs.grapes)"></app-wines-grapes-designed>-->
+        <!--<app-wines-serving-designed [downloadedData]="downloadedData" [hidden]="!showTab(tabs.serving)"></app-wines-serving-designed>-->
+        <!--<app-wines-vote-designed [hidden]="!showTab(tabs.vote)"></app-wines-vote-designed>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="row my-2 py-1">-->
+
+      <!--<div class="form-group offset-8 col">-->
+
+        <!--<button class="btn btn-sm btn-info" [ngClass]="getTabColor(tabs.vote)" (click)="back()">-->
+          <!--<app-text page="wines" default="Cancel"></app-text>-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<div class="form-group col" *ngIf="!routeData.download">-->
+
+        <!--<button class="btn btn-sm btn-info" [ngClass]="getTabColor(tabs.vote)" (click)="create()">-->
+          <!--<app-text page="wines" default="Create"></app-text>-->
+          <!--<mat-spinner [diameter]="15" class="d-inline-block" *ngIf="loadingService.loading"></mat-spinner>-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<div class="form-group col" *ngIf="routeData.download">-->
+
+        <!--<button class="btn btn-sm btn-info" [ngClass]="getTabColor(tabs.vote)" (click)="create()">-->
+          <!--<app-text page="wines" default="Save changes"></app-text>-->
+
+          <!--<mat-spinner [diameter]="15" class="d-inline-block" *ngIf="loadingService.loading"></mat-spinner>-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <!--</div>-->
+
+<!--</div>-->
+

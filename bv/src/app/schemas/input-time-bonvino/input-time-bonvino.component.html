@@ -1,0 +1,18 @@
+<form [formGroup]="innerForm">
+  <div class="d-flex">
+    <div class="d-inline">
+      <div class="field align-self-stretch d-flex flex-column mb-0 margin-right-4">
+        <input type="number" max="23" min="0" maxlength="2" class="field-content field-input align-self-stretch" formControlName="hour">
+      </div>
+    </div>
+    <div class="d-inline field-content double-dot">
+      <span>:</span>
+    </div>
+    <div class="d-inline">
+      <div class="field align-self-stretch d-flex flex-column mb-0 margin-right-4">
+        <input type="number" max="59" min="0" maxlength="2" class="field-content field-input align-self-stretch" formControlName="minute" #minute
+               (focusout)="renderMinutes()">
+      </div>
+    </div>
+  </div>
+</form>

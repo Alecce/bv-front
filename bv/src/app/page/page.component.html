@@ -1,0 +1,18 @@
+<div class="h-100 d-flex flex-column"
+     [ngClass]="{
+         'global-rtl' : isRtl(),
+         'global-ltr' : !isRtl(),
+         'overflow-hidden' : wineListSearchbarService.isBarOpen && !isBigScreen()
+       }">
+  <app-unauth *ngIf="!(cookies | async).id && !variables.open"></app-unauth>
+  <div class="navigation-background margin-bottom-20" [ngClass]="resolutionService.isSmall() ? 'fixed-top' : ''" #navigation>
+
+    <app-language-panel *ngIf="!resolutionService.isSmall() && (cookies | async).sequrity >= 3"></app-language-panel>
+    <app-navigation-designed [hidden]="!variables.open && !(cookies | async).id"></app-navigation-designed>
+  </div>
+  <div [ngStyle]="getBodyMargin()">
+    <router-outlet *ngIf="variables.open || (cookies | async).id"></router-outlet>
+  </div>
+
+  <app-footer class="mt-auto" *ngIf="variables.open || (cookies | async).id"></app-footer>
+</div>

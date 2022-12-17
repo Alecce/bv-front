@@ -1,0 +1,261 @@
+
+<form [formGroup]="form">
+
+  <div class="d-flex flex-column">
+
+    <div class="d-flex flex-row justify-content-between align-items-center">
+
+      <div>
+
+        <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Current user:" class="lines-1"></app-text>
+      </div>
+
+      <div>
+        <app-person-one-row [userIdSubject]="chosenId.valueChanges"></app-person-one-row>
+      </div>
+
+      <div>
+
+        <app-text page="wine_list" default="Page" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="pageSearch" [form]="form" #_page>
+          <div select-title>
+            <div *ngFor="let p of pagesNumbers; let i = index">
+              <app-text [page]="LANGUAGE_CURRENT_PAGE" default="{{p.name}}" *ngIf="pageSearch.value == p.value"></app-text>
+            </div>
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button class="btn btn-option" *ngFor="let p of pagesNumbers; let i = index" (click)="_page.choose(p.value)">
+              <app-text [page]="LANGUAGE_CURRENT_PAGE" default="{{p.name}}"></app-text>
+            </button>
+          </div>
+        </app-select-bonvino>
+      </div>
+    </div>
+
+  </div>
+  <div>
+
+    <table class="table">
+      <thead>
+      <tr class="bonvino-table-head">
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'login' ? 'login' : 'login_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Login" class="lines-2"
+                               [ngClass]="getSortingClass(['login', 'login_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'login' && order.value != 'login_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'login'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'login_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div>
+
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <input type="text" class="field-input align-self-stretch" formControlName="login">
+              </div>
+            </div>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'fname' ? 'fname' : 'fname_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Name" class="lines-2"
+                               [ngClass]="getSortingClass(['fname', 'fname_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'fname' && order.value != 'fname_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'fname'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'fname_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div>
+
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <!--<app-text page="winery_add" default="Winery name" class="field-hint"></app-text>-->
+                <input type="text" class="field-input align-self-stretch" formControlName="fname">
+              </div>
+            </div>
+          </div>
+        </th>
+        <th scope="col">
+
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'lname' ? 'lname' : 'lname_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Surname" class="lines-2"
+                               [ngClass]="getSortingClass(['lname', 'lname_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'lname' && order.value != 'lname_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'lname'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'lname_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div>
+
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <input type="text" class="field-input align-self-stretch" formControlName="lname">
+              </div>
+            </div>
+          </div>
+
+
+
+        </th>
+        <th scope="col">
+
+          <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Photo" class="lines-2"></app-text>
+
+        </th>
+
+        <th scope="col">
+
+          <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Select" class="lines-2"></app-text>
+
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of userList; let i = index">
+
+        <td>
+          <div class="lines-1">
+
+            <a [routerLink]="'profile/' + user.id">
+              <span>{{user.login}}</span>
+            </a>
+
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+            <span>{{user.fname}}</span>
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+            <span>{{user.lname}}</span>
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+            <img  class="img-fluid max-height-200px" [src]="getImage(user)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+
+            <button class="btn btn-type-1 text-uppercase field-content">
+              <app-text page="wine_list" default="Chose" (click)="choseUser(user)"></app-text>
+            </button>
+          </div>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+  </div>
+
+
+</form>
+
+
+
+
+<div class="d-flex justify-content-end" mat-dialog-actions>
+  <div class="ml-auto float-right p-2">
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+      <app-text page="wine_list" default="Cancel"></app-text>
+    </button>
+  </div>
+  <div class="float-right p-2">
+
+    <button class="btn btn-type-1 text-uppercase field-content" *ngIf="this.langService.editable">
+      <app-text page="wine_list" default="Clear"></app-text>
+    </button>
+
+    <button class="btn btn-type-1 text-uppercase field-content"  *ngIf="!this.langService.editable" mat-button [mat-dialog-close]="''" cdkFocusInitial>
+      <app-text page="wine_list" default="Clear"></app-text>
+    </button>
+  </div>
+  <div class="float-right p-2">
+
+    <button class="btn btn-type-1 text-uppercase field-content" *ngIf="this.langService.editable">
+      <app-text page="wine_list" default="Set"></app-text>
+    </button>
+
+    <button class="btn btn-type-1 text-uppercase field-content"  *ngIf="!this.langService.editable" mat-button [mat-dialog-close]="chosenId.value" cdkFocusInitial>
+      <app-text page="wine_list" default="Set"></app-text>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div [formGroup]="formGroup_"  class="d-flex flex-column w-100">
+
+  <div class="field align-self-stretch d-flex flex-column w-100" *ngIf="formGroup_.get('date')">
+    <app-text [page]="'calendar'" [default]="'Date'" class="field-hint"></app-text>
+    <input type="date" class="field-input align-self-stretch" [formControlName]="'date'">
+  </div>
+  <div class="field align-self-stretch d-flex flex-column w-100 ml-0" *ngIf="formGroup_.get('time')">
+    <app-input-time-bonvino [formControl_]="formGroup_.get('time')"></app-input-time-bonvino>
+  </div>
+</div>

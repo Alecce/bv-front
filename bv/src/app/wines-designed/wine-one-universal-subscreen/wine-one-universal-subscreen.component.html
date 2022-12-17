@@ -1,0 +1,117 @@
+<div class="d-flex flex-column h-100 scallable">
+
+  <div class="margin-top-16 margin-right-12 margin-left-20 justify-content-between d-flex flex-row-reverse align-items-start">
+
+
+    <button class="btn m-0 p-0" (click)="close()">
+      <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+    </button>
+
+    <div *ngIf="!isBigScreen() && data && wine && wine.wineData">
+      <div  class="d-flex heading-1 flex-row" #navigation>
+
+
+        <div>
+          <app-title [language]="wine.wineData.basic_designed.language" [national]="wine.wineData.commoninfo.name_national"
+                     [international]="wine.wineData.commoninfo.name_international" [id]="wine.id" page="wineNames"></app-title>
+
+        </div>
+
+        <!--<div *ngIf="wine.wineData.basic_designed.language == langService.getLanguage() && wine.wineData.commoninfo.name_national" class="text-left">-->
+          <!--{{wine.wineData.commoninfo.name_national}}-->
+        <!--</div>-->
+        <!--<div *ngIf="wine.wineData.basic_designed.language != langService.getLanguage() || !wine.wineData.commoninfo.name_national" class="text-left">-->
+          <!--{{wine.wineData.commoninfo.name_international}}-->
+        <!--</div>-->
+      </div>
+    </div>
+
+    <div>
+
+    </div>
+    <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-left"
+         *ngIf="false && data && !accountService.isNoUser() &&
+        ((!short && wineOneUniversal && wineOneUniversal.wineData) ||
+        (short && wineShort && wineShort.wineData))">
+      <div class="" id="listDropdown" ngbDropdownToggle>
+        <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+      </div>
+      <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+        <div class="d-flex flex-column align-items-start menu-buttons">
+
+          <div class=""  *ngIf="isAdmin()">
+            <a [routerLink]="null" class="hyperlink" (click)="findWine(wine.id)">
+              <app-text page="wines_one"  default="Find"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="!short && isTranslatable()">
+            <a [routerLink]="null" class="hyperlink" (click)="setShort()">
+              <app-text page="wines_one"  default="Short version"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="short && isTranslatable()">
+            <a [routerLink]="null" class="hyperlink" (click)="setFull()">
+              <app-text page="wines_one"  default="Full version"></app-text>
+            </a>
+          </div>
+          <div class="">
+            <a [routerLink]="null" class="hyperlink" (click)="rateWine()">
+              <app-text page="wines_one"  default="Rate"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="isSpecialist()">
+            <a [routerLink]="null" class="hyperlink" (click)="describeWine()">
+              <app-text page="wines_one"  default="Describe"></app-text>
+            </a>
+          </div>
+          <!--<div class="" *ngIf="isTranslatable()">-->
+            <!--<a [routerLink]="langService.editable ? null : viewWineLink()" class="hyperlink">-->
+              <!--<app-text page="wines_one"  default="View wine"></app-text>-->
+            <!--</a>-->
+          <!--</div>-->
+          <div class="" *ngIf="isEditable()">
+            <a [routerLink]="langService.editable ? null : editWineLink()" class="hyperlink" (click)="close()">
+              <app-text page="wines_one"  default="Edit wine"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="!wine.wineData.storage">
+            <a [routerLink]="null" class="hyperlink" (click)="getWine(wine.wineData)">
+              <app-text page="wines_one"  default="Get"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="wine.wineData.storage">
+            <a [routerLink]="null" class="hyperlink" (click)="removeWine(wine.wineData)">
+              <app-text page="wines_one"  default="Remove"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="accountService.ifCollector()">
+            <a [routerLink]="null" class="hyperlink" (click)="storeWine()">
+              <app-text page="wines_one"  default="Add to collection"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="wine.wineData.wish == 'buy'">
+            <a [routerLink]="null" class="hyperlink" (click)="wishToTaste(wine.wineData)">
+              <app-text page="wines_one"  default="Wish to buy"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="wine.wineData.wish == 'taste'">
+            <a [routerLink]="null" class="hyperlink" (click)="unwish(wine.wineData)">
+              <app-text page="wines_one"  default="Wish to taste"></app-text>
+            </a>
+          </div>
+          <div class="" *ngIf="!wine.wineData.wish && accountService.me.name">
+            <a [routerLink]="null" class="hyperlink" (click)="wishToBuy(wine.wineData)">
+              <app-text page="wines_one"  default="No wish"></app-text>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="scrollbar" [ngClass]="!isBigScreen() ? 'margin-right-16 margin-bottom-20' : ''">
+    <app-wines-short-designed [data]="data" *ngIf="data && short" [eventListerner]="eventListerner"></app-wines-short-designed>
+    <app-wine-one-universal [data]="data" *ngIf="data && !short" [eventListerner]="eventListerner"></app-wine-one-universal>
+  </div>
+</div>

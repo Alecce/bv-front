@@ -1,0 +1,370 @@
+<div class="d-flex align-items-start">
+  <div class="d-flex flex-column align-items-start left-bar">
+    <form [formGroup]="form"  class="w-100">
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="wine_list" place="wine_name" default="Which event are you looking for?" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="searchInternationalName">
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="searchUpcoming" [form]="form" #_searchUpcoming>
+          <app-text page="event_list" default="Upcoming events" (click)="_searchUpcoming.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="event" default="Country" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="searchCountry" [form]="form" #_searchCountry>
+          <div select-title>
+            <!--<app-text page="event" default="Select" [hidden]="searchCountry.value != '0'"></app-text>-->
+            <app-text *ngFor="let c of countries; let i = index" page="country_names" place="{{c.id}}" default="{{c.name}}" [hidden]="c.id != searchCountry.value"></app-text>
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button class="btn btn-option" (click)="_searchCountry.choose('0')">
+              <app-text page="event" default="Clear input"></app-text>
+            </button>
+            <button *ngFor="let c of countries; let i = index" class="btn btn-option" (click)="_searchCountry.choose(c.id)">
+              <app-text page="country_names" place="{{c.id}}" default="{{c.name}}"></app-text>
+            </button>
+          </div>
+        </app-select-bonvino>
+        <div *ngIf="langService.editable">
+          <app-text page="event" default="Clear input"></app-text>
+          <app-text *ngFor="let c of countries; let i = index" page="country_names" place="{{c.id}}" default="{{c.name}}"></app-text>
+        </div>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="event" default="City" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="searchCity">
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="event" default="From" class="field-hint"></app-text>
+        <input type="date" class="field-input align-self-stretch" formControlName="from">
+      </div>
+
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="event" default="To" class="field-hint"></app-text>
+        <input type="date" class="field-input align-self-stretch" formControlName="to">
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="wines_common_info" default="Language" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="language" [form]="form" #_language>
+          <div select-title>
+            <app-text *ngFor="let l of languageArr" page="language" [default]="l.name" [hidden]="l.value != language.value"></app-text>
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button class="btn btn-option" (click)="_language.choose('')">
+              <app-text page="event" default="Clear input"></app-text>
+            </button>
+            <button *ngFor="let l of languageArr" class="btn btn-option" (click)="_language.choose(l.value)">
+              <app-text page="language" [default]="l.name"></app-text>
+            </button>
+          </div>
+        </app-select-bonvino>
+        <!--<div *ngIf="langService.editable">-->
+          <!--<app-text page="language" *ngFor="let language of languageArr" [default]="language.name"></app-text>-->
+        <!--</div>-->
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="event" default="Type" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="type" [form]="form" #_type>
+          <div select-title>
+            <app-text *ngFor="let t of types" page="event" default="{{t.label}}" [hidden]="t.value != type.value"></app-text>
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button class="btn btn-option" (click)="_type.choose('')">
+              <app-text page="event" default="Clear input"></app-text>
+            </button>
+            <button *ngFor="let t of types" class="btn btn-option" (click)="_type.choose(t.value)">
+              <app-text page="event" default="{{t.label}}"></app-text>
+            </button>
+          </div>
+        </app-select-bonvino>
+        <!--<div *ngIf="langService.editable">-->
+          <!--<app-text page="event" default="Clear input"></app-text>-->
+          <!--<app-text page="event" *ngFor="let t of types" [default]="t.label"></app-text>-->
+        <!--</div>-->
+      </div>
+
+
+      <div>
+        <app-additional-search-schema [structureData]="additionalStructure"></app-additional-search-schema>
+      </div>
+
+      <div>
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="filterEvents()">
+          <app-text page="event_list" default="Show events"></app-text>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="d-flex flex-column justify-content-between w-100 main-menu">
+    <div class="w-100">
+      <div class="d-flex flex-row justify-content-between align-content-end flex-wrap">
+        <div class="d-flex flex-column justify-content-end">
+          <div class="menu-first d-flex flex-row justify-content-between">
+
+            <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.all)" (click)="chooseTab(tabs.all)">
+              <app-text page="event_list" place="discover" default="Discover"></app-text>
+            </button>
+
+            <button class="btn btn-menu-first menu-2-regular" [ngClass]="getTabColor(tabs.interesting)" (click)="chooseTab(tabs.interesting)"  *ngIf="!accountService.isNoUser()">
+              <app-text page="event_list" default="Events you interested in"></app-text>
+            </button>
+
+            <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.my)" (click)="chooseTab(tabs.my)" *ngIf="!accountService.isNoUser()">
+              <app-text page="event_list" default="Events you organised"></app-text>
+            </button>
+
+          </div>
+        </div>
+        <div class="d-flex flex-column justify-content-end ml-auto margin-top-8">
+          <div class="d-flex flex-row justify-content-between align-content-end mb-0">
+            <div class="d-flex flex-column justify-content-end menu-top">
+              <form [formGroup]="form">
+
+                <div class="field align-self-end d-flex flex-column mb-0">
+                  <app-text page="event" default="Sort" class="field-hint"></app-text>
+                  <app-select-bonvino formControlName_="order" [form]="form" #_order>
+                    <div select-title>
+                      <app-text page="event_list" place="id" default="Id" *ngIf="order.value == 'sort'"></app-text>
+                      <app-text page="event_list" place="name_int" default="International name" *ngIf="order.value == 'name_int'"></app-text>
+                      <app-text page="event_list" place="name_int" default="International name" *ngIf="order.value == 'name_int_reverse'"></app-text>
+                      <app-text page="event_list" place="name_nat" default="Name" *ngIf="order.value == 'name_nat'"></app-text>
+                      <app-text page="event_list" place="name_nat" default="Name" *ngIf="order.value == 'name_nat_reverse'"></app-text>
+                      <app-text page="event_list" place="date" default="Date" *ngIf="order.value == 'date'"></app-text>
+                      <app-text page="event_list" place="date" default="Date" *ngIf="order.value == 'date_reverse'"></app-text>
+                      <app-text page="event_list" place="country" default="Country" *ngIf="order.value == 'country'"></app-text>
+                      <app-text page="event_list" place="country" default="Country" *ngIf="order.value == 'country_reverse'"></app-text>
+
+
+                      <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                                *ngIf="order.value == 'name_int' || order.value == 'name_nat' || order.value == 'date' || order.value == 'country'"></mat-icon>
+                      <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"
+                                *ngIf="order.value == 'name_int_reverse' || order.value == 'name_nat_reverse' || order.value == 'date_reverse' || order.value == 'country_reverse'"></mat-icon>
+                    </div>
+                    <div options class="d-flex flex-column align-items-start select-list-options">
+                      <!--<button class="btn btn-option" (click)="_order.choose('sort')">-->
+                      <!--<app-text page="wines_common_info" place="id" default="Id"></app-text>-->
+                      <!--</button>-->
+                      <button class="btn btn-option" (click)="_order.choose('name_int')">
+                        <app-text page="event_list" place="name_int" default="International name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('name_int_reverse')">
+                        <app-text page="event_list" place="name_int" default="International name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('name_nat')">
+                        <app-text page="event_list" place="name_nat" default="Name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('name_nat_reverse')">
+                        <app-text page="event_list" place="name_nat" default="Name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('date')">
+                        <app-text page="event_list" place="date" default="Date"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('date_reverse')">
+                        <app-text page="event_list" place="date" default="Date"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('country')">
+                        <app-text page="event_list" place="country" default="Country"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('country_reverse')">
+                        <app-text page="event_list" place="country" default="Country"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                    </div>
+                  </app-select-bonvino>
+                </div>
+
+                <div *ngIf="langService.editable">
+                  <app-text page="event_list" place="name_int" default="International name"></app-text>
+                  <app-text page="event_list" place="name_nat" default="Name"></app-text>
+                  <app-text page="event_list" place="date" default="Date"></app-text>
+                  <app-text page="event_list" place="country" default="Country"></app-text>
+                </div>
+              </form>
+            </div>
+
+            <div class="d-flex flex-column justify-content-end menu-top" *ngIf="!accountService.isNoUser()">
+              <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : addEventLink()">
+                <app-text page="event_list" default="Add an event"></app-text>
+              </a>
+              <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="addEvent()">-->
+                <!--<app-text page="event_list" default="Add an event"></app-text>-->
+              <!--</button>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="d-flex flex-wrap cards-block" #cards>
+        <div class="card-event d-flex flex-column" *ngFor="let event of eventList" [ngStyle]="{'width.px': cardWidth}">
+          <div class="card-event-image">
+            <a href="event/{{event.id}}" >
+              <img  class="img-fluid" [src]="getImage(event)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+            </a>
+            <!--<a  [routerLink]="null" class="hyperlink" (click)="viewEvent(event.id)">-->
+              <!--<img  class="img-fluid" [src]="getImage(event)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">-->
+            <!--</a>-->
+          </div>
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="heading-1">
+
+                <!--<span *ngIf="event.language == langService.getLanguage()">-->
+                  <!--{{event.name}}-->
+                <!--</span>-->
+                <!--<span *ngIf="event.language != langService.getLanguage()">-->
+                  <!--{{event.name_international}}-->
+                <!--</span>-->
+
+                <app-title [language]="event.language" [national]="event.name"
+                           [international]="event.name_international" [id]="event.id" page="eventNames"></app-title>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="lines-1" *ngIf="event.from == event.to">
+                <span>{{event.from |  date:'longDate' }}</span>
+              </div>
+              <div class="lines-1" *ngIf="event.from != event.to">
+                <span>{{event.from |  date:'MMMM d' }} - {{event.to |  date:'longDate' }}</span>
+              </div>
+            </div>
+            <div>
+              <div class="lines-1">
+                <span>{{event.fromtime}} - {{event.totime}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="wine_list" place="wine_name" default="Which event are you looking for?" class="field-hint"></app-text>
+
+  <app-text page="event_list" default="Upcoming events" (click)="_searchUpcoming.check()" class="lines-1"></app-text>
+
+  <app-text page="event" default="Country" class="field-hint"></app-text>
+
+  <div *ngFor="let row of countries">
+    <app-text page="country_names"  [place]="row.id" default="{{row.name}}"></app-text>
+
+  </div>
+
+  <app-text page="event" default="City" class="field-hint"></app-text>
+
+  <app-text page="event" default="From" class="field-hint"></app-text>
+
+  <app-text page="event" default="To" class="field-hint"></app-text>
+
+  <app-text page="event_list" default="Show events"></app-text>
+
+  <app-text page="event_list" place="discover" default="Discover"></app-text>
+
+  <app-text page="event_list" default="Events you interested in"></app-text>
+
+  <app-text page="event_list" default="Events you organised"></app-text>
+
+  <app-text page="event_list" place="name_int" default="International name"></app-text>
+  <app-text page="event_list" place="name_nat" default="Name"></app-text>
+  <app-text page="event_list" place="date" default="Date"></app-text>
+  <app-text page="event_list" place="country" default="Country"></app-text>
+
+  <app-text page="event_list" default="Add an event"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,14 @@
+
+<div class="lines-1" *ngIf="country.value">
+  <app-text page="wines_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text page="country_names" place="{{country.value}}" default="{{countriesMap.get(country.value)}}"></app-text>
+</div>
+
+<div class="lines-1" *ngIf="regionsForm.at(0).value">
+  <app-text page="wines_one" default="Region" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <div class="d-inline"  *ngFor="let r of regionsForm.value; let i = index">
+    <span *ngIf="i != 0 && r">, </span>
+    <app-text page="country_names" place="{{r}}" default="{{regionesMap.get(r)}}"></app-text>
+  </div>
+
+</div>

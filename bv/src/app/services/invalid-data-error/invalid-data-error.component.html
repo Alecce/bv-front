@@ -1,0 +1,10 @@
+<!--<p>invalid-data-error works!</p>-->
+<div class="d-flex justify-content-between align-items-center">
+  <div>
+    <app-icon-bonvino svgIcon="icn-error-white" class="icn-error" ></app-icon-bonvino>
+    <app-text page="error" default="The given data was invalid" class="Error-message-The-b margin-left-8"></app-text>
+  </div>
+  <div (click)="snackBarRef.dismiss()">
+    <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+  </div>
+</div>

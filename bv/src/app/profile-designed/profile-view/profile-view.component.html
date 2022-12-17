@@ -1,0 +1,145 @@
+<div class="d-flex align-items-start" *ngIf="profile">
+  <div class="d-flex flex-column align-items-start left-bar">
+    <div>
+      <img  class="img-fluid" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+    </div>
+  </div>
+
+  <div class="d-flex flex-column justify-content-end w-100">
+
+
+    <div class="lines-1" *ngIf="profile.first_name">
+      <app-text page="registartion_user" place="first_name" default="First name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.first_name}}</span>
+
+    </div>
+
+    <div class="lines-1" *ngIf="profile.last_name">
+      <app-text place="last_name" default="Last name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.last_name}}</span>
+
+    </div>
+
+    <div class="lines-1" *ngIf="profile.email">
+      <app-text page="registartion_user" place="email" default="Email" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.email}}</span>
+
+    </div>
+
+    <div class="lines-1" *ngIf="profile.username">
+      <app-text page="profile" place="display_name" default="Display name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.username}}</span>
+
+    </div>
+
+    <div class="lines-1" *ngIf="profile.birthday">
+      <app-text page="registartion_user" place="birthday" default="Birthday" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.birthday}}</span>
+
+    </div>
+
+    <!--<div class="lines-1" *ngIf="profile.first_name">-->
+      <!--<app-text page="registartion_user" place="first_name" default="First name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>-->
+      <!--<span>{{profile.first_name}}</span>-->
+
+    <!--</div>-->
+
+
+
+    <div class="lines-1" *ngIf="profile.country">
+      <app-text page="registartion_user" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="country_names" place="{{profile.country}}" default="{{countriesMap.get(profile.country)}}"></app-text>
+
+    </div>
+
+
+    <div class="lines-1" *ngIf="profile.city">
+      <app-text page="registartion_user" place="city" default="City" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.city}}</span>
+
+    </div>
+
+    <div class="lines-1" *ngIf="profile.address">
+      <app-text page="login" place="address" default="Address" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span>{{profile.address}}</span>
+
+    </div>
+
+
+    <div class="lines-1" *ngIf="profile.sex">
+      <app-text page="registartion_user" place="sex" default="Sex" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="registartion_user" place="male" default="Male"
+                [hidden]="profile.sex != '1'"></app-text>
+
+      <app-text page="registartion_user" place="female" default="Female"
+                [hidden]="profile.sex != '2'"></app-text>
+    </div>
+  </div>
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="registartion_user" place="first_name" default="First name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+  <app-text place="last_name" default="Last name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+  <app-text page="registartion_user" place="email" default="Email" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+  <app-text page="profile" place="display_name" default="Display name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+  <app-text page="registartion_user" place="birthday" default="Birthday" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="registartion_user" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+
+  <app-text page="registartion_user" place="city" default="City" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="login" place="address" default="Address" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <app-text page="registartion_user" place="female" default="Female"></app-text>
+  <app-text page="registartion_user" place="male" default="Male"></app-text>
+  <app-text page="registartion_user" place="sex" default="Sex" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+</div>

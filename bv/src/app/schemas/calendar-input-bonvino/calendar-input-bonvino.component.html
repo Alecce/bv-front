@@ -1,0 +1,309 @@
+<div class="d-flex justify-content-between w-100" [ngClass]="isBigScreen() ? 'flex-row' : 'flex-column'" [formGroup]="form">
+
+
+  <div class="w-100" [ngClass]="isBigScreen() ? 'margin-right-32' : ''">
+
+
+    <div  class="heading-2 left-bold-border">
+      <app-text page="calendar_input" default="Weekly"></app-text>
+    </div>
+
+    <div formArrayName="dayOfWeekArr" class="w-100">
+
+      <div class="d-flex flex-column" *ngFor="let pp of dayOfWeekArr.controls; let i = index">
+        <div formGroupName="{{i}}">
+
+          <div class="d-flex flex-fill justify-content-between margin-bottom-20">
+
+            <div class="align-self-stretch d-flex flex-column margin-right-20 w-100">
+
+
+              <div>
+
+                <app-radio-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" value_="0" #_radio [resetValue]="'0'" [resetable]="false">
+
+                  <span class="margin-left-8">
+
+                    <app-text page="calendar_input" default="Closed" class="lines-1"></app-text>
+                  </span>
+
+
+                </app-radio-bonvino>
+              </div>
+              <div>
+
+                <app-radio-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" value_="1" #_radio [resetValue]="'0'" [resetable]="false">
+
+                  <span class="margin-left-8">
+
+                    <app-text page="calendar_input" default="Open" class="lines-1"></app-text>
+                  </span>
+
+
+                </app-radio-bonvino>
+              </div>
+              <div class="margin-bottom-12">
+
+                <app-radio-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" value_="2" #_radio [resetValue]="'0'" [resetable]="false">
+
+                  <span class="margin-left-8">
+
+                    <app-text page="calendar_input" default="Only by appointment" class="lines-1"></app-text>
+                  </span>
+
+
+                </app-radio-bonvino>
+              </div>
+
+              <!--<div class="d-flex flex-fill justify-content-between">-->
+
+                <!--<div class="field align-self-stretch d-flex flex-column">-->
+                  <!--<app-checkbox-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" #_isOpen>-->
+                    <!--<app-text page="calendar_input" default="Open" (click)="_isOpen.check()" class="lines-1"></app-text>-->
+                  <!--</app-checkbox-bonvino>-->
+                <!--</div>-->
+
+
+              <!--</div>-->
+              <!--<div class="d-flex flex-fill justify-content-between" *ngIf="dayOfWeekArr.at(i).get('isOpen').value">-->
+
+                <!--<div class="field align-self-stretch d-flex flex-column">-->
+                  <!--<app-checkbox-bonvino formControlName_="appointment" [form]="dayOfWeekArr.at(i)" #_appointment>-->
+                    <!--<app-text page="calendar_input" default="Only by appointment" (click)="_appointment.check()" class="lines-1"></app-text>-->
+                  <!--</app-checkbox-bonvino>-->
+                <!--</div>-->
+
+
+              <!--</div>-->
+
+
+
+              <!--<div class="field align-self-stretch d-flex flex-column" *ngIf="dayOfWeekArr.at(i).get('isOpen').value">-->
+                <!--<app-text page="calendar_input" default="Language of event" class="field-hint"></app-text>-->
+                <!--<app-select-bonvino formControlName_="language" [form]="dayOfWeekArr.at(i)" #_language>-->
+                  <!--<div select-title>-->
+                    <!--<div *ngFor="let l of languageArr">-->
+                      <!--<app-text page="language" default="{{l.name}}" *ngIf="l.value == dayOfWeekArr.at(i).get('language').value"></app-text>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+                    <!--<button class="btn btn-option" (click)="_language.choose('')">-->
+                      <!--<app-text page="winery_add" default="Clear input"></app-text>-->
+                    <!--</button>-->
+                    <!--<button class="btn btn-option" *ngFor="let l of languageArr" (click)="_language.choose(l.value)">-->
+                      <!--<app-text page="language" default="{{l.name}}"></app-text>-->
+                    <!--</button>-->
+                  <!--</div>-->
+                <!--</app-select-bonvino>-->
+              <!--</div>-->
+
+              <app-day-of-week-time-bonvino [downloadedData]="dayOfWeekArr.at(i).get('days')" [trigger]="innerTrigger"></app-day-of-week-time-bonvino>
+
+
+            </div>
+            <div>
+              <button class="btn m-0 p-0" (click)="removeDayOfWeek(i)">
+                <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+              </button>
+            </div>
+          </div>
+          <!--<div class="d-flex flex-fill justify-content-between">-->
+
+            <!--<div class="field align-self-stretch d-flex flex-column">-->
+              <!--<app-checkbox-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" #_isOpen>-->
+                <!--<app-text page="winery_add" default="Open" (click)="_isOpen.check()" class="lines-1"></app-text>-->
+              <!--</app-checkbox-bonvino>-->
+            <!--</div>-->
+
+
+          <!--</div>-->
+        </div>
+      </div>
+
+
+    </div>
+    <button class="btn m-0 p-0 w-100" (click)="addDayOfWeek(null)">
+      <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+    </button>
+
+
+
+  </div>
+  <div class="w-100">
+
+
+    <div  class="heading-2 left-bold-border">
+      <app-text page="calendar_input" default="Special days"></app-text>
+    </div>
+
+    <div formArrayName="dayOfYearArr" class="w-100">
+
+      <div class="d-flex flex-column" *ngFor="let pp of dayOfYearArr.controls; let i = index">
+        <div formGroupName="{{i}}">
+
+
+
+          <div class="d-flex flex-fill justify-content-between">
+
+            <div class="align-self-stretch d-flex flex-column margin-right-20 w-100">
+
+
+              <div>
+
+                <app-radio-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" value_="0" #_radio [resetValue]="'0'" [resetable]="false">
+
+                  <span class="margin-left-8">
+
+                    <app-text page="calendar_input" default="Closed" class="lines-1"></app-text>
+                  </span>
+
+
+                </app-radio-bonvino>
+              </div>
+              <div>
+
+                <app-radio-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" value_="1" #_radio [resetValue]="'0'" [resetable]="false">
+
+                  <span class="margin-left-8">
+
+                    <app-text page="calendar_input" default="Open" class="lines-1"></app-text>
+                  </span>
+
+
+                </app-radio-bonvino>
+              </div>
+              <div class="margin-bottom-12">
+
+                <app-radio-bonvino formControlName_="isOpen" [form]="dayOfWeekArr.at(i)" value_="2" #_radio [resetValue]="'0'" [resetable]="false">
+
+                  <span class="margin-left-8">
+
+                    <app-text page="calendar_input" default="Only by appointment" class="lines-1"></app-text>
+                  </span>
+
+
+                </app-radio-bonvino>
+              </div>
+
+              <!--<div class="field align-self-stretch d-flex flex-column">-->
+                <!--<app-checkbox-bonvino formControlName_="isOpen" [form]="dayOfYearArr.at(i)" #_isOpen>-->
+                  <!--<app-text page="calendar_input" default="Open" (click)="_isOpen.check()" class="lines-1"></app-text>-->
+                <!--</app-checkbox-bonvino>-->
+              <!--</div>-->
+
+              <!--<div class="field align-self-stretch d-flex flex-column" *ngIf="dayOfYearArr.at(i).get('isOpen').value">-->
+                <!--<app-checkbox-bonvino formControlName_="appointment" [form]="dayOfYearArr.at(i)" #_appointment>-->
+                  <!--<app-text page="calendar_input" default="Only by appointment" (click)="_appointment.check()" class="lines-1"></app-text>-->
+                <!--</app-checkbox-bonvino>-->
+              <!--</div>-->
+
+
+
+              <!--<div class="field align-self-stretch d-flex flex-column" *ngIf="dayOfYearArr.at(i).get('isOpen').value">-->
+                <!--<app-text page="calendar_input" default="Language of event" class="field-hint"></app-text>-->
+                <!--<app-select-bonvino formControlName_="language" [form]="dayOfYearArr.at(i)" #_language>-->
+                  <!--<div select-title>-->
+                    <!--<div *ngFor="let l of languageArr">-->
+                      <!--<app-text page="language" default="{{l.name}}" *ngIf="l.value == dayOfYearArr.at(i).get('language').value"></app-text>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+                    <!--<button class="btn btn-option" (click)="_language.choose('')">-->
+                      <!--<app-text page="winery_add" default="Clear input"></app-text>-->
+                    <!--</button>-->
+                    <!--<button class="btn btn-option" *ngFor="let l of languageArr" (click)="_language.choose(l.value)">-->
+                      <!--<app-text page="language" default="{{l.name}}"></app-text>-->
+                    <!--</button>-->
+                  <!--</div>-->
+                <!--</app-select-bonvino>-->
+              <!--</div>-->
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <app-text page="calendar_input" default="Type" class="field-hint"></app-text>
+                <app-select-bonvino formControlName_="type" [form]="dayOfYearArr.at(i)" #_type>
+                  <div select-title>
+
+                    <app-text *ngFor="let c of calendarArr" page="calendar" [default]="c.name" [hidden]="dayOfYearArr.at(i).get('type').value != c.name"></app-text>
+
+                  </div>
+                  <div options class="d-flex flex-column align-items-start select-list-options">
+                    <button *ngFor="let c of calendarArr" class="btn btn-option" (click)="_type.choose(c.name)">
+                      <app-text page="calendar_input" [default]="c.name"></app-text>
+                    </button>
+                  </div>
+                </app-select-bonvino>
+              </div>
+
+
+
+              <app-grigorian [formGroup_]="dayOfYearArr.at(i)"
+                             *ngIf="dayOfYearArr.at(i) && dayOfYearArr.at(i).get('type').value == calendarArr[0].name"></app-grigorian>
+
+              <app-jewish-calendar [formGroup_]="dayOfYearArr.at(i)"
+                             *ngIf="dayOfYearArr.at(i) && dayOfYearArr.at(i).get('type').value == calendarArr[1].name"></app-jewish-calendar>
+
+              <!--<app-jalali-calendar [formGroup_]="dayOfYearArr.at(i)"-->
+                                   <!--*ngIf="dayOfYearArr.at(i) && dayOfYearArr.at(i).get('type').value == calendarArr[2].name"></app-jalali-calendar>-->
+
+              <app-islamic-calendar [formGroup_]="dayOfYearArr.at(i)"
+                                   *ngIf="dayOfYearArr.at(i) && dayOfYearArr.at(i).get('type').value == calendarArr[2].name"></app-islamic-calendar>
+
+              <app-islamic-umm-al-qura-calendar [formGroup_]="dayOfYearArr.at(i)"
+                                   *ngIf="dayOfYearArr.at(i) && dayOfYearArr.at(i).get('type').value == calendarArr[3].name"></app-islamic-umm-al-qura-calendar>
+
+              <!--<app-buddhist-calendar [formGroup_]="dayOfYearArr.at(i)"-->
+                                   <!--*ngIf="dayOfYearArr.at(i) && dayOfYearArr.at(i).get('type').value == calendarArr[5].name"></app-buddhist-calendar>-->
+            </div>
+            <div>
+              <button class="btn m-0 p-0" (click)="removeDayOfYear(i)">
+                <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex flex-column flex-fill justify-content-between margin-bottom-12">
+
+            <div class="field align-self-stretch d-flex flex-column">
+              <app-checkbox-bonvino formControlName_="everyYear" [form]="dayOfYearArr.at(i)" #_everyYear>
+                <app-text page="calendar_input" default="Same every year" (click)="_everyYear.check()" class="lines-1"></app-text>
+              </app-checkbox-bonvino>
+            </div>
+
+            <div class="field align-self-stretch d-flex flex-column" *ngIf="dayOfYearArr.at(i).get('isOpen').value">
+              <app-checkbox-bonvino formControlName_="wholeDay" [form]="dayOfYearArr.at(i)" #_wholeDay>
+                <app-text page="calendar_input" default="No certain time" (click)="_wholeDay.check()" class="lines-1"></app-text>
+              </app-checkbox-bonvino>
+            </div>
+
+
+            <div class="align-self-stretch d-flex flex-row" *ngIf="!dayOfYearArr.at(i).get('wholeDay').value">
+              <div class="d-flex">
+                <app-input-time-bonvino [formControl_]="dayOfYearArr.at(i).get('timeFrom')"
+                                        *ngIf="dayOfYearArr.at(i).get('timeFrom')"></app-input-time-bonvino>
+              </div>
+              <div class="d-flex defis">
+                <span> - </span>
+              </div>
+              <div class="d-flex">
+                <app-input-time-bonvino [formControl_]="dayOfYearArr.at(i).get('timeTo')"
+                                        *ngIf="dayOfYearArr.at(i).get('timeTo')"></app-input-time-bonvino>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <button class="btn m-0 p-0 w-100" (click)="addDayOfYear(null)">
+      <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+    </button>
+
+
+  </div>
+</div>
+
+

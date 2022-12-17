@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-center flex-column">
+
+  <button class="btn btn-type-2 text-uppercase field-content margin-bottom-32" (click)="openMap()">
+    <app-text page="wine_list" default="Open map"></app-text>
+  </button>
+
+
+  <div *ngIf="geolocation">
+    <a [href]="getLink()" class="hyperlink">
+      <app-text page="wines_one"  default="Link"></app-text>
+    </a>
+  </div>
+</div>

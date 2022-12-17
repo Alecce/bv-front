@@ -1,0 +1,366 @@
+<div class="nav">
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(userlist)" (click)="chose(userlist.tab)">
+      <app-text page="admin" place="users" default="Users"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(winelist)" (click)="chose(winelist.tab)">
+      <app-text page="admin" place="wines" default="Wines"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(winerylist)" (click)="chose(winerylist.tab)">
+      <app-text page="admin" place="wineries" default="Wineries"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(eventlist)" (click)="chose(eventlist.tab)">
+      <app-text page="admin" place="events" default="Events"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(vineyardlist)" (click)="chose(vineyardlist.tab)">
+      <app-text page="admin" place="vineyards" default="Vineyards"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(specialistlist)" (click)="chose(specialistlist.tab)">
+      <app-text page="admin" place="specialists" default="Specialists"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(kashrutlist)" (click)="chose(kashrutlist.tab)">
+      <app-text page="admin" place="kashrut" default="Kashrut"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(qualitylist)" (click)="chose(qualitylist.tab)">
+      <app-text page="admin" place="quality" default="Quality"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(regionlist)" (click)="chose(regionlist.tab)">
+      <app-text page="admin" place="regions" default="Regions"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(grapeslist)" (click)="chose(grapeslist.tab)">
+      <app-text page="admin" place="grapes" default="Grapes"></app-text>
+    </button>
+  </div>
+  <!--<div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">-->
+    <!--<button class="btn" [ngClass]="getButtonColor(grapeCloneslist)" (click)="chose(grapeCloneslist.tab)">-->
+      <!--<app-text page="admin" place="grapes" default="Grape Clones"></app-text>-->
+    <!--</button>-->
+  <!--</div>-->
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(biodynamiclist)" (click)="chose(biodynamiclist.tab)">
+      <app-text page="admin" place="biodynamic" default="Biodynamic"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(organiclist)" (click)="chose(organiclist.tab)">
+      <app-text page="admin" place="organic" default="Organic"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(veganlist)" (click)="chose(veganlist.tab)">
+      <app-text page="admin" place="vegan" default="Vegan"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(autodescriptionlist)" (click)="chose(autodescriptionlist.tab)">
+      <app-text page="admin" place="autodescription_schema" default="Autodescription schema"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(autodescriptionCategorylist)" (click)="chose(autodescriptionCategorylist.tab)">
+      <app-text page="admin" place="autodescription_categories" default="Autodescription categories"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(autodescriptionOptionlist)" (click)="chose(autodescriptionOptionlist.tab)">
+      <app-text page="admin" place="autodescription_options" default="Autodescription options"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(wineryMerging)" (click)="chose(wineryMerging.tab)">
+      <app-text page="admin" place="wine_merging" default="Winery merging"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(wineMerging)" (click)="chose(wineMerging.tab)">
+      <app-text page="admin" place="wine_merging" default="Wine merging"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(languagelist)" (click)="chose(languagelist.tab)">
+      <app-text page="admin" place="language" default="Language"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(winetypelist)" (click)="chose(winetypelist.tab)">
+      <app-text page="admin" place="wine_types" default="Wine types"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(winesubtypelist)" (click)="chose(winesubtypelist.tab)">
+      <app-text page="admin" place="wine_subtypes" default="Still subtypes"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(sparklinglist)" (click)="chose(sparklinglist.tab)">
+      <app-text page="admin" default="Sparkling subtypes"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(nongrapelist)" (click)="chose(nongrapelist.tab)">
+      <app-text page="admin" default="Nongrape subtypes"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(corklist)" (click)="chose(corklist.tab)">
+      <app-text page="admin" default="Cork"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(barrellist)" (click)="chose(barrellist.tab)">
+      <app-text page="admin" default="Barrel types"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(barrelsizelist)" (click)="chose(barrelsizelist.tab)">
+      <app-text page="admin" default="Barrel sizes"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(bottlelist)" (click)="chose(bottlelist.tab)">
+      <app-text page="admin" default="Bottle sizes"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(homepage)" (click)="chose(homepage.tab)">
+      <app-text page="admin" default="Home"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(constructorPages)" (click)="chose(constructorPages.tab)">
+      <app-text page="admin" default="Constructor Pagelist"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(constructorBlocks)" (click)="chose(constructorBlocks.tab)">
+      <app-text page="admin" default="Constructor Blocks"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(constructorPageBlocks)" (click)="chose(constructorPageBlocks.tab)">
+      <app-text page="admin" default="Constructor Page-Blocks"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(constructorBlockOptions)" (click)="chose(constructorBlockOptions.tab)">
+      <app-text page="admin" default="Constructor Block-Options"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(wineImages)" (click)="chose(wineImages.tab)">
+      <app-text page="admin" default="Wine images"></app-text>
+    </button>
+  </div>
+  <div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">
+    <button class="btn" [ngClass]="getButtonColor(blocksConstructor)" (click)="chose(blocksConstructor.tab)">
+      <app-text page="admin" default="Block constructor"></app-text>
+    </button>
+  </div>
+  <!--<div class="nav-item" *ngIf="langService.editable || (!routeData.editable || routeData.available)">-->
+    <!--<button class="btn" [ngClass]="getButtonColor(visitors)" (click)="chose(visitors.tab)">-->
+      <!--<app-text page="admin" default="Visitors"></app-text>-->
+    <!--</button>-->
+  <!--</div>-->
+</div>
+
+<div class="card">
+  <div class="card-body" [hidden]="!userlist || userlist.tab !== chosenTab">
+    <div>
+      <app-admin-userlist [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!userlist || userlist.tab !== chosenTab"></app-admin-userlist>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!winelist || winelist.tab !== chosenTab">
+    <div>
+      <app-admin-wine [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!winelist || winelist.tab !== chosenTab"></app-admin-wine>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!winerylist || winerylist.tab !== chosenTab">
+    <div>
+      <app-admin-winery [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!winerylist || winerylist.tab !== chosenTab"></app-admin-winery>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!eventlist || eventlist.tab !== chosenTab">
+    <div>
+      <app-admin-event [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!eventlist || eventlist.tab !== chosenTab"></app-admin-event>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!vineyardlist || vineyardlist.tab !== chosenTab">
+    <div>
+      <app-admin-vineyard [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!vineyardlist || vineyardlist.tab !== chosenTab"></app-admin-vineyard>
+    </div>
+  </div>
+
+  <div class="card-body" [hidden]="!specialistlist || specialistlist.tab !== chosenTab">
+    <div>
+      <app-admin-specialist [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!specialistlist || specialistlist.tab !== chosenTab"></app-admin-specialist>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!qualitylist || qualitylist.tab !== chosenTab">
+    <div>
+      <app-admin-quality [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!qualitylist || qualitylist.tab !== chosenTab"></app-admin-quality>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!regionlist || regionlist.tab !== chosenTab">
+    <div>
+      <app-admin-region [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!regionlist || regionlist.tab !== chosenTab"></app-admin-region>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!kashrutlist || kashrutlist.tab !== chosenTab">
+    <div>
+      <app-admin-kashrut [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!kashrutlist || kashrutlist.tab !== chosenTab"></app-admin-kashrut>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!grapeslist || grapeslist.tab !== chosenTab">
+    <div>
+      <app-admin-grapes [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!grapeslist || grapeslist.tab !== chosenTab"></app-admin-grapes>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!grapeCloneslist || grapeCloneslist.tab !== chosenTab">
+    <div>
+      <app-admin-grape-clones [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!grapeCloneslist || grapeCloneslist.tab !== chosenTab"></app-admin-grape-clones>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!biodynamiclist || biodynamiclist.tab !== chosenTab">
+    <div>
+      <app-admin-biodynamic [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!biodynamiclist || biodynamiclist.tab !== chosenTab"></app-admin-biodynamic>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!organiclist || organiclist.tab !== chosenTab">
+    <div>
+      <app-admin-organic [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!organiclist || organiclist.tab !== chosenTab"></app-admin-organic>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!veganlist || veganlist.tab !== chosenTab">
+    <div>
+      <app-admin-vegan [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!veganlist || veganlist.tab !== chosenTab"></app-admin-vegan>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!autodescriptionlist || autodescriptionlist.tab !== chosenTab">
+    <div>
+      <app-admin-autodescription [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!autodescriptionlist || autodescriptionlist.tab !== chosenTab"></app-admin-autodescription>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!autodescriptionCategorylist || autodescriptionCategorylist.tab !== chosenTab">
+    <div>
+      <app-admin-autodescription-categories [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!autodescriptionCategorylist || autodescriptionCategorylist.tab !== chosenTab"></app-admin-autodescription-categories>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!autodescriptionOptionlist || autodescriptionOptionlist.tab !== chosenTab">
+    <div>
+      <app-admin-autodescription-options [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!autodescriptionOptionlist || autodescriptionOptionlist.tab !== chosenTab"></app-admin-autodescription-options>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!wineryMerging || wineryMerging.tab !== chosenTab">
+    <div>
+      <app-admin-winery-merging [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!wineryMerging || wineryMerging.tab !== chosenTab"></app-admin-winery-merging>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!wineMerging || wineMerging.tab !== chosenTab">
+    <div>
+      <app-admin-wine-merging [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!wineMerging || wineMerging.tab !== chosenTab"></app-admin-wine-merging>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!languagelist || languagelist.tab !== chosenTab">
+    <div>
+      <app-admin-language [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!languagelist || languagelist.tab !== chosenTab"></app-admin-language>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!winetypelist || winetypelist.tab !== chosenTab">
+    <div>
+      <app-admin-winetype [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!winetypelist || winetypelist.tab !== chosenTab"></app-admin-winetype>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!winesubtypelist || winesubtypelist.tab !== chosenTab">
+    <div>
+      <app-admin-winesubtype [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!winesubtypelist || winesubtypelist.tab !== chosenTab"></app-admin-winesubtype>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!sparklinglist || sparklinglist.tab !== chosenTab">
+    <div>
+      <app-admin-sparkling [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!sparklinglist || sparklinglist.tab !== chosenTab"></app-admin-sparkling>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!nongrapelist || nongrapelist.tab !== chosenTab">
+    <div>
+      <app-admin-nongrape [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!nongrapelist || nongrapelist.tab !== chosenTab"></app-admin-nongrape>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!corklist || corklist.tab !== chosenTab">
+    <div>
+      <app-admin-cork [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!corklist || corklist.tab !== chosenTab"></app-admin-cork>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!barrellist || barrellist.tab !== chosenTab">
+    <div>
+      <app-admin-barrel [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!barrellist || barrellist.tab !== chosenTab"></app-admin-barrel>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!barrelsizelist || barrelsizelist.tab !== chosenTab">
+    <div>
+      <app-admin-barrelsize [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!barrelsizelist || barrelsizelist.tab !== chosenTab"></app-admin-barrelsize>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!bottlelist || bottlelist.tab !== chosenTab">
+    <div>
+      <app-admin-bottle [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!bottlelist || bottlelist.tab !== chosenTab"></app-admin-bottle>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!homepage || homepage.tab !== chosenTab">
+    <div>
+      <app-admin-home [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!homepage || homepage.tab !== chosenTab"></app-admin-home>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!constructorPages || constructorPages.tab !== chosenTab">
+    <div>
+      <app-admin-page-constructor-pagelist [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!constructorPages || constructorPages.tab !== chosenTab"></app-admin-page-constructor-pagelist>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!constructorBlocks || constructorBlocks.tab !== chosenTab">
+    <div>
+      <app-admin-page-constructor-blocks [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!constructorBlocks || constructorBlocks.tab !== chosenTab"></app-admin-page-constructor-blocks>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!constructorPageBlocks || constructorPageBlocks.tab !== chosenTab">
+    <div>
+      <app-admin-page-constructor-blocklist [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!constructorPageBlocks || constructorPageBlocks.tab !== chosenTab"></app-admin-page-constructor-blocklist>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!constructorBlockOptions || constructorBlockOptions.tab !== chosenTab">
+    <div>
+      <app-admin-page-constructor-blockoptionlist [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!constructorBlockOptions || constructorBlockOptions.tab !== chosenTab"></app-admin-page-constructor-blockoptionlist>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!wineImages || wineImages.tab !== chosenTab">
+    <div>
+      <app-admin-wineimages [parentData]="activatedroute" [downloadedData]="dowloadedData" [hidden]="!wineImages || wineImages.tab !== chosenTab"></app-admin-wineimages>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!blocksConstructor || blocksConstructor.tab !== chosenTab">
+    <div>
+      <app-blocks-constructor [hidden]="!blocksConstructor || blocksConstructor.tab !== chosenTab"></app-blocks-constructor>
+    </div>
+  </div>
+  <div class="card-body" [hidden]="!visitors || visitors.tab !== chosenTab">
+    <div>
+      <app-admin-visitors [hidden]="!visitors || visitors.tab !== chosenTab"></app-admin-visitors>
+    </div>
+  </div>
+</div>

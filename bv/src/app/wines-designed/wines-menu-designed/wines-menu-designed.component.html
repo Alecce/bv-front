@@ -1,0 +1,178 @@
+
+<form [formGroup]="form">
+  <div class="d-flex w-50">
+    <div class="d-flex flex-column flex-even">
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="description" [form]="form" #_description>
+          <app-text page="wines_menu" default="Description" (click)="_description.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="professional_points" [form]="form" #_professional_points [isDisabledCheckbox]="!isWineryOwner">
+          <app-text page="wines_menu" default="Professional points" (click)="_professional_points.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="certification" [form]="form" #_certification>
+          <app-text page="wines_menu" default="Certification" (click)="_certification.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="awards"  [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_awards>
+          <app-text page="wines_menu" default="Awards" (click)="_awards.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="analysis" [form]="form" #_analysis>
+          <app-text page="wines_menu" default="Analysis" (click)="_analysis.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="crushing" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_crushing>
+          <app-text page="wines_menu" default="Crushing & destemming" (click)="_crushing.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="maceration_fermentation" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_maceration_fermentation>
+          <app-text page="wines_menu" default="Maceration & Fermentation" (click)="_maceration_fermentation.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="grape" [form]="form" #_grape>
+          <app-text page="wines_menu" default="Grape varieties" (click)="_grape.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="ageing" [form]="form" #_ageing>
+          <app-text page="wines_menu" default="Ageing/Maturation" (click)="_ageing.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="pressing" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_pressing>
+          <app-text page="wines_menu" default="Pressing" (click)="_pressing.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="bottle" [form]="form" #_bottle>
+          <app-text page="wines_menu" default="Bottle" (click)="_bottle.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="pallet" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_pallet>
+          <app-text page="wines_menu" default="Pallet" (click)="_pallet.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="serving" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_serving>
+          <app-text page="wines_menu" default="Serving instructions" (click)="_serving.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="rating_description" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_rating>
+          <app-text page="wines_menu" default="Rating description" (click)="_rating.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="full_description" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_fulldescription>
+          <app-text page="wines_menu" default="Full description" (click)="_fulldescription.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="series" [isDisabledCheckbox]="!isWineryOwner" [form]="form" #_series>
+          <app-text page="wines_menu" default="Series" (click)="_series.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+
+    </div>
+  </div>
+</form>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="wines_menu" default="Description" (click)="_description.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Certification" (click)="_certification.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Awards" (click)="_awards.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Analysis" (click)="_analysis.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Crushing & destemming" (click)="_crushing.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Maceration & Fermentation" (click)="_maceration_fermentation.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Grape varieties" (click)="_grape.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Ageing/Maturation" (click)="_ageing.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Pressing" (click)="_pressing.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Professional points" (click)="_professional_points.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Bottle" (click)="_bottle.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Pallet" (click)="_pallet.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Serving instructions" (click)="_serving.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Rating description" (click)="_serving.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Full description" (click)="_serving.check()" class="lines-1"></app-text>
+
+  <app-text page="wines_menu" default="Series" (click)="_serving.check()" class="lines-1"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

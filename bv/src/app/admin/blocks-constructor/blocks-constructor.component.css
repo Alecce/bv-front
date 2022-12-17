@@ -1,0 +1,21 @@
+.border-1 {
+  border: solid black 1px;
+}
+
+.background-blue {
+  background-color: #c8c8ff;
+}
+
+.background-green {
+  background-color: #c8ffc8;
+}
+
+.background-red {
+  background-color: #ffc8c8;
+}
+.hyperlink {
+  cursor: pointer;
+}
+.min-height {
+  min-height: 70px;
+}

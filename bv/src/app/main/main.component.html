@@ -1,0 +1,176 @@
+<div class="d-flex flex-column">
+  <div class="d-flex margin-bottom-40">
+    <div class="flex-fill d-flex flex-column align-items-center justify-content-end home-image" [ngStyle]="{'background':imageUrl}">
+      <div class="d-flex margin-bottom-20 heading-3">
+        <app-text page="home" default="The ultimate wine engine"></app-text>
+      </div>
+      <div class="home-description home-width margin-bottom-32">
+        <app-text page="home" place="description_on_home" default="A complete database for accessing precise information on wines and winemakers; a facilitator of taste groups and events; a platform for the exchange of opinions and ideas; a forum for intermediary-free access to wine makers and their creations " [textarea]="true"></app-text>
+      </div>
+      <div class="d-flex justify-content-center home-description home-width margin-bottom-32">
+        <div class="d-flex margin-x-40 align-items-center">
+          <div class="margin-right-20">
+            <app-icon-bonvino svgIcon="icn-thumbUp" class="icn-thumbUp" link="fill"></app-icon-bonvino>
+          </div>
+          <div class="d-flex">
+            <app-text page="home" default="Advantage 1" [textarea]="true"></app-text>
+          </div>
+        </div>
+        <div class="d-flex margin-x-40 align-items-center">
+          <div class="margin-right-20">
+            <app-icon-bonvino svgIcon="icn-thumbUp" class="icn-thumbUp" ></app-icon-bonvino>
+          </div>
+          <div class="d-flex">
+            <app-text page="home" default="Advantage 2" [textarea]="true"></app-text>
+          </div>
+        </div>
+        <div class="d-flex margin-x-40 align-items-center">
+          <div class="margin-right-20">
+            <app-icon-bonvino svgIcon="icn-thumbUp" class="icn-thumbUp" ></app-icon-bonvino>
+          </div>
+          <div class="d-flex">
+            <app-text page="home" default="Advantage 3" [textarea]="true"></app-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center margin-bottom-20" *ngIf="!accountService.isNoUser()">
+
+    <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : [addWinesLink()]">
+      <app-text page="home" default="Add a missing wine"></app-text>
+    </a>
+
+    <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="addWines()">-->
+      <!--<app-text page="home" default="Add a missing wine"></app-text>-->
+    <!--</button>-->
+  </div>
+
+  <div class="d-flex justify-content-center lines-3 margin-bottom-10"  *ngIf="!accountService.isNoUser()">
+    <app-text page="home" default="or"></app-text>
+  </div>
+
+  <div class="d-flex justify-content-center margin-bottom-40">
+    <form [formGroup]="form">
+      <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center">
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-text page="wine_list" place="wine_name" default="Which wine are you looking for?" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch width-416" formControlName="searchInternationalName">
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-end">
+
+          <div class="field align-self-stretch d-flex flex-column margin-right-32">
+            <app-text page="wine_list" default="Type" class="field-hint"></app-text>
+            <app-select-bonvino formControlName_="grand_type" [form]="form" #_grand_type>
+              <div select-title>
+                <!--<app-text page="wines_common_info" place="select" default="Select" *ngIf="grand_type.value == '0'"></app-text>-->
+                <app-text page="wines_common_info" place="still" default="Still" *ngIf="grand_type.value == 'still'"></app-text>
+                <app-text page="wines_common_info" place="sparkling" default="Sparkling" *ngIf="grand_type.value == 'sparkling'"></app-text>
+                <app-text page="wines_common_info" place="nongrape" default="Nongrape" *ngIf="grand_type.value == 'nongrape'"></app-text>
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button class="btn btn-option" (click)="_grand_type.choose('0')">
+                  <app-text page="wines_common_info" place="clear_input" default="Clear input"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_grand_type.choose('still')">
+                  <app-text page="wines_common_info" place="still" default="Still"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_grand_type.choose('sparkling')">
+                  <app-text page="wines_common_info" place="sparkling" default="Sparkling"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_grand_type.choose('nongrape')">
+                  <app-text page="wines_common_info" place="nongrape" default="Nongrape"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+            <div *ngIf="langService.editable">
+              <app-text page="wines_common_info" place="clear_input" default="Clear input"></app-text>
+              <app-text page="wines_common_info" place="still" default="Still"></app-text>
+              <app-text page="wines_common_info" place="sparkling" default="Sparkling"></app-text>
+              <app-text page="wines_common_info" place="nongrape" default="Nongrape"></app-text>
+            </div>
+          </div>
+
+          <div class="field align-self-stretch d-flex flex-column margin-right-32">
+            <app-text page="wine_list" default="Color" class="field-hint"></app-text>
+            <app-select-bonvino formControlName_="color" [form]="form" #_color>
+              <div select-title>
+                <!--<app-text page="wines_common_info" place="select" default="Select" *ngIf="color.value == '0'"></app-text>-->
+                <app-text page="wines_common_info" default="White" *ngIf="color.value == 'white'"></app-text>
+                <app-text page="wines_common_info" default="Rose" *ngIf="color.value == 'rose'"></app-text>
+                <app-text page="wines_common_info" default="Red" *ngIf="color.value == 'red'"></app-text>
+                <app-text page="wines_common_info" default="Orange" *ngIf="color.value == 'orange'"></app-text>
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button class="btn btn-option" (click)="_color.choose('0')">
+                  <app-text page="wines_common_info" place="clear_input" default="Clear input"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_color.choose('white')">
+                  <app-text page="wines_common_info" place="white" default="White"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_color.choose('rose')">
+                  <app-text page="wines_common_info" place="rose" default="Rose"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_color.choose('red')">
+                  <app-text page="wines_common_info" place="red" default="Red"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_color.choose('orange')">
+                  <app-text page="wines_common_info" place="orange" default="Orange"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+            <div *ngIf="langService.editable">
+              <app-text page="wines_common_info" place="clear_input" default="Clear input"></app-text>
+              <app-text page="wines_common_info" place="white" default="White"></app-text>
+              <app-text page="wines_common_info" place="rose" default="Rose"></app-text>
+              <app-text page="wines_common_info" place="red" default="Red"></app-text>
+              <app-text page="wines_common_info" place="orange" default="Orange"></app-text>
+            </div>
+          </div>
+
+
+          <div class="field align-self-stretch d-flex flex-column margin-right-32">
+            <app-text page="event" default="Country" class="field-hint"></app-text>
+            <app-select-bonvino formControlName_="country" [form]="form" #_country>
+              <div select-title>
+                <!--<app-text page="event" place="select" default="Select" [hidden]="country.value != '0'"></app-text>-->
+                <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}" [hidden]="c.id != country.value"></app-text>
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button class="btn btn-option" (click)="_country.choose('0')">
+                  <app-text page="event" place="clear_input" default="Clear input"></app-text>
+                </button>
+                <button *ngFor="let c of countries; let i = index" class="btn btn-option" (click)="_country.choose(c.id)">
+                  <app-text page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+            <div *ngIf="langService.editable">
+              <app-text page="event" place="clear_input" default="Clear input"></app-text>
+              <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+            </div>
+          </div>
+
+
+          <div class="margin-bottom-16">
+
+            <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : '/wine-list'" [queryParams]="langService.editable ? null : getSearchParams()">
+              <app-text page="home" place="show_wines" default="Show wines"></app-text>
+            </a>
+
+            <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="showWines()">-->
+              <!--<app-text page="home" place="show_wines" default="Show wines"></app-text>-->
+            <!--</button>-->
+          </div>
+
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+

@@ -1,0 +1,42 @@
+<form [formGroup]="form">
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="country">
+      <app-text page="quality" place="country" default="Country:"></app-text>
+    </label>
+    <select id="country" name="country" class="form-control col-4" formControlName="country_id">
+      <option value="0">
+        <app-text page="quality" place="select" default="Select"></app-text>
+      </option>
+      <option *ngFor="let country of countries; let i = index" value="{{countries[i].id}}">{{countries[i].name}}</option>
+    </select>
+  </div>
+  <div formArrayName="regionsForm">
+    <div *ngFor="let region of allRegiones; let i = index">
+      <div class="form-group row" *ngIf="langService.editable || allRegiones[i].length > 0">
+        <label class="col-4 text-right my-auto" for="region">
+          <app-text page="vineyard_common_info" place="region{{i + 1}}" default="Region {{i + 1}}:"></app-text>
+        </label>
+        <select id="region" name="region" [formControlName]="i">
+          <option value="0">
+            <app-text page="vineyard_common_info" place="select" default="Select"></app-text>
+          </option>
+          <option *ngFor="let region of allRegiones[i]" value="{{region.id}}">{{region.name}}</option>
+        </select>
+        <div *ngIf="langService.editable">
+          <app-text page="vineyard_common_info" place="select" default="Select"></app-text>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

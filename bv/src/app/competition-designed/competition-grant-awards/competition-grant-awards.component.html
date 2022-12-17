@@ -1,0 +1,54 @@
+<div class="d-flex w-100 flex-column">
+  <div class="margin-left-64 margin-right-64 margin-bottom-24 d-flex w-100 flex-column">
+
+    <div class="heading-1">
+
+      <app-text page="wine_list" default="Grant prize to competition" class=""></app-text>
+    </div>
+
+    <!--<app-competition-one-row [competitionIdValue]="id"></app-competition-one-row>-->
+
+    <div class="d-flex flex-row justify-content-between margin-bottom-8">
+      <div class="d-flex flex-row justify-content-start">
+
+        <div class="heading-2 d-flex flex-column" *ngIf="form.get('award').value">
+
+          <app-text page="wine_list" default="Selected award:" class=""></app-text>
+          <app-award-one-row [awardIdFormControl]="form.get('award')"></app-award-one-row>
+
+        </div>
+
+        <div class="heading-2 d-flex flex-column" *ngIf="!form.get('award').value">
+
+          <app-text page="wine_list" default="No award selected" class="margin-bottom-16"></app-text>
+          <!--<app-award-one-row [awardIdFormControl]="form.get('award')"></app-award-one-row>-->
+
+        </div>
+
+      </div>
+      <div class="d-flex flex-row justify-content-end">
+
+        <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : backToEditLink()">
+          <app-text page="winery_one" default="Back to edit"></app-text>
+        </a>
+        <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : backToViewLink()">
+          <app-text page="winery_one" default="Back to view"></app-text>
+        </a>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-start">
+
+      <div>
+        <button class="btn btn-type-2 text-uppercase field-content" (click)="openAwardSelect()">
+          <app-text page="wine_list" default="Select prize" class=""></app-text>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="id">
+    <app-wine-list-designed-b [specialPage]="'grantAward'" [specialPageId]="id" class="w-100"></app-wine-list-designed-b>
+  </div>
+</div>

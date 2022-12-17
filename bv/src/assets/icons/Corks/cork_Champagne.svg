@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <defs>
+    <style>.cls-916968{fill:#916968;}.cls-fff{fill:#fff;}</style>
+  </defs>
+  <g id="Type">
+    <path class="cls-916968"
+          d="M33,15.53c-.49,3.89-3.55,4.14-3.55,4.14a7,7,0,0,0-.2,2.25c.05,3.39.93,9,.91,10.58,0,2,.22,7.49-2.71,7.49H12.53C9.6,40,9.84,34.53,9.82,32.5c0-1.57.86-7.19.91-10.58a7,7,0,0,0-.2-2.25S7.47,19.42,7,15.53c-.27-2.11.43-11.79,1.93-12.95.34-.26.91-.22,1.16-.34l.07-.05C12.65-.32,15.44,0,20,0s7.35-.35,9.86,2.16l.07.05c.25.12.82.08,1.16.34C32.59,3.74,33.29,13.42,33,15.53Z"/>
+    <path class="cls-fff" d="M24.05,4.55a.5.5,0,0,1-.5.5.5.5,0,0,1-.5-.5.51.51,0,0,1,.5-.5A.5.5,0,0,1,24.05,4.55Z"/>
+    <path class="cls-fff" d="M11,9.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,11,9.5Z"/>
+    <path class="cls-fff" d="M20,14.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,20,14.5Z"/>
+    <path class="cls-fff" d="M20,26.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,20,26.5Z"/>
+    <path class="cls-fff" d="M24,30.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,24,30.5Z"/>
+    <path class="cls-fff" d="M26,36.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,26,36.5Z"/>
+    <path class="cls-fff" d="M25,18.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,25,18.5Z"/>
+    <path class="cls-fff" d="M30,15.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,30,15.5Z"/>
+    <path class="cls-fff" d="M20,8.5a.5.5,0,1,1-.5-.5A.5.5,0,0,1,20,8.5Z"/>
+    <circle class="cls-fff" cx="28" cy="6" r="1" transform="translate(17.6 32.68) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="15" cy="4" r="1" transform="translate(8.65 18.17) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="13" cy="16" r="1" transform="translate(-4.87 26.28) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="18" cy="22" r="1" transform="translate(-6.59 36.25) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="26" cy="26" r="1" transform="translate(-3.82 47.51) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="15" cy="30" r="1" transform="translate(-17.01 40.01) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="18" cy="36" r="1" transform="translate(-20.41 48.02) rotate(-80.8)"/>
+    <circle class="cls-fff" cx="25" cy="12" r="1" transform="translate(9.16 34.76) rotate(-80.8)"/>
+  </g>
+</svg>

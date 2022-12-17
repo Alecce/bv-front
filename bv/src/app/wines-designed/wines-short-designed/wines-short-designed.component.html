@@ -1,0 +1,958 @@
+
+<div class="scallable" [ngClass]="langService.isRtl() ? 'global-rtl' : 'global-ltr'" *ngIf="wineData">
+  <div class="d-flex justify-content-between">
+    <!--<div class="d-flex justify-content-start margin-left-64" *ngIf="isBigScreen() && !data">-->
+
+      <!--<div>-->
+
+        <!--<app-wine-list-searchbar></app-wine-list-searchbar>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="d-flex justify-content-center flex-fill">
+
+      <div class="d-flex margin-top-16 margin-bottom-36 margin-right-16 w-100"
+           [ngClass]="{
+         'flex-column align-items-center' : !isBigScreen(),
+         'scrollbar flex-row height-600px' : data && isBigScreen(),
+         'flex-row justify-content-center' : isBigScreen() && !data
+       }">
+
+
+
+
+        <div class="d-flex flex-column">
+
+          <div  class="d-flex heading-1 w-100 flex-row main-column margin-left-24 justify-content-center" #navigation *ngIf="!isBigScreen() && !data">
+
+
+            <div>
+              <app-title [language]="wineData.basic_designed.language" [national]="wineData.commoninfo.name_national"
+                         [international]="wineData.commoninfo.name_international" [id]="id" page="wineNames"
+
+              ></app-title>
+
+            </div>
+
+
+            <div class="justify-content-end margin-bottom-8 margin-right-36" *ngIf="showOptions && false">
+
+
+              <div class="d-flex justify-content-end">
+
+                <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right" autoClose="outside">
+                  <div class="" id="listDropdown" ngbDropdownToggle>
+                    <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+                  </div>
+                  <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+                    <div class="d-flex flex-column align-items-start menu-buttons">
+
+                      <div class="">
+                        <a [routerLink]="null" class="hyperlink" (click)="findWine(id)">
+                          <app-text page="wines_one"  default="Find"></app-text>
+                        </a>
+                      </div>
+                      <div class="">
+                        <a [routerLink]="null" class="hyperlink" (click)="rateWine()">
+                          <app-text page="wines_one"  default="Rate"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="isSpecialist()">
+                        <a [routerLink]="null" class="hyperlink" (click)="describeWine()">
+                          <app-text page="wines_one"  default="Describe"></app-text>
+                        </a>
+                      </div>
+                      <!--<div class="" *ngIf="isTranslatable()">-->
+                      <!--<a [routerLink]="langService.editable ? null : viewWineLink()" class="hyperlink">-->
+                      <!--<app-text page="wines_one"  default="View wine"></app-text>-->
+                      <!--</a>-->
+                      <!--</div>-->
+                      <div class="" *ngIf="isEditable()">
+                        <a [routerLink]="langService.editable ? null : editWineLink()" class="hyperlink">
+                          <app-text page="wines_one"  default="Edit wine"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="!wineData.storage">
+                        <a [routerLink]="null" class="hyperlink" (click)="getWine(wineData)">
+                          <app-text page="wines_one"  default="Get"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="wineData.storage">
+                        <a [routerLink]="null" class="hyperlink" (click)="removeWine(wineData)">
+                          <app-text page="wines_one"  default="Remove"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="accountService.ifCollector()">
+                        <a [routerLink]="null" class="hyperlink" (click)="storeWine()">
+                          <app-text page="wines_one"  default="Add to collection"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="wineData.wish == 'buy'">
+                        <a [routerLink]="null" class="hyperlink" (click)="wishToTaste(wineData)">
+                          <app-text page="wines_one"  default="Wish to buy"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="wineData.wish == 'taste'">
+                        <a [routerLink]="null" class="hyperlink" (click)="unwish(wineData)">
+                          <app-text page="wines_one"  default="Wish to taste"></app-text>
+                        </a>
+                      </div>
+                      <div class="" *ngIf="!wineData.wish && accountService.me.name">
+                        <a [routerLink]="null" class="hyperlink" (click)="wishToBuy(wineData)">
+                          <app-text page="wines_one"  default="No wish"></app-text>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<div *ngIf="!bengat" class="margin-left-16">-->
+          <!--<app-language-navigate></app-language-navigate>-->
+          <!--</div>-->
+          <div class="d-flex" [ngClass]="!isBigScreen() ? 'max-height-80 margin-top-32 margin-left-52 margin-bottom-32 margin-right-48'
+    : 'image-box margin-top-32 margin-left-36 margin-bottom-32 margin-right-36'">
+            <img  class="img-fluid object-fit-contain mx-auto" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+
+          <div class="flex-even justify-content-center" *ngIf="isRegistratedUser()" [ngClass]="isBigScreen() ? 'margin-bottom-8' : 'margin-bottom-28'">
+
+
+            <div class="d-flex justify-content-center">
+
+              <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right" autoClose="outside">
+                <div class="" id="listDropdown" ngbDropdownToggle>
+                  <button class="btn btn-type-1 text-uppercase field-content">
+                    <app-text page="wines" default="Actions"></app-text>
+                  </button>
+                </div>
+                <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+                  <div class="d-flex flex-column align-items-start menu-buttons">
+
+                    <div class="">
+                      <a [routerLink]="null" class="hyperlink" (click)="findWine(id)">
+                        <app-text page="wines_one"  default="Find"></app-text>
+                      </a>
+                    </div>
+                    <div class="">
+                      <a [routerLink]="null" class="hyperlink" (click)="rateWine()">
+                        <app-text page="wines_one"  default="Rate"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="isSpecialist()">
+                      <a [routerLink]="null" class="hyperlink" (click)="describeWine()">
+                        <app-text page="wines_one"  default="Describe"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="isTranslatable()">
+                      <a [routerLink]="langService.editable ? null : viewWineLink()" class="hyperlink">
+                        <app-text page="wines_one"  default="View wine"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="isEditable()">
+                      <a [routerLink]="langService.editable ? null : editWineLink()" class="hyperlink"  (click)="close()">
+                        <app-text page="wines_one"  default="Edit wine"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="!wineData.storage">
+                      <a [routerLink]="null" class="hyperlink" (click)="getWine(wineData)">
+                        <app-text page="wines_one"  default="Get"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="wineData.storage">
+                      <a [routerLink]="null" class="hyperlink" (click)="removeWine(wineData)">
+                        <app-text page="wines_one"  default="Remove"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="accountService.ifCollector()">
+                      <a [routerLink]="null" class="hyperlink" (click)="storeWine()">
+                        <app-text page="wines_one"  default="Add to collection"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="wineData.wish == 'buy'">
+                      <a [routerLink]="null" class="hyperlink" (click)="wishToTaste(wineData)">
+                        <app-text page="wines_one"  default="Wish to buy"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="wineData.wish == 'taste'">
+                      <a [routerLink]="null" class="hyperlink" (click)="unwish(wineData)">
+                        <app-text page="wines_one"  default="Wish to taste"></app-text>
+                      </a>
+                    </div>
+                    <div class="" *ngIf="!wineData.wish && accountService.me.name">
+                      <a [routerLink]="null" class="hyperlink" (click)="wishToBuy(wineData)">
+                        <app-text page="wines_one"  default="No wish"></app-text>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column"
+             [ngClass]="{
+         'w-100' : !isBigScreen() || data
+       }"
+        >
+          <div class="d-flex flex-column" [ngClass]="{
+         'w-100' : !isBigScreen() && !data,
+         'description-box' : isBigScreen() && !data
+       }">
+
+            <div  class="d-flex heading-1 flex-row main-column margin-left-24 justify-content-between" #navigation *ngIf="isBigScreen()">
+              <!--<div *ngIf="wineData.basic_designed.language == langService.getLanguage() && wineData.commoninfo.name_national" class="text-left">-->
+              <!--{{wineData.commoninfo.name_national}}-->
+              <!--</div>-->
+              <!--<div *ngIf="wineData.basic_designed.language != langService.getLanguage() || !wineData.commoninfo.name_national" class="text-left">-->
+              <!--{{wineData.commoninfo.name_international}}-->
+              <!--</div>-->
+
+
+              <div>
+                <app-title [language]="wineData.basic_designed.language" [national]="wineData.commoninfo.name_national"
+                           [international]="wineData.commoninfo.name_international" [id]="id" page="wineNames"
+
+                ></app-title>
+
+              </div>
+
+
+
+              <!--<div class="flex-even justify-content-end margin-bottom-8 margin-right-36" *ngIf="showOptions">-->
+
+
+                <!--<div class="d-flex justify-content-end">-->
+
+                  <!--<div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right" autoClose="outside">-->
+                    <!--<div class="" id="listDropdown" ngbDropdownToggle>-->
+                      <!--<button class="btn btn-type-1 text-uppercase field-content">-->
+                        <!--<app-text page="wines" default="Actions"></app-text>-->
+                      <!--</button>-->
+                    <!--</div>-->
+                    <!--<div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">-->
+                      <!--<div class="d-flex flex-column align-items-start menu-buttons">-->
+
+                        <!--<div class="">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="findWine(id)">-->
+                            <!--<app-text page="wines_one"  default="Find"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="rateWine()">-->
+                            <!--<app-text page="wines_one"  default="Rate"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="isSpecialist()">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="describeWine()">-->
+                            <!--<app-text page="wines_one"  default="Describe"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="isTranslatable()">-->
+                          <!--<a [routerLink]="langService.editable ? null : viewWineLink()" class="hyperlink">-->
+                            <!--<app-text page="wines_one"  default="View wine"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="isEditable()">-->
+                          <!--<a [routerLink]="langService.editable ? null : editWineLink()" class="hyperlink">-->
+                            <!--<app-text page="wines_one"  default="Edit wine"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="!wineData.storage">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="getWine(wineData)">-->
+                            <!--<app-text page="wines_one"  default="Get"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="wineData.storage">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="removeWine(wineData)">-->
+                            <!--<app-text page="wines_one"  default="Remove"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="accountService.ifCollector()">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="storeWine()">-->
+                            <!--<app-text page="wines_one"  default="Add to collection"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="wineData.wish == 'buy'">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="wishToTaste(wineData)">-->
+                            <!--<app-text page="wines_one"  default="Wish to buy"></app-text>-->
+                          <!--</a>-v->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="wineData.wish == 'taste'">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="unwish(wineData)">-->
+                            <!--<app-text page="wines_one"  default="Wish to taste"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                        <!--<div class="" *ngIf="!wineData.wish && accountService.me.name">-->
+                          <!--<a [routerLink]="null" class="hyperlink" (click)="wishToBuy(wineData)">-->
+                            <!--<app-text page="wines_one"  default="No wish"></app-text>-->
+                          <!--</a>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            </div>
+            <div class="d-flex flex-column margin-left-24 margin-right-24 rtl-susceptible">
+
+
+              <div class="d-flex fex-row flex-wrap" [ngClass]="{
+                 'justify-content-center max-width-60wv mx-auto' : !isBigScreen(),
+                 'justify-content-start' : isBigScreen()
+               }">
+
+                <div *ngIf="wineData.menu.serving && wineData.instruction.glass" class="margin-right-24 margin-bottom-28">
+
+
+                  <app-glass-bonvino [glassData]="wineData.instruction.glass"></app-glass-bonvino>
+                </div>
+                <div *ngIf="wineData.advanced_designed.screwcap && wineData.advanced_designed.screwcap != '0'" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-corkscrew" *ngIf="needCorkScrew(wineData.advanced_designed.screwcap)"></mat-icon>
+                    <mat-icon svgIcon="icn-no-corkscrew" *ngIf="!needCorkScrew(wineData.advanced_designed.screwcap)"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.isAmphora" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <app-icon-bonvino svgIcon="icn-amphora"></app-icon-bonvino>
+                    <!--<mat-icon svgIcon="icn-amphora"></mat-icon>-->
+                  </div>
+                </div>
+                <div *ngIf="wineData.isBarrel" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-barrel"></mat-icon>
+                  </div>
+                </div>
+
+                <div *ngIf="wineData.advanced_designed.kashrut" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-kashrut"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.advanced_designed.mevushal" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-mevushal"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.advanced_designed.kosherPesah" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-kosher-pesach"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.advanced_designed.biodynamic" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-biodynamic"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.advanced_designed.organic" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-organic"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.advanced_designed.vegan" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-vegan"></mat-icon>
+                  </div>
+                </div>
+
+
+                <div *ngIf="wineData.menu.serving && wineData.instruction.needDecanter" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-decanter"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.isHandPicked" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-hand-vintage"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.isNightHarvest" class="margin-right-24 margin-bottom-28">
+
+
+                  <div class="icn-40-40">
+
+                    <mat-icon svgIcon="icn-night-vintage"></mat-icon>
+                  </div>
+                </div>
+                <div *ngIf="wineData.advanced.sulfurDioxide == 2" class="margin-right-24 margin-bottom-28">
+
+                  <div class="icn-40-40">
+                    <mat-icon svgIcon="icn-SO2-free"></mat-icon>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.wineryinfo">
+                <app-text page="wines_one" default="Winery" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <!--<a [routerLink]="'winery/' + wineData.wineryinfo.id"-->
+                <!--*ngIf="wineData.wineryinfo.language != langService.getLanguage() && wineData.wineryinfo.international_name" (click)="close()">{{wineData.wineryinfo.international_name}}</a>-->
+                <!--<a [routerLink]="'winery/' + wineData.wineryinfo.id"-->
+                <!--*ngIf="wineData.wineryinfo.language == langService.getLanguage() && wineData.wineryinfo.winery_name">{{wineData.wineryinfo.winery_name}}</a>-->
+                <a  class="hyperlink" [routerLink]="'/winery/' + wineData.wineryinfo.id" (click)="routeToWinery(wineData.wineryinfo.id)"
+                    *ngIf="!langService.editable" >
+                  <app-title [language]="wineData.wineryinfo.language" [national]="wineData.wineryinfo.winery_name"
+                             [international]="wineData.wineryinfo.international_name" [id]="wineData.wineryinfo.id" page="wineryNames"></app-title>
+                </a>
+
+                <app-title [language]="wineData.wineryinfo.language" [national]="wineData.wineryinfo.winery_name"
+                           [international]="wineData.wineryinfo.international_name" [id]="wineData.wineryinfo.id" page="wineryNames"
+                           *ngIf="langService.editable"></app-title>
+
+                <!--<app-title [language]="wineData.basic_designed.language" [national]="wineData.commoninfo.name_national"-->
+                <!--[international]="wineData.commoninfo.name_international" [id]="id" page="wineNames"></app-title>-->
+              </div>
+
+              <div class="d-flex lines-1 margin-bottom-20">
+                <app-text page="wines_one" default="Name" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-title [language]="wineData.basic_designed.language" [national]="wineData.commoninfo.name_national"
+                           [international]="wineData.commoninfo.name_international" [id]="id" page="wineNames"></app-title>
+
+                <!--<div>-->
+                <!--<app-title [language]="wineData.basic_designed.language" [national]="wineData.commoninfo.name_national"-->
+                <!--[international]="wineData.commoninfo.name_international" [id]="id" page="wineNames"></app-title>-->
+
+                <!--</div>-->
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.year">
+                <app-text page="wines_one" default="Harvest" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span> {{wineData.commoninfo.year}}
+
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.regionInfo.country">
+                <app-text page="wines_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text page="country_names" place="{{wineData.regionInfo.country}}" default="{{countriesMap.get(wineData.regionInfo.country)}}"></app-text>
+
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.regionInfo.regionsForm && wineData.regionInfo.regionsForm[0]">
+                <app-text page="wines_one" default="Region/Origin" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <div class="d-inline"  *ngFor="let r of wineData.regionInfo.regionsForm; let i = index" >
+                  <span *ngIf="i != 0 && r">, </span>
+                  <app-text page="country_names" place="{{r}}" default="{{regionesMap.get(r)}}"></app-text>
+                </div>
+
+              </div>
+
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.series">
+                <app-text page="wines_full" default="Series/Brand" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <!--{{getSeriesName(wineData.series)}}-->
+
+                <app-title [language]="wineData.wineryinfo.language" [national]="wineData.series.name"
+                           [international]="wineData.series.international" [id]="wineData.series.id" page="seriesNames"></app-title>
+
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.series && wineData.series.bottle_price * 1 != 0">
+                <app-text page="wines_full" default="Price" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text [hidden]="langService.editable" page="wines_advanced" default="{{priceMap.get(wineData.series.bottle_price * 1)}}"></app-text>
+
+                <div *ngFor="let price of priceList" [hidden]="!langService.editable">
+                  <app-text page="wines_advanced" default="{{price.price}}"></app-text>
+
+                </div>
+              </div>
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.color && wineData.commoninfo.color != 'nocolor'">
+                <app-text page="wines_full" default="Color" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text page="wines_one" [place]="wineData.commoninfo.color" default="{{wineData.commoninfo.color}}" [hidden]="langService.editable"></app-text>
+
+
+                <div *ngFor="let row of colorArr" [hidden]="!langService.editable">
+                  <app-text page="wines_one" place="{{row.value}}" default="{{row.value}}"></app-text>
+
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.basic_designed.grand_type && wineData.basic_designed.grand_type != 'select' && wineData.basic_designed.grand_type != 'still'">
+                <app-text page="wines_full" default="Style" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text [hidden]="langService.editable" page="wines_one" [place]="wineData.basic_designed.grand_type" default="{{wineData.basic_designed.grand_type}}"></app-text>
+                <div *ngFor="let row of grandTypesArr" [hidden]="!langService.editable">
+                  <app-text page="wines_one" place="{{row.defaultText}}" default="{{row.defaultText}}"></app-text>
+
+                </div>
+              </div>
+
+
+              <div class="lines-1 d-flex justify-content-start margin-bottom-20"  *ngIf="
+          (wineData.basic_designed.type && wineData.basic_designed.type != 'select' && wineData.basic_designed.type != '0' && wineData.basic_designed.type != 1) ||
+          (wineData.basic_designed.special && wineData.basic_designed.special != 'select' && wineData.basic_designed.special != '0')
+          ">
+
+                <div>
+                  <app-text page="wines_full" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                </div>
+
+                <div class="d-flex flex-column">
+                  <!--<div [hidden]="langService.editable" *ngIf="wineData.commoninfo.still && wineData.basic_designed.still != 'select' && wineData.basic_designed.still != 'usual'">-->
+                  <!--<app-text page="wines_one" [place]="wineData.basic_designed.still" default="{{wineData.basic_designed.still}}"></app-text>-->
+                  <!--</div>-->
+                  <!--<div *ngFor="let row of stillArr" [hidden]="!langService.editable">-->
+                  <!--<app-text page="wines_one" place="{{row.defaultText}}" default="{{row.defaultText}}"></app-text>-->
+
+                  <!--</div>-->
+
+                  <div [hidden]="langService.editable" *ngIf="wineData.basic_designed.type && wineData.basic_designed.type != 'select' && wineData.basic_designed.type != '0' && wineData.basic_designed.type != 1">
+                    <app-text page="wines_one"
+                              default="{{wineTypeMap.get(wineData.basic_designed.type) }}"></app-text>
+                  </div>
+
+                  <div *ngFor="let row of wineTypeList" [hidden]="!langService.editable">
+                    <app-text page="wines_one" default="{{row.type}}"></app-text>
+
+                  </div>
+
+
+                  <div [hidden]="langService.editable"  *ngIf="wineData.basic_designed.special && wineData.basic_designed.special != 'select' && wineData.basic_designed.special != '0'">
+                    <app-text page="wines_one"
+                              default="{{wineSubTypeMap.get(wineData.basic_designed.special) }}"></app-text>
+                  </div>
+
+                  <div *ngFor="let row of wineSubTypeList" [hidden]="!langService.editable">
+                    <app-text page="wines_one" default="{{row.name}}"></app-text>
+
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+
+              <div class="lines-1 d-flex justify-content-start margin-bottom-20"  *ngIf="
+          (wineData.basic_designed.sparkling && wineData.basic_designed.sparkling != 'select') ||
+          (wineData.basic_designed.sparkling && wineData.basic_designed.sparkling != 'select') ||
+          (wineData.basic_designed.method && wineData.basic_designed.method != 'select') ||
+          (wineData.basic_designed.gas && wineData.basic_designed.gas != 'select')
+          ">
+
+                <div>
+                  <app-text page="wines_full" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                </div>
+
+                <div class="d-flex flex-column">
+                  <div [hidden]="langService.editable" *ngIf="wineData.basic_designed.sparkling && wineData.basic_designed.sparkling != 'select'">
+                    <app-text [hidden]="langService.editable" page="wines_one" [place]="wineData.basic_designed.sparkling" default="{{wineData.basic_designed.sparkling}}"></app-text>
+                  </div>
+                  <div *ngFor="let row of sparklingSubTypeList" [hidden]="!langService.editable">
+                    <app-text page="wines_one" place="{{row.name}}" default="{{row.name}}"></app-text>
+
+                  </div>
+
+
+
+                  <div [hidden]="langService.editable"  *ngIf="wineData.basic_designed.method && wineData.basic_designed.method != 'select'">
+                    <app-text page="wines_one" [place]="wineData.basic_designed.method" default="{{wineData.basic_designed.method}}"></app-text>
+                  </div>
+
+                  <div *ngFor="let row of methodArr" [hidden]="!langService.editable">
+                    <app-text page="wines_one" default="{{row.defaultText}}"></app-text>
+
+                  </div>
+
+
+
+                  <div [hidden]="langService.editable"  *ngIf="wineData.basic_designed.gas && wineData.basic_designed.gas != 'select'">
+                    <app-text page="wines_one" [place]="wineData.basic_designed.gas" default="{{wineData.basic_designed.gas}}"></app-text>
+                  </div>
+
+                  <div *ngFor="let row of gasArr" [hidden]="!langService.editable">
+                    <app-text page="wines_one" default="{{row.defaultText}}"></app-text>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.basic_designed.nongrape && wineData.basic_designed.nongrape != 'select'">
+                <app-text page="wines_full" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text [hidden]="langService.editable" page="wines_one" [place]="wineData.basic_designed.nongrape" default="{{wineData.basic_designed.nongrape  }}"></app-text>
+                <div *ngFor="let row of nongrapeSubTypeList" [hidden]="!langService.editable">
+                  <app-text page="wines_one" default="{{row.name}}"></app-text>
+
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.basic_designed.grand_type != 'sparkling' && wineData.basic_designed.sweetness && wineData.basic_designed.sweetness != 'select'">
+                <app-text page="wines_full" default="Sweetness" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text [hidden]="langService.editable" page="wines_one" [place]="wineData.basic_designed.sweetness" default="{{wineData.basic_designed.sweetness}}"></app-text>
+                <div *ngFor="let row of sweetnessArr" [hidden]="!langService.editable">
+                  <app-text page="wines_one" [place]="row.value" default="{{row.value}}"></app-text>
+
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.basic_designed.grand_type == 'sparkling' && wineData.basic_designed.champagne_sweetness && wineData.basic_designed.champagne_sweetness != 'select'">
+                <app-text page="wines_full" default="Sweetness" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text [hidden]="langService.editable" page="wines_one" [place]="wineData.basic_designed.champagne_sweetness" default="{{wineData.basic_designed.champagne_sweetness}}"></app-text>
+                <div *ngFor="let row of champagneSweetnessArr" [hidden]="!langService.editable">
+                  <app-text page="wines_one" default="{{row.defaultText}}"></app-text>
+
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="hasGrapes()">
+                <div>
+                  <app-text page="wines_full" default="Varieties" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+                </div>
+
+
+                <div class="d-flex flex-column">
+
+                  <div class="lines-1 d-inline margin-left-8" *ngFor="let grape of getGrapes(); let jj = index" [hidden]="!(grapeMap.get(grape.grape * 1))">
+                    <app-text page="grapes_names" [place]="grape.grape" [default]="grapeMap.get(grape.grape * 1)"></app-text><span *ngIf="grape.percent"> - {{grape.percent}} %</span>
+
+
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="lines-1 d-flex justify-content-start margin-bottom-20" *ngIf="hasVineyards()">
+
+                <div>
+                  <app-text page="wines_full" default="Vineyard" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+                </div>
+                <div class="d-flex flex-column">
+
+                  <div class="lines-1 d-inline" *ngFor="let vineyard of getVineyards(); let jj = index">
+                    <div *ngIf="vineyard * 1 && vineyardMap.get(vineyard * 1)">
+
+
+                      <a class="hyperlink" [routerLink]="langService.editable ? null : vineyardLink(vineyard * 1)" (click)="routeToVineyard(vineyard)">
+                        <app-title [language]="vineyardMap.get(vineyard * 1).language" [national]="vineyardMap.get(vineyard * 1).name"
+                                   [international]="vineyardMap.get(vineyard * 1).international" [id]="'noId'" page="vineyardNames"></app-title>
+                      </a>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.alc_percent">
+                <app-text page="wines_one" default="Alcohol" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span> {{wineData.commoninfo.alc_percent | number:'1.0-2'}}%
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.volatile_acidity">
+                <app-text page="wines_full" default="Acidity" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span> {{wineData.commoninfo.volatile_acidity}}
+                <app-text page="wines_full" default="g/l" ></app-text>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.sugar">
+                <app-text page="wines_full" default="Sugar" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span> {{wineData.commoninfo.sugar}}
+                <app-text page="wines_full" default="g/l" ></app-text>
+
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.ph">
+                <app-text page="wines_full" default="pH" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>{{wineData.commoninfo.ph}}
+
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.advanced.sulfurDioxide">
+                <app-text page="wines_full" default="Contain SO₂" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <app-text page="wines_one" default="yes"  *ngIf="wineData.advanced.sulfurDioxide == 1 || langService.editable"></app-text>
+                <app-text page="wines_one" default="no"  *ngIf="wineData.advanced.sulfurDioxide == 2 || langService.editable"></app-text>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.commoninfo.energy">
+                <app-text page="wines_full" default="Energy" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span> {{wineData.commoninfo.energy}}
+                <app-text page="wines_full" default="kkal/100g" ></app-text>
+
+              </div>
+
+              <div class="lines-1 d-flex justify-content-start margin-bottom-20" *ngIf="wineData.menu.ageing && wineData.advanced_designed.barrel_aged && wineData.barrels && wineData.barrels.length">
+                <div>
+                  <app-text page="wines_full" default="Wine aged" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                </div>
+                <div class="d-flex flex-column">
+
+                  <div class="lines-1 d-inline" *ngFor="let b of getBarrels(); let jj = index">
+
+
+                <span *ngIf="b.stuff != 'not chosen' && b.type == 'not chosen'" [hidden]="langService.editable">
+
+                  <app-text page="wines_common_info" place="caly" default="Clay" *ngIf="b.stuff=='clay'"></app-text>
+                  <app-text page="wines_common_info" place="stainless_steel_tank" default="Stainless steel tank" *ngIf="b.stuff=='stainless steel tank'"></app-text>
+                  <app-text page="wines_common_info" place="wood_oak" default="Wood oak" *ngIf="b.stuff=='wood oak'"></app-text>
+                  <app-text page="wines_common_info" default="Cement (concrete) tanks" *ngIf="b.stuff=='Cement (concrete) tanks'"></app-text>
+                  <app-text page="wines_common_info" default="Plastic tanks" *ngIf="b.stuff=='Plastic tanks'"></app-text>
+                  <app-text page="wines_common_info" default="Glass" *ngIf="b.stuff=='Glass'"></app-text>
+
+                </span>
+                    <!--<div [hidden]="!langService.editable">-->
+                    <!--&lt;!&ndash;<app-text page="wines_one" place="{{row.value}}" default="{{row.value}}" [parent]="barrel_stuff_of_wine__.name"></app-text>&ndash;&gt;-->
+
+                    <!--<app-text page="wines_common_info" place="caly" default="Clay"></app-text>-->
+                    <!--<app-text page="wines_common_info" place="stainless_steel_tank" default="Stainless steel tank"></app-text>-->
+                    <!--<app-text page="wines_common_info" place="wood_oak" default="Wood oak"></app-text>-->
+                    <!--<app-text page="wines_common_info" default="Cement (concrete) tanks"></app-text>-->
+                    <!--<app-text page="wines_common_info" default="Plastic tanks"></app-text>-->
+                    <!--<app-text page="wines_common_info" default="Glass"></app-text>-->
+                    <!--</div>-->
+
+                    <span *ngIf="b.type != 'not chosen'" [hidden]="langService.editable">
+
+                  <app-text *ngFor="let bt of barrelTypeList" page="wines_common_info" place="{{bt.name}}" default="{{bt.name}}"
+                            [hidden]="bt.id != b.type"></app-text>
+                </span>
+                  </div>
+
+                  <div *ngFor="let bt of barrelTypeList" [hidden]="!langService.editable">
+                    <app-text page="wines_common_info" place="{{bt.name}}" default="{{bt.name}}"></app-text>
+
+                  </div>
+                  <div [hidden]="!langService.editable">
+                    <!--<app-text page="wines_one" place="{{row.value}}" default="{{row.value}}" [parent]="barrel_stuff_of_wine__.name"></app-text>-->
+
+                    <app-text page="wines_common_info" place="caly" default="Clay"></app-text>
+                    <app-text page="wines_common_info" place="stainless_steel_tank" default="Stainless steel tank"></app-text>
+                    <app-text page="wines_common_info" place="wood_oak" default="Wood oak"></app-text>
+                    <app-text page="wines_common_info" default="Cement (concrete) tanks"></app-text>
+                    <app-text page="wines_common_info" default="Plastic tanks"></app-text>
+                    <app-text page="wines_common_info" default="Glass"></app-text>
+                  </div>
+                  <!--<div *ngFor="let bt of barrelTypeList" [hidden]="!langService.editable">-->
+                  <!--<app-text page="wines_common_info" place="{{bt.name}}" default="{{bt.name}}"></app-text>-->
+
+                  <!--</div>-->
+                </div>
+              </div>
+
+
+
+              <div class="lines-1 d-flex margin-bottom-20" *ngIf="wineData.menu.ageing && getMaximumLengthOfAging(wineData.barrels)">
+                <app-text page="wines_full" default="For months" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                {{getMaximumLengthOfAging(wineData.barrels)}}
+
+              </div>
+
+
+
+              <div class="d-flex margin-bottom-20" *ngIf="wineData.advanced_designed.kashrut">
+                <div class="lines-1 d-flex" *ngIf="wineData.advanced_designed.kashrut && (!wineData.kashrutsWine || !wineData.kashrutsWine.length)">
+                  <app-text page="wines_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                  <app-text page="wines_one" default="yes"></app-text>
+
+                </div>
+                <div class="d-flex flex-row justify-content-start">
+
+                  <div class="lines-1" *ngIf="wineData.advanced_designed.kashrut && wineData.kashrutsWine && wineData.kashrutsWine.length">
+                    <app-text page="wines_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                  </div>
+                  <div class="lines-1 d-flex flex-column">
+                    <div *ngFor="let kashrut of wineData.kashrutsWine">
+
+                      <app-title [language]="'hebrew'" [national]="kashrut.hebrew"
+                                 [international]="kashrut.int_name" [id]="'noId'" page="noPage"></app-title>
+
+
+                      <!--<div *ngIf="langService.getLanguage() == 'hebrew'">-->
+                      <!--{{kashrut.hebrew}}-->
+                      <!--</div>-->
+                      <!--<div *ngIf="langService.getLanguage() != 'hebrew'">-->
+                      <!--{{kashrut.int_name}}-->
+                      <!--</div>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="lines-1 d-flex justify-content-start margin-bottom-20" *ngIf="wineData.menu.bottle && bottleSizes().length">
+                <div>
+                  <app-text page="wines_full" default="Bottle size" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                </div>
+                <div class="d-flex flex-column">
+
+                  <div class="lines-1 d-inline" *ngFor="let b of bottleSizes(); let jj = index" [hidden]="langService.editable">
+                    <!--{{b.size}}-->
+                    <!--{{wrappingMap.get(b.size * 1)}}-->
+
+                    <app-text page="bottle_size" default="{{wrappingMap.get(b * 1)}}"></app-text>
+
+
+
+                  </div>
+                  <div *ngFor="let wrap of wrappingList" [hidden]="!langService.editable">
+                    <app-text page="bottle_size" default="{{wrap.size}}"></app-text>
+
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.menu.bottle && getBottlesQuantity(wineData.wrapping)">
+                <app-text page="wines_full" default="Quantity of bottles" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>{{getBottlesQuantity(wineData.wrapping)}}
+
+              </div>
+
+
+
+              <div class="d-flex margin-bottom-20" *ngIf="isWineOnTap() && wineData.menu.bottle">
+                <div class="lines-1 d-flex">
+                  <app-text page="wines_one" default="Wine on tap" class="font-weight-bold"></app-text>
+
+                </div>
+              </div>
+
+              <!--<div class="d-flex" *ngIf="isWineOnTap()">-->
+              <!--<div class="lines-1 d-flex">-->
+              <!--<app-text page="wines_one" default="Wine on tap" class="font-weight-bold"></app-text>-->
+
+              <!--</div>-->
+              <!--</div>-->
+
+
+              <div class="lines-1 d-flex flex-column justify-content-start margin-bottom-20" *ngIf="wineData.menu.professional_points && wineData.profPointsDB && wineData.profPointsDB.length">
+
+                <div>
+                  <app-text page="wines_full" default="Rating" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+                </div>
+                <div class="d-flex flex-column">
+
+                  <div class="lines-1 d-inline margin-left-8" *ngFor="let p of wineData.profPointsDB; let jj = index">
+                    <div class="lines-1 d-inline">
+                      <span class="font-weight-bold">{{p.specialistName}}</span><span class="font-weight-bold whitespace-pre">: </span>
+                      <span>{{p.points | number:'1.0-2'}} / {{p.system}}</span>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20 flex-column" *ngIf="getSpecialistDescription()">
+                <div>
+                  <app-text page="wines_full" default="Description" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+                </div>
+
+
+                <div class="d-flex flex-column">
+
+                  <div class="lines-1">
+
+                    <div class="lines-1 whitespace-prewrap margin-bottom-8">{{getSpecialistDescription()}}</div>
+
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.specialistData && wineData.specialistData.collection && wineData.specialistData.collection.price">
+                <!--<app-text page="wines_full" default="Collector price" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>-->
+                <span class="whitespace-pre">{{wineData.specialistData.collection.price}} </span><app-text page="wines_full" default="NIS"></app-text>
+              </div>
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.instruction.from && wineData.instruction.to">
+                <app-text page="wines_full" default="Drink dates" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <span>{{wineData.instruction.from}} - {{wineData.instruction.to}}</span>
+              </div>
+
+              <div *ngIf="wineData.menu.rating_description && hasRatingDescription()">
+
+                <app-description-grades-view [downloadedData]="wineData.gradeDescription"></app-description-grades-view>
+
+              </div>
+
+
+
+              <div class="d-flex lines-1 margin-bottom-20" *ngIf="wineData.showViews">
+
+
+                <div class="responsive-margin-12">
+
+                  <mat-icon svgIcon="icn-views" class="icon-views"></mat-icon>
+                </div>
+                <app-text page="wines_full" default="Views" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+                <span>{{wineData.views}}</span>
+              </div>
+
+
+
+
+            </div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+</div>

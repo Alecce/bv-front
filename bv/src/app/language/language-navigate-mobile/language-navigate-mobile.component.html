@@ -1,0 +1,49 @@
+
+<div class="field align-self-stretch d-flex flex-column">
+
+
+  <div ngbDropdown class="d-inline-block icon-arrow-language" display="dynamic" placement="bottom-right">
+    <div class="pointer" id="listDropdown" ngbDropdownToggle>
+
+      <app-text *ngFor="let language of languageArr; let i = index" page="language" [default]="language.code"
+                [hidden]="language.value != getLanguage()" class="language-emblem-mobile text-uppercase margin-right-8"></app-text>
+      <!--<app-icon-bonvino svgIcon="arrow-1-up-black" class="icon-arrow-language"></app-icon-bonvino>-->
+    </div>
+    <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+      <div class="d-flex flex-column align-items-start menu-buttons">
+
+        <!--<div class="">-->
+        <!--<a [routerLink]="null" class="hyperlink">-->
+        <!--<app-text page="wines_one"  default="Find"></app-text>-->
+        <!--</a>-->
+        <!--</div>-->
+
+        <div *ngFor="let language of languageArr; let i = index"
+             [hidden]="!language.ispublic && accountService.isTranslator()" class="noclass w-100">
+          <div class="lang-row w-100" (click)="changeLanguage(language.value)">
+
+            <div class="margin-left-16 margin-right-16 d-flex flex-row ">
+
+              <div class="">
+
+                <div class="language-emblem-container margin-right-12">
+
+                  <app-text page="language" [default]="language.code" class="language-emblem text-uppercase"></app-text>
+
+                </div>
+              </div>
+              <div>
+                <app-text page="language" [default]="language.name" class="lines-1"></app-text>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,316 @@
+<div class="d-flex flex-column">
+
+  <div class="d-flex flex-row">
+    <div class="d-flex flex-column margin-left-32 margin-right-32 flex-even">
+
+
+      <div class="d-flex flex-row">
+
+        <div  class="heading-1 margin-bottom-32 margin-right-32">
+          <app-text page="history" default="Change list"></app-text>
+        </div>
+        <div>
+
+          <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : wineryEditLink()">
+            <app-text page="wines" default="To winery"></app-text>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="lastVersion">
+
+        <div class="lines-1 d-inline" *ngFor="let change of changeList">
+          <span class="font-weight-bold" [ngClass]="getDateColor(change)">{{ change.datetime.toDateString() }}: </span>
+          <app-text page="history" default="Edit snapshot" class="hyperlink pointer" (click)="showForEditHistory(change)"></app-text>
+          <span [ngClass]="getDateColor(change)"> - </span>
+          <app-text page="history" default="Show snapshot" class="hyperlink pointer" (click)="showHistory(change)"></app-text>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column margin-right-32 flex-even" *ngFor="let f of fictionsEdit">
+      <div>
+
+        <div class="field d-flex flex-column margin-right-20">
+          <app-text page="history" default="Date" class="field-hint"></app-text>
+          <input type="date" class="field-input align-self-stretch" [formControl]="date">
+        </div>
+
+        <div class="field d-flex flex-column margin-right-20 margin-top-20">
+          <button class="btn btn-type-2 text-uppercase field-content" (click)="deleteHistory()">
+            <app-text page="wine_list" default="Delete snapshop"></app-text>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="d-flex flex-column margin-right-32 flex-even" *ngFor="let f of fictionsEdit">
+      <div class="d-flex flex-row justify-content-between">
+
+        <div  class="heading-1 margin-bottom-32">
+          <app-text page="history" default="Change log"></app-text>
+        </div>
+
+      </div>
+
+      <div>
+
+        <table class="table">
+          <thead>
+          <tr class="bonvino-table-head">
+            <th scope="col">
+              <app-text page="history" default="Change" class="lines-2"></app-text>
+            </th>
+            <th scope="col">
+              <app-text page="history" default="Before" class="lines-2"></app-text>
+            </th>
+            <th scope="col">
+              <app-text page="history" default="After" class="lines-2"></app-text>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let difference of differenceList; let j = index">
+
+            <td>
+              <div class="lines-1">
+                <span>{{getDifferenceName(difference)}}</span>
+              </div>
+            </td>
+            <td>
+              <div class="lines-1">
+                <div *ngIf="getDifferenceType(difference) == 'image'">
+
+                  <div class="image">
+                    <img  class="img-fluid" [src]="getImage(difference.before)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+                  </div>
+
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'list'">
+
+                  <div *ngFor="let point of difference.before; let i = index">
+
+                    <span> {{ point.name }}</span>
+
+                  </div>
+
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'kashruts'">
+
+                  <div *ngFor="let point of difference.before; let i = index" class="margin-top-4">
+
+                    <span> {{ point.hebrew }}</span><span *ngIf="point.international && point.hebrew"> - </span><span *ngIf="point.international"> {{point.international}}</span>
+
+                  </div>
+
+                </div>
+
+                <div *ngIf="getDifferenceType(difference) == 'visittime'">
+
+                  <app-visitinghours [timeData]="difference.before"></app-visitinghours>
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'grapes'">
+
+                  <div *ngFor="let grape of difference.before.grapesFull; let i = index">
+
+                    <app-text page="grapes_names" [place]="grape.id" [default]="grape.name"></app-text>
+                    <span *ngIf="difference.before.grapeSynonims[i]"> ({{ difference.before.grapeSynonims[i] }})</span>
+                  </div>
+
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'text'">
+                  <span>{{difference.before}}</span>
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'boolean'">
+                  <app-icon-bonvino [svgIcon]="getIcon(difference.before)" class="icon-close"></app-icon-bonvino>
+                </div>
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'regions'">
+
+                  <div class="d-inline" *ngFor="let region of difference.before; let i = index">
+                    <span *ngIf="region && i"> > </span>
+                    <app-text page="country_names" place="{{region * 1}}"
+                              default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'additionalRegions'">
+
+                  <div class="d-inline">
+                    <app-text page="country_names" place="{{getCountryFromObject(difference.before) * 1}}"
+                              default="{{countriesMap.get(getCountryFromObject(difference.before) * 1)}}"></app-text>
+                  </div>
+                  <div class="d-inline" *ngFor="let region of getRegionsFromObject(difference.before); let i = index">
+                    <span *ngIf="region && i"> > </span>
+                    <app-text page="country_names" place="{{region * 1}}"
+                              default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'country'">
+
+                  <div class="d-inline">
+                    <app-text page="country_names" place="{{difference.before * 1}}"
+                              default="{{countriesMap.get(difference.before * 1)}}"></app-text>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'multiselect'">
+                  <div *ngFor="let points of difference.before; let i = index" class="margin-right-12 d-flex flex-row">
+
+                    <div class="margin-right-8">
+                      <app-icon-bonvino [svgIcon]="getIcon(points)" class="icon-close"></app-icon-bonvino>
+                    </div>
+                    <div>
+                      <span>{{getDifferencePointName(difference, i)}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'multiselectText'">
+                  <div *ngFor="let points of difference.before; let i = index" class="margin-right-12 d-flex flex-row">
+
+                    <div *ngIf="!points">
+                      <app-icon-bonvino [svgIcon]="getIcon(points)" class="icon-close"></app-icon-bonvino>
+                    </div>
+                    <div *ngIf="points">
+                      <span>{{points}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <div class="lines-1">
+                <div *ngIf="getDifferenceType(difference) == 'image'">
+
+                  <div class="image">
+                    <img  class="img-fluid" [src]="getImage(difference.after)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+                  </div>
+
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'list'">
+
+                  <div *ngFor="let point of difference.after; let i = index">
+
+                    <span> {{ point.name }}</span>
+
+                  </div>
+
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'kashruts'">
+
+                  <div *ngFor="let point of difference.after; let i = index" class="margin-top-4">
+
+                    <span> {{ point.hebrew }}</span><span *ngIf="point.international && point.hebrew"> - </span><span *ngIf="point.international"> {{point.international}}</span>
+
+                  </div>
+
+                </div>
+
+                <div *ngIf="getDifferenceType(difference) == 'visittime'">
+
+                  <app-visitinghours [timeData]="difference.after"></app-visitinghours>
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'grapes'">
+
+                  <div *ngFor="let grape of difference.after.grapesFull; let i = index">
+
+                    <app-text page="grapes_names" [place]="grape.id" [default]="grape.name"></app-text>
+                    <span *ngIf="difference.after.grapeSynonims[i]"> ({{ difference.after.grapeSynonims[i] }})</span>
+                  </div>
+
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'text'">
+                  <span>{{difference.after}}</span>
+                </div>
+                <div *ngIf="getDifferenceType(difference) == 'boolean'">
+                  <app-icon-bonvino [svgIcon]="getIcon(difference.after)" class="icon-close"></app-icon-bonvino>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'regions'">
+
+                  <div class="d-inline" *ngFor="let region of difference.after; let i = index">
+                    <span *ngIf="region && i"> > </span>
+                    <app-text page="country_names" place="{{region * 1}}"
+                              default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'country'">
+
+                  <div class="d-inline">
+                    <app-text page="country_names" place="{{difference.after * 1}}"
+                              default="{{countriesMap.get(difference.after * 1)}}"></app-text>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'additionalRegions'">
+
+                  <div class="d-inline">
+                    <app-text page="country_names" place="{{getCountryFromObject(difference.after) * 1}}"
+                              default="{{countriesMap.get(getCountryFromObject(difference.after) * 1)}}"></app-text>
+                  </div>
+                  <div class="d-inline" *ngFor="let region of getRegionsFromObject(difference.after); let i = index">
+                    <span *ngIf="region && i"> > </span>
+                    <app-text page="country_names" place="{{region * 1}}"
+                              default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'multiselect'">
+                  <div *ngFor="let points of difference.after; let i = index" class="margin-right-12 d-flex flex-row">
+
+                    <div class="margin-right-8">
+                      <app-icon-bonvino [svgIcon]="getIcon(points)" class="icon-close"></app-icon-bonvino>
+                    </div>
+                    <div>
+                      <span>{{getDifferencePointName(difference, i)}}</span>
+                    </div>
+                    <div>
+
+                      <app-text page="history" default=""></app-text>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column" *ngIf="getDifferenceType(difference) == 'multiselectText'">
+                  <div *ngFor="let points of difference.after; let i = index" class="margin-right-12 d-flex flex-row">
+
+                    <div *ngIf="!points">
+                      <app-icon-bonvino [svgIcon]="getIcon(points)" class="icon-close"></app-icon-bonvino>
+                    </div>
+                    <div *ngIf="points">
+                      <span>{{points}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="margin-top-32" *ngFor="let f of fictionsEdit">
+    <app-winery-add [wineryDataInput]="actualVersion" [historyTimestamp]="date" [historyId]="idDifference" [logReload]="logReload"></app-winery-add>
+  </div>
+  <div class="margin-top-32" *ngFor="let f of fictionsShow">
+    <app-winery-one-designed [wineryDataInput]="actualVersion"></app-winery-one-designed>
+  </div>
+</div>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="history" default="Change list"></app-text>
+
+  <app-text page="history" default="Edit snapshot" class="hyperlink pointer"></app-text>
+
+  <app-text page="history" default="Show snapshot" class="hyperlink pointer"></app-text>
+
+  <app-text page="history" default="Date" class="field-hint"></app-text>
+
+  <app-text page="wine_list" default="Delete snapshop"></app-text>
+
+</div>

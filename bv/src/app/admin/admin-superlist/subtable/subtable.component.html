@@ -1,0 +1,57 @@
+<div>
+
+  <form [formGroup]="form">
+    <div class="col-12 container">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col" *ngFor="let col of data.table.subtable">
+            <app-text page="{{data.table.page}}" place="{{col.place}}" default="{{col.name}}"></app-text>
+          </th>
+          <th scope="col">
+            <app-text page="{{data.table.page}}" place="remove_row" default="Remove row"></app-text>
+          </th>
+        </tr>
+        </thead>
+        <tbody formArrayName="formArray">
+        <tr *ngFor="let row of formArray.controls; let i = index" formGroupName="{{i}}">
+          <td *ngFor="let col of data.table.subtable">
+
+            <input type="checkbox" formControlName="{{col.control}}" *ngIf="col.type === 'checkbox'">
+            <input [type]="col.type" class="form-control" formControlName="{{col.control}}" *ngIf="col.type !== 'select' && col.type !== 'checkbox'">
+            <select name="negotiator" class="form-control" formControlName="{{col.control}}"  *ngIf="col.type === 'select'">
+              <option *ngFor="let option of col.options" value="{{option.value}}">
+                <app-text page="{{data.table.page}}" place="{{option.place}}" default="{{option.default}}"></app-text>
+              </option>
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="removeRow(i)">
+              <app-text page="{{data.table.page}}" place="remove" default="Remove"></app-text>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col my-auto">
+        <button class="btn btn-success btn-block" (click)="addRow(null)">
+          <!--Add range-->
+          <app-text page="wines_common_info" place="add_range" default="Add range"></app-text>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div mat-dialog-actions class="row">
+
+    <div class="col my-auto">
+      <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+    </div>
+    <div class="col my-auto">
+      <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="formArray.value" cdkFocusInitial>Save</button>
+    </div>
+  </div>
+
+</div>

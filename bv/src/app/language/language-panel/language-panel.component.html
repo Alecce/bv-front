@@ -1,0 +1,233 @@
+<div class="nav" #navigation>
+  <!--<div ngbDropdown class="d-inline-block">-->
+    <!--<button class="btn btn-outline-primary" id="langDropdown" ngbDropdownToggle>{{langService.language}}</button>-->
+    <!--<div ngbDropdownMenu aria-labelledby="langDropdown">-->
+      <!--<div ngbDropdownItem>-->
+        <!--<button class="btn" (click)="changeLanguage('base')">-->
+          <!--Base-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<div ngbDropdownItem>-->
+        <!--<button class="btn" (click)="changeLanguage('english')">-->
+          <!--English-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<div ngbDropdownItem>-->
+        <!--<button class="btn" (click)="changeLanguage('hebrew')">-->
+          <!--Hebrew-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<div ngbDropdownItem>-->
+        <!--<button class="btn" (click)="changeLanguage('russian')">-->
+          <!--Russian-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="nav-item">
+    <button class="btn" (click)="openCurrentPageMap()">
+      Open translater list (ctrl + f1 / cmd + f1)
+    </button>
+  </div>
+  <div class="nav-item">
+    <button class="btn border-green" (click)="switchEdition()">
+      Switch edition mode (ctrl + f2 / cmd + f2)
+    </button>
+  </div>
+  <div class="nav-item">
+    <button class="btn border-blue" (click)="switchEditionUniversal()">
+      Switch edition mode to universal (ctrl + f3 / cmd + f3)
+    </button>
+  </div>
+  <div class="nav-item">
+    <button class="btn" (click)="switchHistory()">
+      History of translation
+    </button>
+  </div>
+  <div class="nav-item">
+    <button class="btn" (click)="langService.sendData()" [ngClass]="sendDataColor()">
+      Send data
+    </button>
+  </div>
+  <div class="nav-item">
+    <button class="btn" (click)="langService.sendDataTranslationList()" [ngClass]="sendTranslationDataColor()">
+      Send translation data
+    </button>
+  </div>
+  <div class="nav-item margin-left-4 margin-right-4">
+
+    <div class="field align-self-stretch d-flex flex-column">
+      <app-text page="autodescriptions" default="Schema language" class="field-hint"></app-text>
+
+
+      <form [formGroup]="langService.form">
+        <select id="lang" name="type" class="form-control form-control-sm rounded-0" formControlName="language">
+          <option *ngFor="let l of languageArr; let i = index" value="{{l.value}}">
+            {{l.name}}
+          </option>
+        </select>
+      </form>
+
+
+      <!--<app-select-bonvino formControlName_="language" [form]="langService.form" #_language>-->
+        <!--<div select-title>-->
+          <!--<app-text *ngFor="let l of languageArr" page="language" [default]="l.name" [hidden]="l.value != language.value"></app-text>-->
+        <!--</div>-->
+        <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+          <!--<button *ngFor="let l of languageArr" class="btn btn-option" (click)="_language.choose(l.value)">-->
+            <!--<app-text page="language" [default]="l.name"></app-text>-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</app-select-bonvino>-->
+      <!--<div *ngIf="langService.editable">-->
+        <!--<app-text page="language" *ngFor="let l of languageArr" [default]="l.name"></app-text>-->
+      <!--</div>-->
+    </div>
+  </div>
+
+  <!--<div class="nav-item margin-left-4 margin-right-4">-->
+
+    <!--<div class="field align-self-stretch d-flex flex-column">-->
+      <!--<div  class="heading-2 left-bold-border">-->
+        <!--<app-text page="winery_add" default="Cover image"></app-text>-->
+      <!--</div>-->
+
+      <!--<div class="d-flex flex-wrap">-->
+        <!--<div class="d-flex flex-column">-->
+          <!--<div class="d-flex">-->
+            <!--<div>-->
+              <!--<input hidden="true" id="image" type='file' (change)="onSelectFile($event)" formControlName="file">-->
+
+              <!--<label class="btn btn-type-1 text-uppercase field-content" [for]="langService.editable ? null : 'image'">-->
+                <!--<app-text page="wine_list" default="Select"></app-text>-->
+              <!--</label>-->
+            <!--</div>-->
+            <!--<div *ngIf="fileToUpload || imageLink">-->
+              <!--<button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="deleteImage()">-->
+                <!--<app-text page="winery_add" place="delete" default="Delete image"></app-text>-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div *ngIf="fileToUpload" class="lines-1 place-of-origin-text margin-left-16">-->
+            <!--<span>{{fileToUpload.name}}</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+    <!--</div>-->
+  <!--</div>-->
+
+
+</div>
+<div class="nav">
+
+  <div class="nav-item">
+
+    <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).sequrity == 4">
+      <a [routerLink]="langService.editable ? null : 'admin'" class="nav-link">
+        <app-text page="navigation" place="admin" default="Admin page"></app-text>
+      </a>
+    </div>
+  </div>
+  <div class="nav-item" *ngIf="(cookies | async).sequrity == 4">
+    <div ngbDropdown class="d-inline-block"  placement="bottom-right">
+      <button class="btn btn-outline-primary" id="listDropdown" ngbDropdownToggle>
+        <app-text page="navigation" place="lists" default="Lists"></app-text>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="listDropdown">
+        <!--<a [routerLink]="langService.editable ? null : 'admin/business-list'" class="nav-link" ngbDropdownItem>-->
+
+          <!--<app-text page="navigation" place="business_list" default="Business list"></app-text>-->
+        <!--</a>-->
+        <a [routerLink]="langService.editable ? null : 'admin/user-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="user_list" default="User list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/vineyard-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="vineyard_list" default="Vineyard list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/specialist-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="specialist_list" default="Specialist list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/region-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="region_list" default="Region list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/quality-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="quality_list" default="Quality list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/kashrut-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="kashrut_list" default="Kashrut list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/grape-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="grape_list" default="Grape list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/competition-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="competition_list" default="Competition list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'admin/award-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="Award_list" default="Award list"></app-text>
+        </a>
+        <!--<a [routerLink]="langService.editable ? null : 'admin/winery-list'" class="nav-link" ngbDropdownItem>-->
+
+          <!--<app-text page="navigation" place="winery_list" default="Winery list"></app-text>-->
+        <!--</a>-->
+        <!--<a [routerLink]="langService.editable ? null : 'admin/wine-list'" class="nav-link" ngbDropdownItem>-->
+
+          <!--<app-text page="navigation" place="wines_list" default="Wines list"></app-text>-->
+        <!--</a>-->
+
+        <!--<a [routerLink]="langService.editable ? null : 'admin/event-list'" class="nav-link" ngbDropdownItem>-->
+
+          <!--<app-text page="navigation" place="event_list" default="Event list"></app-text>-->
+        <!--</a>-->
+
+        <a [routerLink]="langService.editable ? null : 'admin/biodinamic-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="biodinamic_list" default="Biodynamic list"></app-text>
+        </a>
+
+        <a [routerLink]="langService.editable ? null : 'admin/organic-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="organic_list" default="Organic list"></app-text>
+        </a>
+
+        <a [routerLink]="langService.editable ? null : 'admin/vegan-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="vegan_list" default="Vegan list"></app-text>
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="nav-item">
+
+
+    <div class="nav-item my-auto mx-2" *ngIf="roleList.length">
+      <form [formGroup]="form">
+        <select id="type" name="type" class="form-control form-control-sm rounded-0" formControlName="role">
+          <option *ngFor="let role of roleList; let i = index" value="{{role.idOption}}">
+            {{role.type}} - {{role.name}}
+          </option>
+        </select>
+      </form>
+    </div>
+  </div>
+  <div class="nav-item">
+
+    <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).sequrity == 4">
+      <a [routerLink]="langService.editable ? null : 'business-search'" class="nav-link">
+        <app-text page="navigation" default="Business search"></app-text>
+      </a>
+    </div>
+  </div>
+</div>
+

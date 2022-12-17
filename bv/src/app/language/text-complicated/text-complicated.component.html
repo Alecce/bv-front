@@ -1,0 +1,40 @@
+
+<!--<div *ngIf="langService.editable && !complicated" [ngClass]="isPainted() ? 'painted' : ''">-->
+  <!--<form [formGroup]="form">-->
+    <!--<input type="text" class="form-control" formControlName="input" placeholder="{{placeHolder}}" *ngIf="!textarea">-->
+    <!--<textarea class="form-control" formControlName="input" placeholder="{{placeHolder}}" *ngIf="textarea"></textarea>-->
+  <!--</form>-->
+<!--</div>-->
+<div *ngIf="langService.editable" [ngClass]="isPainted() ? 'painted' : ''">
+
+  <form [formGroup]="form" class="margin-bottom-4">
+
+    <span class="field-hint">Schema</span>
+    <input type="text" class="form-control" formControlName="input" placeholder="{{placeHolder}}" *ngIf="!textarea">
+    <textarea class="form-control" formControlName="input" placeholder="{{placeHolder}}" *ngIf="textarea"></textarea>
+  </form>
+</div>
+<div class="margin-bottom-8" [hidden]="!langService.editable">
+
+  <span class="field-hint">Options</span>
+  <ng-content select="[translate]"></ng-content>
+</div>
+<div *ngIf="content && langService.editable">
+
+  <div *ngFor="let row of getArrInner">
+    <app-text [page]="row.page" [segment]="row.segment" [place]="row.place" [default]="row.default"></app-text>
+
+  </div>
+</div>
+
+
+<div *ngIf="!langService.editable" [ngClass]="isPainted() ? 'painted' : ''" class="whitespace-prewrap" (click)="click()">
+  <span  *ngFor="let t of splittedText; let i = index">
+
+    <span [hidden]="!i">
+      <ng-container  *ngTemplateOutlet="transcludeTemplate"></ng-container>
+    </span>
+    <span *ngIf="i && noContent">***</span>
+    <span  *ngIf="t !== ''">{{t}}</span>
+  </span>
+</div>

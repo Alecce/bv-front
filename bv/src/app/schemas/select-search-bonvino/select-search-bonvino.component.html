@@ -1,0 +1,75 @@
+
+<!--<form [formGroup]="innerForm">-->
+  <!--<div ngbDropdown #dropDownBlock="ngbDropdown" placement="bottom-left" [ngClass]="disabled ? 'disabled-select' : ''" [autoClose]="true">-->
+    <!--<div class="">-->
+      <!--<ng-content select="[select-title]" class="select-title select-text"></ng-content>-->
+    <!--</div>-->
+
+    <!--<div class="field-search align-self-stretch d-flex" #container ngbDropdownToggle-->
+         <!--(mouseover)="paintMouseOver('#3683dc')"-->
+         <!--(mouseout)="paintMouseOver('#BDA280')"-->
+    <!--&gt;-->
+      <!--&lt;!&ndash;<app-text page="wine_list" place="wine_name" default="Which wine are you looking for?" class="field-hint"></app-text>&ndash;&gt;-->
+
+      <!--<div class="d-inline" [ngClass]="focusClass">-->
+        <!--<app-icon-bonvino svgIcon="icn-search" class="icn-search" #icon></app-icon-bonvino>-->
+      <!--</div>-->
+      <!--<div class="d-inline-block w-100">-->
+        <!--<input type="text" class="field-input-search align-self-stretch w-100" formControlName="search"-->
+               <!--(focus)="paintFocusOn('#a2312d')"-->
+               <!--(focusout)="paintFocusOff('#BDA280')"-->
+        <!--&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div ngbDropdownMenu aria-labelledby="langDropdown" class="select-list" [ngStyle]="{'min-width.px': container.offsetWidth}" *ngIf="!disabled">-->
+
+      <!--<div>-->
+        <!--<ng-content select="[description]"></ng-content>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<ng-content select="[options]" (click)="$event.stopPropagation(); dropDownBlock.close()"></ng-content>-->
+      <!--</div>-->
+
+    <!--</div>-->
+  <!--</div>-->
+<!--</form>-->
+
+
+<form [formGroup]="innerForm">
+  <div [ngClass]="disabled ? 'disabled-select' : ''">
+    <!--<button mat-button [matMenuTriggerFor]="afterMenu">After</button>-->
+
+    <div class="">
+      <ng-content select="[select-title]" class="select-title select-text"></ng-content>
+    </div>
+
+    <button class="btn p-0 border-0 w-100 d-flex justify-content-between align-items-baseline"
+            [disabled]="disabled"
+            #container
+            (mouseover)="paintMouseOver('#3683dc')"
+            (mouseout)="paintMouseOver('#BDA280')" >
+      <div class="field-search align-self-stretch w-100 d-flex" mat-button [matMenuTriggerFor]="afterMenu">
+        <div class="d-inline border-right-0" [ngClass]="focusClass">
+          <app-icon-bonvino svgIcon="icn-search" class="icn-search" #icon></app-icon-bonvino>
+        </div>
+        <div class="d-inline-block w-100 border-left-0">
+          <input type="text" class="field-input-search align-self-stretch w-100 border-left-0" formControlName="search"
+                 (focus)="paintFocusOn('#a2312d')"
+                 (focusout)="paintFocusOff('#BDA280')"
+          >
+        </div>
+      </div>
+    </button>
+
+    <mat-menu #afterMenu="matMenu" xPosition="after" class="select-list {{scallable ? 'scallable' : ''}}">
+      <div  [style.min-width.px]="getWidth()" [style.max-width.px]="getWidth()">
+        <ng-content select="[description]"></ng-content>
+      </div>
+      <div  [style.min-width.px]="getWidth()" [style.max-width.px]="getWidth()" class="select-list-options-field">
+
+        <ng-content select="[options]" mat-menu-item></ng-content>
+      </div>
+    </mat-menu>
+  </div>
+
+</form>

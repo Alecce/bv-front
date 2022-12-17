@@ -1,0 +1,23 @@
+<div class="d-flex justify-content-center margin-top-64">
+
+  <app-text page="are_you_sure" default="Are you sure?"></app-text>
+</div>
+
+<div class="d-flex justify-content-center" mat-dialog-actions>
+  <div class="p-2">
+    <!--<button class="btn btn-outline-primary btn-sm" (click)="close()">-->
+
+    <!--<app-text page="specialist_subscreen" default="Cancel"></app-text>-->
+    <!--</button>-->
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+      <app-text page="are_you_sure" default="Cancel"></app-text>
+    </button>
+  </div>
+  <div class="p-2">
+
+    <button class="btn btn-type-1 text-uppercase field-content" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      <app-text page="are_you_sure" default="Yes"></app-text>
+    </button>
+  </div>
+</div>

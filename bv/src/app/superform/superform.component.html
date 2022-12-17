@@ -1,0 +1,108 @@
+<form [formGroup]="form">
+  <div *ngFor="let point of formData; let j = index">
+    <div class="form-group row" *ngIf="point.type === 'checkbox'">
+      <label class="col-4 text-right my-auto" for="{{point.place}}">
+        <app-text page="{{page}}" place="{{point.place}}" default="{{point.label}}"></app-text>
+      </label>
+      <input id="{{point.place}}" class="my-auto" type="checkbox" formControlName="{{point.controlName}}">
+    </div>
+
+    <div class="form-group row" *ngIf="point.type === 'text'">
+      <label class="col-4 text-right my-auto" for="{{point.place}}">
+        <app-text page="{{page}}" place="{{point.place}}" default="{{point.label}}"></app-text>
+      </label>
+      <input id="{{point.place}}" type="{{point.inputType}}" class="form-control col-4" formControlName="{{point.controlName}}">
+    </div>
+
+    <div class="form-group row" *ngIf="point.type === 'select'">
+      <label class="col-4 text-right my-auto" for="{{point.place}}">
+        <app-text page="{{page}}" place="{{point.place}}" default="{{point.label}}"></app-text>
+      </label>
+      <select class="form-control col-4" id="{{point.place}}" name="{{point.place}}" formControlName="{{point.controlName}}">
+        <option value="{{option.value}}" *ngFor="let option of point.options">
+          <app-text page="{{page}}" place="{{option.place}}" default="{{option.label}}"></app-text>
+        </option>
+      </select>
+      <div *ngIf="langService.editable">
+        <app-text page="{{page}}" place="{{option.place}}" default="{{option.label}}" *ngFor="let option of point.options"></app-text>
+      </div>
+    </div>
+
+    <div *ngIf="point.type === 'table'">
+      <div class="col-12 container">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col" *ngFor="let th of point.table" [hidden]="th.hidden">
+              <app-text page="{{page}}" place="{{th.place}}" default="{{th.label}}"></app-text>
+            </th>
+            <th scope="col" *ngIf="langService.editable || (form.enabled && !point.disableSize)">
+              <app-text page="{{page}}" place="remove_row" default="Remove row"></app-text>
+            </th>
+          </tr>
+          </thead>
+          <tbody formArrayName="{{point.controlName}}">
+            <tr *ngFor="let tr of form.get(point.controlName).controls; let i = index" formGroupName="{{i}}">
+              <th scope="row" *ngFor="let th of point.table" [hidden]="th.hidden">
+                <input type="{{th.inputType}}" class="form-control" formControlName="{{th.controlName}}" *ngIf="th.inputType !== 'select'">
+
+                <select class="form-control" id="{{point.place}}" name="{{point.place}}" formControlName="{{th.controlName}}"
+                        *ngIf="th.inputType === 'select'">
+                  <option value="{{option.value}}" *ngFor="let option of th.options">
+                    <app-text page="{{page}}" place="{{option.place}}" default="{{option.label}}"></app-text>
+                  </option>
+                </select>
+              </th>
+              <td *ngIf="langService.editable || (form.enabled  && !point.disableSize)">
+                <button class="btn btn-danger" (click)="removeRowFromTable(i, j)" *ngIf="routeData.editable">
+                  <app-text page="{{page}}" place="remove" default="Remove"></app-text>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row" *ngIf="langService.editable || (form.enabled && !point.disableSize)">
+        <div class="col my-auto">
+          <button class="btn btn-success btn-block" (click)="addRowToTable(j)">
+            <app-text page="{{page}}" place="add_range" default="Add range"></app-text>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="point.type === 'listCheckboxes'">
+      <div class="form-group row" *ngIf="routeData.editable">
+        <label class="col text-center my-auto">
+          <app-text page="{{page}}" place="{{point.place}}" default="{{point.label}}"></app-text>
+        </label>
+      </div>
+      <div *ngFor="let currentList of checkboxes[point.controlName]">
+        <div  class="form-group row">
+
+          <label class="col-4 offset-4 text-right my-auto">{{currentList[point.rowAsLabel]}}:</label>
+          <input class="my-auto" type="checkbox" (click)="uncheck(point.controlName, currentList.id)" checked [disabled]="form.disabled">
+        </div>
+      </div>
+
+      <div *ngIf="form.enabled">
+        <app-superlist [tableCols]="point.tableCols" [api]="point.api" [addCheckbox]="true" [listId]="point.controlName"></app-superlist>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</form>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+
+<form [formGroup]="form" class="margin-bottom-32 margin-left-32 margin-right-32 margin-top-32 scrollbar">
+  <div class="d-flex flex-column w-100">
+
+    <div class="d-flex w-100 flex-column">
+
+      <div class="d-flex flex-fill justify-content-between align-items-center w-100">
+
+        <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+          <app-text page="store" default="Price (NIS)" class="field-hint"></app-text>
+          <input type="number" class="field-input align-self-stretch" formControlName="price">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column flex-even justify-content-end">
+          <app-checkbox-bonvino formControlName_="isInShop" [form]="form" #_sur_lie>
+            <app-text page="wines" default="Sellable" (click)="_sur_lie.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+
+      <button class="btn btn-type-1 text-uppercase field-content margin-right-36"  (click)="close()">
+        <app-text page="store" default="Close"></app-text>
+      </button>
+      <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="delete()">
+        <app-text page="store"  default="Delete"></app-text>
+      </button>
+      <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="submit()">
+        <app-text page="store"  default="Save"></app-text>
+      </button>
+    </div>
+  </div>
+</form>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+</div>

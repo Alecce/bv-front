@@ -1,0 +1,465 @@
+
+<div class="d-flex">
+
+  <form [formGroup]="form" class="w-100">
+    <div class="d-flex flex-even w-100">
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="wines" default="General Information"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Name" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="name_national">
+        </div>
+
+
+        <div class="d-flex align-items-end w-100">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column w-100">
+            <app-text page="event" default="Name in English" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="name_international">
+          </div>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Type" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="type" [form]="form" #_type>
+            <div select-title>
+              <app-text *ngFor="let t of types" page="event" default="{{t.label}}" [hidden]="t.value != type.value"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_type.choose('')">
+                <app-text page="event" default="Clear input"></app-text>
+              </button>
+              <button *ngFor="let t of types" class="btn btn-option" (click)="_type.choose(t.value)">
+                <app-text page="event" default="{{t.label}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="event" default="Clear input"></app-text>
+            <app-text page="event" *ngFor="let t of types" [default]="t.label"></app-text>
+          </div>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Country" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="country" [form]="form" #_country>
+            <div select-title>
+              <!--<app-text page="event" default="Clear input" [hidden]="country.value != '0'"></app-text>-->
+              <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}" [hidden]="c.id != country.value"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_country.choose('0')">
+                <app-text page="event" default="Clear input"></app-text>
+              </button>
+              <button *ngFor="let c of countries; let i = index" class="btn btn-option" (click)="_country.choose(c.id)">
+                <app-text page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="event" default="Clear input"></app-text>
+            <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+          </div>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="City" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="city">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Address" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="address">
+        </div>
+
+
+
+
+
+
+        <div>
+          <button class="btn btn-type-2 text-uppercase field-content margin-bottom-32" (click)="placeMark()">
+            <app-text page="wine_list" default="Place mark"></app-text>
+          </button>
+          <button class="btn btn-type-2 text-uppercase field-content margin-bottom-32 margin-left-16" (click)="removeMark()">
+            <app-text page="wine_list" default="Remove mark"></app-text>
+          </button>
+        </div>
+
+
+        <div class="margin-bottom-32 w-100">
+
+          <app-map-open-layers [reloadSubj]="mapReloadSubj" [routerData]="{editable: true}" [currentData]="geoData"></app-map-open-layers>
+          <!--<app-map-google-designed [routerData]="{editable: true}" [currentData]="geoData" [downloadedData]="geoData"></app-map-google-designed>-->
+        </div>
+
+
+
+
+        <!--<div class="d-flex flex-fill justify-content-between">-->
+
+          <!--<div class="field align-self-stretch d-flex flex-column margin-right-20 w-100">-->
+
+
+
+            <!--<button class="btn btn-type-2 text-uppercase field-content" (click)="openAwardSelect()">-->
+              <!--<app-text page="winery_add" default="Select competition"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="d-flex flex-fill justify-content-between" *ngIf="competition.value">-->
+
+
+          <!--<app-text  page="wines_advanced" default="Competition:" class="lines-1"></app-text>-->
+        <!--</div>-->
+        <!--<div class="d-flex flex-fill justify-content-between margin-bottom-16">-->
+
+
+          <!--<div class="d-flex flex-fill justify-content-between" *ngIf="competition.value">-->
+
+            <!--<app-competition-one-row [competitionIdFormControl]="competition"></app-competition-one-row>-->
+
+
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="wines_common_info" default="Language" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="language" [form]="form" #_language>
+            <div select-title>
+              <app-text *ngFor="let l of languageArr" page="language" [default]="l.name" [hidden]="l.value != language.value"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button *ngFor="let l of languageArr" class="btn btn-option" (click)="_language.choose(l.value)">
+                <app-text page="language" [default]="l.name"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="language" *ngFor="let language of languageArr" [default]="language.name"></app-text>
+          </div>
+        </div>
+
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Details"  class="field-hint"></app-text>
+          <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="details"></textarea>
+        </div>
+
+
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Fee" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="fee">
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="active" [form]="form" #_active>
+            <app-text page="event" default="Active" (click)="_active.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Age restriction" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="age_restriction" [form]="form" #_public>
+            <div select-title>
+              <!--<app-text page="event" default="Clear input" [hidden]="public.value != ''"></app-text>-->
+              <app-text page="event" default=">18" [hidden]="age_restriction.value != '>18'"></app-text>
+              <app-text page="event" default=">21" [hidden]="age_restriction.value != '>21'"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_public.choose('')">
+                <app-text page="event" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_public.choose('>18')">
+                <app-text page="event" default=">18"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_public.choose('>21')">
+                <app-text page="event" default=">21"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="event" default="Clear input"></app-text>
+            <app-text page="event" default="Public"></app-text>
+            <app-text page="event" default="Private"></app-text>
+          </div>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Public" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="public" [form]="form" #_public>
+            <div select-title>
+              <!--<app-text page="event" default="Clear input" [hidden]="public.value != ''"></app-text>-->
+              <app-text page="event" default="Public" [hidden]="public.value != '0'"></app-text>
+              <app-text page="event" default="Private" [hidden]="public.value != '1'"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_public.choose('')">
+                <app-text page="event" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_public.choose('0')">
+                <app-text page="event" default="Public"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_public.choose('1')">
+                <app-text page="event" default="Private"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="event" default="Clear input"></app-text>
+            <app-text page="event" default="Public"></app-text>
+            <app-text page="event" default="Private"></app-text>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="event" default="Date/Time"></app-text>
+        </div>
+
+        <div class="d-flex">
+          <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+            <app-text page="event" default="From" class="field-hint"></app-text>
+            <input type="date" class="field-input align-self-stretch" formControlName="from">
+          </div>
+          <div class="field align-self-stretch d-flex flex-column flex-even">
+            <app-text page="event" default="To" class="field-hint"></app-text>
+            <input type="date" class="field-input align-self-stretch" formControlName="to">
+          </div>
+        </div>
+
+
+
+        <div class="d-flex">
+
+
+          <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+            <app-text page="event" default="Start time" class="field-hint"></app-text>
+            <app-input-time-bonvino [formControl_]="start_time"></app-input-time-bonvino>
+          </div>
+          <div class="field align-self-stretch d-flex flex-column flex-even">
+            <app-text page="event" default="End time" class="field-hint"></app-text>
+            <app-input-time-bonvino [formControl_]="end_time"></app-input-time-bonvino>
+          </div>
+        </div>
+
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="event" default="Contact Information"></app-text>
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Phone" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="phone">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Fax" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="fax">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Email" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="email">
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Web" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="web">
+        </div>
+
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="winery_add" default="Cover image"></app-text>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div *ngIf="!fileToUpload && imageLink" class="margin-right-20">
+            <img class="cover-image" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+          <div *ngIf="fileToUpload" class="margin-right-20">
+            <img  class="cover-image" [src]="url">
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <div>
+                <input hidden="true" id="image" type='file' (change)="onSelectFile($event)" formControlName="imageDL">
+
+                <label class="btn btn-type-2 text-uppercase field-content  margin-right-36" [for]="langService.editable ? null : 'image'">
+                  <app-text page="wine_list" default="Select"></app-text>
+                </label>
+              </div>
+              <div *ngIf="fileToUpload || imageLink">
+                <button class="btn btn-type-2 text-uppercase field-content" (click)="deleteImage()">
+                  <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="fileToUpload" class="lines-1 place-of-origin-text margin-left-16">
+              <span>{{fileToUpload.name}}</span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div *ngIf="false" class="d-flex flex-column flex-even">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="event" default="Event wines"></app-text>
+        </div>
+
+
+        <div  class="lines-1" *ngIf="!routeData.download">
+          <app-text page="event" default="You can add wines only after creating the event"></app-text>
+        </div>
+
+        <div class="d-flex justify-content-start" *ngIf="routeData.download">
+          <a class="btn btn-type-2 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : selectWinesLink()">
+            <app-text page="event" default="Advanced search"></app-text>
+          </a>
+        </div>
+
+        <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-select-search-bonvino formControlName_="wineHelper" [form]="form" #_wineHelper>-->
+        <!--<div select-title>-->
+        <!--<app-text page="wine_list" default="Search" class="field-hint"></app-text>-->
+        <!--</div>-->
+        <!--<div options class="d-flex flex-column align-items-start select-list-options-full">-->
+        <!--<button *ngFor="let wine of wineList | paginate: { id: 'pagination-wine', itemsPerPage: 10, currentPage: winePage, totalItems: wineTotal}"-->
+        <!--class="btn btn-option"-->
+        <!--(click)="selectWine(wine); _wineHelper.close();">-->
+        <!--<span>{{getWineName(wine)}}</span>-->
+        <!--</button>-->
+        <!--<pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-wine" (pageChange)="setWinePage($event)"></pagination-controls>-->
+
+        <!--</div>-->
+        <!--</app-select-search-bonvino>-->
+        <!--</div>-->
+
+
+        <div class="lines-1 place-of-origin-text d-flex justify-content-between"  *ngFor="let wine of chosenWines">
+          <div>
+            <span>{{getWineName(wine)}}</span>
+          </div>
+          <div>
+            <button class="btn m-0 p-0" (click)="removeWine(wine)">
+              <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+            </button>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </form>
+
+</div>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="wines" default="General Information"></app-text>
+
+  <app-text page="event" default="Name" class="field-hint"></app-text>
+
+  <app-text page="event" default="Name in English" class="field-hint"></app-text>
+
+  <app-text page="event" default="Country" class="field-hint"></app-text>
+  <app-text page="event" default="Clear input"></app-text>
+  <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+
+  <app-text page="event" default="City" class="field-hint"></app-text>
+
+  <app-text page="event" default="Address" class="field-hint"></app-text>
+
+  <app-text page="wine_list" default="Place mark"></app-text>
+
+  <app-text page="event" default="Type" class="field-hint"></app-text>
+  <app-text page="event" *ngFor="let t of types" [default]="t.label"></app-text>
+
+  <app-text page="wines_common_info" default="Language" class="field-hint"></app-text>
+  <app-text page="language" *ngFor="let language of languageArr" [default]="language.name"></app-text>
+
+  <app-text page="event" default="Details"  class="field-hint"></app-text>
+
+  <app-text page="event" default="Fee" class="field-hint"></app-text>
+
+  <app-text page="event" default="Active" (click)="_active.check()" class="lines-1"></app-text>
+
+  <app-text page="event" default="Public" class="field-hint"></app-text>
+
+  <app-text page="event" default="Public"></app-text>
+  <app-text page="event" default="Private"></app-text>
+
+  <app-text page="event" default="Date/Time"></app-text>
+  <app-text page="event" default="From" class="field-hint"></app-text>
+  <app-text page="event" default="To" class="field-hint"></app-text>
+
+  <app-text page="event" default="Start time" class="field-hint"></app-text>
+
+  <app-text page="event" default="End time" class="field-hint"></app-text>
+
+  <app-text page="event" default="Contact Information"></app-text>
+
+  <app-text page="event" default="Phone" class="field-hint"></app-text>
+
+  <app-text page="event" default="Fax" class="field-hint"></app-text>
+
+  <app-text page="event" default="Email" class="field-hint"></app-text>
+
+  <app-text page="event" default="Web" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Cover image"></app-text>
+
+  <app-text page="wine_list" default="Select"></app-text>
+
+  <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+
+  <app-text page="event" default="Event wines"></app-text>
+
+  <app-text page="event" default="You can add wines only after creating the event"></app-text>
+
+  <app-text page="event" default="Advanced search"></app-text>
+
+</div>

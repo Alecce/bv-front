@@ -1,0 +1,25 @@
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+
+import {IslamicCalendarComponent} from './islamic-calendar.component';
+
+describe('IslamicCalendarComponent', () => {
+  let component: IslamicCalendarComponent;
+  let fixture: ComponentFixture<IslamicCalendarComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ IslamicCalendarComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(IslamicCalendarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

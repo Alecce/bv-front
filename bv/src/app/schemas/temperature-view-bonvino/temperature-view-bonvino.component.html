@@ -1,0 +1,6 @@
+
+<div class="lines-1" *ngIf="temperature.value || temperature_f.value">
+  <app-text [page]="'business_' + type" [default]="schemaData.title_name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <span>{{temperature.value}} ⁰C/ {{temperature_f.value}} ⁰F</span>
+
+</div>

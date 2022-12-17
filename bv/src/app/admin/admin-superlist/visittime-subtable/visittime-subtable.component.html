@@ -1,0 +1,59 @@
+<form [formGroup]="form">
+
+  <div *ngFor="let day of daysKeys; let i = index" class="form-group">
+    <div formArrayName="{{day}}">
+      <div class="form-group row">
+
+        <label class="col-3 text-right my-auto">
+          <app-text page="winery_visittime" place="{{langService.morphStr(DAYS_OF_WEEK[day])}}" default="{{DAYS_OF_WEEK[day]}}:"></app-text>
+        </label>
+        <div class="col-6 container">
+          <div *ngFor="let time of times(day).controls; let j = index" class="row">
+            <div class="input-group" *ngIf="j % 2 == 0">
+              <div class="row pl-4">
+                <!--<div *ngIf="form.disabled">-->
+                  <!--<input [ngxTimepicker]="default" formControlName="{{j}}" size="10">-->
+                  <!--<ngx-material-timepicker #default></ngx-material-timepicker>-->
+                <!--</div>-->
+                <!--<div *ngIf="!form.disabled">-->
+                  <!--<ngx-timepicker-field formControlName="{{j}}"></ngx-timepicker-field>-->
+                <!--</div>-->
+                <input type="text" formControlName="{{j}}">
+                <div class="col-auto"> - </div>
+
+                <input type="text" formControlName="{{j + 1}}">
+                <!--<div *ngIf="form.disabled">-->
+                  <!--<input [ngxTimepicker]="default" formControlName="{{j + 1}}" size="10">-->
+                  <!--<ngx-material-timepicker #default></ngx-material-timepicker>-->
+                <!--</div>-->
+                <!--<div *ngIf="!form.disabled">-->
+                  <!--<ngx-timepicker-field formControlName="{{j + 1}}"></ngx-timepicker-field>-->
+                <!--</div>-->
+                <button class="btn btn-danger col-auto" (click)="removeTimeRange(day, j)">
+                  <app-text page="winery_visittime" place="remove" default="Remove"></app-text>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 my-auto">
+          <button class="btn btn-success" (click)="addTimeRange(day)">
+            <app-text page="winery_visittime" place="add_range" default="Add range"></app-text>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</form>
+
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

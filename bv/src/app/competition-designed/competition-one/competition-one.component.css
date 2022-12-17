@@ -1,0 +1,26 @@
+
+.wine-in-list {
+  border-bottom: solid 2px var(--nickel);
+  min-height: 48px;
+  margin-bottom: 8px;
+}
+
+.bg-gradient {
+  height: 128px;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--black));
+}
+.bg-image{
+  height: 416px;
+  margin-right: 32px;
+}
+
+.menu-dropdown {
+  min-width: 96px;
+  border-radius: 4px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+  white-space: nowrap;
+}
+.menu-buttons {
+  margin: 8px 16px 16px 16px;
+}

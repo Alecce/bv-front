@@ -1,0 +1,798 @@
+
+
+<!--<div class="row" *ngIf="wineData">-->
+  <!--&lt;!&ndash;first col&ndash;&gt;-->
+  <!--<div class="col">-->
+    <!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="General information" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.barrel_aged"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Barrel aged" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Barrel month range" class="text-muted"></app-text>: {{wineData.commoninfo.barrel_aged_range}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Still" class="text-muted"></app-text>: {{wineData.commoninfo.still}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Sparkling" class="text-muted"></app-text>: {{wineData.commoninfo.sparkling}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Method" class="text-muted"></app-text>: {{wineData.commoninfo.method}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Nongrape" class="text-muted"></app-text>: {{wineData.commoninfo.nongrape}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Type" class="text-muted"></app-text>: {{wineData.commoninfo.typeName}}-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Professional points" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row" *ngFor="let pp of profPoints; let i = index">-->
+      <!--<div class="col border-bottom-4-chrome">-->
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Specialist" class="text-muted"></app-text>: {{profMap.get(pp.professional * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Point" class="text-muted"></app-text>: {{pp.point}}-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Awards" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row" *ngFor="let award of awards; let i = index">-->
+      <!--<div class="col border-bottom-4-chrome">-->
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Competition" class="text-muted"></app-text>: {{competitionMap.get(award.competition * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;[{"competition":"22","year":"2","award":"11"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"},{"competition":"0","year":"","award":"not chosen"}]&ndash;&gt;-->
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Year" class="text-muted"></app-text>: {{award.year}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Award" class="text-muted"></app-text>: {{awardsMap.get(award.award * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Misc" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Volitile acidity g/l" class="text-muted"></app-text>: {{wineData.commoninfo.volatile_acidity}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="pH" class="text-muted"></app-text>: {{wineData.commoninfo.ph}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Sugar g/l" class="text-muted"></app-text>: {{wineData.commoninfo.sugar}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Energy kkal/100g" class="text-muted"></app-text>: {{wineData.commoninfo.energy}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Price level" class="text-muted"></app-text>: {{priceMap.get(wineData.advanced.priceLevel)}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.nightHarvest"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Night harvest" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.handPicked"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Hand picked" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.nonfiltered"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Nonfiltered" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.sulfurDioxide"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Sulfur dioxide" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.lightfiltered"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Light filtered" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <!--</div>-->
+  <!--&lt;!&ndash;second col&ndash;&gt;-->
+  <!--<div class="col border-left-3-lightgray">-->
+
+    <!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Fermentation and maceration" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Days" class="text-muted"></app-text>: {{wineData.commoninfo.fermentation_range}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Temperature" class="text-muted"></app-text>: {{wineData.commoninfo.fermentation_temperature}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1" *ngIf="wineData.commoninfo.fermentation_type!='select'">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="true"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Inox" class="text-muted" *ngIf="wineData.commoninfo.fermentation_type=='inox'"></app-text>-->
+              <!--<app-text page="wines_full" default="Barriques" class="text-muted" *ngIf="wineData.commoninfo.fermentation_type=='barriques'"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.malolactic_fermentation"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Malolactic fermentation" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.batonnage"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Batonnage" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1" *ngIf="langService.editable || wineData.commoninfo.maceration_range">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Maceration" class="text-muted"></app-text>: {{wineData.commoninfo.maceration_range}}-->
+        <!--<app-text page="wines_full" default="day" class="text-muted" *ngIf="langService.editable || wineData.commoninfo.maceration_range=='1' && wineData.commoninfo.maceration_type=='day'"></app-text>-->
+        <!--<app-text page="wines_full" default="days" class="text-muted" *ngIf="langService.editable || wineData.commoninfo.maceration_range!='1' && wineData.commoninfo.maceration_type=='day'"></app-text>-->
+        <!--<app-text page="wines_full" default="hour" class="text-muted" *ngIf="langService.editable || wineData.commoninfo.maceration_range=='1' && wineData.commoninfo.maceration_type=='hour'"></app-text>-->
+        <!--<app-text page="wines_full" default="hours" class="text-muted" *ngIf="langService.editable || wineData.commoninfo.maceration_range!='1' && wineData.commoninfo.maceration_type=='hour'"></app-text>-->
+      <!--</div>-->
+    <!--</div>-->
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Quality" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.advanced.kashrut"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Kashrut" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.advanced.quality"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Quality" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.advanced.organic"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Organic" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.advanced.vegan"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Vegan" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.advanced.biodynamic"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Biodynamic" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Grape list" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;[{"grape":0,"percent":"","vineyard":0,"grapeyard":"","age":"","gharvest_date":"","brix":""},{"grape":"1","percent":"2","vineyard":"11","grapeyard":"","age":"2","gharvest_date":"0003-02-02","brix":"qq"}]&ndash;&gt;-->
+    <!--<div class="row" *ngFor="let g of grapes; let i = index">-->
+      <!--<div class="col border-bottom-4-chrome">-->
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<span class="font-weight-bold text-muted">{{grapeMap.get(g.grape * 1)}}</span>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Brix" class="text-muted"></app-text>: {{g.brix}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Age" class="text-muted"></app-text>: {{g.age}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Vineyard" class="text-muted"></app-text>: {{vineyardMap.get(g.vineyard * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Date of harvest" class="text-muted"></app-text>: {{g.gharvest_date}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+
+
+
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Serving instructions" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Recomendation drinking time" class="text-muted"></app-text>: {{wineData.instruction.from}} - {{wineData.instruction.to}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.instruction.needDecanter"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Need decanter" class="text-muted"></app-text>-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Serving temperature" class="text-muted"></app-text>: {{wineData.instruction.servingTemperature}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Glass" class="text-muted"></app-text>:-->
+        <!--<div class="d-inline-block" *ngFor="let g of glasses; let i=index">-->
+          <!--<img class="glass-1" src="../../../assets/images/G{{g}}.png" *ngIf="g == wineData.instruction.glass">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Drinking time" class="text-muted"></app-text>: {{wineData.instruction.drinking_time}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+  <!--</div>-->
+
+  <!--<div class="col border-left-3-lightgray">-->
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Barrel" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row" *ngFor="let b of barrels; let i = index">-->
+      <!--<div class="col border-bottom-4-chrome">-->
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Barrel stuff" class="text-muted"></app-text>:-->
+
+            <!--<app-text page="wines_full" default="Clay" class="text-muted" *ngIf="b.stuff=='clay'"></app-text>-->
+            <!--<app-text page="wines_full" default="Stainless steel tank" class="text-muted" *ngIf="b.stuff=='stainless steel tank'"></app-text>-->
+            <!--<app-text page="wines_full" default="Wood oak" class="text-muted" *ngIf="b.stuff=='wood oak'"></app-text>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Barrel type" class="text-muted"></app-text>: {{barrelTypeMap.get(b.type * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Months" class="text-muted"></app-text>: {{b.month}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Percent of wine" class="text-muted"></app-text>: {{b.percent}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1" *ngIf="b.use && b.use!='not chosen'">-->
+          <!--<div class="col">-->
+            <!--<div class="pretty p-icon p-smooth p-locked">-->
+              <!--<input type="checkbox"-->
+                     <!--[checked]="true"-->
+                     <!--(click)="true">-->
+              <!--<div class="state p-primary">-->
+                <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+                <!--<label>-->
+                  <!--<app-text page="wines_full" default="New" class="text-muted" *ngIf="b.use=='new'"></app-text>-->
+                  <!--<app-text page="wines_full" default="Neutral" class="text-muted" *ngIf="b.use=='neutral'"></app-text>-->
+                  <!--<app-text page="wines_full" default="Used" class="text-muted" *ngIf="b.use=='used'"></app-text>-->
+                <!--</label>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Size" class="text-muted"></app-text>:-->
+            <!--<app-text page="wines_full" default="112L – 30 US Gallons" class="text-muted" *ngIf="b.size=='112L'"></app-text>-->
+            <!--<app-text page="wines_full" default="225L – 59.4 US Gallons" class="text-muted" *ngIf="b.size=='225L'"></app-text>-->
+            <!--<app-text page="wines_full" default="228L – 60 US Gallons" class="text-muted" *ngIf="b.size=='228L'"></app-text>-->
+            <!--<app-text page="wines_full" default="300L – 79 US Gallons" class="text-muted" *ngIf="b.size=='300L'"></app-text>-->
+            <!--<app-text page="wines_full" default="500L – 132 US Gallons" class="text-muted" *ngIf="b.size=='500L'"></app-text>-->
+            <!--<app-text page="wines_full" default="600L – 158.5 USGallons" class="text-muted" *ngIf="b.size=='600L'"></app-text>-->
+            <!--<app-text page="wines_full" default="2K-12KL – 500-32K US Gallons" class="text-muted" *ngIf="b.size=='2K-12KL'"></app-text>-->
+          <!--</div>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Bottle" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row" *ngFor="let b of bottles; let i = index">-->
+      <!--<div class="col border-bottom-4-chrome">-->
+
+        <!--&lt;!&ndash;[{"size":"15","total_bottles":"2","count_in_pack":"3","barcode_bottles":"4","priceLevel":"4"}]&ndash;&gt;-->
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Bottle size" class="text-muted"></app-text>: {{wrappingMap.get(b.size * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Batch" class="text-muted"></app-text>: {{b.total_bottles}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Pack" class="text-muted"></app-text>: {{b.count_in_pack}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Barcode" class="text-muted"></app-text>: {{b.barcode_bottles}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="row mx-2 pb-1">-->
+          <!--<div class="col">-->
+            <!--<app-text page="wines_full" default="Price" class="text-muted"></app-text>: {{priceMap.get(b.priceLevel * 1)}}-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+      <!--</div>-->
+    <!--</div>-->
+<!--<div class="row mx-2 pb-1 pt-2 mt-2">-->
+      <!--<div class="col">-->
+        <!--<h5>-->
+          <!--<app-text page="wines_full"  default="Bottle by" class="text-muted"></app-text>-->
+        <!--</h5>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="row mx-2 pb-1" *ngIf="wineData.commoninfo.bottled_by && wineData.commoninfo.bottled_by!='not chosen'">-->
+      <!--<div class="col">-->
+        <!--<div class="pretty p-icon p-smooth p-locked">-->
+          <!--<input type="checkbox"-->
+                 <!--[checked]="wineData.commoninfo.bottled_by"-->
+                 <!--(click)="true">-->
+          <!--<div class="state p-primary">-->
+            <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+            <!--<label>-->
+              <!--<app-text page="wines_full" default="Mobile line" class="text-muted" *ngIf="wineData.commoninfo.bottled_by=='mobile line'"></app-text>-->
+              <!--<app-text page="wines_full" default="Estate" class="text-muted" *ngIf="wineData.commoninfo.bottled_by=='estate'"></app-text>-->
+
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="row mx-2 pb-1">-->
+      <!--<div class="col">-->
+        <!--<app-text page="wines_full" default="Date" class="text-muted"></app-text>: {{wineData.commoninfo.bottled_date}}-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <!--</div>-->
+
+<!--</div>-->
+
+
+
+<!--&lt;!&ndash;Words for translater&ndash;&gt;-->
+
+<!--<div [hidden]="true">-->
+
+
+  <!--<app-text page="wines_full"  default="General information" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Barrel aged" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Barrel month range" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Still" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Sparkling" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Method" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Nongrape" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Type" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Professional points" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Specialist" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Point" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Awards" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Competition" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Year" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Award" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Misc" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Volitile acidity g/l" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="pH" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Sugar g/l" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Energy kkal/100g" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Price level" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Night harvest" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Hand picked" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Nonfiltered" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Sulfur dioxide" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Light filtered" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Fermentation and maceration" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Days" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Temperature" class="text-muted"></app-text>-->
+  <!---->
+  <!--<app-text page="wines_full" default="Inox" class="text-muted" *ngIf="wineData.commoninfo.fermentation_type=='inox'"></app-text>-->
+  <!--<app-text page="wines_full" default="Barriques" class="text-muted" *ngIf="wineData.commoninfo.fermentation_type=='barriques'"></app-text>-->
+
+
+  <!--<app-text page="wines_full" default="Malolactic fermentation" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Batonnage" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Maceration" class="text-muted"></app-text>: {{wineData.commoninfo.maceration_range}}-->
+  <!--<app-text page="wines_full" default="day" class="text-muted" *ngIf="langService.editable || wineData.commoninfo.maceration_range=='1' && wineData.commoninfo.maceration_type=='day'"></app-text>-->
+  <!--<app-text page="wines_full" default="days" class="text-muted" *ngIf="langService.editable || wineData.commoninfo.maceration_range!='1' && wineData.commoninfo.maceration_type=='day'"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Quality" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Kashrut" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Quality" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Organic" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Vegan" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Biodynamic" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Grape list" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Brix" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Age" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Vineyard" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Date of harvest" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Serving instructions" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Recomendation drinking time" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Need decanter" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Serving temperature" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Glass" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full" default="Drinking time" class="text-muted"></app-text>-->
+
+  <!--<app-text page="wines_full"  default="Barrel" class="text-muted"></app-text>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--</div>-->

@@ -1,0 +1,121 @@
+<div class="d-flex flex-column margin-64">
+  <div class="d-flex">
+    <div class="d-flex page-title margin-bottom-32">
+      <div  class="heading-1" *ngIf="!routeData.download">
+        <app-text page="shop_add" default="Add a shop"></app-text>
+      </div>
+      <div  class="heading-1" *ngIf="routeData.download">
+        <app-text page="shop_add" default="Edit a shop"></app-text>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="d-flex flex-column justify-content-end w-100">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between main-menu menu-first">
+          <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.menu)" (click)="chose(tabs.menu)">
+            <app-text page="shop_add" default="Menu"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.basic)" (click)="chose(tabs.basic)">
+            <app-text page="shop_add" place="basic_info" default="Basic info"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getSubTabColor('')"
+                  (click)="chose(tabs.additional); choseSubtab('')" [hidden]="!isTabExist('')">
+            <app-text page="shop_add" default="Additional"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular mr-0" *ngFor="let subTab of subTabs; let i = index" [ngClass]="getSubTabColor(subTab)"
+                  (click)="chose(tabs.additional); choseSubtab(subTab)" [hidden]="!isTabExist(subTab)">
+            <app-text page="subtabs" [default]="subTab"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular mr-0" *ngIf="!routeData.download" [disabled]="!routeData.download" [ngClass]="getTabColor(tabs.wines)" (click)="chose(tabs.wines)">
+            <app-text page="shop_add" default="Wines (only in edit)"></app-text>
+          </button>
+
+          <button class="btn btn-menu-first menu-2-regular mr-0" *ngIf="routeData.download" [ngClass]="getTabColor(tabs.wines)" (click)="chose(tabs.wines)">
+            <app-text page="shop_add" default="Wines"></app-text>
+          </button>
+        </div>
+        <div class="d-flex justify-content-between">
+
+          <div>
+
+            <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : backLink()">
+              <app-text page="wines" default="Cancel"></app-text>
+            </a>
+            <!--<button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="back()">-->
+            <!--<app-text page="wines" default="Cancel"></app-text>-->
+            <!--</button>-->
+          </div>
+
+
+          <div>
+            <button class="btn btn-type-1 text-uppercase field-content" (click)="create()"  *ngIf="!routeData.download">
+              <app-text page="shop_add" default="Create"></app-text>
+            </button>
+            <button class="btn btn-type-1 text-uppercase field-content" (click)="create()" *ngIf="routeData.download">
+              <app-text page="shop_add" default="Save changes"></app-text>
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex wine-select">
+
+
+    <app-shop-designed-basic [downloadedData]="downloadedData" [hidden]="!showTab(tabs.basic)" class="w-100"></app-shop-designed-basic>
+    <app-shop-designed-additional [downloadedData]="downloadedData" [menuData]="menuData" [structureData]="additionalStructure"
+                                  [hidden]="!showTab(tabs.additional)" [additionalTabs]="additionalTabsSubject" [currentSubTab]="currentSubTab" class="w-100"></app-shop-designed-additional>
+    <app-shop-designed-menu [downloadedData]="downloadedData" [hidden]="!showTab(tabs.menu)" [structureData]="additionalStructure" class="w-100"></app-shop-designed-menu>
+    <app-wine-list-designed-b [specialPage]="'shop'"  *ngIf="routeData.download" [specialPageId]="activatedroute.snapshot.params.id" [hidden]="!showTab(tabs.wines)" class="w-100"></app-wine-list-designed-b>
+
+  </div>
+
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="shop_add" default="Add a shop"></app-text>
+
+  <app-text page="shop_add" default="Edit a shop"></app-text>
+
+  <app-text page="shop_add" default="Menu"></app-text>
+
+  <app-text page="shop_add" place="basic_info" default="Basic info"></app-text>
+
+  <app-text page="shop_add" default="Additional"></app-text>
+
+  <app-text page="shop_add" default="Wines (only in edit)"></app-text>
+
+  <app-text page="shop_add" default="Wines"></app-text>
+
+  <app-text page="wines" default="Cancel"></app-text>
+
+  <app-text page="shop_add" default="Create"></app-text>
+
+  <app-text page="shop_add" default="Save changes"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

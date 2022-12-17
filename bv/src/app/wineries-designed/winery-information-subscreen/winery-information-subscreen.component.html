@@ -1,0 +1,204 @@
+<div class="d-flex padding-32">
+  <div class="d-flex flex-column align-items-start" *ngIf="wineryData">
+    <div class="heading-2">
+      <app-text page="winery_one" default="Winery information"></app-text>
+    </div>
+    <div class="lines-1 font-weight-bold">
+      <span>{{wineryData.commoninfo.name_national}}</span>
+    </div>
+    <div class="lines-1">
+      <span>{{wineryData.commoninfo.name_international}}</span>
+    </div>
+    <div class="lines-1" *ngIf="wineryData.commoninfo.country">
+      <app-text page="winery_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="country_names" place="{{wineryData.commoninfo.country}}" default="{{countriesMap.get(wineryData.commoninfo.country)}}"></app-text>
+      <!--<span> {{getCountry(wineryData.commoninfo.country)}}</span>-->
+
+    </div>
+    <div class="lines-1" *ngIf="wineryData.commoninfo.regionsForm">
+      <app-text page="winery_one" default="Region" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span><span> {{getRegion(wineryData.commoninfo.regionsForm)}}</span>
+
+    </div>
+
+
+
+    <!--<div class="field align-self-stretch d-flex flex-column">-->
+      <!--<app-text page="winery_add" default="Wine producer" class="field-hint"></app-text>-->
+      <!--<app-select-bonvino formControlName_="wine_producer" [form]="form" #_wine_producer>-->
+        <!--<div select-title>-->
+          <!--<app-text *ngFor="let wp of wineProducerArr" page="winery_add" [default]="wp.value" [hidden]="wp.value != wine_producer.value"></app-text>-->
+        <!--</div>-->
+        <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+          <!--<button class="btn btn-option" (click)="_wine_producer.choose('')">-->
+            <!--<app-text page="winery_add" default="Clear input"></app-text>-->
+          <!--</button>-->
+          <!--<button *ngFor="let wp of wineProducerArr" class="btn btn-option" (click)="_wine_producer.choose(wp.value)">-->
+            <!--<app-text page="winery_add" [default]="wp.value"></app-text>-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</app-select-bonvino>-->
+    <!--</div>-->
+
+    <div class="lines-1" *ngIf="wineryData.commoninfo.wine_producer">
+      <app-text page="winery_one" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+      <app-text page="winery_one" *ngFor="let wp of wineProducerArr" [default]="wp.value"
+                [hidden]="wp.value != wineryData.commoninfo.wine_producer"></app-text>
+
+    </div>
+
+
+    <div class="lines-1" *ngIf="wineryData.commoninfo.noncommercial">
+      <app-text page="winery_one" default="Non comercial producer" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="wineryData.commoninfo.establish_year">
+      <app-text page="winery_one" default="Established" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineryData.commoninfo.establish_year}}
+
+    </div>
+    <div class="lines-1" *ngIf="wineryData.commoninfo.owner">
+      <app-text page="winery_one" default="Owner" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineryData.commoninfo.owner}}
+
+    </div>
+    <div class="lines-1" *ngIf="wineryData.commoninfo.performance">
+      <app-text page="winery_one" default="Performance" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+      <app-text page="winery_one" default="till 2000"  *ngIf="wineryData.commoninfo.performance==1"></app-text>
+      <app-text page="winery_one" default="2000-5000"  *ngIf="wineryData.commoninfo.performance==2"></app-text>
+      <app-text page="winery_one" default="5000-8000"  *ngIf="wineryData.commoninfo.performance==3"></app-text>
+      <app-text page="winery_one" default="8000-12000"  *ngIf="wineryData.commoninfo.performance==4"></app-text>
+      <app-text page="winery_one" default="12000-20000"  *ngIf="wineryData.commoninfo.performance==5"></app-text>
+      <app-text page="winery_one" default="20000-30000"  *ngIf="wineryData.commoninfo.performance==6"></app-text>
+      <app-text page="winery_one" default="30000-60000"  *ngIf="wineryData.commoninfo.performance==7"></app-text>
+      <app-text page="winery_one" default="60000-100000"  *ngIf="wineryData.commoninfo.performance==8"></app-text>
+      <app-text page="winery_one" default="100000-160000"  *ngIf="wineryData.commoninfo.performance==9"></app-text>
+      <app-text page="winery_one" default="160000-220000"  *ngIf="wineryData.commoninfo.performance==10"></app-text>
+      <app-text page="winery_one" default="220000-300000"  *ngIf="wineryData.commoninfo.performance==11"></app-text>
+      <app-text page="winery_one" default="300000-450000"  *ngIf="wineryData.commoninfo.performance==12"></app-text>
+      <app-text page="winery_one" default="450000-600000"  *ngIf="wineryData.commoninfo.performance==13"></app-text>
+      <app-text page="winery_one" default="600000-800000"  *ngIf="wineryData.commoninfo.performance==14"></app-text>
+      <app-text page="winery_one" default="800000-1200000"  *ngIf="wineryData.commoninfo.performance==15"></app-text>
+      <app-text page="winery_one" default="1200000-1500000"  *ngIf="wineryData.commoninfo.performance==16"></app-text>
+      <app-text page="winery_one" default="1500000-2000000"  *ngIf="wineryData.commoninfo.performance==17"></app-text>
+      <app-text page="winery_one" default="2000000-3000000"  *ngIf="wineryData.commoninfo.performance==18"></app-text>
+      <app-text page="winery_one" default="3000000-5000000"  *ngIf="wineryData.commoninfo.performance==19"></app-text>
+      <app-text page="winery_one" default="5000000 and more"  *ngIf="wineryData.commoninfo.performance==20"></app-text>
+
+    </div>
+    <div class="lines-1" *ngIf="wineryData.qualities.length">
+      <app-text page="winery_one" default="Quality" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+    </div>
+    <div class="lines-1" *ngFor="let quality of wineryData.qualities">
+      <app-text page="quality_names" place="{{quality.id}}" default="{{quality.name}}"></app-text>
+    </div>
+    <div class="lines-1" *ngIf="wineryData.kashruts.length">
+      <app-text page="winery_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+    </div>
+    <div class="lines-1" *ngFor="let kashrut of wineryData.kashruts">
+      <span>{{getKashrutName(kashrut)}}</span>
+    </div>
+    <div class="lines-1" *ngIf="wineryData.biodynamics.length">
+      <app-text page="winery_one" default="Biodynamics" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+    </div>
+    <div class="lines-1" *ngFor="let biodynamic of wineryData.biodynamics">
+      <span>{{biodynamic.name}}</span>
+    </div>
+    <div class="lines-1" *ngIf="wineryData.organics.length">
+      <app-text page="winery_one" default="Organics" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+    </div>
+    <div class="lines-1" *ngFor="let organic of wineryData.organics">
+      <span>{{organic.name}}</span>
+    </div>
+    <div class="lines-1" *ngIf="wineryData.vegans.length">
+      <app-text page="winery_one" default="Biodynamics" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+    </div>
+    <div class="lines-1" *ngFor="let vegan of wineryData.vegans">
+      <span>{{vegan.name}}</span>
+    </div>
+  </div>
+  <div class="d-flex flex-column align-items-start"  *ngIf="wineryData">
+
+    <div class="heading-2">
+      <app-text page="winery_one" default="Winemaking team"></app-text>
+    </div>
+
+    <div class="lines-1" *ngIf="wineryData.commoninfo.winemaker_national">
+      <app-text page="winery_one" default="Head winemaker" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineryData.commoninfo.winemaker_national}}
+
+    </div>
+    <div class="lines-1" *ngIf="wineryData.commoninfo.winemaker_international">
+      <app-text page="winery_one" default="Head winemaker (in English)" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineryData.commoninfo.winemaker_international}}
+
+    </div>
+  </div>
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="winery_one" default="Winery information"></app-text>
+
+  <app-text page="winery_one" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="winery_one" *ngFor="let wp of wineProducerArr" [default]="wp.value"
+            [hidden]="wp.value != wineryData.commoninfo.wine_producer"></app-text>
+
+  <app-text page="winery_one" default="Established" class="font-weight-bold"></app-text>
+
+  <app-text page="winery_one" default="Owner" class="font-weight-bold"></app-text>
+
+  <app-text page="winery_one" default="Performance" class="font-weight-bold"></app-text>
+
+
+  <app-text page="winery_one" default="till 2000"></app-text>
+  <app-text page="winery_one" default="2000-5000"></app-text>
+  <app-text page="winery_one" default="5000-8000"></app-text>
+  <app-text page="winery_one" default="8000-12000"></app-text>
+  <app-text page="winery_one" default="12000-20000"></app-text>
+  <app-text page="winery_one" default="20000-30000"></app-text>
+  <app-text page="winery_one" default="30000-60000"></app-text>
+  <app-text page="winery_one" default="60000-100000"></app-text>
+  <app-text page="winery_one" default="100000-160000"></app-text>
+  <app-text page="winery_one" default="160000-220000"></app-text>
+  <app-text page="winery_one" default="220000-300000"></app-text>
+  <app-text page="winery_one" default="300000-450000"></app-text>
+  <app-text page="winery_one" default="450000-600000"></app-text>
+  <app-text page="winery_one" default="600000-800000"></app-text>
+  <app-text page="winery_one" default="800000-1200000"></app-text>
+  <app-text page="winery_one" default="1200000-1500000"></app-text>
+  <app-text page="winery_one" default="1500000-2000000"></app-text>
+  <app-text page="winery_one" default="2000000-3000000"></app-text>
+  <app-text page="winery_one" default="3000000-5000000"></app-text>
+  <app-text page="winery_one" default="5000000 and more"></app-text>
+
+
+  <app-text page="winery_one" default="Quality" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="winery_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="winery_one" default="Biodynamics" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="winery_one" default="Organics" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="winery_one" default="Biodynamics" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="winery_one" default="Winemaking team"></app-text>
+
+  <app-text page="winery_one" default="Head winemaker" class="font-weight-bold"></app-text>
+
+  <app-text page="winery_one" default="Head winemaker (in English)" class="font-weight-bold"></app-text>
+
+
+
+
+
+
+
+
+
+</div>

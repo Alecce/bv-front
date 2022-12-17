@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+  <div>
+
+    <div>
+      <div class="form-group row">
+        <label class="col text-center my-auto">
+          <app-text page="wines_advanced" place="qualities" default="Qualities:"></app-text>
+        </label>
+      </div>
+      <div *ngFor="let quality of qualityList" formGroupName="qualitiesWine">
+        <div  class="form-group row">
+          <label class="col-4 offset-4 text-right my-auto">{{quality.name}}</label>
+          <input class="col-1 my-auto" type="checkbox" formControlName="{{quality.id}}">
+          <button class="btn btn-danger btn-sm"  (click)="uncheckQuality(quality.id)">
+            <app-text page="wines_advanced" place="delete_quality_from_winery" default="Delete from winery"></app-text>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <app-superlist [tableCols]="tableColsQualities" [api]="apiQualities" [addCheckbox]="true"></app-superlist>
+      </div>
+
+    </div>
+  </div>
+</form>
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

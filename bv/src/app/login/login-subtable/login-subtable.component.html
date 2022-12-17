@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="form-group col">
+    <h5>
+      <app-text page="login" place="log_in" default="Log in"></app-text>
+    </h5>
+  </div>
+</div>
+<form [formGroup]="form">
+  <div mat-dialog-actions class="row">
+    <div class="form-group col">
+        <app-text page="login" place="email" default="Email" class="field-hint"></app-text>
+      <input id="email" type="email" class="form-control form-control-sm border-info rounded-0" formControlName="email"
+             [placeholder]="langService.getPlaceholder('login', '', 'email', 'Email')">
+    </div>
+
+
+    <div class="form-group col">
+        <app-text page="login" place="password" default="Password" *ngIf="langService.editable"></app-text>
+      <input id="password" type="password" class="form-control form-control-sm border-info rounded-0" formControlName="password"
+             [placeholder]="langService.getPlaceholder('login', '', 'password', 'Password')">
+    </div>
+  </div>
+</form>
+
+<div *ngIf="email.touched && email.invalid" class="text-center">
+  <div class="alert alert-danger" *ngIf="email.errors.required">
+    <app-text page="login" place="enter_email" default="Enter email"></app-text>
+  </div>
+  <div class="alert alert-danger" *ngIf="email.errors.email">
+    <app-text page="login" place="Wrong_email_pattern" default="Wrong email pattern"></app-text>
+  </div>
+</div>
+<div *ngIf="password.touched && password.invalid" class="text-center">
+  <div class="alert alert-danger" *ngIf="password.errors.required">
+    <app-text page="login" place="enter_password" default="Enter password"></app-text>
+  </div>
+</div>
+<div class="d-flex justify-content-end" mat-dialog-actions>
+  <div class="my-auto float-right p-2">
+    <button class="btn btn-outline-primary btn-sm" mat-button [mat-dialog-close]="'registration'" cdkFocusInitial>
+      <app-text page="login" place="registration" default="Registration"></app-text>
+    </button>
+  </div>
+  <div class="my-auto float-right p-2">
+    <button class="btn btn-outline-primary btn-sm" (click)="close()">
+
+      <app-text page="login" place="cancel" default="Cancel"></app-text>
+    </button>
+  </div>
+  <div class="my-auto float-right p-2">
+    <button class="btn btn-outline-primary btn-sm" (click)="submit()">
+
+      <app-text page="login" place="log_in" default="Log in"></app-text>
+    </button>
+  </div>
+</div>

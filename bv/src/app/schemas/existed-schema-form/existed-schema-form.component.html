@@ -1,0 +1,71 @@
+<div class="d-flex">
+  <form [formGroup]="form" class="w-100">
+
+    <div class="d-flex flex-even w-100">
+      <div class="d-flex flex-column flex-even margin-right-36">
+        <div class="heading-2 left-bold-border">
+          <app-text page="existed_schema" default="Select or add schema"></app-text>
+        </div>
+
+        <div formArrayName="schemas">
+
+          <div class="d-flex flex-column margin-bottom-20 w-100" *ngFor="let p of schemas.controls; let i = index"
+               formGroupName="{{i}}">
+
+            <div class="d-flex flex-fill justify-content-between w-100">
+
+              <div class="d-flex flex-row justify-content-start w-100">
+
+                <div class="field d-flex flex-column margin-right-20">
+                  <app-text page="existed_schema" default="Schema name" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="name">
+                </div>
+
+                <div class="field align-self-stretch d-flex flex-column">
+                  <app-text page="existed_schema" default="Schema type" class="field-hint"></app-text>
+                  <app-select-bonvino formControlName_="type" [form]="schemas.at(i)" #_type>
+                    <div select-title>
+                      <app-text *ngFor="let s of schemaTypes" page="business_name" [default]="s.name" [hidden]="s.name != schemas.at(i).get('type').value"></app-text>
+                    </div>
+                    <div options class="d-flex flex-column align-items-start select-list-options">
+                      <button *ngFor="let s of schemaTypes" class="btn btn-option" (click)="_type.choose(s.name)">
+                        <app-text page="business_name" [default]="s.name"></app-text>
+                      </button>
+                    </div>
+                  </app-select-bonvino>
+                </div>
+
+              </div>
+
+
+              <button class="btn btn-type-2 text-uppercase field-content margin-right-36" (click)="saveSchema(i)">
+                <app-text page="existed_schema" default="Save"></app-text>
+              </button>
+
+              <button class="btn btn-type-2 text-uppercase field-content margin-right-36" mat-button [mat-dialog-close]="schemas.at(i).value" cdkFocusInitial>
+                <app-text page="existed_schema" default="Load"></app-text>
+              </button>
+
+              <button class="btn btn-type-2 text-uppercase field-content margin-right-36" (click)="removeSchema(i)">
+                <app-text page="existed_schema" default="Delete"></app-text>
+              </button>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+        <div class="d-flex margin-bottom-32 justify-content-center">
+          <button class="btn m-0 p-0" (click)="addSchema(null)">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>

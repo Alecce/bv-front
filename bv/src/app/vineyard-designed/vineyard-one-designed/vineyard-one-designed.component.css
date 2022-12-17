@@ -1,0 +1,83 @@
+::ng-deep .map-container-inner
+{
+  width: 250px !important;
+  height: 250px !important;
+  margin: auto;
+}
+::ng-deep agm-map
+{
+  width: 250px !important;
+  height: 250px !important;
+  margin: auto;
+}
+mat-icon.checkbox{
+  margin-top: -3px;
+}
+.checkbox-bonvino {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 2px;
+  border: solid 1px var(--wine);
+  margin-bottom: 2px;
+}
+
+::ng-deep .global-rtl .checkbox-bonvino
+{
+  margin-left: 8px;
+}
+::ng-deep .global-ltr .checkbox-bonvino
+{
+  margin-right: 8px;
+}
+mat-icon.checkmark {
+  height: 14px !important;
+}
+
+.heading-1 {
+  margin-bottom: 36px;
+}
+/*.heading-2 {*/
+/*!*margin-bottom: 20px;*!*/
+/*border-left: 8px solid var(--wine);*/
+/*padding-left: 8px;*/
+/*}*/
+.margin-right-36 {
+  margin-right: 36px;
+}
+.main-column {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.left-bar {
+  min-width: 256px;
+}
+
+.main-menu {
+  margin-right: 32px;
+  margin-bottom: 32px;
+
+}
+.margin-bottom-32 {
+  margin-bottom: 32px;
+}
+app-scroll-bonvino {
+  margin-bottom: 20px;
+}
+
+.glass {
+  height: 64px;
+  object-fit: cover;
+}
+.margin-x-4 {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.whitespace-prewrap {
+  white-space: pre-wrap;
+}
+.margin-left-12  {
+  margin-left: 12px;
+}
+.padding-top-12 {
+  padding-top: 12px;
+}

@@ -1,0 +1,62 @@
+mat-icon.checkbox{
+  margin-top: -3px;
+}
+
+.place-of-origin-text {
+  margin-top: 12px;
+  margin-bottom: 16px;
+  line-height: 26px;
+}
+.heading-1 {
+  margin-bottom: 36px;
+}
+.main-menu {
+  margin-right: 32px;
+  margin-bottom: 32px;
+
+}
+.margin-bottom-32 {
+  margin-bottom: 32px;
+}
+.margin-64 {
+  margin: 0 64px 64px 64px;
+}
+
+.cover-image {
+  width: 144px;
+  margin-bottom: 16px;
+}
+textarea.field-input {
+  height: auto;
+
+}
+textarea.field-input:focus {
+  box-shadow: none !important;
+
+}
+
+::ng-deep textarea::-webkit-scrollbar {
+  width: 7px;
+  cursor: pointer !important;
+}
+::ng-deep textarea::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: rgba(0,0,0,0.1);
+}
+::ng-deep textarea::-webkit-scrollbar-thumb {
+  padding-right: 4px;
+  margin-right: 4px;
+  height: 33px;
+  border-radius: 4px;
+  background-color: var(--chrome);
+}
+::ng-deep textarea::-webkit-scrollbar-thumb:hover {
+  background-color: var(--black);
+}
+.margin-right-20 {
+  margin-right: 20px;
+}
+.margin-right-36 {
+  margin-right: 36px;
+}
+

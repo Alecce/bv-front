@@ -1,0 +1,240 @@
+
+<form [formGroup]="form">
+
+  <div class="d-flex flex-row justify-content-between">
+
+    <div class="d-flex flex-column">
+
+      <div>
+
+        <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Current competition:" class="lines-1"></app-text>
+      </div>
+
+      <div>
+
+        <app-competition-one-row [competitionIdFormControl]="competitionId" #competitionComponent></app-competition-one-row>
+      </div>
+
+
+
+      <div *ngIf="hasAwardOption">
+
+        <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Awards:" class="lines-1"></app-text>
+      </div>
+      <div *ngIf="competitionComponent.isCompetitionSet && hasAwardOption">
+
+        <!--<span class="lines-1">{{getAwardName()}}</span>-->
+
+
+        <div class="lines-1" *ngFor="let p of competitionComponent.prizes; let j = index">
+
+          <app-radio-bonvino formControlName_="award" [form]="dataForm" [value_]="p.id" #_radio>
+
+            <app-award-one-row [awardIdValue]="p.id"></app-award-one-row>
+          </app-radio-bonvino>
+        </div>
+      </div>
+
+      <div class="margin-top-16 width-200px">
+        <div *ngIf="hasCompetitionOption" class="d-flex flex-column">
+
+          <app-text page="wine_list" default="Page" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="pageSearch" [form]="form" #_page>
+            <div select-title>
+              <div *ngFor="let p of pagesNumbers; let i = index">
+                <app-text [page]="LANGUAGE_CURRENT_PAGE" default="{{p.name}}" *ngIf="pageSearch.value == p.value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" *ngFor="let p of pagesNumbers; let i = index" (click)="_page.choose(p.value)">
+                <app-text [page]="LANGUAGE_CURRENT_PAGE" default="{{p.name}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column">
+
+      <div  *ngIf="hasCompetitionOption && competitionId.value">
+
+        <button class="btn btn-type-2 text-uppercase field-content" (click)="clearCompetition()">
+          <app-text page="winery_add" default="Clear competition"></app-text>
+        </button>
+      </div>
+      <div *ngIf="hasAwardOption && prizeId.value">
+
+        <button class="btn btn-type-2 text-uppercase field-content" (click)="clearAward()">
+          <app-text page="winery_add" default="Clear award"></app-text>
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-end">
+
+      <div  *ngIf="savable" class="margin-bottom-16">
+
+        <button class="btn btn-type-1 text-uppercase field-content" mat-button [mat-dialog-close]="true" cdkFocusInitial>
+          <app-text page="winery_add" default="Save"></app-text>
+        </button>
+
+      </div>
+      <div>
+
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+          <app-text page="winery_add" default="Close"></app-text>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="hasCompetitionOption">
+
+    <table class="table">
+      <thead>
+      <tr class="bonvino-table-head">
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'name' ? 'name' : 'name_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Name" class="lines-2"
+                               [ngClass]="getSortingClass(['name', 'name_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'name' && order.value != 'name_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'name'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'name_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div>
+
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <input type="text" class="field-input align-self-stretch" formControlName="name">
+              </div>
+            </div>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'name_int' ? 'name_int' : 'name_int_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Name in english" class="lines-2"
+                               [ngClass]="getSortingClass(['name_int', 'name_int_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'name_int' && order.value != 'name_int_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'name_int'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'name_int_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div>
+
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <!--<app-text page="winery_add" default="Winery name" class="field-hint"></app-text>-->
+                <input type="text" class="field-input align-self-stretch" formControlName="name_int">
+              </div>
+            </div>
+          </div>
+        </th>
+        <!--<th scope="col">-->
+
+          <!--<app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Awards" class="lines-2"></app-text>-->
+
+        <!--</th>-->
+
+        <th scope="col">
+
+          <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Select" class="lines-2"></app-text>
+
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of competitionList; let i = index">
+
+        <td>
+          <div class="lines-1">
+
+            <a [routerLink]="'competition/' + c.id">
+              <span>{{c.name_national}}</span>
+            </a>
+
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+            <a [routerLink]="'competition/' + c.id">
+              <span>{{c.name_international}}</span>
+            </a>
+          </div>
+        </td>
+
+        <!--<td>-->
+          <!--<div class="lines-1" *ngFor="let p of c.prizes; let j = index">-->
+            <!--{{p.name}} - {{p.name_int}}-->
+            <!--<button class="btn btn-type-1 text-uppercase field-content">-->
+              <!--<app-text page="wine_list" default="Chose" (click)="chosePrize(c, p)"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</td>-->
+
+
+        <td>
+          <div class="lines-1">
+
+            <button class="btn btn-type-2 text-uppercase field-content">
+              <app-text page="wine_list" default="Chose" (click)="choseCompetition(c)"></app-text>
+            </button>
+          </div>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+  </div>
+
+
+</form>

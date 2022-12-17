@@ -1,0 +1,235 @@
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row margin-bottom-16">
+    <div>
+      <app-language-navigate></app-language-navigate>
+    </div>
+
+    <div class="margin-left-8">
+      <button class="btn" (click)="langService.sendData()" [ngClass]="sendDataColor()">
+        Send data
+      </button>
+    </div>
+
+    <div class="margin-left-8">
+      <button class="btn btn-primary" (click)="getTableData()">
+        Get translation table
+      </button>
+    </div>
+
+    <div class="margin-left-8">
+      <button class="btn btn-primary" (click)="getFullTableData()">
+        Get full translation table
+      </button>
+    </div>
+
+    <div class="nav-item margin-left-4 margin-right-4">
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="autodescriptions" default="Schema language" class="field-hint"></app-text>
+
+
+        <form [formGroup]="langService.form">
+          <select id="lang" name="type" class="form-control form-control-sm rounded-0" formControlName="language">
+            <option *ngFor="let l of languageArr; let i = index" value="{{l.value}}">
+              {{l.name}}
+            </option>
+          </select>
+        </form>
+
+      </div>
+    </div>
+
+
+
+    <div class="margin-left-8">
+      <button class="btn btn-primary" (click)="getGeneratorTableData()">
+        Get generator table
+      </button>
+    </div>
+
+    <div>
+
+      <div class="nav-item margin-left-4 margin-right-4">
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <!--<div  class="heading-2 left-bold-border">-->
+            <!--<app-text page="winery_add" default="Send table"></app-text>-->
+          <!--</div>-->
+
+
+          <div class="d-flex flex-wrap">
+            <div class="d-flex flex-column">
+              <div class="d-flex">
+                <div [formGroup]="form">
+                  <input hidden="true" id="imageLangList" type='file' (change)="onSelectFile($event)" formControlName="file">
+
+                  <label class="btn btn-type-1 text-uppercase field-content" [for]="langService.editable ? null : 'imageLangList'">
+                    Select table for translation
+                  </label>
+                </div>
+                <!--<div *ngIf="fileToUpload || imageLink">-->
+                  <!--<button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="deleteImage()">-->
+                    <!--<app-text page="winery_add" place="delete" default="Delete image"></app-text>-->
+                  <!--</button>-->
+                <!--</div>-->
+              </div>
+              <div *ngIf="fileToUploadLangList" class="lines-1 place-of-origin-text margin-left-16">
+                <span>{{fileToUploadLangList.name}}</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="margin-left-8">
+      <button class="btn btn-primary" (click)="sendTable()">
+        Send translation table
+      </button>
+    </div>
+
+
+  </div>
+
+
+  <div>
+    <form [formGroup]="form">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">
+            <button class="btn btn-block btn-secondary" (click)="changeOrder(ENGLISH)">
+              <span class="align-middle">
+                English
+              </span>
+              <mat-icon class="align-middle" *ngIf="this.order.name === ENGLISH && this.order.direction">arrow_downward</mat-icon>
+              <mat-icon class="align-middle" *ngIf="this.order.name === ENGLISH && !this.order.direction">arrow_upward</mat-icon>
+            </button>
+          </th>
+          <th scope="col">
+            <button class="btn btn-block btn-secondary" (click)="changeOrder(TEXT)">
+              <span class="align-middle">
+                Text in editing language
+              </span>
+              <mat-icon class="align-middle" *ngIf="this.order.name === TEXT && this.order.direction">arrow_downward</mat-icon>
+              <mat-icon class="align-middle" *ngIf="this.order.name === TEXT && !this.order.direction">arrow_upward</mat-icon>
+            </button>
+          </th>
+          <th scope="col">
+            <button class="btn btn-block btn-secondary" (click)="changeOrder(RESULT)">
+              <span class="align-middle">
+                Element
+              </span>
+              <mat-icon class="align-middle" *ngIf="this.order.name === RESULT && this.order.direction">arrow_downward</mat-icon>
+              <mat-icon class="align-middle" *ngIf="this.order.name === RESULT && !this.order.direction">arrow_upward</mat-icon>
+            </button>
+          </th>
+          <th scope="col">
+            <button class="btn btn-block btn-secondary" (click)="changeOrder(IS_CHANGED)">
+              <span class="align-middle">
+                Is translated
+              </span>
+              <mat-icon class="align-middle" *ngIf="this.order.name === IS_CHANGED && this.order.direction">arrow_downward</mat-icon>
+              <mat-icon class="align-middle" *ngIf="this.order.name === IS_CHANGED && !this.order.direction">arrow_upward</mat-icon>
+            </button>
+          </th>
+        </tr>
+        <tr>
+          <th scope="col">
+            <div>
+              <div class="field align-self-stretch d-flex flex-column">
+                <input type="text" class="field-input align-self-stretch" formControlName="english">
+              </div>
+            </div>
+          </th>
+          <th scope="col">
+            <div>
+              <div class="field align-self-stretch d-flex flex-column">
+                <input type="text" class="field-input align-self-stretch" formControlName="editing">
+              </div>
+            </div>
+          </th>
+          <th scope="col">
+            <div>
+              <div class="field align-self-stretch d-flex flex-column">
+                <input type="text" class="field-input align-self-stretch" formControlName="element">
+              </div>
+            </div>
+          </th>
+          <th scope="col">
+            <div>
+              <div class="field align-self-stretch d-flex flex-column">
+                <app-select-bonvino formControlName_="isTranslated" [form]="form" #_isTranslated>
+                  <div select-title>
+                    <app-text page="any" default="Not matter" [hidden]="isTranslated.value != 'not important'"></app-text>
+                    <app-text page="any" default="Yes" [hidden]="isTranslated.value != 'yes'"></app-text>
+                    <app-text page="any" default="No" [hidden]="isTranslated.value != 'no'"></app-text>
+                  </div>
+                  <div options class="d-flex flex-column align-items-start select-list-options">
+                    <button class="btn btn-option" (click)="_isTranslated.choose('not important')">
+                      <app-text page="any" default="Not matter"></app-text>
+                    </button>
+                    <button class="btn btn-option" (click)="_isTranslated.choose('yes')">
+                      <app-text page="any" default="Yes"></app-text>
+                    </button>
+                    <button class="btn btn-option" (click)="_isTranslated.choose('no')">
+                      <app-text page="any" default="No"></app-text>
+                    </button>
+                  </div>
+                </app-select-bonvino>
+              </div>
+            </div>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--<tr>-->
+        <!--<th *ngFor="let col of tableCols"  [hidden]="!chosenOptionForm.get(col.searchFormControlName).value"><input type="text" class="form-control" formControlName="{{col.searchFormControlName}}"></th>-->
+        <!--</tr>-->
+
+        <tr *ngFor="let row of list | paginate: {itemsPerPage: 10, currentPage: order.page}; let i = index">
+          <td>
+
+            <div>
+              {{getValueInEnglish(row)}}
+            </div>
+          </td>
+          <td>
+
+            <div>
+              {{getValueInCurrentLanguage(row)}}
+            </div>
+          </td>
+          <td>
+
+            <div class="d-flex justify-content-between">
+              <div *ngIf="row.type == 'simple'">
+                <app-text [page]="row.page" [place]="row.place" [default]="row.default"></app-text>
+              </div>
+              <div *ngIf="row.type == 'complicated'">
+                <app-text-complicated [page]="row.page" [place]="row.place" [default]="row.default" [content]="true"></app-text-complicated>
+              </div>
+              <div class="margin-left-8">
+                <button class="btn btn-block btn-secondary" (click)="paint(row)">
+                  <span>Paint</span>
+                </button>
+              </div>
+            </div>
+
+          </td>
+          <td>
+
+            <div>
+              {{isChanged(row)}}
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+    <pagination-controls class="text-center" (pageChange)="setPage($event)"></pagination-controls>
+  </div>
+</div>

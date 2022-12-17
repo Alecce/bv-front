@@ -1,0 +1,590 @@
+<div class="d-flex flex-column margin-64">
+  <div class="d-flex margin-bottom-32">
+    <div class="d-flex flex-column justify-content-end w-100">
+      <div class="d-flex justify-content-end">
+
+        <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="back()">
+          <app-text page="profile" default="Cancel"></app-text>
+        </button>
+        <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="submit()">
+          <app-text page="profile" default="Save changes"></app-text>
+        </button>
+      </div>
+      <div class="d-flex justify-content-end error margin-top-8 margin-right-36">
+        <div class="d-flex flex-row no-validation" *ngIf="form.invalid && showNoValidation">
+          <div class="margin-left-8 margin-right-8">
+            <app-icon-bonvino svgIcon="icn-error-white" class="icn-error"></app-icon-bonvino>
+          </div>
+          <div class="margin-right-8 d-flex align-items-center Error-message-The-b">
+            <app-text page="validation" default="Some fields are invalid"></app-text>
+          </div>
+        </div>
+      </div>
+      <!--<div>-->
+        <!--<app-text page="qwe" default="Cancel"></app-text>-->
+        <!--<app-text page="qwe" default="Cancel"></app-text>-->
+        <!--<app-text page="qwe" default="Cancel"></app-text>-->
+        <!--<app-text page="profile" place="qwe" default="Cancel"></app-text>-->
+        <!--<app-text page="profile" segment="trewq" default="Cancel"></app-text>-->
+
+      <!--</div>-->
+    </div>
+  </div>
+  <div class="d-flex flex-row">
+
+    <form [formGroup]="form" class="d-flex flex-row">
+      <div class="d-flex flex-column flex-half margin-right-36">
+
+        <div class="d-flex flex-column" *ngIf="profile">
+          <div *ngIf="routeData.download && !fileToUpload && profile.image">
+            <img class="cover-image" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+          <div *ngIf="fileToUpload">
+            <img  class="cover-image" [src]="url">
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <div class="d-flex margin-right-20">
+                <input hidden="true" id="image" type='file' (change)="onSelectFile($event)" formControlName="image">
+
+                <label class="btn btn-type-1 text-uppercase field-content" for="image">
+                  <app-text page="wine_list" default="Select"></app-text>
+                </label>
+              </div>
+              <div *ngIf="fileToUpload || profile.image">
+                <button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="deleteImage()">
+                  <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="fileToUpload" class="lines-1 place-of-origin-text margin-left-16">
+              <span>{{fileToUpload.name}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="profile"  default="Profile"></app-text>
+        </div>
+
+        <div class="d-flex flex-fill justify-content-between align-items-end">
+
+          <div class="mandatory"></div>
+
+          <div class="field required align-self-stretch d-flex flex-column flex-even margin-right-20" [ngClass]="isInvalid(first_name) ? 'error' : ''">
+            <div class="d-flex align-items-center flex-row">
+
+              <app-icon-bonvino svgIcon="icn-error-2" class="icn-error-2 margin-right-4 error-only"></app-icon-bonvino>
+              <app-text page="registartion_user" place="first_name" default="First name" class="field-hint"></app-text>
+
+            </div>
+            <input type="text" class="field-input align-self-stretch" formControlName="first_name">
+          </div>
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column flex-even" [ngClass]="isInvalid(last_name) ? 'error' : ''">
+            <div class="d-flex align-items-center flex-row">
+
+              <app-icon-bonvino svgIcon="icn-error-2" class="icn-error-2 margin-right-4 error-only"></app-icon-bonvino>
+              <app-text page="registartion_user" place="last_name" default="Last name" class="field-hint"></app-text>
+
+            </div>
+            <input type="text" class="field-input align-self-stretch" formControlName="last_name">
+          </div>
+
+        </div>
+
+
+
+        <div class="d-flex flex-fill justify-content-between align-items-end">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column flex-even margin-right-20" [ngClass]="isInvalid(email) ? 'error' : ''">
+            <div class="d-flex align-items-center flex-row">
+
+              <app-icon-bonvino svgIcon="icn-error-2" class="icn-error-2 margin-right-4 error-only"></app-icon-bonvino>
+              <app-text page="registartion_user" place="email" default="Email" class="field-hint"></app-text>
+
+            </div>
+            <input type="text" class="field-input align-self-stretch" formControlName="email">
+          </div>
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column flex-even" [ngClass]="isInvalid(username) ? 'error' : ''">
+            <div class="d-flex align-items-center flex-row">
+
+              <app-icon-bonvino svgIcon="icn-error-2" class="icn-error-2 margin-right-4 error-only"></app-icon-bonvino>
+              <app-text page="profile" place="display_name" default="Display name" class="field-hint"></app-text>
+
+            </div>
+            <input type="text" class="field-input align-self-stretch" formControlName="username">
+          </div>
+
+        </div>
+
+
+        <div class="d-flex flex-fill justify-content-between align-items-end">
+
+          <div class="field required align-self-stretch d-flex flex-column flex-even margin-right-20">
+            <app-text page="registartion_user" place="phone" default="Phone" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="phone">
+          </div>
+
+          <div class="field required align-self-stretch d-flex flex-column flex-even">
+          </div>
+
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column align-items-end">
+          <app-checkbox-bonvino formControlName_="name_invisible" [form]="form" #_name_invisible>
+            <app-text page="registartion_user" place="name_invisible" default="Name invisible" (click)="_name_invisible.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+
+
+        <div class="d-flex flex-fill justify-content-between">
+
+
+          <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+            <app-text page="registartion_user" place="birthday" default="Birthday" class="field-hint"></app-text>
+            <input type="date" class="field-input align-self-stretch" formControlName="birthday">
+          </div>
+
+          <div class="field align-self-stretch d-flex flex-column flex-even">
+            <app-text page="registartion_user" place="sex" default="Sex" class="field-hint"></app-text>
+            <app-select-bonvino formControlName_="sex" [form]="form" #_sex>
+              <div select-title>
+                <!--<app-text page="registartion_user" default="Select"-->
+                          <!--[hidden]="sex.value != ''"></app-text>-->
+                <app-text page="registartion_user" place="male" default="Male"
+                          [hidden]="sex.value != '1'"></app-text>
+                <app-text page="registartion_user" place="female" default="Female"
+                          [hidden]="sex.value != '2'"></app-text>
+
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button class="btn btn-option" (click)="_sex.choose('')">
+                  <app-text page="registartion_user" default="Clear input"></app-text>
+                </button>
+                <!--<button class="btn btn-option" (click)="_sex.choose('')">-->
+                  <!--<app-text page="registartion_user" default="Select"></app-text>-->
+                <!--</button>-->
+                <button class="btn btn-option" (click)="_sex.choose('1')">
+                  <app-text page="registartion_user" place="male" default="Male"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_sex.choose('2')">
+                  <app-text page="registartion_user" place="female" default="Female"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+            <div *ngIf="langService.editable">
+              <app-text page="registartion_user" default="Clear input"></app-text>
+              <app-text page="registartion_user" place="male" default="Male"></app-text>
+              <app-text page="registartion_user" place="female" default="Female"></app-text>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="event" default="Country" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="country" [form]="form" #_country>
+            <div select-title>
+              <!--<app-text page="event" place="select" default="Select" [hidden]="country.value != '0'"></app-text>-->
+              <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}" [hidden]="c.id != country.value"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_country.choose('0')">
+                <app-text page="registartion_user" default="Clear input"></app-text>
+              </button>
+              <button *ngFor="let c of countries; let i = index" class="btn btn-option" (click)="_country.choose(c.id)">
+                <app-text page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="registartion_user" default="Clear input"></app-text>
+            <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+          </div>
+        </div>
+
+        <!--<div class="row my-0 py-1">-->
+          <!--<div class="form-group col">-->
+            <!--<small class="form-text text-muted">-->
+              <!--<app-text page="registartion_user" place="country" default="Country"></app-text>-->
+            <!--</small>-->
+            <!--<select id="type" name="type" class="form-control form-control-sm rounded-0" [ngClass]="checkValidation(country)" formControlName="country">-->
+              <!--<option value="0">-->
+                <!--<app-text page="registartion_user" place="select" default="Select"></app-text>-->
+              <!--</option>-->
+              <!--<option *ngFor="let country of countries; let i = index" value="{{countries[i].id}}">-->
+                <!--<app-text page="country_names" place="{{countries[i].name}}" default="{{countries[i].name}}"></app-text>-->
+              <!--</option>-->
+
+              <!--&lt;!&ndash;<app-text page="country_names" place="{{countries[i].name}}" default="{{countries[i].name}}"></app-text>&ndash;&gt;-->
+            <!--</select>-->
+
+            <!--<div *ngIf="langService.editable">-->
+              <!--<app-text page="country_names" *ngFor="let country of countries; let i = index" place="{{countries[i].name}}" default="{{countries[i].name}}"></app-text>-->
+
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+
+        <div class="d-flex flex-fill justify-content-between">
+
+          <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+            <app-text page="registartion_user" place="city" default="City" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="city">
+          </div>
+
+          <div class="field align-self-stretch d-flex flex-column flex-even">
+            <app-text page="login" place="address" default="Address" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="address">
+          </div>
+
+        </div>
+
+        <!--<div class="row my-0 py-1">-->
+
+          <!--<div class="form-group col align-self-end">-->
+            <!--<app-text page="registartion_user" place="city" default="City" *ngIf="langService.editable"></app-text>-->
+            <!--<input type="text" class="form-control form-control-sm rounded-0" [ngClass]="checkValidation(city)" formControlName="city"-->
+                   <!--[placeholder]="langService.getPlaceholder('registartion_user', 'city', 'City')">-->
+          <!--</div>-->
+
+          <!--<div class="form-group col align-self-end">-->
+            <!--<app-text page="login" place="address" default="Address" *ngIf="langService.editable"></app-text>-->
+            <!--<input type="text" class="form-control form-control-sm rounded-0" [ngClass]="checkValidation(address)" formControlName="address"-->
+                   <!--[placeholder]="langService.getPlaceholder('registartion_user', 'address', 'Address')">-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="field align-self-stretch d-flex flex-column align-items-end">
+          <app-checkbox-bonvino formControlName_="address_invisible" [form]="form" #_address_invisible>
+            <app-text page="registartion_user" place="hide_address" default="Address invisible" (click)="_address_invisible.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <!--<div class="row my-0 py-1">-->
+          <!--<div class="form-group col d-flex justify-content-end">-->
+            <!--<div class="pretty p-icon p-smooth">-->
+              <!--<input type="checkbox" formControlName="address_invisible"-->
+                     <!--[checked]="address_invisible.value"-->
+                     <!--(click)="address_invisible.setValue(!address_invisible.value)" />-->
+              <!--<div class="state p-primary">-->
+                <!--<mat-icon svgIcon="check"  class="icon mdi mdi-check checkbox"></mat-icon>-->
+                <!--<label>-->
+                  <!--<app-text page="registartion_user" place="hide_address" default="Address invisible" class="text-muted"></app-text>-->
+                <!--</label>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+        <div class="d-flex flex-fill justify-content-between align-items-end" *ngIf="accountService.properties.type >= 2">
+
+          <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20 justify-content-end">
+            <app-checkbox-bonvino formControlName_="specialist" [form]="form" #_specialist>
+              <app-text page="registartion_user" default="Specialist" (click)="_specialist.check()" class="lines-1"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+          <div class="mandatory" *ngIf="specialist.value"></div>
+          <div class="field align-self-stretch d-flex flex-column flex-even"
+               [ngClass]="[specialist.value ? 'required' : '', (showNoValidation && specialist.value && !specialistName.value) ? 'error' : '']">
+            <div class="d-flex align-items-center flex-row">
+
+              <app-icon-bonvino svgIcon="icn-error-2" class="icn-error-2 margin-right-4 error-only"></app-icon-bonvino>
+              <app-text page="registartion_user" default="Specialist name" class="field-hint"></app-text>
+
+            </div>
+            <input type="text" class="field-input align-self-stretch" formControlName="specialistName">
+          </div>
+
+
+        </div>
+
+
+        <div class="d-flex flex-fill justify-content-between align-items-end" *ngIf="accountService.properties.type >= 2">
+
+
+          <div class="mandatory" *ngIf="specialist.value"></div>
+          <div class="field align-self-stretch d-flex flex-column flex-even"
+               [ngClass]="[specialist.value ? 'required' : '', (showNoValidation && specialist.value && !specialistSystem.value) ? 'error' : '']">
+
+            <div class="d-flex align-items-center flex-row">
+
+              <app-icon-bonvino svgIcon="icn-error-2" class="icn-error-2 margin-right-4 error-only"></app-icon-bonvino>
+              <app-text page="registartion_user" place="system" default="System" class="field-hint"></app-text>
+
+            </div>
+            <app-select-bonvino formControlName_="specialistSystem" [form]="form" #_specialistSystem [invalid]="showNoValidation && specialist.value && !specialistSystem.value">
+              <div select-title>
+                <!--<app-text page="registartion_user" default="Clear input"-->
+                          <!--[hidden]="specialistSystem.value != ''"></app-text>-->
+                <app-text page="point_system" default="5 star system"
+                          [hidden]="specialistSystem.value != '5'"></app-text>
+                <app-text page="point_system" default="20 points system"
+                          [hidden]="specialistSystem.value != '20'"></app-text>
+                <app-text page="point_system" default="100 points system"
+                          [hidden]="specialistSystem.value != '100'"></app-text>
+
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button class="btn btn-option" (click)="_specialistSystem.choose('')">
+                  <app-text page="registartion_user" default="Clear input"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_specialistSystem.choose('5')">
+                  <app-text page="point_system" default="5 star system"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_specialistSystem.choose('20')">
+                  <app-text page="point_system" default="20 points system"></app-text>
+                </button>
+                <button class="btn btn-option" (click)="_specialistSystem.choose('100')">
+                  <app-text page="point_system" default="100 points system"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+            <div *ngIf="langService.editable">
+              <app-text page="registartion_user" default="Clear input"></app-text>
+              <app-text page="point_system" default="5 star system"></app-text>
+              <app-text page="point_system" default="20 points system"></app-text>
+              <app-text page="point_system" default="100 points system"></app-text>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column"  *ngIf="accountService.properties.type >= 2">
+          <app-checkbox-bonvino formControlName_="collector" [form]="form" #_collector>
+            <app-text page="registartion_user" default="Collector" (click)="_collector.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+      </div>
+      <div class="d-flex flex-column flex-half justify-content-start" formGroupName="passwords">
+
+      <div  class="heading-2 left-bold-border">
+        <app-text page="profile"  default="Password"></app-text>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="registartion_user" default="Current password" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="password_current">
+      </div>
+
+      <!--<div class="row my-0 py-1">-->
+
+        <!--<div class="form-group col" formGroupName="passwords">-->
+          <!--<app-text page="registartion_user" place="password" default="Password" *ngIf="langService.editable"></app-text>-->
+          <!--<input type="password" class="form-control form-control-sm rounded-0" formControlName="password_current"-->
+                 <!--[placeholder]="langService.getPlaceholder('profile', 'password', 'Current password')">-->
+        <!--</div>-->
+
+      <!--</div>-->
+
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="registartion_user" place="password" default="Password" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="password">
+      </div>
+
+      <!--<div class="row my-0 py-1">-->
+
+        <!--<div class="form-group col" formGroupName="passwords">-->
+          <!--<app-text page="registartion_user" place="password" default="Password" *ngIf="langService.editable"></app-text>-->
+          <!--<input type="password" class="form-control form-control-sm rounded-0" formControlName="password"-->
+                 <!--[placeholder]="langService.getPlaceholder('profile', 'password', 'New password')">-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+
+
+      <div class="field align-self-stretch d-flex flex-column flex-even">
+        <app-text page="login" place="confirm_password" default="Confirm password" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="password_confirmation">
+      </div>
+
+      <!--<div class="row my-0 py-1">-->
+
+        <!--<div class="form-group col" formGroupName="passwords">-->
+          <!--<app-text page="login" place="confirm_password" default="Confirm password" *ngIf="langService.editable"></app-text>-->
+          <!--<input type="password" class="form-control form-control-sm rounded-0" formControlName="password_confirmation"-->
+                 <!--[placeholder]="langService.getPlaceholder('profile', 'confirm_password', 'New password (again)')">-->
+        <!--</div>-->
+
+      <!--</div>-->
+
+
+    </div>
+    </form>
+  </div>
+</div>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="profile" default="Cancel"></app-text>
+
+  <app-text page="profile" default="Save changes"></app-text>
+
+  <app-text page="wine_list" default="Select"></app-text>
+
+  <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+
+  <app-text page="profile"  default="Profile"></app-text>
+
+  <app-text page="registartion_user" place="first_name" default="First name" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="last_name" default="Last name" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="email" default="Email" class="field-hint"></app-text>
+
+  <app-text page="profile" place="display_name" default="Display name" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="name_invisible" default="Name invisible" class="lines-1"></app-text>
+
+  <app-text page="registartion_user" place="birthday" default="Birthday" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="sex" default="Sex" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="male" default="Male"
+            [hidden]="sex.value != '1'"></app-text>
+  <app-text page="registartion_user" place="female" default="Female"
+            [hidden]="sex.value != '2'"></app-text>
+
+  <app-text page="registartion_user" default="Clear input"></app-text>
+  <app-text page="registartion_user" place="male" default="Male"></app-text>
+  <app-text page="registartion_user" place="female" default="Female"></app-text>
+
+  <app-text page="event" default="Country" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" default="Clear input"></app-text>
+  <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+
+
+  <app-text page="registartion_user" place="city" default="City" class="field-hint"></app-text>
+
+  <app-text page="login" place="address" default="Address" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="hide_address" default="Address invisible" class="lines-1"></app-text>
+
+  <app-text page="registartion_user" default="Specialist" class="lines-1"></app-text>
+
+  <app-text page="registartion_user" default="Specialist name" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="system" default="System" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" default="Clear input"></app-text>
+  <app-text page="point_system" default="5 star system"></app-text>
+  <app-text page="point_system" default="20 points system"></app-text>
+  <app-text page="point_system" default="100 points system"></app-text>
+
+  <app-text page="registartion_user" default="Collector" class="lines-1"></app-text>
+
+  <app-text page="profile"  default="Password"></app-text>
+
+  <app-text page="registartion_user" default="Current password" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="password" default="Password" class="field-hint"></app-text>
+
+  <app-text page="login" place="confirm_password" default="Confirm password" class="field-hint"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

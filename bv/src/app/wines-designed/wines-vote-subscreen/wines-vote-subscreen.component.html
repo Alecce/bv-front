@@ -1,0 +1,727 @@
+<form [formGroup]="form" class="margin-32-8-32-32 scrollbar">
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-between margin-bottom-32">
+      <div class="menu-first d-flex flex-row justify-content-start align-items-end">
+
+        <button class="btn btn-menu-first menu-2-regular mr-0" *ngFor="let s of systems; let i = index" [ngClass]="[getTabColor(s.value), getMarginleft(i)]" (click)="choseSystem(s.value)">
+          <app-text page="wines_votes" default="{{s.name}}"></app-text>
+        </button>
+      </div>
+
+      <div class="d-flex flex-column justify-content-end">
+        <div class="d-flex flex-row justify-content-between align-content-end mb-0">
+          <div class="d-flex flex-column justify-content-end menu-top">
+
+            <div class="field align-self-end d-flex flex-column mb-0">
+              <app-text page="wines_votes" default="Role" class="field-hint"></app-text>
+              <app-select-bonvino formControlName_="role" [form]="form" #_role>
+                <div select-title>
+                  <span *ngFor="let r of roleList; let i = index" [hidden]="role.value != r.idOption">
+                    {{r.type}} - {{r.name}}
+                  </span>
+                </div>
+                <div options class="d-flex flex-column align-items-start select-list-options">
+                  <button class="btn btn-option" *ngFor="let r of roleList; let i = index"
+                          (click)="_role.choose(r.idOption)" [hidden]="r.type != 'person' && r.type != 'specialist'">
+                    {{r.type}} - {{r.name}}
+                  </button>
+                </div>
+              </app-select-bonvino>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column margin-bottom-32">
+      <div>
+        <app-text page="wines_votes" default="Previous votes"></app-text>
+      </div>
+      <div *ngFor="let vote of previousVotes">
+        <div *ngIf="vote.specialist">
+
+          <app-text-complicated page="wines_votes" default="As specialist ***: "  class="d-inline-block"
+                                #country__>
+
+            <span  *appTransclude>{{vote.specialist}}</span>
+            <!--<app-text *appTransclude page="country_names" place="{{wineData.regionInfo.country}}" default="{{countriesMap.get(wineData.regionInfo.country)}}"></app-text>-->
+          </app-text-complicated>
+          <span class="whitespace-pre" *ngIf="vote.points">{{vote.points | number: '1.0-1'}}/{{vote.system}}</span>
+
+          <span *ngIf="vote.points && vote.price" class="whitespace-pre">, </span>
+
+          <app-text-complicated page="wines_votes" default="price *** NIS" class="d-inline-block" *ngIf="vote.price"
+                                #country__>
+
+            <span  *appTransclude>{{vote.price}}</span>
+            <!--<app-text *appTransclude page="country_names" place="{{wineData.regionInfo.country}}" default="{{countriesMap.get(wineData.regionInfo.country)}}"></app-text>-->
+          </app-text-complicated>
+          <!--<app-text page="wines_votes" default="As specialist"></app-text><span> {{vote.specialist}} - {{vote.points | number: '1.0-1'}}/{{vote.system}}</span>-->
+        </div>
+        <div *ngIf="!vote.specialist">
+
+
+
+          <app-text page="wines_votes" default="As user: "></app-text>
+          <!--<app-text-complicated page="wines_votes" default="As user ***: " class="d-inline-block"-->
+                                <!--#country__>-->
+
+            <!--<span  *appTransclude>{{vote.specialist}}</span>-->
+            <!--&lt;!&ndash;<app-text *appTransclude page="country_names" place="{{wineData.regionInfo.country}}" default="{{countriesMap.get(wineData.regionInfo.country)}}"></app-text>&ndash;&gt;-->
+          <!--</app-text-complicated>-->
+          <span class="whitespace-pre" *ngIf="vote.points"> {{vote.points | number: '1.0-1'}}/{{vote.system}}</span>
+
+          <span *ngIf="vote.points && vote.price" class="whitespace-pre">, </span>
+
+          <app-text-complicated page="wines_votes" default="price *** NIS" class="d-inline-block" *ngIf="vote.price"
+                                #country__>
+
+            <span  *appTransclude>{{vote.price}}</span>
+            <!--<app-text *appTransclude page="country_names" place="{{wineData.regionInfo.country}}" default="{{countriesMap.get(wineData.regionInfo.country)}}"></app-text>-->
+          </app-text-complicated>
+
+          <!--<app-text page="wines_votes" default="As user"></app-text><span> {{vote.specialist}} - {{vote.points | number: '1.0-1'}}/{{vote.system}}</span>-->
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="system.value=='system5' || system.value=='system5_2'">
+      <div class="d-flex">
+
+        <span *ngFor="let rating of [1, 2, 3, 4, 5]; let i = index" class="margin-right-4">
+          <app-icon-bonvino svgIcon="icn-star" class="icn-star" link="stroke" *ngIf="!score.value || score.value < rating" (click)="starRate(rating)"></app-icon-bonvino>
+          <app-icon-bonvino svgIcon="icn-star-filled" class="icn-star-filled" link="both" *ngIf="score.value && score.value >= rating" (click)="starRate(rating)"></app-icon-bonvino>
+        </span>
+      </div>
+
+    </div>
+
+
+    <div *ngIf="system.value=='systemAny'">
+
+      <div class="d-flex flex-fill justify-content-between margin-bottom-64" formGroupName="full">
+
+
+        <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+          <app-text page="wines_votes" default="Mark" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="_result">
+        </div>
+
+        <!--<div class="field align-self-stretch d-flex flex-column flex-even">-->
+          <!--<app-text page="wines_votes" default="Maximum" class="field-hint"></app-text>-->
+          <!--<input type="text" class="field-input align-self-stretch" formControlName="_maximum">-->
+
+
+
+          <!---->
+          <!---->
+        <!--</div>-->
+
+
+        <div class="field align-self-stretch d-flex flex-column flex-even">
+          <app-text page="registartion_user" place="system" default="System" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="_maximum" [form]="fullData" #_specialistSystem>
+            <div select-title>
+              <!--<app-text page="registartion_user" default="Clear input"-->
+              <!--[hidden]="specialistSystem.value != ''"></app-text>-->
+              <app-text page="point_system" default="5 star system"
+                        [hidden]="fullData.get('_maximum').value != '5'"></app-text>
+              <app-text page="point_system" default="20 points system"
+                        [hidden]="fullData.get('_maximum').value != '20'"></app-text>
+              <app-text page="point_system" default="100 points system"
+                        [hidden]="fullData.get('_maximum').value != '100'"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_specialistSystem.choose('')">
+                <app-text page="registartion_user" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_specialistSystem.choose('5')">
+                <app-text page="point_system" default="5 star system"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_specialistSystem.choose('20')">
+                <app-text page="point_system" default="20 points system"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_specialistSystem.choose('100')">
+                <app-text page="point_system" default="100 points system"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="registartion_user" default="Clear input"></app-text>
+            <app-text page="point_system" default="5 star system"></app-text>
+            <app-text page="point_system" default="20 points system"></app-text>
+            <app-text page="point_system" default="100 points system"></app-text>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <div *ngIf="system.value=='system20'">
+
+      <div formGroupName="full">
+        <div class="d-flex w-100">
+
+          <div class="d-flex flex-column flex-even margin-right-36" *ngFor="let c of threeCols; let i = index" [ngClass]="getMarginleft(i)">
+
+            <div *ngFor="let system of systemToShow">
+              <div *ngFor="let select of system.selects">
+                <div>
+                  <div *ngIf="c == select.colNumber" class="d-flex flex-column">
+
+                    <div  class="heading-2">
+                      <app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}"></app-text>
+                    </div>
+
+                    <div *ngFor="let option of select.options; let i=index" class="margin-bottom-4">
+
+
+                      <app-radio-bonvino formControlName_="{{system.part + '_' + select.criteria}}" [form]="fullData" value_="{{option.cost}}" #_radio>
+                        <app-text page="wines_votes" place="{{langService.morphStr(option.name)}}" default="{{option.name}}" (click)="_radio.check()" class="lines-1 margin-left-8"></app-text>
+                      </app-radio-bonvino>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div *ngIf="system.value=='system100'">
+
+      <table class="table table-borderless" formGroupName="full">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col" *ngFor="let option of system100[0].selects[0].options; let i=index" class="width-20 text-center">
+                <app-text page="wines_votes" place="{{langService.morphStr(system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name)}}"
+                          default="{{system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name}}" class="lines-1 font-weight-bold"></app-text>
+
+              </th>
+
+            </tr>
+            </thead>
+            <tbody *ngFor="let system of systemToShow">
+
+              <tr *ngFor="let select of system.selects; let j=index">
+                <td>
+                  <app-text page="wines_votes" place="{{langService.morphStr(system.part)}}" default="{{system.part}}" class="lines-1 font-weight-bold" *ngIf="j == 0"></app-text>
+                </td>
+                <td>
+                  <app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}" class="lines-1"></app-text>
+                </td>
+                <td *ngFor="let option of select.options; let i=index" class="width-20 px-0">
+                  <div class="d-flex">
+                    <div class="border-bottom-4-chrome my-auto h-50 flex-fill" *ngIf="i != 0"></div>
+                    <div class="my-auto h-50 flex-fill" *ngIf="i == 0"></div>
+                    <app-radio-bonvino formControlName_="{{system.part + '_' + select.criteria}}" [form]="fullData" value_="{{select.options[select.options.length - 1 - i].cost}}" #_radio
+                                       [matTooltip]="select.options[select.options.length - 1 - i].name"
+                                       matTooltipPosition="above"
+                    >
+                    </app-radio-bonvino>
+
+                    <div class="my-auto h-50 flex-fill" *ngIf="i == 4"></div>
+                    <div class="border-bottom-4-chrome my-auto h-50 flex-fill" *ngIf="i != 4"></div>
+                  </div>
+                </td>
+              </tr>
+            <!--</div>-->
+            </tbody>
+          </table>
+
+    </div>
+
+
+
+    <div class="w-50 margin-top-20">
+
+      <div class="d-flex flex-fill justify-content-between margin-bottom-64">
+        <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+          <app-text page="wines_votes" default="Price" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="price">
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="field align-self-stretch d-flex flex-column flex-even">-->
+    <!--<app-text page="wines_votes" default="Maximum" class="field-hint"></app-text>-->
+    <!--<input type="text" class="field-input align-self-stretch" formControlName="_maximum">-->
+
+
+
+    <!---->
+    <!---->
+    <!--</div>-->
+
+
+
+
+    <div class="d-flex justify-content-end align-items-center">
+      <div class="d-flex justify-content-between margin-right-36" *ngIf="system.value!='system5' && system.value!='system5_2' && system.value!='systemAny'">
+        <app-text page="wines_votes" default="Total score:" class="lines-1"></app-text>
+        <span class="lines-1 font-weight-bold"> {{result}}</span>
+      </div>
+
+      <div class="d-flex justify-content-between">
+
+        <button class="btn btn-type-1 text-uppercase field-content margin-right-36"  (click)="close()">
+          <app-text page="event" default="Close"></app-text>
+        </button>
+        <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="submit()">
+          <app-text page="wines"  default="Vote"></app-text>
+        </button>
+        <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="clearVotes()">
+          <app-text page="wines"  default="Delete previous marks"></app-text>
+        </button>
+      </div>
+    </div>
+
+
+    <!--<div class="row mt-2 pt-2">-->
+      <!--<div class="col">-->
+
+        <!--<div class="row" *ngIf="system.value!='system5' && system.value!='system5_2' && system.value!='systemAny'">-->
+          <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+          <!--<div class="col">-->
+
+          <!--</div>-->
+          <!--<div class="form-group col-auto">-->
+            <!--<app-text page="wines_votes" default="Total score:" class="text-muted font-weight-bold"></app-text>-->
+            <!--<span class="text-muted font-weight-bold">{{result}}</span>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+
+
+          <!--<div class="col">-->
+
+          <!--</div>-->
+          <!--<div class="col-auto">-->
+            <!--<button class="btn btn-info btn-sm" (click)="close()">-->
+              <!--<app-text page="event" default="Close"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+          <!--<div class="col-auto">-->
+            <!--&lt;!&ndash;<div class="row my-0 py-1">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col my-auto d-flex  justify-content-center">&ndash;&gt;-->
+            <!--<button class="btn btn-info btn-sm" (click)="submit()">-->
+              <!--<app-text page="wines"  default="Vote"></app-text>-->
+            <!--</button>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+
+
+  </div>
+</form>
+
+
+
+
+
+
+<!--<div class="row">-->
+  <!--<div class="col" *ngIf="(accountService.currentRole | async).type == 'specialist'">-->
+
+    <!--<app-text page="wines_votes" default="You voting as specialist now"></app-text><span> {{(accountService.currentRole | async).name}}</span>-->
+
+  <!--</div>-->
+  <!--<div class="col" *ngIf="(accountService.currentRole | async).type != 'specialist'">-->
+
+    <!--<app-text page="wines_votes" default="You voting as user now"></app-text><span> {{(cookies | async).login}}</span>-->
+
+  <!--</div>-->
+<!--</div>-->
+<!--<div class="row mt-2 pt-2">-->
+  <!--<div class="col">-->
+    <!--Your previous votes:-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div class="row" *ngFor="let vote of previousVotes">-->
+  <!--<div class="col" *ngIf="vote.specialist">-->
+    <!--<app-text page="wines_votes" default="As specialist"></app-text><span> {{vote.specialist}} - {{vote.points | number: '1.0-1'}}/{{vote.system}}</span>-->
+  <!--</div>-->
+  <!--<div class="col" *ngIf="!vote.specialist">-->
+    <!--<app-text page="wines_votes" default="As user"></app-text><span> {{vote.specialist}} - {{vote.points | number: '1.0-1'}}/{{vote.system}}</span>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<form [formGroup]="form">-->
+  <!--<div class="row">-->
+    <!--<div class="col-auto mr-0 pr-0">-->
+
+      <!--<div class="row mr-0 pr-0 my-2 d-flex justify-content-end" *ngFor="let s of systems">-->
+
+        <!--<button class="btn btn-sm btn-block rounded-0" [ngClass]="getTabColor()" (click)="choseSystem(s.value)">-->
+          <!--<app-text page="wines_votes" default="{{s.name}}"></app-text>-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="col border-left-3-lightgray" *ngIf="system.value=='system20'">-->
+      <!--<div class="row" formGroupName="full">-->
+        <!--<div class="col" *ngFor="let c of threeCols">-->
+          <!--<div *ngFor="let system of systemToShow">-->
+            <!--<div *ngFor="let select of system.selects">-->
+              <!--<div>-->
+                <!--<div *ngIf="c == select.colNumber">-->
+                  <!--<div class="row">-->
+                    <!--<div class="form-group col">-->
+                      <!--<app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}" class="text-muted font-weight-bold"></app-text>-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+                  <!--<div class="row" *ngFor="let option of select.options; let i=index">-->
+                    <!--<div class="form-group col">-->
+
+                      <!--<div class="pretty p-default p-round">-->
+                        <!--<input type="radio" value="{{option.cost}}" formControlName="{{system.part + '_' + select.criteria}}">-->
+                        <!--<div class="state p-primary">-->
+                          <!--<label>-->
+                            <!--<app-text page="wines_votes" place="{{langService.morphStr(option.name)}}" default="{{option.name}}"></app-text>-->
+                          <!--</label>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                      <!--<app-text page="wines_votes" place="{{langService.morphStr(option.name)}}" default="{{option.name}}" *ngIf="langService.editable"></app-text>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col border-left-3-lightgray" *ngIf="system.value=='system100'">-->
+      <!--<div class="row" formGroupName="full">-->
+        <!--<div class="col">-->
+
+          <!--<div class="row">-->
+            <!--<div class="col-8 offset-2">-->
+              <!--<div class="row">-->
+                <!--<div class="col offset-3">-->
+                  <!--<div class="row">-->
+                    <!--<div class="col d-flex justify-content-center" *ngFor="let option of system100[0].selects[0].options; let i=index">-->
+                      <!--<app-text page="wines_votes" place="{{langService.morphStr(system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name)}}"-->
+                                <!--default="{{system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name}}" class="small text-muted"></app-text>-->
+
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="row" *ngFor="let system of systemToShow">-->
+            <!--<div class="col-2">-->
+              <!--<app-text page="wines_votes" place="{{langService.morphStr(system.part)}}" default="{{system.part}}" class="text-muted font-weight-bold"></app-text>-->
+            <!--</div>-->
+            <!--<div class="col-8">-->
+              <!--<div class="row" *ngFor="let select of system.selects; let j=index">-->
+                <!--<div class="col-3">-->
+                  <!--<app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}" class="text-muted"></app-text>-->
+                <!--</div>-->
+                <!--<div class="col" *ngFor="let option of select.options; let i=index">-->
+                  <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="col">&ndash;&gt;-->
+                  <!--&lt;!&ndash;&ndash;&gt;-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                  <!--<div class="row">-->
+
+                    <!--<div class="col">-->
+                      <!--<div class="row border-bottom-4-chrome my-auto h-50" *ngIf="i != 0"></div>-->
+                      <!--<div class="row my-auto"></div>-->
+                    <!--</div>-->
+                    <!--<div class="col-auto mx-0 px-0">-->
+                      <!--<div class="row">-->
+                        <!--<div class="col">-->
+                          <!--<div class="pretty p-default p-round mr-0">-->
+                            <!--<input type="radio" value="{{select.options[select.options.length - 1 - i].cost}}" formControlName="{{system.part + '_' + select.criteria}}" mat-raised-button-->
+                                   <!--[matTooltip]="select.options[select.options.length - 1 - i].name"-->
+                                   <!--matTooltipPosition="above"-->
+                            <!--&gt;-->
+                            <!--<div class="state p-primary">-->
+                              <!--<label>-->
+                              <!--</label>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col">-->
+                      <!--<div class="row border-bottom-4-chrome my-auto h-50" *ngIf="i != 4"></div>-->
+                      <!--<div class="row my-auto"></div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col border-left-3-lightgray" *ngIf="system.value=='system5' || system.value=='system5_2'">-->
+      <!--<div formGroupName="full">-->
+        <!--<div class="row">-->
+          <!--<div class="col-4 offset-4">-->
+            <!--<div>-->
+
+              <!--<ng-template #star let-fill="fill">-->
+                <!--<span class="star" [class.full]="fill === 100">-->
+                  <!--<span class="half" [style.width.%]="fill">&#9733;</span>&#9733;-->
+                <!--</span>-->
+              <!--</ng-template>-->
+              <!--<ng-template #heart let-fill="fill">-->
+                <!--<span class="star" [class.full]="fill === 100">-->
+                  <!--<span class="half" [style.width.%]="fill">&hearts;</span>&hearts;-->
+                <!--</span>-->
+              <!--</ng-template>-->
+              <!--<ngb-rating *ngIf="system.value=='system5'" [(rate)]="currentRateHearts" [starTemplate]="heart" (click)="starRate()" (rateChange)="rateChange(value)"></ngb-rating>-->
+              <!--<ngb-rating *ngIf="system.value=='system5_2'" [(rate)]="currentRateStars" [starTemplate]="star" (click)="starRate()" (rateChange)="rateChange(value)"></ngb-rating>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col border-left-3-lightgray" *ngIf="system.value=='systemAny'">-->
+      <!--<div formGroupName="full">-->
+        <!--<div class="row">-->
+          <!--<div class="col-4">-->
+
+
+            <!--<div class="row my-0 py-1">-->
+              <!--<div class="form-group col">-->
+                <!--<app-text page="wines_votes" default="Mark" class="small text-muted"></app-text>-->
+                <!--<input type="number" class="form-control form-control-sm rounded-0" formControlName="_result"-->
+                       <!--[placeholder]="langService.getPlaceholder('wines', 'mark', 'Mark')">-->
+              <!--</div>-->
+            <!--</div>-->
+
+
+            <!--<div class="row my-0 py-1">-->
+              <!--<div class="form-group col">-->
+                <!--<app-text page="wines_votes" default="Maximum" class="small text-muted"></app-text>-->
+                <!--<input type="number" class="form-control form-control-sm rounded-0" formControlName="_maximum"-->
+                       <!--[placeholder]="langService.getPlaceholder('wines', 'maximum', 'Maximum')">-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</form>-->
+
+<!--<div class="row mt-2 pt-2">-->
+  <!--<div class="col">-->
+
+    <!--<div class="row" *ngIf="system.value!='system5' && system.value!='system5_2' && system.value!='systemAny'">-->
+      <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+      <!--<div class="col">-->
+
+      <!--</div>-->
+      <!--<div class="form-group col-auto">-->
+        <!--<app-text page="wines_votes" default="Total score:" class="text-muted font-weight-bold"></app-text>-->
+        <!--<span class="text-muted font-weight-bold">{{result}}</span>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+
+
+      <!--<div class="col">-->
+
+      <!--</div>-->
+      <!--<div class="col-auto">-->
+        <!--<button class="btn btn-info btn-sm" (click)="close()">-->
+          <!--<app-text page="event" default="Close"></app-text>-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<div class="col-auto">-->
+        <!--&lt;!&ndash;<div class="row my-0 py-1">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="col my-auto d-flex  justify-content-center">&ndash;&gt;-->
+            <!--<button class="btn btn-info btn-sm" (click)="submit()">-->
+              <!--<app-text page="wines"  default="Vote"></app-text>-->
+            <!--</button>-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--Words for translater-->
+
+<div [hidden]="true"  [formGroup]="form">
+
+
+  <app-text page="wines_votes" default="Role" class="field-hint"></app-text>
+
+  <app-text page="wines_votes" default="Previous votes"></app-text>
+
+  <app-text page="wines_votes" default="As specialist"></app-text>
+
+  <app-text page="wines_votes" default="As user"></app-text>
+
+  <app-text page="wines_votes" default="Mark" class="field-hint"></app-text>
+
+  <app-text page="registartion_user" place="system" default="System" class="field-hint"></app-text>
+
+  <app-text page="point_system" default="5 star system"></app-text>
+  <app-text page="point_system" default="20 points system"></app-text>
+  <app-text page="point_system" default="100 points system"></app-text>
+
+
+  <div formGroupName="full">
+    <div class="d-flex w-100">
+
+      <div class="d-flex flex-column flex-even margin-right-36" *ngFor="let c of threeCols; let i = index" [ngClass]="getMarginleft(i)">
+
+        <div *ngFor="let system of systemToShow">
+          <div *ngFor="let select of system.selects">
+            <div>
+              <div *ngIf="c == select.colNumber" class="d-flex flex-column">
+
+                <div  class="heading-2">
+                  <app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}"></app-text>
+                </div>
+
+                <div *ngFor="let option of select.options; let i=index" class="margin-bottom-4">
+
+
+                  <app-radio-bonvino formControlName_="{{system.part + '_' + select.criteria}}" [form]="fullData" value_="{{option.cost}}" #_radio>
+                    <app-text page="wines_votes" place="{{langService.morphStr(option.name)}}" default="{{option.name}}" (click)="_radio.check()" class="lines-1 margin-left-8"></app-text>
+                  </app-radio-bonvino>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-borderless" formGroupName="full">
+    <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col" *ngFor="let option of system100[0].selects[0].options; let i=index" class="width-20 text-center">
+        <app-text page="wines_votes" place="{{langService.morphStr(system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name)}}"
+                  default="{{system100[0].selects[0].options[system100[0].selects[0].options.length - 1 - i].name}}" class="lines-1 font-weight-bold"></app-text>
+
+      </th>
+
+    </tr>
+    </thead>
+    <tbody *ngFor="let system of systemToShow">
+
+    <tr *ngFor="let select of system.selects; let j=index">
+      <td>
+        <app-text page="wines_votes" place="{{langService.morphStr(system.part)}}" default="{{system.part}}" class="lines-1 font-weight-bold" *ngIf="j == 0"></app-text>
+      </td>
+      <td>
+        <app-text page="wines_votes" place="{{langService.morphStr(select.criteria)}}" default="{{select.criteria}}" class="lines-1"></app-text>
+      </td>
+      <td *ngFor="let option of select.options; let i=index" class="width-20 px-0">
+        <div class="d-flex">
+          <div class="border-bottom-4-chrome my-auto h-50 flex-fill" *ngIf="i != 0"></div>
+          <div class="my-auto h-50 flex-fill" *ngIf="i == 0"></div>
+          <app-radio-bonvino formControlName_="{{system.part + '_' + select.criteria}}" [form]="fullData" value_="{{select.options[select.options.length - 1 - i].cost}}" #_radio
+                             [matTooltip]="select.options[select.options.length - 1 - i].name"
+                             matTooltipPosition="above"
+          >
+          </app-radio-bonvino>
+
+          <div class="my-auto h-50 flex-fill" *ngIf="i == 4"></div>
+          <div class="border-bottom-4-chrome my-auto h-50 flex-fill" *ngIf="i != 4"></div>
+        </div>
+      </td>
+    </tr>
+    <!--</div>-->
+    </tbody>
+  </table>
+
+  <app-text page="wines_votes" default="Total score:" class="lines-1"></app-text>
+
+  <app-text page="event" default="Close"></app-text>
+
+  <app-text page="wines"  default="Vote"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

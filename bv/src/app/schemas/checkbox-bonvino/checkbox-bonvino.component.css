@@ -1,0 +1,126 @@
+.checkbox-bonvino {
+  width: 16px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  border-radius: 2px;
+  border: solid 1px var(--wine);
+  margin-right: 8px;
+  margin-bottom: 2px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .checkbox-bonvino {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .checkbox-bonvino {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    border-radius: 4px;
+    margin-right: 16px;
+    margin-bottom: 0;
+  }
+}
+
+.mouse-over-check:not(.disabled-checkbox) {
+  cursor: pointer;
+}
+
+::ng-deep .mouse-over-check:hover .checkbox-bonvino {
+  border: solid 1px var(--black);
+}
+
+.disabled-checkbox .checkbox-bonvino {
+  border: solid 1px var(--chrome);
+}
+.checkmark-wine {
+  display: flex !important;
+}
+.disabled-checkbox .checkmark-wine {
+  display: none !important;
+}
+.mouse-over-check:hover .checkmark-wine {
+  display: none !important;
+}
+.btn-none:active .checkmark-wine {
+  display: none !important;
+}
+
+.checkmark-black {
+  display: none !important;
+}
+.disabled-checkbox .checkmark-black {
+  display: none !important;
+}
+.mouse-over-check:hover:not(.disabled-checkbox):not(.btn-none:active) .checkmark-black {
+  display: flex !important;
+}
+.btn-none:active .checkmark-black {
+  display: none !important;
+}
+
+
+.checkmark-chrome {
+  display: none !important;
+}
+.disabled-checkbox .checkmark-chrome {
+  display: flex !important;
+}
+.mouse-over-check:hover:not(.disabled-checkbox)  .checkmark-chrome {
+  display: none !important;
+}
+
+.checkmark-pressed {
+  display: none !important;
+}
+.btn-none:active:not(.disabled-checkbox) .checkmark-pressed {
+  display: flex !important;
+}
+
+::ng-deep .btn-none {
+  padding: 0;
+
+}
+
+
+::ng-deep .disabled-checkbox .lines-1 {
+
+  color: var(--chrome);
+  cursor: default;
+}
+
+
+
+::ng-deep mat-icon svg {
+
+}
+mat-icon.icn-checkbox {
+  height: 14px !important;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable mat-icon.icn-checkbox {
+    height: 35px !important;
+    width: 35px !important;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable mat-icon.icn-checkbox {
+    height: 28px !important;
+    width: 28px !important;
+  }
+}
+
+.btn-radio-bonvino {
+  /*height: 30px;*/
+}
+
+.btn-radio-bonvino div:hover {
+  /*height: 30px;*/
+  cursor: pointer;
+}

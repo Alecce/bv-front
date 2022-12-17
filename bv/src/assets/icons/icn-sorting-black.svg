@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="8px" viewBox="0 0 12 8" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>icn-sorting</title>
+    <desc>Created with Sketch.</desc>
+    <g id="UI-Kit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g transform="translate(-1098.000000, -1136.000000)" fill="#D8D8D8" id="icn-sorting" stroke="#000000">
+            <g transform="translate(1099.000000, 1136.000000)">
+                <g id="Group" fill="none">
+                    <line x1="0" y1="1" x2="10" y2="1" id="Path" stroke-width="2"></line>
+                    <line x1="2" y1="4" x2="8" y2="4" id="Path" stroke-width="2"></line>
+                    <line x1="4" y1="7" x2="6" y2="7" id="Path" stroke-width="2"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

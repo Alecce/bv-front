@@ -1,0 +1,131 @@
+.winery-item{
+  white-space: normal;
+}
+.border-bottom-2{
+  border-bottom: 2px solid darkgray;
+}
+.rounded-top{
+  border-radius: 5px 5px 0 0;
+}
+
+.border-1{
+  border: 1px solid darkgray;
+}
+
+.wine-card{
+  font-size: 80%;
+  font-weight: lighter;
+}
+.height-200px{
+  max-height: 200px;
+}
+.max-heigth-100px{
+  max-height: 100px;
+}
+
+.border-bottom-4-chrome{
+  border-bottom: lightgray solid 1px;
+}
+
+
+
+.heading-1 {
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+.field-hint {
+  margin-bottom: 2px;
+}
+.field {
+  margin-bottom: 16px;
+}
+.place-of-origin-text {
+  margin-top: 12px;
+  line-height: 26px;
+}
+.select-list-options-full {
+  height: 100%;
+  margin-left: 16px;
+  margin-bottom: 16px;
+}
+.menu-top {
+  margin: 0 48px 0 16px;
+}
+.main-menu {
+  margin-right: 32px;
+  margin-bottom: 32px;
+
+}
+.cards-block {
+  margin-top: 24px;
+}
+.card-event {
+  min-width: 320px;
+  max-width: 640px;
+  min-height: 224px;
+  border-radius: 4px;
+  /*box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);*/
+  margin-right: 32px;
+  margin-bottom: 22px;
+}
+.card-event-image {
+  height: 160px;
+  width: 100%;
+  margin: 0 0 0 0;
+}
+
+.card-event-image img {
+  /*min-width: 104px;*/
+  height: 160px;
+  width: 100%;
+  object-fit: cover;
+  /*border: solid 2px var(--ocean);*/
+}
+
+.card-image img:hover {
+  /*border: solid 2px var(--wine);*/
+}
+.card-text {
+  margin: 20px 0 12px 0;
+}
+.card-buttons {
+  margin: 16px;
+}
+.card-place-of-origin {
+  /*margin-top: 16px;*/
+}
+.card-wine-name {
+  margin-top: 2px;
+}
+.card-winery-name {
+  margin-top: 2px;
+}
+.card-year, .card-type, .card-alcohol {
+  margin-top: 4px;
+}
+.card-cost {
+  margin-bot: 12px;
+}
+.icn-sorting {
+  margin-left: 4px;
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+}
+.reverse {
+  transform: rotate(180deg);
+  transform-origin: 50% 80%;
+}
+.winery-title {
+  margin: 0 32px 0 32px;
+}
+
+.margin-top-8 {
+  margin-top: 8px;
+}
+
+::ng-deep .wide-left-bar {
+  width: 400px;
+  min-width: 400px;
+  margin: 0 32px 24px 64px;
+}

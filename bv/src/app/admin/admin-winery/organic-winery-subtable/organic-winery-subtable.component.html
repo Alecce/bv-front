@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col text-center my-auto">
+        <app-text page="winery_specification" place="organic" default="Organic:"></app-text>
+      </label>
+    </div>
+    <div *ngFor="let o of organicList" formGroupName="organics">
+      <div  class="form-group row">
+        <label class="col-4 offset-4 text-right my-auto">{{o.name}}:</label>
+        <input class="my-auto" type="checkbox" formControlName="{{o.id}}" (click)="uncheckOrganic(o.id)">
+      </div>
+    </div>
+
+    <div>
+      <app-superlist [tableCols]="tableColsOrganic" [api]="apiOrganic" [addCheckbox]="true"></app-superlist>
+    </div>
+
+  </div>
+
+
+</form>
+
+
+
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

@@ -1,0 +1,292 @@
+<div class="d-flex align-items-start">
+  <div class="d-flex flex-column align-items-start wide-left-bar">
+    <form [formGroup]="form"  class="w-100">
+
+      <div class="field d-flex flex-column margin-bottom-16">
+        <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Block" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="block" [form]="blockForm" #_block>
+          <div select-title>
+            <app-text *ngFor="let p of avaliableBlocks" [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name"
+                      [hidden]="p.id != block.value"></app-text>
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button *ngFor="let p of avaliableBlocks" class="btn btn-option" (click)="_block.choose(p.id)">
+              <app-text [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name"></app-text>
+            </button>
+          </div>
+        </app-select-bonvino>
+      </div>
+
+
+      <div *ngFor="let inp of structure; let j = index" class="w-100">
+
+
+        <div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 1">
+
+          <div class="field align-self-stretch d-flex flex-column w-100">
+            <app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" [formControlName]="inp.controlName">
+          </div>
+
+        </div>
+
+        <div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 2">
+
+          <div class="field align-self-stretch d-flex flex-column w-100">
+            <app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>
+            <input type="number" class="field-input align-self-stretch" [formControlName]="inp.controlName">
+          </div>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 3">
+          <app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>
+          <app-select-bonvino [formControlName_]="inp.controlName" [form]="form" #_select>
+            <div select-title>
+              <div *ngFor="let opt of inp.select_options">
+                <app-text [page]="'business_' + type" default="{{opt.id}}" *ngIf="opt.id == form.get(inp.controlName).value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_select.choose('')">
+                <app-text page="shop_add" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let opt of inp.select_options" (click)="_select.choose(opt.id)">
+                <app-text [page]="'business_' + type" default="{{opt.id}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 4">
+          <app-checkbox-bonvino [formControlName_]="inp.controlName" [form]="form" #_check>
+            <app-text [page]="'business_' + type" [default]="inp.title_name" (click)="_check.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 5">
+
+
+          <app-text [page]="'business_' + type" [default]="inp.title_name" class="lines-1"></app-text>
+          <app-radio-bonvino *ngFor="let opt of inp.select_options" class="margin-bottom-4" [formControlName_]="inp.controlName"
+                             [form]="form" value_="{{opt.id}}" #_radio>
+            <app-text [page]="'business_' + type" default="{{opt.id}}"
+                      (click)="_radio.check()" class="lines-1 margin-left-8"></app-text>
+          </app-radio-bonvino>
+
+        </div>
+
+
+
+        <div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 6">
+
+          <div class="field align-self-stretch d-flex flex-column w-100">
+            <app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>
+            <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" [formControlName]="inp.controlName"></textarea>
+          </div>
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 7">
+
+          <div [formArrayName]="inp.controlName">
+            <app-text [page]="'business_' + type" [default]="inp.title_name" class="lines-1"></app-text>
+            <app-checkbox-bonvino *ngFor="let opt of inp.select_options; let j = index" class="margin-bottom-4" [formControlName_]="j"
+                                  [arr]="form.get(inp.controlName)" #_checkGroup>
+              <app-text [page]="'business_' + type" default="{{opt.id}}"
+                        (click)="_checkGroup.check()" class="lines-1 margin-left-8"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+        </div>
+
+
+
+        <div class="align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 8">
+
+          <div>
+            <app-text [page]="'business_' + type" [default]="inp.title_name" class="lines-1"></app-text>
+            <div *ngFor="let opt of inp.select_options; let j = index">
+              <div class="d-flex flex-row justify-content-between align-items-center margin-top-4">
+                <div class="field" [formArrayName]="inp.controlName">
+                  <app-checkbox-bonvino class="margin-bottom-4" [formControlName_]="j"
+                                        [arr]="form.get(inp.controlName)" #_checkGroup>
+                    <app-text [page]="'business_' + type" default="{{opt.id}}"
+                              (click)="_checkGroup.check()" class="lines-1 margin-left-8"></app-text>
+                  </app-checkbox-bonvino>
+                </div>
+                <div class="field" [formArrayName]="inp.controlName + '_text'">
+
+                  <input type="text" class="field-input align-self-stretch" [formControlName]="j">
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 9">
+
+          <app-temperature-input-bonvino [downloadedData]="form.get(inp.controlName)" [schemaData]="inp" [type]="type" class="w-100"></app-temperature-input-bonvino>
+
+
+        </div>
+
+        <div class="field d-flex align-items-end w-100" *ngIf="inp.input_type == 10">
+
+          <app-origin-input-bonvino [downloadedData]="form.get(inp.controlName)" [schemaData]="inp" [type]="type"></app-origin-input-bonvino>
+
+
+        </div>
+
+        <div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 11">
+          <div  class="heading-1">
+            <!--<app-text page="wine_list" place="place_of_origin" default="Place of origin"></app-text>-->
+            <app-text [page]="'business_' + type" [default]="inp.title_name"></app-text>
+          </div>
+          <!--<app-subblock-input-bonvino [downloadedData]="form.get(inp.controlName)" [title]="inp.title_name" [schemaData]="inp" [type]="type" [subTabSubject]="currentSubTab" class="w-100"></app-subblock-input-bonvino>-->
+
+
+        </div>
+
+        <div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 12">
+
+          <div class="field align-self-stretch d-flex flex-column w-100">
+            <app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" [formControlName]="inp.controlName">
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div *ngIf="structure.length">
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="findBlocks()">
+          <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Find"></app-text>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="d-flex flex-column justify-content-between w-100 main-menu">
+
+    <div>
+
+      <table class="table">
+        <thead>
+        <tr class="bonvino-table-head">
+          <th scope="col">
+
+            <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Business type" class="lines-2"></app-text>
+
+          </th>
+          <th scope="col">
+
+            <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Business name" class="lines-2"></app-text>
+
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let business of eventList; let i = index">
+
+          <td>
+            <div class="lines-1">
+
+              <app-text  [page]="LANGUAGE_CURRENT_PAGE" [default]="business.type_business" class="lines-2"></app-text>
+
+            </div>
+          </td>
+
+          <td>
+            <div class="lines-1" *ngIf="business.type_business == 'winery'">
+
+              <a href="winery/{{business.id_business}}" >
+                <span *ngIf="business.winery_language == langService.getLanguage() && business.winery_language != 'english'">{{business.winery_name}}</span>
+                <span *ngIf="!business.winery_name || business.winery_language != langService.getLanguage() || business.winery_language == 'english'">{{business.winery_intname}}</span>
+              </a>
+
+            </div>
+            <div class="lines-1" *ngIf="business.type_business == 'event'">
+
+              <a href="event/{{business.id_business}}" >
+                <span *ngIf="business.event_language == langService.getLanguage() && business.event_language != 'english'">{{business.event_name}}</span>
+                <span *ngIf="!business.event_name || business.event_language != langService.getLanguage() || business.event_language == 'english'">{{business.event_intname}}</span>
+              </a>
+
+            </div>
+            <div class="lines-1" *ngIf="business.type_business == 'shop'">
+
+              <a href="shop/{{business.id_business}}" >
+                <span *ngIf="business.shop_language == langService.getLanguage() && business.shop_language != 'english'">{{business.shop_name}}</span>
+                <span *ngIf="!business.shop_name || business.shop_language != langService.getLanguage() || business.shop_language == 'english'">{{business.shop_intname}}</span>
+              </a>
+
+            </div>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+  <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Block" class="field-hint"></app-text>
+
+  <app-text *ngFor="let p of avaliableBlocks" [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name"
+            [hidden]="p.id != block.value"></app-text>
+
+    <app-text *ngFor="let p of avaliableBlocks" [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name"></app-text>
+
+    <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Find"></app-text>
+
+    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Business type" class="lines-2"></app-text>
+
+  <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Business name" class="lines-2"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,47 @@
+<div *ngIf="langService.editable && !langService.universal" [ngClass]="isPainted() ? 'painted' : ''">
+  <form [formGroup]="form">
+    <textarea class="form-control border-green" formControlName="input" placeholder="{{getPlaceholder()}}" [rows]="rows" #ta *ngIf="!langService.history"
+              mat-raised-button #tooltip="matTooltip"
+              [matTooltip]="getTooltipText()"
+              matTooltipPosition="below"
+              matTooltipHideDelay="500"
+              aria-label=""></textarea>
+
+
+    <select class="field align-self-stretch d-flex flex-column lines-1 border-green" formControlName="input" *ngIf="langService.history">
+      <option value="{{''}}" [hidden]="inputValue.value == getPlaceholder()">
+        {{getPlaceholder()}}
+      </option>
+      <option *ngFor="let option of getLanguageArray()" value="{{option}}" >
+        {{option}}
+      </option>
+    </select>
+
+  </form>
+</div>
+<div *ngIf="langService.editable && langService.universal" [ngClass]="isPainted() ? 'painted' : ''">
+  <form [formGroup]="form">
+    <textarea class="form-control border-blue" formControlName="inputUniversal" placeholder="{{getPlaceholderUniversal()}}" [rows]="rowsu" #tau *ngIf="!langService.history"
+              mat-raised-button #tooltip="matTooltip"
+              [matTooltip]="getTooltipTextUniversal()"
+              matTooltipPosition="below"
+              matTooltipHideDelay="500"
+              aria-label=""></textarea>
+
+
+    <select class="field align-self-stretch d-flex flex-column lines-1" formControlName="inputUniversal" *ngIf="langService.history">
+      <option value="{{''}}" [hidden]="inputValue.value == getPlaceholderUniversal()">
+        {{getPlaceholderUniversal()}}
+      </option>
+      <option *ngFor="let option of getLanguageArrayUniversal()" value="{{option}}" >
+        {{option}}
+      </option>
+    </select>
+
+  </form>
+</div>
+<span class="whitespace-prewrap" *ngIf="!langService.editable" [ngClass]="isPainted() ? 'painted' : ''" (click)="reload()">{{getText()}}</span>
+<!--<span *ngIf="!langService.editable" [ngClass]="isPainted() ? 'painted' : ''">{{translatedValue}}</span>-->
+
+
+<!--<span *ngIf="!langService.editable" [ngClass]="paintedValue">{{translatedValue}}</span>-->

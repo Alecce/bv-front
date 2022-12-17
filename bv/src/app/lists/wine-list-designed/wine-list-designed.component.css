@@ -1,0 +1,175 @@
+.winery-item{
+  white-space: normal;
+}
+.border-bottom-2{
+  border-bottom: 2px solid darkgray;
+}
+.rounded-top{
+  border-radius: 5px 5px 0 0;
+}
+
+.border-1{
+  border: 1px solid darkgray;
+}
+
+.wine-card{
+  font-size: 80%;
+  font-weight: lighter;
+}
+.height-200px{
+  height: 300px;
+}
+.max-height-270px{
+  max-height: 270px;
+}
+.heading-1 {
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+.heading-1.mobile {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.field-hint {
+  margin-bottom: 2px;
+}
+.field {
+  margin-bottom: 16px;
+}
+.place-of-origin-text {
+  margin-top: 12px;
+  line-height: 26px;
+}
+.select-list-options-full {
+  height: 100%;
+  margin-left: 16px;
+  margin-bottom: 16px;
+}
+.menu-top {
+  margin: 0 48px 0 16px;
+}
+.main-menu {
+  margin-right: 32px;
+  margin-bottom: 32px;
+
+}
+.cards-block {
+  margin-top: 24px;
+}
+.card-wine {
+  min-width: 320px;
+  max-width: 640px;
+  min-height: 224px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
+  margin-right: 32px;
+  margin-bottom: 32px;
+}
+.card-wine-mini {
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 8px;
+}
+.card-image {
+  height: 172px;
+  width: 104px;
+  margin: 26px 10px 26px 20px;
+}
+
+.card-image img {
+  min-width: 104px;
+  height: 172px;
+  width: 104px;
+  object-fit: cover;
+  /*border: solid 2px var(--ocean);*/
+}
+
+.card-image img:hover {
+  /*border: solid 2px var(--wine);*/
+}
+.card-text {
+  margin: 20px 0 12px 0;
+}
+.card-buttons {
+  margin: 16px;
+}
+.card-place-of-origin {
+  /*margin-top: 16px;*/
+}
+.card-wine-name {
+  margin-top: 2px;
+}
+.card-winery-name {
+  margin-top: 2px;
+}
+.card-year, .card-type, .card-alcohol {
+  margin-top: 4px;
+}
+.card-cost {
+  margin-bot: 12px;
+
+  color: var(--wine) !important;
+}
+.icn-sorting {
+  margin-left: 4px;
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+}
+::ng-deep .icn-sorting svg {
+  display: block !important;
+}
+.reverse {
+  transform: scaleY(-1);
+}
+.winery-title {
+  margin: 0 32px 0 32px;
+}
+.margin-top-8 {
+  margin-top: 8px;
+}
+.lines-2 {
+  height: 15px;
+}
+
+.schema-button {
+  height: 32px;
+  width: 32px;
+}
+.schema-button-current {
+  border-radius: 4px;
+  background-color: var(--sand-bright);
+}
+.schema-block {
+  width: 64px;
+  height: 32px;
+  border-radius: 4px;
+  border: solid 1px var(--sand-bright);
+}
+
+.menu-dropdown {
+  min-width: 96px;
+  border-radius: 4px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+  white-space: nowrap;
+}
+.menu-buttons {
+  margin: 8px 16px 16px 16px;
+}
+.sorting-col {
+  color: var(--wine);
+}
+
+.navbar-mobile .nav-item-accaunt {
+  margin: 20px 24px 0px 24px
+}
+
+.winery-name {
+  text-align: start;
+}
+
+
+:not(div + div) > div > .has-previous-element {
+  display: none;
+}

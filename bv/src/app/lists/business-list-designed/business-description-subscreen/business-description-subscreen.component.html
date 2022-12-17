@@ -1,0 +1,131 @@
+
+<form [formGroup]="form">
+  <div class="d-flex justify-content-between align-items-end">
+
+    <div class="mandatory"></div>
+    <div class="field align-self-stretch d-flex flex-even flex-column margin-right-32">
+      <app-text page="business" default="Business name" class="field-hint"></app-text>
+      <input type="text" class="field-input align-self-stretch" formControlName="name">
+    </div>
+
+
+
+    <div class="field align-self-stretch d-flex flex-even flex-column">
+      <app-text page="business" default="Type" class="field-hint"></app-text>
+      <app-select-bonvino formControlName_="type" [form]="form" #_type>
+        <div select-title>
+          <!--<app-text page="business" default="Select" *ngIf="type.value == 'select'"></app-text>-->
+          <app-text *ngFor="let bt of businessTypeList" page="business" [default]="bt.name" [hidden]="type.value != bt.name"></app-text>
+          <!--<app-text page="business" default="Network" *ngIf="type.value == 'Network'"></app-text>-->
+          <!--<app-text page="business" default="Co-operative" *ngIf="type.value == 'Co-operative'"></app-text>-->
+        </div>
+        <div options class="d-flex flex-column align-items-start select-list-options">
+          <button class="btn btn-option" (click)="_type.choose('select')">
+            <app-text page="business" default="Select"></app-text>
+          </button>
+          <button *ngFor="let bt of businessTypeList" class="btn btn-option" (click)="_type.choose(bt.name)">
+            <app-text page="business" [default]="bt.name"></app-text>
+          </button>
+          <!--<button class="btn btn-option" (click)="_type.choose('Network')">-->
+            <!--<app-text page="business" default="Network"></app-text>-->
+          <!--</button>-->
+          <!--<button class="btn btn-option" (click)="_type.choose('Co-operative')">-->
+            <!--<app-text page="business" default="Co-operative"></app-text>-->
+          <!--</button>-->
+        </div>
+      </app-select-bonvino>
+      <div *ngIf="langService.editable">
+        <app-text page="business" default="Select"></app-text>
+        <app-text page="business" *ngFor="let bt of businessTypeList" [default]="bt.name"></app-text>
+        <!--<app-text page="business" default="Network"></app-text>-->
+        <!--<app-text page="business" default="Co-operative"></app-text>-->
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+<!--<form [formGroup]="form">-->
+  <!--<div class="row mx-2 pb-1">-->
+    <!--<div class="col">-->
+
+      <!--<div class="row">-->
+
+        <!--<div class="form-group col">-->
+          <!--<app-text page="business" default="Business name" class="small text-muted"></app-text>-->
+          <!--<input type="text" class="form-control form-control-sm rounded-0" formControlName="name"-->
+                 <!--[placeholder]="langService.getPlaceholder('profile', '', 'Business name')">-->
+        <!--</div>-->
+
+        <!--<div class="form-group col">-->
+          <!--<app-text page="business" default="Type" class="small text-muted"></app-text>-->
+          <!--<select class="form-control form-control-sm rounded-0" formControlName="type">-->
+            <!--<option value="select">-->
+              <!--<app-text page="business" default="Select"></app-text>-->
+            <!--</option>-->
+            <!--<option value="Independent">-->
+              <!--<app-text page="business" default="Independent"></app-text>-->
+            <!--</option>-->
+            <!--<option value="Network">-->
+              <!--<app-text page="business" default="Network"></app-text>-->
+            <!--</option>-->
+            <!--<option value="Co-operative">-->
+              <!--<app-text page="business" default="Co-operative"></app-text>-->
+            <!--</option>-->
+          <!--</select>-->
+          <!--<div *ngIf="langService.editable">-->
+            <!--<app-text page="business" default="Select"></app-text>-->
+            <!--<app-text page="business" default="Independent"></app-text>-->
+            <!--<app-text page="business" default="Network"></app-text>-->
+            <!--<app-text page="business" default="Co-operative"></app-text>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</form>-->
+
+
+<div class="d-flex justify-content-between" mat-dialog-actions>
+
+  <div class="float-right p-2">
+    <!--<button class="btn btn-outline-primary btn-sm" (click)="close()">-->
+
+    <!--<app-text page="specialist_subscreen" default="Cancel"></app-text>-->
+    <!--</button>-->
+
+    <!--<a  id="logo-bonvino-link" [routerLink]="langService.editable ? null : ''" class="nav-link p-0">-->
+      <!--<mat-icon id="logo-bonvono" svgIcon="logo-bonvono"></mat-icon>-->
+    <!--</a>-->
+    <button class="btn btn-type-2 text-uppercase field-content" (click)="close()" *ngIf="!id.value" [disabled]="true">
+      <app-text page="specialist_subscreen" default="Properties - only for existing business"></app-text>
+    </button>
+    <a class="btn btn-type-2 text-uppercase field-content" [routerLink]="langService.editable ? null : getLink()" (click)="close()" *ngIf="id.value">
+      <app-text page="specialist_subscreen" default="Properties"></app-text>
+    </a>
+  </div>
+  <div class="ml-auto float-right p-2">
+    <!--<button class="btn btn-outline-primary btn-sm" (click)="close()">-->
+
+      <!--<app-text page="specialist_subscreen" default="Cancel"></app-text>-->
+    <!--</button>-->
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+      <app-text page="specialist_subscreen" default="Cancel"></app-text>
+    </button>
+  </div>
+  <div class="float-right p-2">
+    <!--<button class="btn btn-outline-primary btn-sm" mat-button [mat-dialog-close]="form.value" cdkFocusInitial>-->
+      <!--<app-text page="specialist_subscreen" default="Set"></app-text>-->
+    <!--</button>-->
+
+
+    <button class="btn btn-type-1 text-uppercase field-content" mat-button [mat-dialog-close]="form.value" cdkFocusInitial>
+      <app-text page="specialist_subscreen" default="Set"></app-text>
+    </button>
+  </div>
+</div>

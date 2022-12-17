@@ -1,0 +1,8 @@
+<div class="row">
+  <div  *ngFor="let letter of LETTERS; let i = index">
+    <button class="btn btn-sm" (click)="submit()">
+      {{letter}}
+    </button>
+
+  </div>
+</div>

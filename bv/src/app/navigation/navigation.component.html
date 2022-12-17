@@ -1,0 +1,185 @@
+<div class="nav">
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'logout'" class="nav-link">
+
+      <app-text page="navigation" place="logout" default="Logout"></app-text>
+    </a>
+  </div>
+
+
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'profile/' + cookieService.get('myId')" class="nav-link">
+
+      <app-text page="navigation" place="my_profile" default="My profile"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'winery-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_winery" default="Add winery"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'vineyard-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_vineyard" default="Add vineyard"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'event-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_event" default="Add event"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'quality-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_quality" default="Add quality"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'kashrut-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_kashrut" default="Add kashrut"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'biodinamic-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_biodinamic" default="Add biodynamic"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'organic-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_organic" default="Add organic"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'vegan-add'" class="nav-link">
+
+      <app-text page="navigation" place="add_vegan" default="Add vegan"></app-text>
+    </a>
+  </div>
+
+  <div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).sequrity == 4">
+    <a [routerLink]="langService.editable ? null : 'admin'" class="nav-link">
+
+      <app-text page="navigation" place="admin" default="Admin page"></app-text>
+    </a>
+  </div>
+  <!--<div class="nav-item" routerLinkActive="active current" *ngIf="(cookies | async).id">-->
+    <!--<a [routerLink]="langService.editable ? null : 'business-add'" class="nav-link">-->
+
+      <!--<app-text page="navigation" place="add_business" default="Add business"></app-text>-->
+    <!--</a>-->
+  <!--</div>-->
+
+
+  <div class="nav-item">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="listDropdown" ngbDropdownToggle>
+        <app-text page="navigation" place="lists" default="Lists"></app-text>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="listDropdown">
+        <a [routerLink]="langService.editable ? null : 'business-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="business_list" default="Business list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'user-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="user_list" default="User list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'vineyard-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="vineyard_list" default="Vineyard list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'specialist-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="specialist_list" default="Specialist list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'region-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="region_list" default="Region list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'quality-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="quality_list" default="Quality list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'kashrut-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="kashrut_list" default="Kashrut list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'grape-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="grape_list" default="Grape list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'competition-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="competition_list" default="Competition list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'award-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="Award_list" default="Award list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'winery-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="winery_list" default="Winery list"></app-text>
+        </a>
+        <a [routerLink]="langService.editable ? null : 'wine-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="wines_list" default="Wines list"></app-text>
+        </a>
+
+        <a [routerLink]="langService.editable ? null : 'event-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="event_list" default="Event list"></app-text>
+        </a>
+
+        <a [routerLink]="langService.editable ? null : 'biodinamic-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="biodinamic_list" default="Biodynamic list"></app-text>
+        </a>
+
+        <a [routerLink]="langService.editable ? null : 'organic-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="organic_list" default="Organic list"></app-text>
+        </a>
+
+        <a [routerLink]="langService.editable ? null : 'vegan-list'" class="nav-link" ngbDropdownItem>
+
+          <app-text page="navigation" place="vegan_list" default="Vegan list"></app-text>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    <app-language-navigate></app-language-navigate>
+
+  </div>
+
+  <div class="nav-item" *ngIf="!(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'login'" class="nav-link">
+
+      <app-text page="navigation" place="login" default="Login"></app-text>
+    </a>
+  </div>
+  <div class="nav-item" *ngIf="!(cookies | async).id">
+    <a [routerLink]="langService.editable ? null : 'registration'" class="nav-link">
+
+      <app-text page="navigation" place="registration" default="Registration"></app-text>
+    </a>
+  </div>
+</div>
+

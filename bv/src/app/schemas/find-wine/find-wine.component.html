@@ -1,0 +1,265 @@
+<div class="margin-right-64 margin-left-64 margin-bottom-64 margin-top-64">
+
+  <div class="heading-2 border-0 p-0">
+    <app-text [page]="LANGUAGE_CURRENT_PAGE" default="In shops"></app-text>
+  </div>
+
+  <div class="margin-bottom-32">
+
+    <table class="table">
+      <thead>
+      <tr class="bonvino-table-head">
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableByShopName(orderShop.value != 'name' ? 'name' : 'name_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Shop national name" class="lines-2"
+                               [ngClass]="getSortingClassShops(['name', 'name_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="orderShop.value != 'name' && orderShop.value != 'name_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderShop.value == 'name'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderShop.value == 'name_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableByShopIntName(orderShop.value != 'int_name' ? 'int_name' : 'int_name_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Shop international name" class="lines-2"
+                               [ngClass]="getSortingClassShops(['int_name', 'int_name_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="orderShop.value != 'int_name' && orderShop.value != 'int_name_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderShop.value == 'int_name'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderShop.value == 'int_name_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableByShopPrice(orderShop.value != 'price' ? 'price' : 'price_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Shop price" class="lines-2"
+                               [ngClass]="getSortingClassShops(['price', 'price_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="orderShop.value != 'price' && orderShop.value != 'price_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderShop.value == 'price'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderShop.value == 'price_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let shop of shopArr; let i = index">
+
+        <td>
+          <div class="lines-1 d-flex justify-content-center">
+
+            <div>
+
+              <a class="hyperlink" href="shop/{{shop.id}}">
+                <span>{{shop.name}}</span>
+              </a>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1 d-flex justify-content-center">
+
+            <div>
+
+              <a class="hyperlink" href="shop/{{shop.id}}">
+                <span>{{shop.int_name}}</span>
+              </a>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+            <div class="d-flex justify-content-center">
+
+              <span>{{shop.price}}</span>
+            </div>
+          </div>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="heading-2 border-0 p-0">
+    <app-text [page]="LANGUAGE_CURRENT_PAGE" default="In collections"></app-text>
+  </div>
+
+  <div>
+
+    <table class="table">
+      <thead>
+      <tr class="bonvino-table-head">
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableByUsername(orderCollector.value != 'user' ? 'user' : 'user_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="User" class="lines-2"
+                               [ngClass]="getSortingClassCollectors(['user', 'user_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="orderCollector.value != 'user' && orderCollector.value != 'user_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderCollector.value == 'user'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderCollector.value == 'user_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </th>
+
+        <th scope="col">
+          <div class="d-flex flex-column">
+            <div>
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableByCost(orderCollector.value != 'cost' ? 'cost' : 'cost_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Cost (NIS)" class="lines-2"
+                               [ngClass]="getSortingClassCollectors(['cost', 'cost_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="orderCollector.value != 'cost' && orderCollector.value != 'cost_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderCollector.value == 'cost'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="orderCollector.value == 'cost_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let collector of collectorArr; let i = index">
+
+        <td>
+          <div class="lines-1 d-flex justify-content-center">
+
+            <div>
+
+              <a class="hyperlink" href="profile/{{collector.id}}">
+                <span>{{collector.login}}</span>
+              </a>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <div class="lines-1">
+            <div class="d-flex justify-content-center">
+
+              <span>{{collector.price}}</span>
+            </div>
+          </div>
+        </td>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+  <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+    <app-text  [page]="LANGUAGE_CURRENT_PAGE" default="Close"></app-text>
+  </button>
+</div>

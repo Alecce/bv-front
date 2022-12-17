@@ -1,0 +1,69 @@
+
+<div class="d-flex flex-column margin-64" *ngIf="wineryDeleted">
+  <app-winery-deleted [userId]="userId"></app-winery-deleted>
+</div>
+
+<div class="d-flex flex-column" *ngIf="wineryData && !wineryDeleted">
+  <div class="d-flex">
+    <div class="bg-image flex-fill d-flex justify-content-between align-items-end" [ngStyle]="{'background':image}">
+
+      <div class="w-100 d-flex justify-content-between align-items-end bg-gradient">
+        <div class="title-name">
+        <span *ngIf="wineryData.commoninfo.language == langService.getLanguage()">
+          {{wineryData.commoninfo.name_national}}
+        </span>
+          <span *ngIf="wineryData.commoninfo.language != langService.getLanguage()">
+          {{wineryData.commoninfo.name_international}}
+        </span>
+        </div>
+        <div class="button-edit" *ngIf="isEditable()">
+
+          <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : editLink()">
+            <app-text page="winery_one" default="Edit"></app-text>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div>
+      <app-map-open-layers [downloadedData]="downloadedData"></app-map-open-layers>
+      <!--<app-map-google-designed [downloadedData]="downloadedData"></app-map-google-designed>-->
+    </div>
+  </div>
+  <div class="d-flex margin-64 justify-content-around">
+    <div>
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showInformation()">
+        <app-text page="winery_one" default="Winery Information"></app-text>
+      </button>
+    </div>
+    <div>
+      <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : '/wine-list'"
+         [queryParams]="langService.editable ? null : wineListParams()" (click)="close()">
+        <app-text page="home" place="show_wines" default="Show wines"></app-text>
+      </a>
+    </div>
+    <div>
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showContacts()">
+        <app-text page="winery_one" default="Contact us"></app-text>
+      </button>
+    </div>
+    <div [hidden]="!isTabExist('')">
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional('')">
+        <app-text page="winery_one" default="Additional Information"></app-text>
+      </button>
+    </div>
+    <div *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)">
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">
+        <app-text page="subtabs" [default]="tab"></app-text>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+</div>
