@@ -1,0 +1,880 @@
+
+<div class="d-flex">
+
+  <form [formGroup]="form" class="w-100">
+    <div  class="d-flex align-items-start w-100" [ngClass]="isBigScreen() ? '' : 'flex-column'">
+      <div class="d-flex flex-column align-items-start"
+           [ngClass]="isBigScreen() ? 'flex-even' : 'margin-bottom-32 w-100'">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="vineyards" default="General Information"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Language" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="language" [form]="form" #_language>
+            <div select-title>
+              <div *ngFor="let l of languageArr">
+                <app-text page="language" default="{{l.name}}" *ngIf="l.value == language.value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" *ngFor="let l of languageArr" (click)="_language.choose(l.value)">
+                <app-text page="language" default="{{l.name}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+
+        <div class="d-flex align-items-end w-100">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column w-100">
+            <app-text page="vineyards" default="Vineyard name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="name_national">
+          </div>
+        </div>
+
+
+        <div class="d-flex align-items-end w-100">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column w-100">
+            <app-text page="vineyards" default="Vineyard name in English" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="name_international">
+          </div>
+        </div>
+
+
+
+        <div formArrayName="alterNames" class="w-100">
+
+          <div class="d-flex flex-column" *ngFor="let pp of alterNames.controls; let i = index">
+            <div formGroupName="{{i}}">
+
+              <div class="d-flex flex-fill justify-content-between">
+
+                <div class="field align-self-stretch d-flex flex-column margin-right-20 w-100">
+
+
+
+                  <!--<div class="field align-self-stretch d-flex flex-column">-->
+                  <app-text page="vineyards" default="Name language" class="field-hint"></app-text>
+                  <app-select-bonvino formControlName_="language" [form]="alterNames.at(i)" #_language>
+                    <div select-title>
+                      <app-text *ngFor="let l of languageArr" page="language" [default]="l.name"
+                                [hidden]="l.value != alterNames.at(i).get('language').value"></app-text>
+                    </div>
+                    <div options class="d-flex flex-column align-items-start select-list-options">
+                      <button *ngFor="let l of languageArr" class="btn btn-option" (click)="_language.choose(l.value)">
+                        <app-text page="language" [default]="l.name"></app-text>
+                      </button>
+                    </div>
+                  </app-select-bonvino>
+                  <div *ngIf="langService.editable">
+                    <app-text page="language" *ngFor="let language of languageArr" [default]="language.name"></app-text>
+                  </div>
+                  <!--</div>-->
+
+                </div>
+                <div>
+                  <button class="btn m-0 p-0" (click)="removeAlterNames(i)">
+                    <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="d-flex flex-fill justify-content-between margin-bottom-8">
+
+                <div class="field align-self-stretch d-flex flex-column w-100">
+                  <app-text page="vineyards" page="wines_common_info" default="Name" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="name">
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <button class="btn m-0 p-0 w-100" (click)="addAlterNames(null)">
+          <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+        </button>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="When was it established" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="establish_year">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Owner" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="owner">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Name of head Vintner/vine-grower" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="vintner_national">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Name of head Vintner/vine-grower (in English)" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="vintner_international">
+        </div>
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="vineyards" default="Select redactor"></app-text>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="yours" [form]="form" #_yours>
+            <app-text page="vineyards" default="Claim yours" (click)="_yours.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+        <div *ngIf="(cookies | async).sequrity == 4 && !yours.value || langService.editable">
+          <button class="btn btn-type-1 text-uppercase field-content" (click)="openUserSelect()">
+            <app-text page="vineyards" default="Select user"></app-text>
+          </button>
+        </div>
+        <div *ngIf="(cookies | async).sequrity == 4 && !yours.value || langService.editable">
+
+          <app-person-one-row [userIdSubject]="userId.valueChanges"></app-person-one-row>
+        </div>
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="vineyards" default="Cover image"></app-text>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div *ngIf="routeData.download && !fileToUpload && imageLink">
+            <img class="cover-image" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+          <div *ngIf="fileToUpload">
+            <img  class="cover-image" [src]="url">
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <div>
+                <input hidden="true" id="image" type='file' (change)="onSelectFile($event)" formControlName="image">
+
+                <label class="btn btn-type-1 text-uppercase field-content" [for]="langService.editable ? null : 'image'">
+                  <app-text page="wine_list" default="Select"></app-text>
+                </label>
+              </div>
+              <div *ngIf="fileToUpload || imageLink">
+                <button class="btn btn-type-1 text-uppercase field-content"  (click)="deleteImage()">
+                  <app-text page="vineyards" place="delete" default="Delete image"></app-text>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="fileToUpload" class="lines-1 place-of-origin-text margin-left-16">
+              <span>{{fileToUpload.name}}</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="wine_list" default="Logo"></app-text>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div *ngIf="routeData.download && !fileToUploadEmblem && imageLinkEmblem">
+            <img class="cover-image" [src]="getImageEmblem()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+          </div>
+          <div *ngIf="fileToUploadEmblem">
+            <img  class="cover-image" [src]="urlEmblem">
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <div>
+                <label class="btn btn-type-1 text-uppercase field-content" [for]="langService.editable ? null : 'emblem'">
+                  <app-text page="wine_list" default="Select"></app-text>
+                </label>
+
+
+                <input hidden="true" id="emblem" type='file' (change)="onSelectFileEmblem($event)" formControlName="emblem">
+              </div>
+              <div *ngIf="fileToUploadEmblem || imageLinkEmblem">
+
+                <button class="btn btn-type-1 text-uppercase field-content" (click)="deleteImageEmblem()">
+                  <app-text page="vineyards" place="delete" default="Delete image"></app-text>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="fileToUploadEmblem" class="lines-1 place-of-origin-text margin-left-16">
+              <span>{{fileToUploadEmblem.name}}</span>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="d-flex flex-column align-items-start"
+           [ngClass]="isBigScreen() ? 'flex-even margin-left-36' : 'margin-bottom-32 w-100'">
+
+
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="vineyards" default="Grapes"></app-text>
+        </div>
+
+
+
+
+        <div class="d-flex flex-column w-100">
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-select-search-bonvino formControlName_="grapesSearch" [form]="form" #_grapesSearch>
+              <div select-title>
+                <app-text  page="vineyards" default="Grape" class="field-hint"></app-text>
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options-full">
+                <button *ngFor="let grape of grapeList | paginate: { id: 'pagination-grapes', itemsPerPage: 10, currentPage: grapePage, totalItems: grapeTotal}"
+                        class="btn btn-option"
+                        (click)="selectGrape(grape); _grapesSearch.close();">
+                  <span>{{getGrapeName(grape)}}</span>
+                </button>
+                <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-grapes" (pageChange)="setGrapePage($event)"></pagination-controls>
+
+              </div>
+            </app-select-search-bonvino>
+          </div>
+
+
+          <div class="lines-1  d-flex flex-column  py-0" *ngFor="let grape of wineryGrapeList; let i = index">
+            <div class="d-flex flex-row py-0 place-of-origin-text justify-content-between">
+
+              <div class="d-flex justify-content-start">
+
+                <button class="btn m-0 p-0 hyperlinks text-left" (click)="switchCloneAndUses(grape)">
+                  <div *ngIf="grape.synonim">
+                    <span>{{grape.synonim}} (</span><app-text page="grapes_names" [place]="grape.id" [default]="grape.name"></app-text><span>)</span>
+                  </div>
+                  <div *ngIf="!grape.synonim">
+                    <app-text page="grapes_names" [place]="grape.id" [default]="grape.name"></app-text>
+                  </div>
+                </button>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="removeGrapeFromWinery(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+            <div [hidden]="!grape.open">
+              <div class="d-flex flex-column py-0 justify-content-between"
+                   *ngFor="let clone of getClonesForGrape(grape.id); let i = index"
+              >
+
+                <div *ngIf="i == 0" class="margin-bottom-4 margin-top-4">
+                  <app-text page="vineyards" [default]="'Clones:'"></app-text>
+                </div>
+                <div>
+                  <app-checkbox-bonvino [formControlName_]="clone.name" [form]="clone.form" #_clone>
+                    <app-text page="grape_clones" [default]="clone.name" class="lines-1" (click)="_clone.check()"></app-text>
+                  </app-checkbox-bonvino>
+                </div>
+              </div>
+              <div class="d-flex flex-column py-0 justify-content-between"
+                   *ngFor="let clone of getUsesForGrape(grape.id); let i = index"
+              >
+
+                <div *ngIf="i == 0" class="margin-bottom-4 margin-top-4">
+                  <app-text page="vineyards" [default]="'Uses:'"></app-text>
+                </div>
+                <div>
+                  <app-checkbox-bonvino [formControlName_]="clone.name" [form]="clone.form" #_use (click)="_use.check()">
+                    <app-text page="grape_uses" [default]="clone.name" class="lines-1"></app-text>
+                  </app-checkbox-bonvino>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div  class="heading-2 left-bold-border">
+            <app-text page="vineyards" place="sertifications" default="Certifications"></app-text>
+          </div>
+
+
+
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-checkbox-bonvino formControlName_="isKashrut" [form]="form" #_isKashrut>
+              <app-text page="vineyards" default="Kashrut" (click)="_isKashrut.check()" class="lines-1"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+          <div *ngIf="isKashrut.value" class="d-flex flex-column w-100">
+            <div class="field align-self-stretch d-flex flex-column">
+              <app-select-search-bonvino formControlName_="kashrutsSearch" [form]="form" #_kashrutsSearch>
+                <div select-title>
+                  <app-text page="vineyards" default="Select kashrut" class="field-hint"></app-text>
+                </div>
+                <div options class="d-flex flex-column align-items-start select-list-options-full">
+                  <button *ngFor="let kashrut of kashrutList | paginate: { id: 'pagination-kashrut', itemsPerPage: 10, currentPage: kashrutPage, totalItems: kashrutTotal}"
+                          class="btn btn-option"
+                          (click)="selectKashrut(kashrut); _kashrutsSearch.close();">
+                    <span>{{getKashrutName(kashrut)}}</span>
+                  </button>
+                  <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-kashrut" (pageChange)="setKashrutsPage($event)"></pagination-controls>
+
+                </div>
+              </app-select-search-bonvino>
+            </div>
+
+
+            <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngFor="let kashrut of wineryKashrutList; let i = index">
+              <div>
+                <span>{{getKashrutName(kashrut)}}</span>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="removeKashrutFromWinery(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-checkbox-bonvino formControlName_="isQuality" [form]="form" #_isQuality>
+              <app-text page="vineyards" default="Geographical indications" (click)="_isQuality.check()" class="lines-1"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+
+          <div *ngIf="isQuality.value" class="d-flex flex-column w-100">
+            <div class="field align-self-stretch d-flex flex-column">
+              <app-select-search-bonvino formControlName_="qualitiesSearch" [form]="form" #_qualitiesSearch>
+                <div select-title>
+                  <app-text page="vineyards" default="Select indication" class="field-hint"></app-text>
+                </div>
+                <div options class="d-flex flex-column align-items-start select-list-options-full">
+                  <button *ngFor="let quality of qualityList | paginate: { id: 'pagination-quality', itemsPerPage: 10, currentPage: qualityPage, totalItems: qualityTotal}"
+                          class="btn btn-option"
+                          (click)="selectQuality(quality); _qualitiesSearch.close();">
+                    <span>{{getQualityName(quality)}}</span>
+                  </button>
+                  <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-quality" (pageChange)="setQualitiesPage($event)"></pagination-controls>
+
+                </div>
+              </app-select-search-bonvino>
+            </div>
+
+
+            <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngFor="let quality of wineryQualityList; let i = index">
+              <div>
+                <span>{{getQualityName(quality)}}</span>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="removeQualityFromWinery(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-checkbox-bonvino formControlName_="isBiodynamic" [form]="form" #_isBiodynamic>
+              <app-text page="vineyards" default="Biodynamic" (click)="_isBiodynamic.check()" class="lines-1"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+
+          <div *ngIf="isBiodynamic.value" class="d-flex flex-column w-100">
+            <div class="field align-self-stretch d-flex flex-column">
+              <app-select-search-bonvino formControlName_="biodynamicsSearch" [form]="form" #_biodynamicsSearch>
+                <div select-title>
+                  <app-text page="vineyards" default="Select biodynamic" class="field-hint"></app-text>
+                </div>
+                <div options class="d-flex flex-column align-items-start select-list-options-full">
+                  <button *ngFor="let biodynamic of biodynamicList | paginate: { id: 'pagination-biodynamic', itemsPerPage: 10, currentPage: biodynamicPage, totalItems: biodynamicTotal}"
+                          class="btn btn-option"
+                          (click)="selectBiodynamic(biodynamic); _biodynamicsSearch.close();">
+                    <span>{{getBiodynamicName(biodynamic)}}</span>
+                  </button>
+                  <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-biodynamic" (pageChange)="setBiodynamicPage($event)"></pagination-controls>
+
+                </div>
+              </app-select-search-bonvino>
+            </div>
+
+
+            <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngFor="let biodynamic of wineryBiodynamicList; let i = index">
+              <div>
+                <span>{{getBiodynamicName(biodynamic)}}</span>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="removeBiodynamicFromWinery(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-checkbox-bonvino formControlName_="isOrganic" [form]="form" #_isOrganic>
+              <app-text page="vineyards" default="Organic" (click)="_isOrganic.check()" class="lines-1"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+
+          <div *ngIf="isOrganic.value" class="d-flex flex-column w-100">
+            <div class="field align-self-stretch d-flex flex-column">
+              <app-select-search-bonvino formControlName_="organicsSearch" [form]="form" #_organicsSearch>
+                <div select-title>
+                  <app-text page="vineyards" default="Select organic" class="field-hint"></app-text>
+                </div>
+                <div options class="d-flex flex-column align-items-start select-list-options-full">
+                  <button *ngFor="let organic of organicList | paginate: { id: 'pagination-organic', itemsPerPage: 10, currentPage: organicPage, totalItems: organicTotal}"
+                          class="btn btn-option"
+                          (click)="selectOrganic(organic); _organicsSearch.close();">
+                    <span>{{getOrganicName(organic)}}</span>
+                  </button>
+                  <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-organic" (pageChange)="setOrganicPage($event)"></pagination-controls>
+
+                </div>
+              </app-select-search-bonvino>
+            </div>
+
+
+            <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngFor="let organic of wineryOrganicList; let i = index">
+              <div>
+                <span>{{getOrganicName(organic)}}</span>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="removeOrganicFromWinery(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-checkbox-bonvino formControlName_="isVegan" [form]="form" #_isVegan>
+              <app-text page="vineyards" default="Vegan" (click)="_isVegan.check()" class="lines-1"></app-text>
+            </app-checkbox-bonvino>
+          </div>
+
+
+
+          <div *ngIf="isVegan.value" class="d-flex flex-column w-100">
+            <div class="field align-self-stretch d-flex flex-column">
+              <app-select-search-bonvino formControlName_="vegansSearch" [form]="form" #_vegansSearch>
+                <div select-title>
+                  <app-text page="vineyards" default="Select vegan" class="field-hint"></app-text>
+                </div>
+                <div options class="d-flex flex-column align-items-start select-list-options-full">
+                  <button *ngFor="let vegan of veganList | paginate: { id: 'pagination-vegan', itemsPerPage: 10, currentPage: veganPage, totalItems: veganTotal}"
+                          class="btn btn-option"
+                          (click)="selectVegan(vegan); _vegansSearch.close();">
+                    <span>{{getVeganName(vegan)}}</span>
+                  </button>
+                  <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-vegan" (pageChange)="setVeganPage($event)"></pagination-controls>
+
+                </div>
+              </app-select-search-bonvino>
+            </div>
+
+
+            <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngFor="let vegan of wineryVeganList; let i = index">
+              <div>
+                <span>{{getVeganName(vegan)}}</span>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="removeVeganFromWinery(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+      <div class="d-flex flex-column align-items-start"
+           [ngClass]="isBigScreen() ? 'flex-even margin-left-36' : 'margin-bottom-32 w-100'">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="vineyards" default="Description"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Square" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="square">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Square unit" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="squareUnit" [form]="form" #_squareUnit>
+            <div select-title>
+              <div *ngFor="let l of squareUnits">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label" *ngIf="l.value == squareUnit.value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_squareUnit.choose('')">
+                <app-text page="vineyards" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let l of squareUnits" (click)="convertSquare(l.size); _squareUnit.choose(l.value)">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Minimum altitudes" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="altitude_min">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Maximum altitudes" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="altitude_max">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Altitude unit" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="altituteUnit" [form]="form" #_altituteUnit>
+            <div select-title>
+              <div *ngFor="let l of altituteUnits">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label" *ngIf="l.value == altituteUnit.value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_altituteUnit.choose('')">
+                <app-text page="vineyards" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let l of altituteUnits" (click)="convertAltitude(l.size); _altituteUnit.choose(l.value)">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Annual production of grapes" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="production">
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="vineyards" default="Production unit" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="productionUnit" [form]="form" #_productionUnit>
+            <div select-title>
+              <div *ngFor="let l of productionUnits">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label" *ngIf="l.value == productionUnit.value"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_productionUnit.choose('')">
+                <app-text page="vineyards" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let l of productionUnits" (click)="convertProduction(l.size); _productionUnit.choose(l.value)">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+        <!--<div  class="heading-2 left-bold-border">-->
+          <!--<app-text page="vineyards" default="Harvests"></app-text>-->
+        <!--</div>-->
+
+
+        <!--<div formArrayName="harvests" class="w-100">-->
+
+          <!--<div class="d-flex flex-column" *ngFor="let pp of harvests.controls; let i = index">-->
+            <!--<div formGroupName="{{i}}">-->
+
+              <!--<div class="d-flex flex-fill justify-content-between">-->
+
+                <!--<div class="field align-self-stretch d-flex flex-column margin-right-20 w-100">-->
+                  <!--<app-text page="wines" page="wines_common_info" default="Production" class="field-hint"></app-text>-->
+                  <!--<input type="text" class="field-input align-self-stretch" formControlName="production">-->
+                <!--</div>-->
+
+                <!--<div>-->
+                  <!--<button class="btn m-0 p-0" (click)="removeHarvests(i)">-->
+                    <!--<mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="d-flex flex-fill justify-content-between margin-bottom-8">-->
+
+                <!--<div class="field align-self-stretch d-flex flex-column w-100">-->
+                  <!--<app-text page="wines" page="wines_common_info" default="Year" class="field-hint"></app-text>-->
+                  <!--<input type="text" class="field-input align-self-stretch" formControlName="year">-->
+                <!--</div>-->
+
+
+              <!--</div>-->
+              <!--<div class="d-flex flex-fill justify-content-between margin-bottom-8">-->
+
+                <!--<div class="field align-self-stretch d-flex flex-column w-100">-->
+
+
+
+                  <!--&lt;!&ndash;<div class="field align-self-stretch d-flex flex-column">&ndash;&gt;-->
+                  <!--<app-text page="wines_common_info" default="Grape type" class="field-hint"></app-text>-->
+                  <!--<app-select-bonvino formControlName_="type" [form]="harvests.at(i)" #_type>-->
+                    <!--<div select-title>-->
+                      <!--<app-text *ngFor="let l of harvestTypes" page="language" [default]="l.label"-->
+                                <!--[hidden]="l.value != harvests.at(i).get('type').value"></app-text>-->
+                    <!--</div>-->
+                    <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+                      <!--<button class="btn btn-option" (click)="_type.choose('')">-->
+                        <!--<app-text page="vineyards" default="Clear input"></app-text>-->
+                      <!--</button>-->
+                      <!--<button *ngFor="let l of harvestTypes" class="btn btn-option" (click)="_type.choose(l.value)">-->
+                        <!--<app-text page="vineyards" [default]="l.label"></app-text>-->
+                      <!--</button>-->
+                    <!--</div>-->
+                  <!--</app-select-bonvino>-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                <!--</div>-->
+
+
+              <!--</div>-->
+              <!--<div class="d-flex flex-fill justify-content-between margin-bottom-8">-->
+
+                <!--<div class="field align-self-stretch d-flex flex-column w-100">-->
+
+
+
+                  <!--&lt;!&ndash;<div class="field align-self-stretch d-flex flex-column">&ndash;&gt;-->
+                  <!--<app-text page="wines_common_info" default="Unit" class="field-hint"></app-text>-->
+                  <!--<app-select-bonvino formControlName_="unit" [form]="harvests.at(i)" #_unit>-->
+                    <!--<div select-title>-->
+                      <!--<app-text *ngFor="let l of harvestUnits" page="language" [default]="l.label"-->
+                                <!--[hidden]="l.value != harvests.at(i).get('unit').value"></app-text>-->
+                    <!--</div>-->
+                    <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+                      <!--<button class="btn btn-option" (click)="_unit.choose('')">-->
+                        <!--<app-text page="vineyards" default="Clear input"></app-text>-->
+                      <!--</button>-->
+                      <!--<button *ngFor="let l of harvestUnits" class="btn btn-option text-transform-none" (click)="convertHarvest(i, l); _unit.choose(l.value)">-->
+                        <!--<app-text page="vineyards" [default]="l.label"></app-text>-->
+                      <!--</button>-->
+                    <!--</div>-->
+                  <!--</app-select-bonvino>-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                <!--</div>-->
+
+
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
+        <!--</div>-->
+        <!--<button class="btn m-0 p-0 w-100" (click)="addHarvests(null)">-->
+          <!--<app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>-->
+        <!--</button>-->
+
+
+      </div>
+
+      <div class="d-flex flex-column align-items-start"
+           [ngClass]="isBigScreen() ? 'flex-even margin-left-36' : 'margin-bottom-32 w-100'">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="vineyards" default="Contact us"></app-text>
+        </div>
+
+        <!--<div class="row my-2 py-1">-->
+        <!--<div class="form-group col">-->
+        <!--<app-text page="vineyards" default="Contact us" class="text-muted font-weight-bold"></app-text>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-checkbox-bonvino formControlName_="differentAddress" [form]="form" #_differentAddress>
+            <app-text page="vineyards" default="Different address from contacts" (click)="_differentAddress.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="differentAddress.value">
+          <app-text page="vineyards" default="Address" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="address">
+        </div>
+
+        <div  class="heading-2 left-bold-border" *ngIf="differentAddress.value">
+          <app-text page="wine_list" place="place_of_origin" default="Place of origin"></app-text>
+        </div>
+
+        <div *ngIf="differentAddress.value">
+          <button class="btn btn-type-1 text-uppercase field-content" (click)="openPlaceOfOrigin()">
+            <app-text page="wine_list" default="Select"></app-text>
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-start error margin-bottom-8" *ngIf="country.invalid && isParentShowNoValidation">
+          <div class="d-flex flex-row no-validation">
+            <div class="margin-left-8 margin-right-8">
+              <app-icon-bonvino svgIcon="icn-error-white" class="icn-error"></app-icon-bonvino>
+            </div>
+            <div class="margin-right-8 d-flex align-items-center Error-message-The-b">
+              <app-text page="validation" default="Select country here or in contacts tab"></app-text>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="lines-1 place-of-origin-text" *ngIf="differentAddress.value">
+          <div class="d-inline">
+            <app-text page="country_names" place="{{country.value}}" default="{{countriesMap.get(country.value)}}"></app-text>
+          </div>
+          <div class="d-inline" *ngFor="let region of regionsForm.value; let i = index">
+            <span *ngIf="region"> > </span>
+            <app-text page="country_names" place="{{region * 1}}"
+                      default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row">
+          <button class="btn btn-type-2 text-uppercase field-content margin-bottom-32" (click)="placeMark()">
+            <app-text page="wine_list" default="Place mark"></app-text>
+          </button>
+          <button class="btn btn-type-2 text-uppercase field-content margin-bottom-32 margin-left-16" (click)="removeMark()">
+            <app-text page="wine_list" default="Remove mark"></app-text>
+          </button>
+        </div>
+
+
+        <div class="margin-bottom-32 w-100" >
+
+          <app-map-open-layers [reloadSubj]="mapReloadSubj" [routerData]="{editable: true}" [currentData]="geoData"></app-map-open-layers>
+
+          <!--<app-map-google-designed [routerData]="{editable: true}" [currentData]="geoData"-->
+          <!--&gt;</app-map-google-designed>-->
+        </div>
+
+
+      </div>
+
+    </div>
+  </form>
+
+</div>
+
+
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="vineyards" default="General Information"></app-text>
+
+  <app-text page="vineyards" default="Language" class="field-hint"></app-text>
+
+  <div *ngFor="let l of languageArr">
+    <app-text page="language" default="{{l.name}}"></app-text>
+  </div>
+
+  <app-text page="vineyards" default="Vineyard name" class="field-hint"></app-text>
+
+  <app-text page="vineyards" default="Vineyard name in English" class="field-hint"></app-text>
+
+  <app-text page="vineyards" default="When was it established" class="field-hint"></app-text>
+
+  <app-text page="vineyards" default="Owner" class="field-hint"></app-text>
+
+  <app-text page="vineyards" default="Select redactor"></app-text>
+
+  <app-text page="vineyards" default="Claim yours" (click)="_yours.check()"></app-text>
+
+  <app-text page="vineyards" default="Select user"></app-text>
+
+  <app-text page="vineyards" default="Square" class="field-hint"></app-text>
+
+  <app-text page="vineyards" default="Square unit" class="field-hint"></app-text>
+
+  <div *ngFor="let l of squareUnits">
+    <app-text page="vineyards" [place]="l.place" [default]="l.label"></app-text>
+  </div>
+
+  <app-text page="vineyards" place="place_of_origin" default="Place of origin"></app-text>
+
+  <app-text page="vineyards" default="Select"></app-text>
+
+  <app-text page="vineyards" default="Address" class="field-hint"></app-text>
+
+  <app-text page="vineyards" default="Place mark"></app-text>
+
+  <app-text page="vineyards" default="Remove mark"></app-text>
+
+  <app-text page="vineyards" default="Grapes"></app-text>
+
+  <app-text  page="vineyards" default="Grape" class="field-hint"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

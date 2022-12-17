@@ -1,0 +1,48 @@
+mat-icon.checkbox{
+  margin-top: -3px;
+}
+
+.margin-right-20 {
+  margin-right: 20px;
+}
+.margin-right-36 {
+  margin-right: 36px;
+}
+.margin-bottom-32 {
+  margin-bottom: 32px;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.margin-64 {
+  margin: 0 64px 64px 64px;
+}
+
+.btn-type-1 {
+  margin-bottom: 12px;
+  margin-left: 16px;
+}
+.btn-type-2 {
+  margin-bottom: 12px;
+  margin-left: 16px;
+}
+.cover-image {
+  width: 144px;
+  margin-bottom: 16px;
+}
+.margin-right-32 {
+  margin-right: 32px;
+}
+
+.main-menu {
+  margin-right: 32px;
+  margin-bottom: 32px;
+
+}
+
+::ng-deep .wine-select .left-bar {
+  width: 256px;
+  min-width: 256px;
+  margin: 0 32px 24px 0 !important;
+}

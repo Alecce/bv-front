@@ -1,0 +1,74 @@
+
+<div class="scallable" [ngClass]="langService.isRtl() ? 'global-rtl' : 'global-ltr'">
+  <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-start margin-left-64" *ngIf="isBigScreen()">
+
+      <div>
+
+        <app-wine-list-searchbar></app-wine-list-searchbar>
+      </div>
+    </div>
+    <div class="d-flex margin-left-64 w-100">
+
+      <div>
+
+        <div class="w-100 margin-bottom-20">
+          <div class="d-flex flex-row justify-content-between align-content-end flex-wrap">
+            <div class="d-flex flex-column justify-content-end">
+              <div class="d-flex flex-row justify-content-between flex-wrap">
+
+                <div>
+
+                  <a class="d-flex btn btn-menu-first menu-4-regular ml-0" [ngClass]="getTabColor(tabs.back)"
+                     [routerLink]="langService.editable ? null : wineListLink()" (mouseover)="paintArrow('#000000')" (mouseout)="paintArrow('#ff7800')">
+
+                    <div>
+
+                      <app-icon-bonvino svgIcon="arrow-1-down-orange" class="icon-arrow-big rotate" #iconArrow></app-icon-bonvino>
+                    </div>
+                    <div>
+
+                      <app-text page="wine_list" default="Back to wine list"></app-text>
+                    </div>
+                  </a>
+                </div>
+                <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                  <button class="btn btn-menu-first menu-4-regular ml-0" [ngClass]="getTabColor(tabs.wine)"
+                          (click)="chooseTab(tabs.wine)">
+                    <app-text page="wine_list" default="Wine"></app-text>
+                  </button>
+                </div>
+                <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                  <button class="btn btn-menu-first menu-4-regular ml-0 mr-0" [ngClass]="getTabColor(tabs.winery)"
+                          (click)="chooseTab(tabs.winery)">
+                    <app-text page="wine_list" default="Winery"></app-text>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="w-100" [hidden]="tab.value != tabs.wine">
+          <app-wines-short-designed [wineryVineyardIdSubscriber]="wineryVineyardIdSubscriber"></app-wines-short-designed>
+        </div>
+        <div class="w-100" [hidden]="tab.value != tabs.winery" *ngIf="wineryId && tab.value == tabs.winery">
+          <app-winery-short [data]="{id: wineryId}"></app-winery-short>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+</div>
+
+
+
+

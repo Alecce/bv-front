@@ -1,0 +1,14 @@
+.logo-bonvono {
+  height: 26px;
+  width: 120px;
+  margin-left: 64px;
+}
+::ng-deep .logo-bonvono mat-icon{
+  height: 26px !important;
+  width: 120px;
+  /*width: 16px !important;;*/
+}
+.footer {
+  height: 62px;
+  border-top: solid 1px var(--chrome);
+}

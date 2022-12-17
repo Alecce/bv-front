@@ -1,0 +1,218 @@
+<form [formGroup]="form">
+  <div class="d-flex flex-column align-items-start">
+    <div class="heading-1 margin-bottom-16">
+      <app-text page="login" default="Registration" class="heading-1"></app-text>
+    </div>
+
+
+    <div class="d-flex flex-row justify-content-between align-items-center w-100">
+
+      <div class="d-flex flex-row align-items-end flex-even">
+        <div class="mandatory"></div>
+        <div class="field required align-self-stretch d-flex flex-column margin-bottom-16 w-100 margin-right-32">
+
+          <div class="">
+            <app-text page="registartion_user" place="first_name" default="First name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="first_name">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row align-items-end flex-even">
+        <div class="mandatory"></div>
+        <div class="field required align-self-stretch d-flex flex-column margin-bottom-16 w-100 margin-right-32">
+
+          <div class="">
+            <app-text page="registartion_user" place="last_name" default="Last name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="last_name">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row align-items-end flex-even">
+        <div class="mandatory"></div>
+        <div class="field required align-self-stretch d-flex flex-column margin-bottom-16 w-100 margin-right-32">
+
+          <div class="">
+            <app-text page="login" place="display_name" default="Display name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="username">
+          </div>
+        </div>
+      </div>
+      <div class="field align-self-stretch d-flex align-items-end margin-bottom-16 flex-even">
+        <app-checkbox-bonvino formControlName_="name_invisible" [form]="form" #_isTest>
+          <app-text page="registartion_user" place="name_invisible" default="Name invisible"  (click)="_isTest.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+    </div>
+
+
+    <div class=" d-flex flex-row justify-content-between align-items-center w-100">
+
+      <div class="d-flex flex-row align-items-end flex-even">
+        <div class="mandatory"></div>
+        <div class="field required align-self-stretch d-flex flex-column margin-bottom-16 margin-right-32">
+
+          <div class="">
+            <app-text page="registartion_user" place="email" default="Email" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="email">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row align-items-end flex-even" formGroupName="passwords">
+        <div class="mandatory"></div>
+        <div class="field required align-self-stretch d-flex flex-column margin-bottom-16 margin-right-32">
+
+          <div class="">
+            <app-text page="registartion_user" place="password" default="Password" class="field-hint"></app-text>
+            <input type="password" class="field-input align-self-stretch" formControlName="password">
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row align-items-end flex-even" formGroupName="passwords">
+        <div class="mandatory"></div>
+        <div class="field required align-self-stretch d-flex flex-column margin-bottom-16 margin-right-32">
+
+          <div class="">
+            <app-text place="confirm_password" default="Confirm password" class="field-hint"></app-text>
+            <input type="password" class="field-input align-self-stretch" formControlName="password_confirmation">
+          </div>
+        </div>
+      </div>
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 flex-even">
+
+
+      </div>
+
+    </div>
+
+
+
+    <div class=" d-flex flex-row justify-content-between align-items-center w-100">
+
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 margin-right-32 flex-even">
+        <app-text page="registartion_user" place="birthday" default="Birthday" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="birthday">
+      </div>
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 margin-right-32 flex-even">
+        <div class="w-100">
+
+          <app-text page="registartion_user" place="sex" default="Sex" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="sex" [form]="form" #_sex>
+            <div select-title>
+              <!--<app-text page="registartion_user" default="Select"-->
+              <!--[hidden]="sex.value != ''"></app-text>-->
+              <app-text page="registartion_user" place="male" default="Male"
+                        [hidden]="sex.value != '1'"></app-text>
+              <app-text page="registartion_user" place="female" default="Female"
+                        [hidden]="sex.value != '2'"></app-text>
+
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_sex.choose('')">
+                <app-text page="registartion_user" default="Clear input"></app-text>
+              </button>
+              <!--<button class="btn btn-option" (click)="_sex.choose('')">-->
+              <!--<app-text page="registartion_user" default="Select"></app-text>-->
+              <!--</button>-->
+              <button class="btn btn-option" (click)="_sex.choose('1')">
+                <app-text page="registartion_user" place="male" default="Male"></app-text>
+              </button>
+              <button class="btn btn-option" (click)="_sex.choose('2')">
+                <app-text page="registartion_user" place="female" default="Female"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="registartion_user" default="Clear input"></app-text>
+            <app-text page="registartion_user" place="male" default="Male"></app-text>
+            <app-text page="registartion_user" place="female" default="Female"></app-text>
+          </div>
+        </div>
+      </div>
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 margin-right-32 flex-even">
+        <div  class="heading-2 left-bold-border">
+          <app-text page="winery_add" default="Cover image"></app-text>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <!--<div *ngIf="routeData.download && !fileToUpload && imageLink">-->
+            <!--<img class="cover-image" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">-->
+          <!--</div>-->
+          <div class="d-flex flex-column">
+            <div class="d-flex flex-column">
+              <div>
+                <input hidden="true" id="image" type='file' (change)="onSelectFile($event)" formControlName="image">
+
+                <label class="btn btn-type-1 text-uppercase field-content" [for]="langService.editable ? null : 'image'">
+                  <app-text page="wine_list" default="Select"></app-text>
+                </label>
+              </div>
+              <!--<div *ngIf="fileToUpload || imageLink">-->
+                <!--<button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="deleteImage()">-->
+                  <!--<app-text page="winery_add" place="delete" default="Delete image"></app-text>-->
+                <!--</button>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 flex-even">
+
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-column align-items-center">
+            <div *ngIf="fileToUpload">
+              <img  class="cover-image" [src]="url">
+            </div>
+            <div *ngIf="fileToUpload" class="lines-1 place-of-origin-text margin-left-16">
+              <span>{{fileToUpload.name}}</span>
+            </div>
+            <div *ngIf="fileToUpload || imageLink">
+              <button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="deleteImage()">
+                <app-text page="winery_add" place="delete" default="Delete image"></app-text>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+    <div class=" d-flex flex-row justify-content-between align-items-center w-100">
+
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 w-100 margin-right-32">
+        <app-text page="login" place="address" default="Address" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="address">
+      </div>
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 w-100 margin-right-32">
+        <app-text page="registartion_user" place="city" default="City" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="city">
+      </div>
+      <div class="field align-self-stretch d-flex align-items-end margin-bottom-16 w-100">
+        <app-checkbox-bonvino formControlName_="address_invisible" [form]="form" #_isTest>
+          <app-text page="registartion_user" place="hide_address" default="Address invisible" (click)="_isTest.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+      <div class="field align-self-stretch d-flex flex-column margin-bottom-16 w-100">
+
+      </div>
+
+    </div>
+
+    <div class="d-flex flex-row justify-content-end align-items-center w-100">
+
+      <div class="margin-right-16">
+        <button class="btn btn-type-2 field-content text-uppercase" (click)="close()">
+          <app-text page="login" place="cancel" default="Cancel"></app-text>
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-type-1 field-content text-uppercase" (click)="submit()">
+          <app-text page="login" place="registration" default="Registration"></app-text>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</form>

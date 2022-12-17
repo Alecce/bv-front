@@ -1,0 +1,20 @@
+mat-icon.checkbox{
+  margin-top: -3px;
+}
+.border-left-3-lightgray{
+  border-left: lightgray solid 3px;
+}
+.border-bottom-4-chrome{
+  border-bottom: lightgray solid 1px;
+}
+.glass {
+  height: 247px;
+  object-fit: cover;
+}
+.margin-x-4 {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.margin-right-8 {
+  margin-right: 8px;
+}

@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between menu-first" *ngIf="isBigScreen()">
+
+  <button  *ngFor="let tabData of tabsData; let i=index" class="btn btn-menu-first menu-2-regular ml-0"
+           [disabled]="isDisabled(tabData.onlyBusiness, tabData.disabledForYou, tabData.specialCondition)"
+           [ngClass]="getSpecialClasses(tabData.tab, i)"
+           [hidden]="isHiddenForYou(tabData.onlyAdmin, tabData.specialCondition)"
+           (click)="chose(tabData.tab)">
+    <app-text [page]="tabData.page" [place]="tabData.place" [default]="tabData.default"></app-text>
+  </button>
+  <!--<button  *ngFor="let tabData of tabsData; let i=index" class="btn btn-menu-first menu-2-regular ml-0"-->
+           <!--[disabled]="isDisabledForNonBusiness(tabData.onlyBusiness) || isDisabledForYou(tabData.disabledForYou)"-->
+           <!--[ngClass]="getSpecialClasses(tabData.tab, i)"-->
+           <!--[hidden]="isHiddenForYou(tabData.onlyAdmin, tabData.specialCondition)"-->
+           <!--(click)="chose(tabData.tab)">-->
+    <!--<app-text [page]="tabData.page" [place]="tabData.place" [default]="tabData.default"></app-text>-->
+  <!--</button>-->
+</div>
+<div *ngIf="!isBigScreen()">
+
+  <div ngbDropdown class="d-flex align-items-end justify-content-center margin-top-12" display="dynamic" placement="bottom-left">
+    <div class="" id="listDropdown2" ngbDropdownToggle>
+      <div  class="btn btn-menu-first menu-2-regular ml-0">
+        <div class="whitespace-nowrap">
+
+          <app-text *ngFor="let tabData of tabsData; let i=index"
+                    [page]="tabData.page" [place]="tabData.place" [default]="tabData.default"
+                    class="margin-right-4 btn-menu-selected menu-2-active"
+                    [hidden]="!isChosenTab(tabData.tab)"></app-text>
+          <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" #icon1></app-icon-bonvino>
+        </div>
+
+      </div>
+
+    </div>
+    <div ngbDropdownMenu aria-labelledby="listDropdown2" class="menu-dropdown p-0">
+      <div class="d-flex flex-column align-items-start menu-buttons">
+        <div class="" *ngFor="let tabData of tabsData; let i=index">
+
+
+          <button class="btn btn-option" [disabled]="isDisabledForNonBusiness(tabData.onlyBusiness)" [hidden]="isHiddenForYou(tabData.onlyAdmin)"
+                  (click)="chose(tabData.tab)">
+            <app-text [page]="tabData.page" [place]="tabData.place" [default]="tabData.default"></app-text>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,210 @@
+
+<form [formGroup]="form" *ngIf="show">
+  <table class="table" *ngIf="routeData.editable">
+    <thead>
+      <tr class="bonvino-table-head">
+        <th scope="col">
+          <div class="d-flex justify-content-center">
+            <app-text page="wines_autodescription_onpage" default="Name" class="lines-2"></app-text>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="d-flex justify-content-center">
+            <app-text page="wines_autodescription_onpage" default="Choose properties" class="lines-2"></app-text>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="d-flex justify-content-center">
+            <app-text page="wines_autodescription_onpage" default="Options" class="lines-2"></app-text>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let group of fields; let i = index" formGroupName="{{group.name}}">
+
+      <tr>
+
+        <td colspan="3">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center min-width-100">
+
+            <app-text page="wines_autodescription" place="{{langService.morphStr(group.name)}}" default="{{group.name}}"
+                      class="lines-1"></app-text>
+          </div>
+
+        </td>
+      </tr>
+      <tr *ngFor="let field of group.form; let i = index">
+
+        <td>
+
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center min-width-100">
+            <app-text page="wines_autodescription" place="{{langService.morphStr(group.name + '_' + field.name)}}"
+                      default="{{field.name}}" class="lines-2"></app-text>
+          </div>
+        </td>
+        <td>
+
+
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <div *ngIf="field.type == 'select'" class="row w-100">
+
+                <!--<div class="field align-self-stretch d-flex flex-column">-->
+                  <!--&lt;!&ndash;{{field.name}}&ndash;&gt;-->
+                  <!--<app-select-bonvino formControlName_="{{field.name}}" [form]="form.get(group.name)" #_select>-->
+                    <!--<div select-title>-->
+                      <!--<app-text *ngFor="let option of field.options; let i = index"-->
+                                <!--page="wines_autodescription" place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"-->
+                                <!--default="{{getName(option.name)}}"-->
+                                <!--[hidden]="getName(option.name) != form.get(group.name).get(field.name).value"></app-text>-->
+                    <!--</div>-->
+                    <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+                      <!--<button class="btn btn-option" (click)="_select.choose('not selected')">-->
+                        <!--<app-text page="wines_common_info" default="Clear input"></app-text>-->
+                      <!--</button>-->
+                      <!--<button *ngFor="let option of field.options; let i = index" class="btn btn-option" (click)="_select.choose(getName(option.name))">-->
+
+                        <!--<span  class="field-hint" *ngIf="langService.editable">Form: </span>-->
+                        <!--<app-text page="wines_autodescription" place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"-->
+                                  <!--default="{{getName(option.name)}}"></app-text>-->
+
+                        <!--<span  class="field-hint" *ngIf="langService.editable">Text: </span>-->
+                        <!--<app-text page="wines_autodescription_in_text" place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"-->
+                                  <!--default="{{getName(option.name)}}" [language]="langService.schemaLanguage.value" *ngIf="langService.editable"></app-text>-->
+                      <!--</button>-->
+                    <!--</div>-->
+                  <!--</app-select-bonvino>-->
+                <!--</div>-->
+
+
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 margin-bottom-4 d-flex"
+                   *ngFor="let option of field.options; let i = index">
+
+                <!--<span>{{hasTitle(field.options, i)}}</span>-->
+                <app-radio-bonvino class="d-flex" formControlName_="{{field.name}}" [form]="form.get(group.name)"
+                                   value_="{{getName(option.name)}}" [resetValue]="'not selected'" [resetable]="true" #_radio>
+                  <div class="d-flex flex-column">
+                    <span  class="field-hint" *ngIf="langService.editable">Form: </span>
+                    <app-text page="wines_autodescription"
+                              place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"
+                              default="{{getName(option.name)}}" class="my-auto text-left word-break"></app-text>
+                    <span  class="field-hint" *ngIf="langService.editable">Text: </span>
+                    <app-text page="wines_autodescription_in_text"  *ngIf="langService.editable"
+                              place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"
+                              default="{{getName(option.name)}}"  [languageFormControl]="langService.schemaLanguage" class="my-auto text-left"></app-text>
+                  </div>
+                </app-radio-bonvino>
+              </div>
+
+            </div>
+            <div class="row" *ngIf="field.type == 'checkbox'">
+
+
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 margin-bottom-4 d-flex"
+                   *ngFor="let option of field.options; let i = index">
+
+                <!--<span>{{hasTitle(field.options, i)}}</span>-->
+                <app-checkbox-bonvino  class="d-flex" formControlName_="{{getName(option.name)}}" [form]="form.get(group.name).get(field.name)" #_checkbox>
+                  <div class="d-flex flex-column" (click)="_checkbox.check()">
+                    <span  class="field-hint" *ngIf="langService.editable">Form: </span>
+                    <app-text page="wines_autodescription"
+                              place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"
+                              default="{{getName(option.name)}}" class="my-auto text-left word-break"></app-text>
+                    <span  class="field-hint" *ngIf="langService.editable">Text: </span>
+                    <app-text page="wines_autodescription_in_text"  *ngIf="langService.editable"
+                              place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"
+                              default="{{getName(option.name)}}"  [languageFormControl]="langService.schemaLanguage" class="my-auto text-left"></app-text>
+                  </div>
+                </app-checkbox-bonvino>
+              </div>
+
+
+            </div>
+            <div *ngIf="field.type == 'textarea'">
+
+              <div class="field align-self-stretch d-flex flex-column">
+                <textarea class="form-control" rows="5" formControlName="{{field.name}}"></textarea>
+              </div>
+
+            </div>
+          </div>
+
+        </td>
+
+        <td>
+
+          <div class="d-flex flex-column">
+            <div class="d-flex flex-nowrap">
+
+              <app-checkbox-bonvino formControlName_="{{field.name + checkString}}" [form]="form.get(group.name)" #_use_in_result class="whitespace-nowrap">
+                <app-text page="wines_autodescription"
+                          place="use_in_result"
+                          default="use in result" class="my-auto min-width-100" (click)="_use_in_result.check()"></app-text>
+              </app-checkbox-bonvino>
+            </div>
+
+            <div class="margin-top-20" *ngIf="field.type == 'checkbox'">
+
+              <app-text page="wines_autodescription_onpage" default="Order" class="lines-1"></app-text>
+            </div>
+            <div class="d-flex flex-column margin-top-8" *ngIf="field.type == 'checkbox'">
+              <div class="dnd-container">
+                <div
+                  cdkDropList
+                  #todoList="cdkDropList"
+                  [cdkDropListData]="field.selected"
+                  class="dnd-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="dnd-box pointer" *ngFor="let option of field.selected; let i = index" cdkDrag>
+                    <app-text page="wines_autodescription"
+                              place="{{langService.morphStr(group.name + '_' + field.name + '_' + getName(option.name))}}"
+                              default="{{getName(option.name)}}" class="my-auto"></app-text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-center">
+
+    <button class="btn btn-type-2 text-uppercase field-content" for="image" (click)="generateText()">
+      <app-text page="wines_autodescription_onpage" default="Generate"></app-text>
+    </button>
+  </div>
+
+  <div class="d-flex flex-column">
+    <div *ngFor="let schema of schemasArr" class="d-flex flex-column">
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="wines_autodescription" default="Result ({{schema.code}})"  class="field-hint"></app-text>
+        <textarea type="textarea" dir="auto" rows="15" class="form-control" formControlName="description_{{schema.id}}"></textarea>
+      </div>
+      <!--<div  class="lines-1 whitespace-prewrap">-->
+        <!--{{form.get('description_' + schema.id).value}}-->
+      <!--</div>-->
+
+      <div class="d-flex justify-content-center">
+
+        <button class="btn btn-type-2 text-uppercase field-content" (click)="saveAsMain(schema)" *ngIf="!isSameDescription(schema)">
+          <app-text page="wines_autodescription_onpage" default="Save for that language"></app-text>
+        </button>
+        <button class="btn btn-type-2 text-uppercase field-content" disabled *ngIf="isSameDescription(schema)">
+          <app-text page="wines_autodescription_onpage" default="Already in use"></app-text>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <!--no need-->
+
+</div>

@@ -1,0 +1,37 @@
+<div class="d-flex padding-32 flex-column">
+  <div class="d-flex">
+    <div class="heading-1">
+      <app-text page="winery_one" default="Contact us"></app-text>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="d-flex flex-column flex-even align-items-start">
+      <div class="heading-2">
+        <app-text page="winery_one" default="Visit time"></app-text>
+      </div>
+
+
+
+      <app-visitinghours [timeData]="timeData"></app-visitinghours>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+      <app-text page="wine_list" default="Close"></app-text>
+    </button>
+  </div>
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="winery_one" default="Contact us"></app-text>
+  <app-text page="winery_one" default="Visit time"></app-text>
+
+  <app-text page="wine_list" default="Close"></app-text>
+
+
+</div>

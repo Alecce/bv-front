@@ -1,0 +1,65 @@
+
+<!--<div class="flag-mouse-over">-->
+  <!--<button class="btn-0 icn-40-40" mat-button [matMenuTriggerFor]="afterMenu"-->
+          <!--#container-->
+          <!--[ngClass]="">-->
+
+    <!--<mat-icon svgIcon="icn-glass"></mat-icon>-->
+  <!--</button>-->
+
+  <!--<mat-menu #afterMenu="matMenu" xPosition="after" class="no-max-width max-height-90vh" overlapTrigger="true">-->
+    <!---->
+  <!--</mat-menu>-->
+<!--</div>-->
+<div>
+  <button mat-button [center-mat-menu]="menuTrigger" class="btn-0 icn-40-40 p-0" >
+
+    <div class="glass-button-text" >
+      {{glassData}}
+    </div>
+    <div>
+      <mat-icon svgIcon="icn-glass"></mat-icon>
+    </div>
+    <!-- <div class="gb_wb"></div> -->
+    <!-- <div class="gb_vb"></div> -->
+  </button>
+  <div #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+    <mat-menu #menu="matMenu" class="width-440 height-194">
+      <div class="d-flex flex-even padding-24 width-440 height-194">
+        <!--<div *ngFor="let g of glasses; let i=index" class="margin-left-60">-->
+          <!--{{g.id}}-->
+        <!--</div>-->
+
+        <table class="table">
+          <tbody>
+            <tr class="glass-border-bottom-1">
+
+              <td *ngFor="let g of glasses; let i=index" class="p-0 border-0 margin-bottom-8">
+                <div class="text-center">
+                  <div class="text-center m-auto" [ngClass]="g.id == glassData ? 'glass-circle-background' : 'glass-bleak-text'">
+
+                    {{g.id}}
+                  </div>
+
+                </div>
+              </td>
+
+            </tr>
+            <tr>
+
+              <td *ngFor="let g of glasses; let i=index" class="p-0 text-center vertical-align-bottom border-0">
+
+                <div class="vertical-align-bottom text-center h-100">
+
+                  <mat-icon [svgIcon]="g.iconDisabled" [class]="g.iconClass" *ngIf="g.id != glassData"></mat-icon>
+                  <mat-icon [svgIcon]="g.icon" [class]="g.iconClass" *ngIf="g.id == glassData"></mat-icon>
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-menu>
+  </div>
+</div>

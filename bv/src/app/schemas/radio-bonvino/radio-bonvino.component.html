@@ -1,0 +1,11 @@
+<button class="d-flex flex-row justify-content-start align-items-center btn-radio-bonvino border-0 btn p-0" (click)="check()" [ngClass]="isDisabled()">
+  <div class="d-flex radio-bonvino align-items-start" [ngClass]="{'margin-right-8': !nomargin}">
+    <div class="radio-bonvino-inner" [ngClass]="getInner()"></div>
+  </div>
+
+  <!--<ng-content></ng-content>-->
+
+  <div class="d-flex flex-row justify-content-start">
+    <ng-content></ng-content>
+  </div>
+</button>

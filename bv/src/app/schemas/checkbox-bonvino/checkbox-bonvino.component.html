@@ -1,0 +1,13 @@
+<button class="d-flex flex-row justify-content-start align-items-center mouse-over-check btn btn-none text-left" [ngClass]="isDisabledCheckbox ? 'disabled-checkbox' : ''">
+  <div class="d-flex checkbox-bonvino align-items-start"
+       (click)="check()">
+    <mat-icon svgIcon="checkmark" class="icn-checkbox icn-menu d-flex align-items-start checkmark-wine" *ngIf="hide()" #icon1></mat-icon>
+    <mat-icon svgIcon="checkmark-black" class="icn-checkbox icn-menu d-flex align-items-start checkmark-black"  *ngIf="hide()" #icon2></mat-icon>
+    <mat-icon svgIcon="checkmark-chrome" class="icn-checkbox icn-menu d-flex align-items-start checkmark-chrome"  *ngIf="hide()" #icon3></mat-icon>
+    <mat-icon svgIcon="checkmark-chrome" class="icn-checkbox icn-menu d-flex align-items-start checkmark-pressed" #icon3></mat-icon>
+  </div>
+  <div class="d-flex flex-row justify-content-start">
+    <ng-content></ng-content>
+  </div>
+</button>
+<!--{{isDisabledCheckbox}}-->

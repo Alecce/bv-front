@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="6px" viewBox="0 0 11 6" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>arrow-1-down</title>
+    <desc>Created with Sketch.</desc>
+    <g id="UI-Kit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="translate(-971.000000, -509.000000)" fill="#ff4545" id="dropDown" stroke="#ff4545" stroke-width="2" class="changeStrokeHere">
+            <g transform="translate(832.000000, 480.000000)">
+                <g id="arrow-1-down" transform="translate(144.087654, 32.000000) scale(1, -1) translate(-144.087654, -32.000000) translate(140.087654, 30.000000)">
+                    <polyline id="arrow-1" fill="none" points="-2.23336691e-13 -3.55271368e-15 3.98116847 4 8 -3.55271368e-15"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

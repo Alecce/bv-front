@@ -1,0 +1,31 @@
+
+.heading-1 {
+  margin-bottom: 36px;
+}
+.heading-2 {
+  margin-bottom: 20px;
+  border-left: 8px solid var(--wine);
+  padding-left: 8px;
+}
+.margin-right-36 {
+  margin-right: 36px;
+}
+.main-column {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.left-bar {
+  min-width: 256px;
+}
+
+.main-menu {
+  margin-right: 32px;
+  margin-bottom: 32px;
+
+}
+.margin-bottom-32 {
+  margin-bottom: 32px;
+}
+.img-fluid {
+  width: 256px;
+}

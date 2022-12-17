@@ -1,0 +1,731 @@
+
+<div class="show-results-button-container mx-auto padding-right-48" *ngIf="!isBigScreen()">
+  <div class="d-flex mx-auto justify-content-center">
+
+    <button class="btn btn-type-4" mat-button (click)="showWines()">
+
+      <app-text page="wine_list" place="show_wines" default="Show wines"></app-text>
+    </button>
+  </div>
+
+</div>
+
+<form [formGroup]="form" class="w-100">
+
+
+
+  <div class="margin-bottom-16" *ngIf="isBigScreen()">
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="showWines()">
+      <app-text page="wine_list" place="show_wines" default="Show wines"></app-text>
+    </button>
+  </div>
+
+
+  <div class="align-self-end d-flex flex-column margin-bottom-40" *ngIf="!isBigScreen()">
+    <app-text page="wine_list" default="Sort" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="order" [form]="form" #_order [scallable]="true">
+      <div select-title>
+        <app-text page="wines_common_info" place="id" default="Id" *ngIf="order.value == 'sort'"></app-text>
+        <app-text page="wines_common_info" default="Add time" *ngIf="order.value == 'addtime'"></app-text>
+        <app-text page="wines_common_info" default="Add time" *ngIf="order.value == 'addtime_reverse'"></app-text>
+        <app-text page="wines_common_info" place="name_int" default="Name" *ngIf="order.value == 'name_int'"></app-text>
+        <app-text page="wines_common_info" place="name_int" default="Name" *ngIf="order.value == 'name_int_reverse'"></app-text>
+        <app-text page="wines_common_info" place="year" default="Year" *ngIf="order.value == 'year'"></app-text>
+        <app-text page="wines_common_info" place="year" default="Year" *ngIf="order.value == 'year_reverse'"></app-text>
+        <app-text page="wines_common_info" place="country" default="Country" *ngIf="order.value == 'country'"></app-text>
+        <app-text page="wines_common_info" place="country" default="Country" *ngIf="order.value == 'country_reverse'"></app-text>
+
+
+        <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                  *ngIf="order.value == 'name_int' || order.value == 'name_nat' || order.value == 'year' || order.value == 'country' || order.value == 'addtime'"
+        ></mat-icon>
+        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"
+                  *ngIf="order.value == 'name_int_reverse' || order.value == 'name_nat_reverse'
+                                  || order.value == 'year_reverse' || order.value == 'country_reverse' || order.value == 'addtime_reverse'"
+        ></mat-icon>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <!--<button class="btn btn-option" (click)="_order.choose('sort')">-->
+        <!--<app-text page="wines_common_info" place="id" default="Id"></app-text>-->
+        <!--</button>-->
+        <button class="btn btn-option" (click)="_order.choose('addtime')" *ngIf="order.value == 'addtime_reverse'">
+          <app-text page="wines_common_info" default="Add time"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+        </button>
+        <button class="btn btn-option" (click)="_order.choose('addtime_reverse')" *ngIf="order.value != 'addtime_reverse'">
+          <app-text page="wines_common_info" default="Add time"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+        </button>
+        <button class="btn btn-option" (click)="_order.choose('name_int')" *ngIf="order.value != 'name_int'">
+          <app-text page="wines_common_info" place="name_int" default="Name"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+        </button>
+        <button class="btn btn-option" (click)="_order.choose('name_int_reverse')" *ngIf="order.value == 'name_int'">
+          <app-text page="wines_common_info" place="name_int" default="Name"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+        </button>
+        <!--<button class="btn btn-option" (click)="_order.choose('name_nat')">-->
+        <!--<app-text page="wines_common_info" place="name_nat" default="Name"></app-text>-->
+        <!--<mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>-->
+        <!--</button>-->
+        <!--<button class="btn btn-option" (click)="_order.choose('name_nat_reverse')">-->
+        <!--<app-text page="wines_common_info" place="name_nat" default="Name"></app-text>-->
+        <!--<mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>-->
+        <!--</button>-->
+        <button class="btn btn-option" (click)="_order.choose('year')" *ngIf="order.value != 'year'">
+          <app-text page="wines_common_info" place="year" default="Year"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+        </button>
+        <button class="btn btn-option" (click)="_order.choose('year_reverse')" *ngIf="order.value == 'year'">
+          <app-text page="wines_common_info" place="year" default="Year"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+        </button>
+        <button class="btn btn-option" (click)="_order.choose('country')" *ngIf="order.value != 'country'">
+          <app-text page="wines_common_info" place="country" default="Country"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+        </button>
+        <button class="btn btn-option" (click)="_order.choose('country_reverse')" *ngIf="order.value == 'country'">
+          <app-text page="wines_common_info" place="country" default="Country"></app-text>
+          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+        </button>
+      </div>
+    </app-select-bonvino>
+  </div>
+
+
+  <!--<div *ngIf="langService.editable">-->
+    <!--<app-text page="wines_common_info" place="name" default="Name"></app-text>-->
+    <!--&lt;!&ndash;<app-text page="wines_common_info" place="name_reverse" default="Name (reverse order)"></app-text>&ndash;&gt;-->
+    <!--<app-text page="wines_common_info" place="year" default="Year"></app-text>-->
+    <!--&lt;!&ndash;<app-text page="wines_common_info" place="year_reverse" default="Year (reverse order)"></app-text>&ndash;&gt;-->
+    <!--<app-text page="wines_common_info" place="country" default="Country"></app-text>-->
+    <!--&lt;!&ndash;<app-text page="wines_common_info" place="country_reverse" default="Country (reverse order)"></app-text>&ndash;&gt;-->
+  <!--</div>-->
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wine_list" place="wine_name" default="Which wine are you looking for?" class="field-hint"></app-text>
+    <input type="text" class="field-input align-self-stretch" formControlName="searchInternationalName" [ngModel]="wineListSearchbarService.formModel.searchInternationalName">
+  </div>
+
+
+
+
+  <div  class="heading-1 margin-top-40" *ngIf="!winery">
+    <app-text page="wine_list" place="winery" default="Winery" ></app-text>
+  </div>
+
+
+
+  <div class="align-self-stretch d-flex flex-column margin-top-24" *ngIf="!winery">
+    <app-select-search-bonvino formControlName_="wineryHelper" [form]="form" #_winery [scallable]="true">
+      <div select-title>
+
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options-full">
+        <button *ngFor="let winery of wineryList | paginate: { id: 'pagination-winery', itemsPerPage: 10, currentPage: wineryPage, totalItems: wineryTotal}"
+                class="btn btn-option"
+                (click)="selectWinery(winery.id); _winery.close();">
+          <span>{{getWineryName(winery)}}</span>
+        </button>
+        <pagination-controls  (click)="$event.stopPropagation()" class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-winery" (pageChange)="setWineryPage($event)"></pagination-controls>
+
+      </div>
+    </app-select-search-bonvino>
+  </div>
+
+
+  <div class="lines-1 place-of-origin-text d-flex justify-content-between margin-top-24" *ngIf="wineListSearchbarService.chosenWinery">
+    <div>
+      <span>{{getWineryName(wineListSearchbarService.chosenWinery)}}</span>
+    </div>
+    <div>
+      <button class="btn m-0 p-0" (click)="selectWinery('')">
+        <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+
+  <div  class="heading-1 margin-top-40" *ngIf="!winery">
+    <app-text page="wine_list" place="place_of_origin" default="Place of origin"></app-text>
+  </div>
+
+  <div *ngIf="!winery">
+    <button class="btn btn-type-1 text-uppercase field-content margin-top-24" (click)="openPlaceOfOrigin()">
+      <app-text page="wine_list" default="Select"></app-text>
+    </button>
+  </div>
+
+
+  <div class="lines-1 place-of-origin-text d-flex justify-content-between margin-top-24" *ngIf="country.value * 1">
+    <div>
+
+      <div class="d-inline">
+        <app-text page="country_names" place="{{country.value * 1}}" default="{{countriesMap.get(country.value * 1)}}"></app-text>
+      </div>
+      <div class="d-inline" *ngFor="let region of regionsForm.value; let i = index">
+        <span *ngIf="region"> > </span>
+        <app-text page="country_names" place="{{region * 1}}"
+                  default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn m-0 p-0" (click)="clearPlaceOfOrigin()">
+        <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <!--<div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngIf="chosenWinery">-->
+  <!--<div>-->
+  <!--<span>{{getWineryName(chosenWinery)}}</span>-->
+  <!--</div>-->
+  <!--<div>-->
+  <!--<button class="btn m-0 p-0" (click)="selectWinery('')">-->
+  <!--<mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>-->
+  <!--</button>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <div class="heading-1 margin-top-40">
+    <app-text page="wine_list" place="wine_type" default="Wine type"></app-text>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column margin-top-24">
+    <app-text page="wine_list" default="Type" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="grand_type" [form]="form" #_grand_type [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('grand_type', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" place="select" default="Clear input" *ngIf="grand_type.value == '0'"></app-text>-->
+        <app-text page="wines_common_info" place="still" default="Still" *ngIf="grand_type.value == 'still'"></app-text>
+        <app-text page="wines_common_info" place="sparkling" default="Sparkling" *ngIf="grand_type.value == 'sparkling'"></app-text>
+        <app-text page="wines_common_info" place="nongrape" default="Nongrape" *ngIf="grand_type.value == 'nongrape'"></app-text>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_grand_type.choose('0')">
+          <app-text page="wines_common_info"  default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" (click)="_grand_type.choose('still')" *ngIf="!counterData || counterData.grand_type.still">
+          <app-text page="wines_common_info" place="still" default="Still"></app-text>
+          <span *ngIf="counterData"> ({{counterData.grand_type.still}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_grand_type.choose('sparkling')" *ngIf="!counterData || counterData.grand_type.sparkling">
+          <app-text page="wines_common_info" place="sparkling" default="Sparkling"></app-text>
+          <span *ngIf="counterData"> ({{counterData.grand_type.sparkling}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_grand_type.choose('nongrape')" *ngIf="!counterData || counterData.grand_type.nongrape">
+          <app-text page="wines_common_info" place="nongrape" default="Nongrape"></app-text>
+          <span *ngIf="counterData"> ({{counterData.grand_type.nongrape}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text page="wines_common_info" place="still" default="Still"></app-text>
+      <app-text page="wines_common_info" place="sparkling" default="Sparkling"></app-text>
+      <app-text page="wines_common_info" place="nongrape" default="Nongrape"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value == 'still'">
+    <app-text page="wine_list" default="Still" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="still" [form]="form" #_still [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('still', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="still.value == '0'"></app-text>-->
+        <app-text page="wines_common_info" place="usual" default="Usual" *ngIf="still.value == 'usual'"></app-text>
+        <app-text page="wines_common_info" place="fortified" default="Fortified" *ngIf="still.value == 'fortified'"></app-text>
+        <app-text page="wines_common_info" place="concentrated" default="Concentrated" *ngIf="still.value == 'concentrated'"></app-text>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_still.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" (click)="_still.choose('usual')"
+                [hidden]="counterData && !counterData.vinetype_still.usual">
+          <app-text page="wines_common_info" place="usual" default="Usual"></app-text>
+          <span *ngIf="counterData"> ({{counterData.vinetype_still.usual}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_still.choose('fortified')"
+                [hidden]="counterData && !counterData.vinetype_still.fortified">
+          <app-text page="wines_common_info" place="fortified" default="Fortified"></app-text>
+          <span *ngIf="counterData"> ({{counterData.vinetype_still.fortified}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_still.choose('concentrated')"
+                [hidden]="counterData && !counterData.vinetype_still.concentrated">
+          <app-text page="wines_common_info" place="concentrated" default="Concentrated"></app-text>
+          <span *ngIf="counterData"> ({{counterData.vinetype_still.concentrated}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text page="wines_common_info" place="usual" default="Usual"></app-text>
+      <app-text page="wines_common_info" place="fortified" default="Fortified"></app-text>
+      <app-text page="wines_common_info" place="concentrated" default="Concentrated"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value == 'sparkling'">
+    <app-text page="wine_list" default="Sparkling" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="sparkling" [form]="form" #_sparkling [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('sparkling', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="sparkling.value == '0'"></app-text>-->
+        <div *ngFor="let type of sparklingSubTypeList; let i = index">
+          <app-text page="wines_common_info" default="{{type.name}}" *ngIf="sparkling.value == type.name"></app-text>
+        </div>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_sparkling.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" *ngFor="let type of sparklingSubTypeList; let i = index" (click)="_sparkling.choose(type.name)"
+                [hidden]="counterData && !counterData.vinetype_sparkling[type.name]">
+          <app-text page="wines_common_info" default="{{type.name}}"></app-text>
+          <span *ngIf="counterData && sparkling.value == '0'"> ({{counterData.vinetype_sparkling[type.name]}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text *ngFor="let type of sparklingSubTypeList; let i = index" page="wines_common_info" default="{{type.name}}"></app-text>
+    </div>
+  </div>
+
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value != 'nongrape' && grand_type.value != 'sparkling'">
+    <app-text page="wine_list" default="Sweetness" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="sweetness" [form]="form" #_sweetness [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('sweetness', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="sweetness.value == '0'"></app-text>-->
+        <app-text page="wines_common_info" place="dry" default="Dry" *ngIf="sweetness.value == 'dry'"></app-text>
+        <app-text page="wines_common_info" place="semi_dry" default="Semi-dry" *ngIf="sweetness.value == 'semi_dry'"></app-text>
+        <app-text page="wines_common_info" place="semi_sweet" default="Semi-sweet" *ngIf="sweetness.value == 'semi_sweet'"></app-text>
+        <app-text page="wines_common_info" place="sweet" default="Sweet" *ngIf="sweetness.value == 'sweet'"></app-text>
+      </div>
+      <div options>
+        <div class="d-flex flex-column align-items-start select-list-options">
+          <button class="btn btn-option" (click)="_sweetness.choose('0')">
+            <app-text page="wines_common_info" default="Clear input"></app-text>
+          </button>
+          <button class="btn btn-option" (click)="_sweetness.choose('dry')"
+                  [hidden]="counterData && !counterData.vinetype_sweetness.dry">
+            <app-text page="wines_common_info" place="dry" default="Dry"></app-text>
+            <span *ngIf="counterData"> ({{counterData.vinetype_sweetness.dry}})</span>
+          </button>
+          <button class="btn btn-option" (click)="_sweetness.choose('semi_dry')"
+                  [hidden]="counterData && !counterData.vinetype_sweetness.semi_dry">
+            <app-text page="wines_common_info" place="semi_dry" default="Semi-dry"></app-text>
+            <span *ngIf="counterData"> ({{counterData.vinetype_sweetness.semi_dry}})</span>
+          </button>
+          <button class="btn btn-option" (click)="_sweetness.choose('semi_sweet')"
+                  [hidden]="counterData && !counterData.vinetype_sweetness.semi_sweet">
+            <app-text page="wines_common_info" place="semi_sweet" default="Semi-sweet"></app-text>
+            <span *ngIf="counterData"> ({{counterData.vinetype_sweetness.semi_sweet}})</span>
+          </button>
+          <button class="btn btn-option" (click)="_sweetness.choose('sweet')"
+                  [hidden]="counterData && !counterData.vinetype_sweetness.sweet">
+            <app-text page="wines_common_info" place="sweet" default="Sweet"></app-text>
+            <span *ngIf="counterData"> ({{counterData.vinetype_sweetness.sweet}})</span>
+          </button>
+        </div>
+
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text page="wines_common_info" place="dry" default="Dry"></app-text>
+      <app-text page="wines_common_info" place="semi_dry" default="Semi-dry"></app-text>
+      <app-text page="wines_common_info" place="semi_sweet" default="Semi-sweet"></app-text>
+      <app-text page="wines_common_info" place="sweet" default="Sweet"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value == 'sparkling'">
+    <app-text page="wine_list" default="Champagne sweetness" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="champagne_sweetness" [form]="form" #_champagne_sweetness [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('champagne_sweetness', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="champagne_sweetness.value == '0'"></app-text>-->
+        <app-text page="wines_common_info" default="Extra Brut" *ngIf="champagne_sweetness.value == 'Extra Brut'"></app-text>
+        <app-text page="wines_common_info" default="Brut" *ngIf="champagne_sweetness.value == 'Brut'"></app-text>
+        <app-text page="wines_common_info" default="Extra Dry" *ngIf="champagne_sweetness.value == 'Extra Dry'"></app-text>
+        <app-text page="wines_common_info" default="Sec" *ngIf="champagne_sweetness.value == 'Sec'"></app-text>
+        <app-text page="wines_common_info" default="Demi-Sec" *ngIf="champagne_sweetness.value == 'Demi-Sec'"></app-text>
+        <app-text page="wines_common_info" default="Doux" *ngIf="champagne_sweetness.value == 'Doux'"></app-text>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('Extra Brut')"
+                [hidden]="counterData && !counterData.champagne_sweetness['Extra Brut']">
+          <app-text page="wines_common_info" default="Extra Brut"></app-text>
+          <span *ngIf="counterData"> ({{counterData.champagne_sweetness['Extra Brut']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('Brut')"
+                [hidden]="counterData && !counterData.champagne_sweetness['Brut']">
+          <app-text page="wines_common_info" default="Brut"></app-text>
+          <span *ngIf="counterData"> ({{counterData.champagne_sweetness['Brut']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('Extra Dry')"
+                [hidden]="counterData && !counterData.champagne_sweetness['Extra Dry']">
+          <app-text page="wines_common_info" default="Extra Dry"></app-text>
+          <span *ngIf="counterData"> ({{counterData.champagne_sweetness['Extra Dry']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('Sec')"
+                [hidden]="counterData && !counterData.champagne_sweetness['Sec']">
+          <app-text page="wines_common_info" default="Sec"></app-text>
+          <span *ngIf="counterData"> ({{counterData.champagne_sweetness['Sec']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('Demi-Sec')"
+                [hidden]="counterData && !counterData.champagne_sweetness['Demi-Sec']">
+          <app-text page="wines_common_info" default="Demi-Sec"></app-text>
+          <span *ngIf="counterData"> ({{counterData.champagne_sweetness['Demi-Sec']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_champagne_sweetness.choose('Doux')"
+                [hidden]="counterData && !counterData.champagne_sweetness['Doux']">
+          <app-text page="wines_common_info" default="Doux"></app-text>
+          <span *ngIf="counterData"> ({{counterData.champagne_sweetness['Doux']}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text page="wines_common_info" default="Extra Brut"></app-text>
+      <app-text page="wines_common_info" default="Brut"></app-text>
+      <app-text page="wines_common_info" default="Extra Dry"></app-text>
+      <app-text page="wines_common_info" default="Sec"></app-text>
+      <app-text page="wines_common_info" default="Demi-Sec"></app-text>
+      <app-text page="wines_common_info" default="Doux"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value == 'sparkling'">
+    <app-text page="wine_list" default="Gas amount" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="gas" [form]="form" #_gas [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('gas', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="gas.value == '0'"></app-text>-->
+        <app-text page="wines_common_info" default="Beady" *ngIf="gas.value == 'Beady'"></app-text>
+        <app-text page="wines_common_info" default="Semi-sparkling" *ngIf="gas.value == 'Semi-sparkling'"></app-text>
+        <app-text page="wines_common_info" default="Sparkling" *ngIf="gas.value == 'Sparkling'"></app-text>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_gas.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" (click)="_gas.choose('Beady')"
+                [hidden]="counterData && !counterData.gas_amount['Beady']">
+          <app-text page="wines_common_info" default="Beady"></app-text>
+          <span *ngIf="counterData"> ({{counterData.gas_amount['Beady']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_gas.choose('Semi-sparkling')"
+                [hidden]="counterData && !counterData.gas_amount['Semi-sparkling']">
+          <app-text page="wines_common_info" default="Semi-sparkling"></app-text>
+          <span *ngIf="counterData"> ({{counterData.gas_amount['Semi-sparkling']}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_gas.choose('Sparkling')"
+                [hidden]="counterData && !counterData.gas_amount['Sparkling']">
+          <app-text page="wines_common_info" default="Sparkling"></app-text>
+          <span *ngIf="counterData"> ({{counterData.gas_amount['Sparkling']}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text page="wines_common_info" default="Beady"></app-text>
+      <app-text page="wines_common_info" default="Semi-sparkling"></app-text>
+      <app-text page="wines_common_info" default="Sparkling"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value == 'still'">
+    <app-text page="wine_list" default="Special type" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="type" [form]="form" #_type [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('type', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="type.value == '0'"></app-text>-->
+        <div *ngFor="let wt of wineTypeList">
+          <app-text page="wines_common_info" place="{{wt.type}}" default="{{wt.type}}" *ngIf="type.value == wt.id"></app-text>
+        </div>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_type.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" *ngFor="let wt of wineTypeList" (click)="_type.choose(wt.id)"
+                [hidden]="counterData && !counterData.wine_type[wt.id]">
+          <app-text page="wines_common_info" place="{{wt.type}}" default="{{wt.type}}"></app-text>
+          <span *ngIf="counterData"> ({{counterData.wine_type[wt.id]}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" default="Clear input"></app-text>
+      <app-text *ngFor="let wt of wineTypeList" page="wines_common_info" place="{{wt.type}}"
+                default="{{wt.type}}"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value != 'nongrape'">
+    <app-text page="wine_list" default="Color" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="color" [form]="form" #_color [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('color', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="color.value == '0'"></app-text>-->
+        <app-text page="wines_common_info" default="White" *ngIf="color.value == 'white'"></app-text>
+        <app-text page="wines_common_info" default="Rose" *ngIf="color.value == 'rose'"></app-text>
+        <app-text page="wines_common_info" default="Red" *ngIf="color.value == 'red'"></app-text>
+        <app-text page="wines_common_info" default="Orange" *ngIf="color.value == 'orange'"></app-text>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_color.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" (click)="_color.choose('white')"
+                [hidden]="counterData && !counterData.wine_color.white">
+          <app-text page="wines_common_info" place="white" default="White"></app-text>
+          <span *ngIf="counterData"> ({{counterData.wine_color.white}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_color.choose('rose')"
+                [hidden]="counterData && !counterData.wine_color.rose">
+          <app-text page="wines_common_info" place="rose" default="Rose"></app-text>
+          <span *ngIf="counterData"> ({{counterData.wine_color.rose}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_color.choose('red')"
+                [hidden]="counterData && !counterData.wine_color.red">
+          <app-text page="wines_common_info" place="red" default="Red"></app-text>
+          <span *ngIf="counterData"> ({{counterData.wine_color.red}})</span>
+        </button>
+        <button class="btn btn-option" (click)="_color.choose('orange')"
+                [hidden]="counterData && !counterData.wine_color.orange">
+          <app-text page="wines_common_info" place="orange" default="Orange"></app-text>
+          <span *ngIf="counterData"> ({{counterData.wine_color.orange}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+      <app-text page="wines_common_info" place="nocolor" default="Clear input"></app-text>
+      <app-text page="wines_common_info" place="white" default="White"></app-text>
+      <app-text page="wines_common_info" place="rose" default="Rose"></app-text>
+      <app-text page="wines_common_info" place="red" default="Red"></app-text>
+      <app-text page="wines_common_info" place="orange" default="Orange"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column"  *ngIf="availableTypesForSubTypes.includes(type.value + '')">
+    <app-text page="wine_list" default="Subtype" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="special" [form]="form" #_special [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('special', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="special.value == '0'"></app-text>-->
+        <div *ngFor="let wst of wineSubTypeList">
+          <app-text page="wines_common_info" default="{{wst.name}}" *ngIf="special.value == wst.id"></app-text>
+        </div>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_special.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" *ngFor="let wst of wineSubTypeList" [hidden]="!wst.typeList.includes(type.value + '')" (click)="_special.choose(wst.id)"
+                [hidden]="counterData && !counterData.additional_property[wst.id]">
+          <app-text page="wines_common_info" default="{{wst.name}}"></app-text>
+          <span *ngIf="counterData"> ({{counterData.additional_property[wst.id]}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+
+      <app-text page="wines_common_info" *ngFor="let wst of wineSubTypeList" default="{{wst.name}}"></app-text>
+    </div>
+  </div>
+
+
+
+  <div class="field align-self-stretch d-flex flex-column" *ngIf="grand_type.value == 'nongrape'">
+    <app-text page="wine_list" default="Nongrape" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="nongrape" [form]="form" #_nongrape [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('nongrape', '0')">
+      <div select-title>
+        <!--<app-text page="wines_common_info" default="Clear input" *ngIf="nongrape.value == '0'"></app-text>-->
+        <div *ngFor="let type of nongrapeSubTypeList; let i = index">
+          <app-text page="wines_common_info" default="{{type.name}}" *ngIf="nongrape.value == type.name"></app-text>
+        </div>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_nongrape.choose('0')">
+          <app-text page="wines_common_info" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" *ngFor="let type of nongrapeSubTypeList; let i = index" (click)="_nongrape.choose(type.name)" [hidden]="counterData && !counterData.vinetype_nongrape[type.name]">
+          <app-text page="wines_common_info" default="{{type.name}}"></app-text>
+          <span *ngIf="counterData"> ({{counterData.vinetype_nongrape[type.name]}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+
+      <app-text *ngFor="let type of nongrapeSubTypeList; let i = index" page="wines_common_info" default="{{type.name}}"></app-text>
+    </div>
+  </div>
+
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wine_list" default="Price" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="priceLevel" [form]="form" #_priceLevel [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('priceLevel', '0')">
+      <div select-title>
+        <!--<app-text page="wines_advanced" default="Clear input" *ngIf="priceLevel.value == '0'"></app-text>-->
+        <div *ngFor="let price of priceList; let i = index">
+          <app-text page="wines_advanced" default="{{price.price}}" *ngIf="priceLevel.value == price.id"></app-text>
+        </div>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_priceLevel.choose('0')">
+          <app-text page="wines_advanced" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" *ngFor="let price of priceList; let i = index" (click)="_priceLevel.choose(price.id)" [hidden]="counterData && !counterData.price[price.id]">
+          <app-text page="wines_advanced" default="{{price.price}}"></app-text>
+          <span *ngIf="counterData"> ({{counterData.price[price.id]}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+
+      <app-text page="wines_advanced"  *ngFor="let price of priceList; let i = index" default="{{price.price}}"></app-text>
+    </div>
+  </div>
+
+
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wine_list" default="Bottle size" class="field-hint"></app-text>
+    <app-select-bonvino formControlName_="bottleSize" [form]="form" #_bottleSize [scallable]="true"
+                        (menuOpened)="reloadCountsOnOpeningSelect('bottleSize', '0')">
+      <div select-title>
+        <!--<app-text page="wines_advanced" default="Clear input" *ngIf="bottleSize.value == '0'"></app-text>-->
+        <div *ngFor="let wrap of wrappingList">
+          <app-text page="wines_advanced" default="{{wrap.size}}" *ngIf="bottleSize.value == wrap.id"></app-text>
+        </div>
+      </div>
+      <div options class="d-flex flex-column align-items-start select-list-options">
+        <button class="btn btn-option" (click)="_bottleSize.choose('0')">
+          <app-text page="wines_advanced" default="Clear input"></app-text>
+        </button>
+        <button class="btn btn-option" *ngFor="let wrap of wrappingList" (click)="_bottleSize.choose(wrap.id)" [hidden]="counterData && !counterData.wrapping[wrap.id]">
+          <app-text page="wines_advanced" default="{{wrap.size}}"></app-text>
+          <span *ngIf="counterData"> ({{counterData.wrapping[wrap.id]}})</span>
+        </button>
+      </div>
+    </app-select-bonvino>
+    <div *ngIf="langService.editable">
+
+      <app-text page="wines_advanced" *ngFor="let wrap of wrappingList" default="{{wrap.size}}"></app-text>
+    </div>
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wines" default="Vintage year" class="field-hint"></app-text>
+    <input type="text" class="field-input align-self-stretch" formControlName="year" [ngModel]="wineListSearchbarService.formModel.year">
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wines" default="Alcohol percents" class="field-hint"></app-text>
+    <input type="text" class="field-input align-self-stretch" formControlName="alc_percent" [ngModel]="wineListSearchbarService.formModel.alc_percent">
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wines" default="Minimum collector price" class="field-hint"></app-text>
+    <input type="text" class="field-input align-self-stretch" formControlName="minPrice" [ngModel]="wineListSearchbarService.formModel.minPrice">
+  </div>
+
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-text page="wines" default="Maximum collector price" class="field-hint"></app-text>
+    <input type="text" class="field-input align-self-stretch" formControlName="maxPrice" [ngModel]="wineListSearchbarService.formModel.maxPrice">
+  </div>
+
+
+  <div class="d-flex flex-column w-100 margin-bottom-32">
+    <div class="field align-self-stretch d-flex flex-column">
+      <app-select-search-bonvino formControlName_="grapeHelper" [form]="form" #_grapeHelper [scallable]="true">
+        <div select-title>
+          <app-text  page="wines" place="grapes" default="Grapes" class="field-hint"></app-text>
+        </div>
+        <div options class="d-flex flex-column align-items-start select-list-options-full">
+          <button *ngFor="let grape of grapeList | paginate: { id: 'pagination-grapes', itemsPerPage: 10, currentPage: grapePage, totalItems: grapeTotal}"
+                  class="btn btn-option"
+                  (click)="selectGrape(grape.id); _grapeHelper.close();">
+            <span>{{getGrapeName(grape)}}</span>
+          </button>
+          <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-grapes" (pageChange)="setGrapePage($event)"></pagination-controls>
+
+        </div>
+      </app-select-search-bonvino>
+    </div>
+
+
+    <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngIf="wineListSearchbarService.chosenGrape">
+      <div>
+        <span>{{getGrapeName(wineListSearchbarService.chosenGrape)}}</span>
+      </div>
+      <div>
+        <button class="btn m-0 p-0" (click)="selectGrape('')">
+          <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-checkbox-bonvino formControlName_="isKashrut" [form]="form" #_isKashrut>
+      <app-text page="winery_add" default="Kashrut" (click)="_isKashrut.check()" class="lines-1"></app-text>
+    </app-checkbox-bonvino>
+  </div>
+
+  <!--<div class="field align-self-stretch d-flex flex-column">-->
+  <!--<app-checkbox-bonvino formControlName_="isQuality" [form]="form" #_isQuality>-->
+  <!--<app-text page="winery_add" default="Quality" (click)="_isQuality.check()"></app-text>-->
+  <!--</app-checkbox-bonvino>-->
+  <!--</div>-->
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-checkbox-bonvino formControlName_="isBiodynamic" [form]="form" #_isBiodynamic>
+      <app-text page="winery_add" default="Biodynamic" (click)="_isBiodynamic.check()" class="lines-1"></app-text>
+    </app-checkbox-bonvino>
+  </div>
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-checkbox-bonvino formControlName_="isOrganic" [form]="form" #_isOrganic>
+      <app-text page="winery_add" default="Organic" (click)="_isOrganic.check()" class="lines-1"></app-text>
+    </app-checkbox-bonvino>
+  </div>
+
+  <div class="field align-self-stretch d-flex flex-column">
+    <app-checkbox-bonvino formControlName_="isVegan" [form]="form" #_isVegan>
+      <app-text page="winery_add" default="Vegan" (click)="_isVegan.check()" class="lines-1"></app-text>
+    </app-checkbox-bonvino>
+  </div>
+
+</form>

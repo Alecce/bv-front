@@ -1,0 +1,72 @@
+mat-icon.checkbox{
+  margin-top: -3px;
+}
+.margin-64 {
+  margin: 0 64px 64px 64px;
+}
+.page-title {
+  margin-bottom: 44px;
+}
+.left-bold-border {
+  border-left: 8px solid var(--wine);
+  padding-left: 8px;
+}
+.field-hint {
+  margin-bottom: 2px;
+}
+.field {
+  margin-bottom: 16px;
+}
+.heading-2 {
+  margin-bottom: 20px;
+  margin-top: 4px;
+}
+.btn-type-1 {
+  margin-bottom: 12px;
+  margin-left: 16px;
+}
+.cover-image {
+  width: 144px;
+  margin-bottom: 16px;
+}
+.place-of-origin-text {
+  margin-top: 12px;
+  margin-bottom: 16px;
+  line-height: 26px;
+}
+.margin-left-16 {
+  margin-left: 16px;
+}
+.margin-left-32 {
+  margin-left: 32px;
+}
+.select-list-options-full {
+  height: 100%;
+  margin-left: 16px;
+  margin-bottom: 16px;
+}
+.icon-margin {
+  margin: 6px;
+}
+::ng-deep .icon-close svg {
+  width: 12px;
+  height: 12px;
+}
+::ng-deep .icn-add svg {
+  width: 16px;
+  height: 16px;
+}
+/*::ng-deep .map-container-inner*/
+/*{*/
+  /*width: 300px !important;*/
+  /*height: 300px !important;*/
+/*}*/
+::ng-deep agm-map
+{
+  /*width: 300px !important;*/
+  height: 300px !important;
+  /*margin: auto;*/
+}
+.margin-bottom-32 {
+  margin-bottom: 32px;
+}

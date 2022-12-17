@@ -1,0 +1,296 @@
+<form [formGroup]="form">
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="type">
+      <app-text page="registartion_user" place="type" default="Type"></app-text>
+    </label>
+    <select id="type" name="type" class="form-control col-4" formControlName="type">
+      <option value="1">
+        <app-text page="registartion_user" place="person" default="Person"></app-text>
+
+      </option>
+      <option value="2">
+        <app-text page="registartion_user" place="business" default="Business"></app-text>
+
+      </option>
+      <option value="3" *ngIf="langService.editable || !routeData.editable || cookieService.get('sequrity') == '4'">
+        <app-text page="registartion_user" place="translator" default="Translator"></app-text>
+
+      </option>
+      <option value="4" *ngIf="langService.editable || !routeData.editable || cookieService.get('sequrity') == '4'">
+        <app-text page="registartion_user" place="administrator" default="Administrator"></app-text>
+
+      </option>
+    </select>
+    <div *ngIf="langService.editable">
+      <app-text page="registartion_user" place="person" default="User"></app-text>
+      <app-text page="registartion_user" place="business" default="Business"></app-text>
+      <app-text page="registartion_user" place="translator" default="Translator"></app-text>
+      <app-text page="registartion_user" place="administrator" default="Administrator"></app-text>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="type.value == 2">
+    <label class="col-4 text-right my-auto" for="business_name">
+      <app-text page="registartion_user" place="business_name" default="Business name:"></app-text>
+    </label>
+    <input id="business_name" type="text" class="form-control col-4" formControlName="business_name">
+  </div>
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="email">
+      <!--Email:-->
+      <app-text page="registartion_user" place="email" default="Email:"></app-text>
+    </label>
+    <input id="email" type="email" class="form-control col-4" formControlName="email">
+  </div>
+  <div *ngIf="langService.editable || langService.editable || email.touched && email.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || email.errors.required">
+      <!--Enter email-->
+      <app-text page="registartion_user" place="enter_email" default="Enter email"></app-text>
+
+    </div>
+    <div class="alert alert-danger" *ngIf="langService.editable || email.errors.email">
+      <!--Wrong email pattern-->
+      <app-text page="registartion_user" place="wrong_email" default="Wrong email pattern"></app-text>
+
+    </div>
+  </div>
+  <!--qQ1!111111-->
+  <div formGroupName="passwords" *ngIf="langService.editable || routeData.editable">
+    <div class="form-group row">
+      <label class="col-4 text-right my-auto" for="password">
+        <!--Password:-->
+        <app-text page="registartion_user" place="password" default="Password:"></app-text>
+      </label>
+      <input id="password" type="password" class="form-control col-4" formControlName="password">
+    </div>
+    <div *ngIf="langService.editable || password.touched && password.invalid" class="text-center">
+      <div class="alert alert-danger" *ngIf="langService.editable || password.errors.required">
+        <!--Enter password-->
+        <app-text page="registartion_user" place="enter_password" default="Enter password"></app-text>
+
+      </div>
+      <div class="alert alert-danger" *ngIf="langService.editable || password.errors.pattern">
+        <!--Password must be at least 8 character length and must include at least one upper case letter, one down case letter, one digit and one symbol-->
+        <app-text page="registartion_user" place="pattern_password" default="Password must be at least 8 character length and must include at least one upper case letter, one down case letter, one digit and one symbol"></app-text>
+
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-4 text-right my-auto" for="password_confirmation">
+        <!--Confirm password:-->
+        <app-text page="registartion_user" place="confirm_password" default="Confirm password:"></app-text>
+      </label>
+      <input id="password_confirmation" type="password" class="form-control col-4" formControlName="password_confirmation">
+
+    </div>
+    <div *ngIf="langService.editable || password_confirmation.touched && password_confirmation.invalid" class="text-center">
+      <div class="alert alert-danger" *ngIf="langService.editable || password_confirmation.errors.required">
+        <!--Enter password confirmation-->
+        <app-text page="registartion_user" place="enter_confirm" default="Enter password confirmation"></app-text>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="langService.editable || passwords.touched && passwords.invalid && password.valid && password_confirmation.valid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || passwords.errors.matchPassword">
+      <!--Wrong confirmation-->
+      <app-text page="registartion_user" place="wrong_confirmaition" default="Wrong confirmation"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="name">
+      <!--First name:-->
+      <app-text page="registartion_user" place="first_name" default="First name:"></app-text>
+    </label>
+    <input id="name" type="text" class="form-control col-4" formControlName="first_name">
+  </div>
+  <div *ngIf="langService.editable || first_name.touched && first_name.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || first_name.errors.required">
+      <!--Enter first name-->
+      <app-text page="registartion_user" place="enter_first_name" default="Enter first name"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="surname">
+      <!--Last name:-->
+      <app-text page="registartion_user" place="last_name" default="Last name:"></app-text>
+    </label>
+    <input id="surname" type="text" class="form-control col-4" formControlName="last_name">
+  </div>
+  <div *ngIf="langService.editable || last_name.touched && last_name.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || last_name.errors.required">
+      <!--Enter last name-->
+      <app-text page="registartion_user" place="enter_last_name" default="Enter last name"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="langService.editable || routeData.editable">
+    <label class="col-4 text-right my-auto" for="name_invisible">
+      <!--Hide my name-->
+      <app-text page="registartion_user" place="hide_name" default="Hide my name"></app-text>
+
+    </label>
+    <input id="name_invisible" class="my-auto" type="checkbox"
+           [checked]="name_invisible.value === '1'"
+           (change)="name_invisible.setValue(1 - name_invisible.value + '')">
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="username">
+      <!--Username:-->
+      <app-text page="registartion_user" place="username" default="Username:"></app-text>
+    </label>
+    <input id="username" type="text" class="form-control col-4" formControlName="username">
+  </div>
+  <div *ngIf="langService.editable || username.touched && username.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || username.errors.required">
+      <!--Enter username-->
+      <app-text page="registartion_user" place="enter_username" default="Enter username"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="birthday">
+      <!--Birthday:-->
+      <app-text page="registartion_user" place="birthday" default="Birthday:"></app-text>
+    </label>
+    <input id="birthday" type="date" class="form-control col-4" formControlName="birthday">
+  </div>
+  <div *ngIf="langService.editable || birthday.touched && birthday.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || birthday.errors.required">
+      <!--Enter birthday-->
+      <app-text page="registartion_user" place="enter_birthday" default="Enter birthday"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="sex">
+      <!--Gender:-->
+      <app-text page="registartion_user" place="gender" default="Gender:"></app-text>
+    </label>
+    <select id="sex" name="sex" class="form-control col-4" formControlName="sex">
+      <option value="1">
+        <!--Male-->
+        <app-text page="registartion_user" place="male" default="Male"></app-text>
+
+      </option>
+      <option value="2">
+        <!--Female-->
+        <app-text page="registartion_user" place="female" default="Female"></app-text>
+
+      </option>
+    </select>
+    <div *ngIf="langService.editable">
+      <app-text page="registartion_user" place="male" default="Male"></app-text>
+      <app-text page="registartion_user" place="female" default="Female"></app-text>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="country">
+      <!--Country:-->
+      <app-text page="registartion_user" place="country" default="Country:"></app-text>
+    </label>
+    <select id="country" name="country" class="form-control col-4" formControlName="country">
+      <option value="0">
+        <!--Select-->
+        <app-text page="registartion_user" place="select" default="Select"></app-text>
+      </option>
+      <option *ngFor="let country of countries; let i = index" value="{{countries[i].id}}">{{countries[i].name}}</option>
+    </select>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="city">
+      <!--City:-->
+      <app-text page="registartion_user" place="city" default="City:"></app-text>
+    </label>
+    <input id="city" type="text" class="form-control col-4" formControlName="city">
+  </div>
+  <div *ngIf="langService.editable || city.touched && city.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || city.errors.required">
+      <!--Enter city-->
+      <app-text page="registartion_user" place="enter_city" default="Enter city"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="address">
+      <!--Address:-->
+      <app-text page="registartion_user" place="address" default="Address:"></app-text>
+    </label>
+    <input id="address" type="text" class="form-control col-4" formControlName="address">
+  </div>
+  <div *ngIf="langService.editable || address.touched && address.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || address.errors.required">
+      <!--Enter address-->
+      <app-text page="registartion_user" place="enter_address" default="Enter address"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="langService.editable || routeData.editable">
+    <label class="col-4 text-right my-auto" for="address_invisible">
+      <!--Hide my address-->
+      <app-text page="registartion_user" place="hide_address" default="Hide my address"></app-text>
+    </label>
+    <input id="address_invisible" class="my-auto" type="checkbox"
+           [checked]="address_invisible.value === 1"
+           (change)="address_invisible.setValue(1 - address_invisible.value)">
+  </div>
+  <div class="row">
+    <div class="col-4 offset-4">
+      <button class="btn btn-success btn-block" (click)="submit()" *ngIf="langService.editable || routeData.editable" [disabled]="!form.invalid">
+        <!--Submit-->
+        <app-text page="registartion_user" place="submit" default="Submit"></app-text>
+
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="langService.editable || !routeData.editable && routeData.available">
+    <div class="col-4 offset-4">
+      <button class="btn btn-success btn-block" (click)="edit()">
+        <!--Edit-->
+        <app-text page="registartion_user" place="edit" default="Edit"></app-text>
+
+      </button>
+    </div>
+  </div>
+
+
+  <div class="row" *ngIf="langService.editable || routeData.download && routeData.editable && routeData.available && cookieService.get('sequrity') == '4'">
+    <div class="col-4 offset-4">
+      <button class="btn btn-danger btn-block" (click)="delete()">
+        <!--Delete-->
+        <app-text page="registartion_user" place="delete" default="Delete"></app-text>
+
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="langService.editable || routeData.editable && routeData.download">
+    <div class="row">
+      <div class="col-4 offset-4">
+        <button class="btn btn-success btn-block" (click)="returnBack()">
+          <!--Return back-->
+          <app-text page="registartion_user" place="return_back" default="Return back"></app-text>
+
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

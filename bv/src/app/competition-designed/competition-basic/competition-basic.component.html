@@ -1,0 +1,152 @@
+
+<div class="d-flex">
+
+  <form [formGroup]="form" class="w-100">
+    <div class="d-flex flex-even w-100">
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="competition_basic" default="General Information"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Name" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="name_national">
+        </div>
+
+
+        <div class="d-flex align-items-end w-100">
+
+          <div class="mandatory"></div>
+          <div class="field required align-self-stretch d-flex flex-column w-100">
+            <app-text page="competition_basic" default="Name in English" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="name_international">
+          </div>
+        </div>
+
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Language" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="language" [form]="form" #_language>
+            <div select-title>
+              <app-text *ngFor="let l of languageArr" page="language" [default]="l.name" [hidden]="l.value != language.value"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button *ngFor="let l of languageArr" class="btn btn-option" (click)="_language.choose(l.value)">
+                <app-text page="language" [default]="l.name"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+            <app-text page="language" *ngFor="let language of languageArr" [default]="language.name"></app-text>
+          </div>
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Type" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="type" [form]="form" #_type>
+            <div select-title>
+              <app-text *ngFor="let t of competitionTypes" page="event" default="{{t.defaultText}}" [hidden]="t.value != type.value"></app-text>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_type.choose('')">
+                <app-text page="competition_basic" default="Clear input"></app-text>
+              </button>
+              <button *ngFor="let t of competitionTypes" class="btn btn-option" (click)="_type.choose(t.value)">
+                <app-text page="competition_basic" default="{{t.defaultText}}"></app-text>
+              </button>
+            </div>
+          </app-select-bonvino>
+        </div>
+
+
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="(cookies | async).id == userId.value || !userId.value || langService.editable">
+          <app-checkbox-bonvino formControlName_="yours" [form]="form" #_yours>
+            <app-text page="competition_basic" default="Claim yours" (click)="_yours.check()"></app-text>
+          </app-checkbox-bonvino>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column"  *ngIf="(cookies | async).sequrity == 4 && !yours.value || langService.editable">
+          <app-text page="competition_basic" default="Set redactor Id" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="userId">
+        </div>
+
+
+
+        <div class="field align-self-stretch d-flex flex-column"  *ngIf="(cookies | async).sequrity != 4 && ((cookies | async).id != userId.value && userId.value) || langService.editable">
+          <a href="profile/{{userId.value}}" *ngIf="!langService.editable">
+            <app-text page="competition_basic" default="Redactor page"></app-text>
+          </a>
+
+          <app-text page="competition_basic" default="Redactor page" class="hyperlink" *ngIf="langService.editable"></app-text>
+        </div>
+
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="competition_basic" default="Dates Of Competition"></app-text>
+        </div>
+
+        <div class="d-flex">
+          <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+            <app-text page="competition_basic" default="From" class="field-hint"></app-text>
+            <input type="date" class="field-input align-self-stretch" formControlName="from">
+          </div>
+          <div class="field align-self-stretch d-flex flex-column flex-even">
+            <app-text page="competition_basic" default="To" class="field-hint"></app-text>
+            <input type="date" class="field-input align-self-stretch" formControlName="to">
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+      </div>
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Coordinator" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="coordinator">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Sponsors"  class="field-hint"></app-text>
+          <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="sponsors"></textarea>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Sponsors (english)"  class="field-hint"></app-text>
+          <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="sponsors_int"></textarea>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Organizers"  class="field-hint"></app-text>
+          <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="organizers"></textarea>
+        </div>
+
+        <div class="field align-self-stretch d-flex flex-column">
+          <app-text page="competition_basic" default="Organizers (english)"  class="field-hint"></app-text>
+          <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="organizers_int"></textarea>
+        </div>
+
+
+
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,89 @@
+<form [formGroup]="form">
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="email">
+      <!--Email:-->
+      <app-text page="registration_business" place="email" default="Email:"></app-text>
+    </label>
+    <input id="email" type="email" class="form-control col-4" formControlName="email">
+  </div>
+  <div *ngIf="langService.editable || langService.editable || email.touched && email.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || email.errors.required">
+      <!--Enter email-->
+      <app-text page="registration_business" place="enter_email" default="Enter email"></app-text>
+
+    </div>
+    <div class="alert alert-danger" *ngIf="langService.editable || email.errors.email">
+      <!--Wrong email pattern-->
+      <app-text page="registration_business" place="wrong_email" default="Wrong email pattern"></app-text>
+
+    </div>
+  </div>
+  <!--qQ1!111111-->
+  <div formGroupName="passwords" *ngIf="langService.editable || routeData.editable">
+    <div class="form-group row">
+      <label class="col-4 text-right my-auto" for="password">
+        <!--Password:-->
+        <app-text page="registration_business" place="password" default="Password:"></app-text>
+      </label>
+      <input id="password" type="password" class="form-control col-4" formControlName="password">
+    </div>
+    <div *ngIf="langService.editable || password.touched && password.invalid" class="text-center">
+      <div class="alert alert-danger" *ngIf="langService.editable || password.errors.required">
+        <!--Enter password-->
+        <app-text page="registration_business" place="enter_password" default="Enter password"></app-text>
+
+      </div>
+      <div class="alert alert-danger" *ngIf="langService.editable || password.errors.pattern">
+        <!--Password must be at least 8 character length and must include at least one upper case letter, one down case letter, one digit and one symbol-->
+        <app-text page="registration_business" place="pattern_password" default="Password must be at least 8 character length and must include at least one upper case letter, one down case letter, one digit and one symbol"></app-text>
+
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-4 text-right my-auto" for="password_confirmation">
+        <!--Confirm password:-->
+        <app-text page="registration_business" place="confirm_password" default="Confirm password:"></app-text>
+      </label>
+      <input id="password_confirmation" type="password" class="form-control col-4" formControlName="password_confirmation">
+
+    </div>
+    <div *ngIf="langService.editable || password_confirmation.touched && password_confirmation.invalid" class="text-center">
+      <div class="alert alert-danger" *ngIf="langService.editable || password_confirmation.errors.required">
+        <!--Enter password confirmation-->
+        <app-text page="registration_business" place="enter_confirm" default="Enter password confirmation"></app-text>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="langService.editable || passwords.touched && passwords.invalid && password.valid && password_confirmation.valid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || passwords.errors.matchPassword">
+      <!--Wrong confirmation-->
+      <app-text page="registration_business" place="wrong_confirmaition" default="Wrong confirmation"></app-text>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="name">
+      <app-text page="registration_business" place="business_name" default="Business name:"></app-text>
+    </label>
+    <input id="name" type="text" class="form-control col-4" formControlName="business_name">
+  </div>
+  <div *ngIf="langService.editable || business_name.touched && business_name.invalid" class="text-center">
+    <div class="alert alert-danger" *ngIf="langService.editable || business_name.errors.required">
+      <app-text page="registration_business" place="enter_business_name" default="Enter business name"></app-text>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4 offset-4">
+      <button class="btn btn-success btn-block" (click)="submit()" *ngIf="langService.editable || routeData.editable" [disabled]="form.invalid">
+        <app-text page="registration_business" place="submit" default="Submit"></app-text>
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,376 @@
+<!--<div >-->
+
+  <!--<div-->
+    <!--cdkDropList-->
+    <!--[cdkDropListData]="testArr"-->
+    <!--class="example-list"-->
+    <!--(cdkDropListDropped)="drop($event)"-->
+    <!--&gt;-->
+
+    <!--<div class="example-container" [cdkDragData]="inner" *ngFor="let inner of testArr; let i = index;" cdkDrag>-->
+      <!--<h2>{{i}}</h2>-->
+      <!--<div>-->
+
+        <!--<div-->
+          <!--cdkDropList-->
+          <!--[cdkDropListData]="inner"-->
+          <!--class="example-list"-->
+          <!--(cdkDropListDropped)="drop($event)"-->
+          <!--[cdkDropListConnectedTo]="['qwerty1','qwerty3','qwerty2']"-->
+        <!--id="{{'qwerty'+i}}">-->
+          <!--<div class="example-box" *ngFor="let item of inner" cdkDrag>{{item}}</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <!--</div>-->
+<!--</div>-->
+
+
+
+<div class="d-flex flex-column margin-left-64 margin-right-64">
+    <form [formGroup]="form">
+      <div class="d-flex flex-row">
+        <div class="d-flex margin-right-16">
+
+          <div class="field d-flex flex-column">
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Page" class="field-hint"></app-text>
+            <app-select-bonvino formControlName_="page" [form]="form" #_page>
+              <div select-title>
+                <app-text *ngFor="let p of avaliablePages" [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name" [hidden]="p.id != page.value"></app-text>
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button *ngFor="let p of avaliablePages" class="btn btn-option" (click)="_page.choose(p.id)">
+                  <app-text [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+          </div>
+
+        </div>
+        <div>
+
+          <button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="savePage()">
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Save page data"></app-text>
+          </button>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="d-flex margin-right-16">
+
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Tab of page" class="field-hint"></app-text>
+            <app-select-bonvino formControlName_="selectTab" [form]="form" #_selectTab>
+              <div select-title>
+                <app-text *ngFor="let t of avaliableTabs" [page]="LANGUAGE_CURRENT_PAGE" [default]="t" [hidden]="t != selectTab.value"></app-text>
+              </div>
+              <div options class="d-flex flex-column align-items-start select-list-options">
+                <button *ngFor="let t of avaliableTabs" class="btn btn-option" (click)="_selectTab.choose(t)">
+                  <app-text [page]="LANGUAGE_CURRENT_PAGE" [default]="t"></app-text>
+                </button>
+              </div>
+            </app-select-bonvino>
+          </div>
+        </div>
+        <div class="margin-right-16">
+          <div class="field align-self-stretch d-flex flex-column">
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="New tab name" class="field-hint"></app-text>
+            <input type="text" class="field-input align-self-stretch" formControlName="newTabName">
+          </div>
+        </div>
+        <div class="margin-right-16">
+
+          <button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="addTab()">
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Add tab"></app-text>
+          </button>
+        </div>
+        <div class="margin-right-16">
+
+          <button class="btn btn-type-1 text-uppercase field-content" for="image" (click)="deleteTab()">
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Delete current tab"></app-text>
+          </button>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="margin-right-16">
+          <app-radio-bonvino formControlName_="version" [form]="form" value_="view" #_radio>
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="View"></app-text>
+          </app-radio-bonvino>
+        </div>
+        <div class="margin-right-16">
+          <app-radio-bonvino formControlName_="version" [form]="form" value_="edit" #_radio>
+            <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Edit"></app-text>
+          </app-radio-bonvino>
+        </div>
+      </div>
+    </form>
+    <div class="d-flex margin-top-20">
+      <div cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropCol($event)" [cdkDropListData]="currentTabCols" class="d-flex flex-row">
+        <!--<div class="d-flex flex-row padding-8 border-1">-->
+          <div class="padding-16 border-1 d-flex flex-column" *ngFor="let col of currentTabCols; let i = index" cdkDrag>
+            <div class="d-flex flex-row justify-content-between">
+              <div class="margin-right-16">
+                <span cdkDragHandle>
+
+                  <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Grab column here"></app-text>
+
+                </span>
+              </div>
+              <div>
+                <button class="btn m-0 p-0" (click)="deleteCol(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+
+            <div class="d-flex flex-column background-red">
+              <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="getListByClass('.blocklist')"
+                   [cdkDropListData]="col.blocks" class="blocklist min-height">
+                <div class="d-flex flex-column padding-8 border-1" *ngFor="let block of col.blocks; let j = index" cdkDrag>
+
+                  <div class="d-flex flex-row justify-content-between">
+
+                    <div class="margin-right-16">
+                    <span cdkDragHandle>
+
+                      <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Grab block here"></app-text>
+
+                    </span>
+                    </div>
+                    <div>
+                      <button class="btn m-0 p-0" (click)="deleteBlock(i, j)">
+                        <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="hyperlink d-flex flex-row" (click)="block.form.get('hidden').setValue(!block.form.get('hidden').value)">
+                      <div class="margin-right-4">
+                        <span>{{blocksMap.get(block.form.get('id').value)}}</span>
+                      </div>
+                      <div>
+                        <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" [hidden]="!block.form.get('hidden').value"></app-icon-bonvino>
+                      </div>
+                      <div>
+                        <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow rotate-90" [hidden]="block.form.get('hidden').value"></app-icon-bonvino>
+                      </div>
+                    </div>
+                  </div>
+                  <div [hidden]="block.form.get('hidden').value">
+
+                    <form [formGroup]="block.form">
+
+                      <div class="field d-flex flex-column">
+                        <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Block" class="field-hint"></app-text>
+                        <app-select-bonvino formControlName_="id" [form]="block.form" #_block>
+                          <div select-title>
+                            <app-text *ngFor="let p of avaliableBlocks" [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name" [hidden]="p.id != block.form.get('id').value"></app-text>
+                          </div>
+                          <div options class="d-flex flex-column align-items-start select-list-options">
+                            <button *ngFor="let p of avaliableBlocks" class="btn btn-option" (click)="_block.choose(p.id)">
+                              <app-text [page]="LANGUAGE_CURRENT_PAGE" [default]="p.name"></app-text>
+                            </button>
+                          </div>
+                        </app-select-bonvino>
+                      </div>
+
+
+
+                      <div class="d-flex flex-column background-blue">
+                        <div cdkDropList (cdkDropListDropped)="dropOption($event)" [cdkDropListConnectedTo]="getListByClass('.optionlist')"
+                             [cdkDropListData]="block.options" class="optionlist min-height">
+                          <div class="d-flex flex-column padding-8 border-1 background-blue" *ngFor="let option of block.options; let k = index" cdkDrag>
+
+                            <div class="d-flex flex-row justify-content-between">
+
+                              <div class="margin-right-16">
+                                <span cdkDragHandle>
+
+                                  <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Grab option here"></app-text>
+
+                                </span>
+                              </div>
+                              <div>
+                                <button class="btn m-0 p-0" (click)="deleteOption(i, j, k)">
+                                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                                </button>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="hyperlink d-flex flex-row" (click)="option.form.get('hidden').setValue(!option.form.get('hidden').value)">
+                                <div class="margin-right-4">
+                                  <span>{{option.form.get('title').value}}</span>
+                                </div>
+                                <div>
+                                  <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" [hidden]="!option.form.get('hidden').value"></app-icon-bonvino>
+                                </div>
+                                <div>
+                                  <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow rotate-90" [hidden]="option.form.get('hidden').value"></app-icon-bonvino>
+                                </div>
+                              </div>
+                            </div>
+                            <div [hidden]="option.form.get('hidden').value">
+
+                              <form [formGroup]="option.form">
+
+                                <div class="d-flex flex-column">
+
+                                  <div class="field d-flex flex-column">
+                                    <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Title" class="field-hint"></app-text>
+                                    <input type="text" class="field-input align-self-stretch" formControlName="title">
+                                  </div>
+
+                                  <div class="field d-flex flex-column">
+                                    <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Type" class="field-hint"></app-text>
+                                    <app-select-bonvino formControlName_="type" [form]="option.form" #_select>
+                                      <div select-title>
+                                        <app-text *ngFor="let t of typeList" [page]="LANGUAGE_CURRENT_PAGE" [default]="t.name" [hidden]="t.id != option.form.get('type').value"></app-text>
+                                      </div>
+                                      <div options class="d-flex flex-column align-items-start select-list-options">
+                                        <button *ngFor="let t of typeList" class="btn btn-option" (click)="_select.choose(t.id)">
+                                          <app-text [page]="LANGUAGE_CURRENT_PAGE" [default]="t.name"></app-text>
+                                        </button>
+                                      </div>
+                                    </app-select-bonvino>
+                                  </div>
+
+                                  <div class="field align-self-stretch d-flex flex-column">
+                                    <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Select" class="field-hint"></app-text>
+                                    <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="3" formControlName="select"></textarea>
+                                  </div>
+
+
+                                  <div class="field align-self-stretch d-flex flex-column">
+                                    <app-checkbox-bonvino formControlName_="hide" [form]="option.form" #_hide>
+                                      <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Hide option" (click)="_hide.check()" class="lines-1"></app-text>
+                                    </app-checkbox-bonvino>
+                                  </div>
+
+                                  <div *ngIf="option.form.get('type').value == 11" class="background-green">
+
+                                    <div cdkDropList (cdkDropListDropped)="dropOption($event)"
+                                         [cdkDropListData]="option.subOptions" [cdkDropListConnectedTo]="getListByClass('.optionlist')" class="optionlist min-height">
+
+                                      <div class="d-flex flex-column padding-8 border-1" *ngFor="let subOption of option.subOptions; let kk = index" cdkDrag>
+
+                                        <div class="d-flex flex-row justify-content-between">
+
+                                          <div class="margin-right-16">
+                                            <span cdkDragHandle>
+
+                                              <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Grab suboption here"></app-text>
+
+                                            </span>
+                                          </div>
+                                          <div>
+                                            <button class="btn m-0 p-0" (click)="deleteSubOption(i, j, k, kk)">
+                                              <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                                            </button>
+                                          </div>
+                                        </div>
+
+                                        <div>
+                                          <div class="hyperlink d-flex flex-row" (click)="subOption.form.get('hidden').setValue(!subOption.form.get('hidden').value)">
+                                            <div class="margin-right-4">
+                                              <span>{{subOption.form.get('title').value}}</span>
+                                            </div>
+                                            <div>
+                                              <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" [hidden]="!subOption.form.get('hidden').value"></app-icon-bonvino>
+                                            </div>
+                                            <div>
+                                              <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow rotate-90" [hidden]="subOption.form.get('hidden').value"></app-icon-bonvino>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div [hidden]="subOption.form.get('hidden').value">
+
+                                          <form [formGroup]="subOption.form">
+
+                                            <div class="d-flex flex-column">
+
+                                              <div class="field align-self-stretch d-flex flex-column">
+                                                <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Title" class="field-hint"></app-text>
+                                                <input type="text" class="field-input align-self-stretch" formControlName="title">
+                                              </div>
+
+                                              <div class="field align-self-stretch d-flex flex-column">
+                                                <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Type" class="field-hint"></app-text>
+                                                <app-select-bonvino formControlName_="type" [form]="subOption.form" #_select>
+                                                  <div select-title>
+                                                    <app-text *ngFor="let t of typeList" [page]="LANGUAGE_CURRENT_PAGE" [default]="t.name" [hidden]="t.id != subOption.form.get('type').value"></app-text>
+                                                  </div>
+                                                  <div options class="d-flex flex-column align-items-start select-list-options">
+                                                    <button *ngFor="let t of typeList" class="btn btn-option"  [hidden]="t.id == 11" (click)="_select.choose(t.id)">
+                                                      <app-text [page]="LANGUAGE_CURRENT_PAGE" [default]="t.name"></app-text>
+                                                    </button>
+                                                  </div>
+                                                </app-select-bonvino>
+                                              </div>
+
+                                              <div class="field align-self-stretch d-flex flex-column">
+                                                <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Select" class="field-hint"></app-text>
+                                                <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="3" formControlName="select"></textarea>
+                                              </div>
+
+
+                                              <div class="field align-self-stretch d-flex flex-column">
+                                                <app-checkbox-bonvino formControlName_="hide" [form]="subOption.form" #_hide>
+                                                  <app-text [page]="LANGUAGE_CURRENT_PAGE" default="Hide option" (click)="_hide.check()" class="lines-1"></app-text>
+                                                </app-checkbox-bonvino>
+                                              </div>
+
+                                            </div>
+                                          </form>
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <button class="btn m-0 p-0" (click)="addNewSubOption(i, j, k)">
+                                      <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+                                    </button>
+                                  </div>
+
+
+                                </div>
+                              </form>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <button class="btn m-0 p-0" (click)="addNewOption(i, j)">
+                        <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+                      </button>
+
+                    </form>
+
+                  </div>
+
+                </div>
+              </div>
+
+
+
+              <button class="btn m-0 p-0" (click)="addNewBlock(i)">
+                <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+              </button>
+
+            </div>
+          </div>
+        <!--</div>-->
+      </div>
+      <div>
+
+        <button class="btn m-0 p-0" (click)="addNewCol(currentTabCols)">
+          <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+        </button>
+      </div>
+
+    </div>
+  </div>

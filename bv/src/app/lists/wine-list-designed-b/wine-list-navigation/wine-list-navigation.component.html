@@ -1,0 +1,23 @@
+<div class="d-flex flex-row justify-content-start pointer" (click)="openBengatContacts()" *ngIf="profile">
+  <div class="d-flex flex-column align-items-start">
+    <div>
+      <img
+        [ngClass]="{
+         'img-wine-navigation' : isBigScreen(),
+         'img-wine-navigation-big' : !isBigScreen()
+       }"
+        [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+    </div>
+  </div>
+  <div class="d-flex flex-column align-items-start justify-content-center margin-left-28"
+  >
+    <div class="heading-1 font-weight-bold" *ngIf="profile.username">
+      <span>{{profile.username}}</span>
+
+    </div>
+    <div class="heading-1">
+      <app-text page="wine_list_navigation" default="Private collection"></app-text>
+
+    </div>
+  </div>
+</div>

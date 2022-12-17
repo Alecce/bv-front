@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+  <div class="d-flex flex-column">
+
+    <div class="d-flex align-items-start">
+      <div class="d-flex flex-column align-items-start flex-even">
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="winery_add" default="Additional options"></app-text>
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column" *ngFor="let cb of checkboxes; let i = index">
+          <app-checkbox-bonvino [formControlName_]="cb" [form]="form" #_cb>
+            <app-text page="winery_add" [default]="cb" (click)="_cb.check()" class="lines-1"></app-text>
+          </app-checkbox-bonvino>
+
+          <!--{{cb}}-->
+        </div>
+
+
+        <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-checkbox-bonvino formControlName_="yours" [form]="form" #_yours>-->
+        <!--<app-text page="winery_add" default="Claim yours" (click)="_yours.check()"></app-text>-->
+        <!--</app-checkbox-bonvino>-->
+        <!--</div>-->
+
+
+      </div>
+      <div class="d-flex flex-column align-items-start flex-even margin-left-32">
+
+      </div>
+    </div>
+  </div>
+
+</form>

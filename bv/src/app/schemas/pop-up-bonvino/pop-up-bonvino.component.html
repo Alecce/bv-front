@@ -1,0 +1,14 @@
+
+
+
+<div ngbDropdown class="d-inline-block" display="dynamic" [placement]="placement">
+  <div class="" id="listDropdown" ngbDropdownToggle>
+
+    <ng-content select="[icon]"></ng-content>
+  </div>
+  <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+    <div class="d-flex flex-column align-items-start menu-buttons">
+      <ng-content select="[list]"></ng-content>
+    </div>
+  </div>
+</div>

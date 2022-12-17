@@ -1,0 +1,39 @@
+::ng-deep .map-container-inner
+{
+  width: 384px !important;
+  height: 416px !important;
+}
+::ng-deep agm-map
+{
+  width: 384px !important;
+  height: 416px !important;
+  margin: auto;
+}
+.bg-gradient {
+  height: 128px;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--black));
+}
+.bg-image{
+  height: 416px;
+  margin-right: 32px;
+}
+.margin-bot{
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+.mixed-blend-mode{
+  mix-blend-mode: darken;
+
+}
+
+.margin-64 {
+  margin: 32px 64px 64px 64px;
+}
+.title-name {
+  margin-left: 64px;
+  margin-bottom: 26px;
+}
+.button-edit {
+  margin-bottom: 32px;
+  margin-right: 32px;
+}

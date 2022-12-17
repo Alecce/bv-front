@@ -1,0 +1,35 @@
+<div class="nav-item">
+  <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+    <div class="" id="listDropdown" ngbDropdownToggle>
+
+
+      <a [routerLink]="null" *ngIf="resolutionService.isSmall() || !isBigScreen()">
+        <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+      </a>
+      <a [routerLink]="null" *ngIf="!resolutionService.isSmall() && isBigScreen()">
+        <img height="30" width="30" class="profile-image" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+      </a>
+    </div>
+    <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+      <div class="d-flex flex-column align-items-start menu-buttons">
+        <div class="">
+          <a [routerLink]="langService.editable ? null : 'profile-edit/' + cookieService.get('myId')" class="hyperlink">
+            <app-text page="navigation" place="my_profile" default="My profile"></app-text>
+          </a>
+        </div>
+        <div class="" *ngIf="cookieService.get('sequrity') && cookieService.get('sequrity') != '1'">
+          <a [routerLink]="langService.editable ? null : 'my-business/' + cookieService.get('myId')" class="hyperlink">
+            <app-text page="navigation" default="My business"></app-text>
+          </a>
+        </div>
+        <div>
+          <a [routerLink]="null" class="hyperlink"  (click)="logout()">
+            <app-text page="navigation" place="logout" default="Logout" class="hyperlink"></app-text>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

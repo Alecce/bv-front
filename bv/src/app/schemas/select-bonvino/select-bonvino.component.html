@@ -1,0 +1,72 @@
+<!--<div ngbDropdown #dropDownBlock="ngbDropdown" placement="bottom-left" [autoClose]="true" [ngClass]="disabled ? 'disabled-select' : ''">-->
+  <!--<button class="btn btn-select d-flex justify-content-between align-items-baseline" id="langDropdown" ngbDropdownToggle #container-->
+          <!--[disabled]="disabled"-->
+          <!--[ngClass]="dropDownBlock.isOpen() ? 'btn-select-active' : ''"-->
+          <!--(mouseover)="paintMouseOver('#3683dc')"-->
+          <!--(mouseout)="paintMouseOver('#a2312d')">-->
+    <!--<div class="select-title select-text">-->
+      <!--<ng-content select="[select-title]"></ng-content>-->
+    <!--</div>-->
+    <!--<div class="margin-left-16">-->
+      <!--<app-icon-bonvino svgIcon="arrow-1-down" class="icon-arrow" [hidden]="!dropDownBlock.isOpen() || disabled" #icon1></app-icon-bonvino>-->
+      <!--<app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" [hidden]="dropDownBlock.isOpen() || disabled" #icon2></app-icon-bonvino>-->
+      <!--<app-icon-bonvino svgIcon="arrow-1-up-chrome" class="icon-arrow" [hidden]="!disabled"></app-icon-bonvino>-->
+    <!--</div>-->
+  <!--</button>-->
+  <!--<div ngbDropdownMenu aria-labelledby="langDropdown" class="select-list" [ngStyle]="{'min-width.px': container.offsetWidth}">-->
+
+    <!--<div>-->
+      <!--<ng-content select="[options]" (click)="$event.stopPropagation(); dropDownBlock.close()"></ng-content>-->
+    <!--</div>-->
+
+  <!--</div>-->
+<!--</div>-->
+
+<div [ngClass]="[disabled ? 'disabled-select' : '']" class="flag-mouse-over">
+  <!--<button-->
+    <!--[ngClass]="[isMenuOpened ? 'btn-select-active' : '', invalid ? 'error' : '']"-->
+    <!--(mouseover)="paintMouseOver('#3683dc')"-->
+    <!--(mouseout)="paintMouseOver('#a2312d')">After</button>-->
+
+  <button class="btn btn-select d-flex justify-content-between align-items-center" mat-button [matMenuTriggerFor]="afterMenu"
+          #container
+          [disabled]="disabled"
+          [ngClass]="[isMenuOpened ? 'btn-select-active' : '', invalid ? 'error' : '']"
+          (menuOpened)="onMenuOpened()"
+          (menuClosed)="onMenuClosed()">
+    <div class="select-title select-text whitespace-nowrap">
+      <ng-content select="[select-title]"></ng-content>
+    </div>
+    <div class="margin-left-16 icon-arrow-container h-100 d-flex align-items-center">
+      <div *ngIf="isOcean()" [ngClass]="[isMenuOpened ? '' : 'mouse-over']">
+
+        <mat-icon svgIcon="arrow-1-up-ocean" class="icon-arrow"
+                  [ngClass]="[isMenuOpened ? 'reverse-icon-arrow' : 'mouse-over']"></mat-icon>
+      </div>
+      <div *ngIf="isWine()" class="non-mouse-over">
+
+        <mat-icon svgIcon="arrow-1-up" class="icon-arrow non-mouse-over"
+                  [ngClass]="[isMenuOpened ? 'reverse-icon-arrow' : '']"></mat-icon>
+      </div>
+      <div *ngIf="isDisabled()">
+
+        <mat-icon svgIcon="arrow-1-up-chrome" class="icon-arrow"></mat-icon>
+      </div>
+      <div *ngIf="isInvalid()">
+
+        <mat-icon svgIcon="arrow-1-up-error" class="icon-arrow"
+                  [ngClass]="[isMenuOpened ? 'reverse-icon-arrow' : '']"></mat-icon>
+      </div>
+
+      <!--<app-icon-bonvino svgIcon="arrow-1-down-ocean" class="icon-arrow" [hidden]="!isMenuOpened || disabled"></app-icon-bonvino>-->
+      <!--<app-icon-bonvino svgIcon="arrow-1-down" class="icon-arrow" [hidden]="!isMenuOpened || disabled"></app-icon-bonvino>-->
+    </div>
+  </button>
+
+  <mat-menu #afterMenu="matMenu" xPosition="after" class="{{invalid ? 'select-list error' : 'select-list'}} {{scallable ? 'scallable' : ''}}">
+    <div [style.min-width.px]="getWidth()" class="select-list-options-field" (click)="clickOnMenu($event)">
+
+      <ng-content select="[options]" mat-menu-item></ng-content>
+    </div>
+  </mat-menu>
+</div>

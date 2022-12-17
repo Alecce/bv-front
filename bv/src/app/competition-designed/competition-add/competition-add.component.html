@@ -1,0 +1,117 @@
+<div class="d-flex flex-column margin-64">
+  <div class="d-flex">
+    <div class="d-flex flex-column justify-content-end w-100">
+      <!--<div class="test">-->
+
+        <!--<img  class="cover-image" [src]="url">-->
+      <!--</div>-->
+
+      <div class="d-flex justify-content-between">
+
+        <div class="d-flex">
+
+          <div  class="heading-1">
+            <div *ngIf="routeData.download">
+              <app-text page="competition_add" default="Edit a competition"></app-text>
+            </div>
+            <div  *ngIf="!routeData.download">
+              <app-text page="competition_add" default="Create a competition"></app-text>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column justify-content-end w-100">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between main-menu menu-first">
+
+            <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.menu)" (click)="chose(tabs.menu)">
+              <app-text page="competition_add" default="Menu"></app-text>
+            </button>
+
+            <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.basic)" (click)="chose(tabs.basic)">
+              <app-text page="competition_add" place="basic_info" default="Basic info"></app-text>
+            </button>
+
+            <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.awards)" (click)="chose(tabs.awards)">
+              <app-text page="competition_add" default="Possible awards"></app-text>
+            </button>
+
+            <!--<button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.additional)" (click)="chose(tabs.additional)">-->
+            <!--<app-text page="event" default="Additional"></app-text>-->
+            <!--</button>-->
+
+
+            <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getSubTabColor('')"
+                    (click)="chose(tabs.additional); choseSubtab('')" [hidden]="!isTabExist('')">
+              <app-text page="competition_add" default="Additional"></app-text>
+            </button>
+
+            <button class="btn btn-menu-first menu-2-regular ml-0" *ngFor="let subTab of subTabs; let i = index" [ngClass]="getSubTabColor(subTab)"
+                    (click)="chose(tabs.additional); choseSubtab(subTab)" [hidden]="!isTabExist(subTab)">
+              <app-text page="subtabs" [default]="subTab"></app-text>
+            </button>
+
+
+            <!--<button class="btn btn-menu-first menu-2-regular mr-0" *ngIf="!routeData.download" [disabled]="!routeData.download" [ngClass]="getTabColor(tabs.wines)" (click)="chose(tabs.wines)">-->
+              <!--<app-text page="event" default="Wines (only in edit)"></app-text>-->
+            <!--</button>-->
+
+            <!--<button class="btn btn-menu-first menu-2-regular mr-0" *ngIf="routeData.download" [ngClass]="getTabColor(tabs.wines)" (click)="chose(tabs.wines)">-->
+              <!--<app-text page="event" default="Wines"></app-text>-->
+            <!--</button>-->
+          </div>
+          <div class="d-flex justify-content-between">
+
+
+
+            <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : backLink()">
+              <app-text page="competition_add" default="Back"></app-text>
+            </a>
+
+            <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : grantAwardsLink()" *ngIf="routeData.download">
+              <app-text page="competition_add" default="Grant awards"></app-text>
+            </a>
+            <!--<button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="back()">-->
+            <!--<app-text page="wines" default="Cancel"></app-text>-->
+            <!--</button>-->
+            <button class="btn btn-type-1 text-uppercase field-content margin-right-36" (click)="create()" *ngIf="!routeData.download">
+              <app-text page="competition_add" default="Create"></app-text>
+            </button>
+            <button class="btn btn-type-1 text-uppercase field-content margin-right-36"  (click)="create()" *ngIf="routeData.download">
+              <app-text page="competition_add" default="Save changes"></app-text>
+            </button>
+            <!--<button class="btn btn-type-1 text-uppercase field-content margin-right-36"  (click)="clone()" *ngIf="routeData.download">-->
+              <!--<app-text page="wines" default="Clone event"></app-text>-->
+            <!--</button>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="d-flex wine-select">
+
+    <app-competition-additional [downloadedData]="downloadedData" [menuData]="menuData" [structureData]="additionalStructure"
+                                   [hidden]="!showTab(tabs.additional)" [additionalTabs]="additionalTabsSubject" [currentSubTab]="currentSubTab" class="w-100"></app-competition-additional>
+    <app-competition-menu [downloadedData]="downloadedData" [hidden]="!showTab(tabs.menu)" [structureData]="additionalStructure" class="w-100"></app-competition-menu>
+
+    <app-competition-basic [downloadedData]="fullDownloadedData" [hidden]="!showTab(tabs.basic)" class="w-100"></app-competition-basic>
+    <app-competition-possible-awards [downloadedData]="fullDownloadedData" [hidden]="!showTab(tabs.awards)" class="w-100"></app-competition-possible-awards>
+    <!--<app-wine-list-designed [specialPage]="'event'"  *ngIf="routeData.download" [specialPageId]="activatedroute.snapshot.params.id" [hidden]="!showTab(tabs.wines)" class="w-100"></app-wine-list-designed>-->
+
+  </div>
+
+</div>
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+
+</div>

@@ -1,0 +1,117 @@
+<div class="scallable">
+
+  <form [formGroup]="form">
+
+    <div class="field align-self-stretch d-flex flex-column">
+      <app-text page="wine_list" default="Country" class="field-hint"></app-text>
+      <app-select-bonvino formControlName_="country" [form]="form" #_country [scallable]="true"
+                          (menuOpened)="reloadCountsOnOpeningSelect('country', '0')">
+        <div select-title>
+          <!--<app-text page="wines_common_info" default="Clear input" *ngIf="nongrape.value == '0'"></app-text>-->
+          <div *ngFor="let type of countries; let i = index">
+            <app-text page="country_names" place="{{countries[i].id}}" default="{{countries[i].name}}" *ngIf="country.value == countries[i].id"></app-text>
+          </div>
+        </div>
+        <div options class="d-flex flex-column align-items-start select-list-options">
+          <button class="btn btn-option" (click)="_country.choose('0')">
+            <app-text page="wines_common_info" default="Clear input"></app-text>
+          </button>
+          <button class="btn btn-option" *ngFor="let c of countries; let i = index" (click)="_country.choose(countries[i].id)"
+                  [hidden]="counterData && !counterData.country[countries[i].id]">
+            <app-text page="country_names" place="{{countries[i].id}}" default="{{countries[i].name}}"></app-text>
+            <span *ngIf="counterData"> ({{counterData.country[countries[i].id]}})</span>
+          </button>
+        </div>
+      </app-select-bonvino>
+      <div *ngIf="langService.editable">
+
+        <app-text page="wine_list" place="select" default="Select"></app-text>
+        <app-text page="country_names" *ngFor="let country of countries; let i = index" place="{{countries[i].id}}" default="{{countries[i].name}}"></app-text>
+
+      </div>
+    </div>
+
+
+    <div formArrayName="regionsForm">
+      <div *ngFor="let r of allRegiones; let i = index">
+
+        <div class="field align-self-stretch d-flex flex-column" *ngIf="langService.editable || allRegiones[i].length > 0">
+          <app-text place="region{{i + 1}}" default="Region {{i + 1}}" class="field-hint"></app-text>
+          <app-select-bonvino formControlName_="{{i}}" [formArray]="regionsForm" #_region [scallable]="true"
+                              (menuOpened)="reloadCountsOnOpeningSelect({level: i}, '0')">
+            <div select-title>
+              <div *ngFor="let region of allRegiones[i]">
+                <app-text page="country_names" place="{{region.id}}" default="{{region.name}}" *ngIf="regionsForm.at(i).value == region.id"></app-text>
+              </div>
+            </div>
+            <div options class="d-flex flex-column align-items-start select-list-options">
+              <button class="btn btn-option" (click)="_region.choose('0')">
+                <app-text page="wines_common_info" default="Clear input"></app-text>
+              </button>
+              <button class="btn btn-option" *ngFor="let region of allRegiones[i]" (click)="_region.choose(region.id)"
+
+                      [hidden]="counterData && !counterData['region' + (i + 1)][region.id]">
+                <app-text page="country_names" place="{{region.id}}" default="{{region.name}}"></app-text>
+                <span *ngIf="counterData"> ({{counterData['region' + (i + 1)][region.id]}})</span>
+              </button>
+            </div>
+          </app-select-bonvino>
+          <div *ngIf="langService.editable">
+
+          <app-text page="wine_list" place="select" default="Select"></app-text>
+          <app-text page="country_names" *ngFor="let region of allRegiones[i]" place="{{region.id}}" default="{{region.name}}"></app-text>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="d-flex justify-content-end" mat-dialog-actions *ngIf="data && data.form">
+    <div class="ml-auto float-right p-2">
+
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+        <app-text page="wine_list" default="Close"></app-text>
+      </button>
+    </div>
+  </div>
+
+
+
+  <div class="d-flex justify-content-end" mat-dialog-actions *ngIf="!data || !data.form">
+    <div class="ml-auto float-right p-2">
+
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+        <app-text page="wine_list" default="Cancel"></app-text>
+      </button>
+    </div>
+    <div class="float-right p-2">
+
+      <button class="btn btn-type-1 text-uppercase field-content" *ngIf="this.langService.editable">
+        <app-text page="wine_list" default="Set"></app-text>
+      </button>
+
+      <button class="btn btn-type-1 text-uppercase field-content"  *ngIf="!this.langService.editable" mat-button [mat-dialog-close]="form.value" cdkFocusInitial>
+        <app-text page="wine_list" default="Set"></app-text>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div [hidden]="true">
+
+
+  <div *ngFor="let row of countries">
+    <app-text page="country_names" [place]="row.id" default="{{row.name}}"></app-text>
+
+  </div>
+
+  <div *ngFor="let r of allRegiones; let i = index">
+
+    <app-text page="country_names" *ngFor="let region of allRegiones[i]" place="{{region.id}}" default="{{region.name}}"></app-text>
+
+  </div>
+
+</div>

@@ -1,0 +1,20 @@
+
+<div class="heading-2 d-flex justify-content-start scroll-title rtl-susceptible" (click)="scrollToggle()"
+     (mouseover)="paintMouseOver('#3683dc')"
+     (mouseout)="paintMouseOver('#a2312d')">
+
+  <div class="" [ngClass]="langService.isRtl() ? 'margin-left-4' : 'margin-right-4'" *ngIf="iconPosition == 'start'">
+    <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow icon-arrow-scroll" [hidden]="!isOpen"></app-icon-bonvino>
+    <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow icon-arrow-scroll rotate-90" [hidden]="isOpen"></app-icon-bonvino>
+  </div>
+  <div>
+    <ng-content select="[select-title]"></ng-content>
+  </div>
+  <div class="d-flex align-items-center"  [ngClass]="langService.isRtl() ? 'margin-right-16' : 'margin-left-16'" *ngIf="iconPosition == 'end'">
+    <app-icon-bonvino svgIcon="arrow-1-down" class="icon-arrow icon-arrow-scroll" [hidden]="!isOpen" #icon1></app-icon-bonvino>
+    <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow icon-arrow-scroll" [hidden]="isOpen" #icon2></app-icon-bonvino>
+  </div>
+</div>
+<div *ngIf="!noList && isOpen" class="slow-appearing d-flex flex-column margin-top-20 scroll-list rtl-susceptible" >
+  <ng-content select="[scroll]"></ng-content>
+</div>

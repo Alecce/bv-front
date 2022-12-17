@@ -1,0 +1,411 @@
+::ng-deep .select-list {
+  margin-top: 2px;
+  padding-bottom: 0;
+  max-height: 132px;
+  border-radius: 4px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+  box-shadow: none;
+  max-width: none !important;
+  overflow: hidden;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list {
+    max-height: 400px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list {
+    max-height: 300px;
+    border-radius: 6px;
+  }
+}
+
+::ng-deep .select-list-options-field {
+  max-height: 108px;
+  height: 100%;
+  overflow-y: auto;
+  margin-right: 4px;
+  margin-left: 12px;
+  /*margin-bottom: 12px;*/
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field {
+    max-height: 340px;
+    margin-right: 12px;
+    margin-left: 28px;
+    margin-bottom: 28px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field {
+    max-height: 280px;
+    margin-right: 12px;
+    margin-left: 28px;
+    margin-bottom: 28px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar {
+  width: 7px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar {
+    width: 16px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar {
+    width: 12px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: rgba(0,0,0,0.1);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-track {
+    border-radius: 8px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-track {
+    border-radius: 6px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar-thumb {
+  height: 33px;
+  border-radius: 4px;
+  background-color: var(--chrome);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-thumb {
+    height: 96px;
+    border-radius: 8px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-thumb {
+    height: 64px;
+    border-radius: 6px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar-thumb:hover {
+  background-color: var(--black);
+}
+.dropdown-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.btn-select {
+  padding-top: 0;
+  padding-bottom: 0;
+  min-width: 160px;
+  width: 100%;
+  height: 32px;
+  border-radius: 4px;
+  background-color: var(--sand-bright);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .btn-select {
+    min-width: 400px;
+    height: 75px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .btn-select {
+    min-width: 300px;
+    height: 64px;
+    border-radius: 6px;
+  }
+}
+.btn-select:hover {
+  height: 32px;
+  border-radius: 3px;
+  border: solid 1px var(--ocean);
+  background-color: var(--white);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .btn-select:hover {
+    border-radius: 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .btn-select:hover {
+    border-radius: 6px;
+  }
+}
+.btn-select:focus {
+  box-shadow: none;
+}
+.btn-select.btn-select-active {
+  height: 32px;
+  border-radius: 3px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .btn-select.btn-select-active {
+    border-radius: 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .btn-select.btn-select-active {
+    border-radius: 6px;
+  }
+}
+.select-text {
+  height: 17px;
+  font-family: 'Noto Sans Display';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0px;
+  color: var(--black);
+  /*text-transform: capitalize;*/
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-text {
+    height: 55px;
+    font-size: 48px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-text {
+    height: 34px;
+    font-size: 28px;
+  }
+}
+/*.icon-arrow {*/
+  /*margin-bottom: 10px;*/
+  /*height: 5px;*/
+  /*width: 10px;*/
+/*}*/
+.dropdown-item:hover {
+  background-color: inherit;
+}
+.dropdown-item:active {
+  background-color: inherit;
+}
+.dropdown-item:focus {
+  background-color: inherit;
+}
+::ng-deep .ngx-pagination {
+  padding-left: 0;
+}
+::ng-deep .ngx-pagination > li span{
+  background: inherit !important;
+
+  font-family: 'Noto Sans Display' !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  font-stretch: normal !important;
+  font-style: normal !important;
+  line-height: 1.57 !important;
+  letter-spacing: 0px !important;
+  color: var(--ocean) !important;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .ngx-pagination > li span {
+    font-size: 36px !important;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .ngx-pagination > li span {
+    font-size: 28px !important;
+  }
+}
+::ng-deep .current,
+::ng-deep .ngx-pagination > li span:hover,
+::ng-deep .ngx-pagination > li a:hover,
+::ng-deep .ngx-pagination > li.current span,
+::ng-deep .ngx-pagination > li.current a
+{
+  background: inherit !important;
+  font-family: 'Noto Sans Display' !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  font-stretch: normal !important;
+  font-style: normal !important;
+  line-height: 1.57 !important;
+  letter-spacing: 0px !important;
+  color: var(--wine) !important;
+  text-decoration: none !important;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+
+  ::ng-deep .scallable .current,
+  ::ng-deep .scallable .ngx-pagination > li span:hover,
+  ::ng-deep .scallable .ngx-pagination > li a:hover,
+  ::ng-deep .scallable .ngx-pagination > li.current span,
+  ::ng-deep .scallable .ngx-pagination > li.current a {
+    font-size: 36px !important;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+
+  ::ng-deep .scallable .current,
+  ::ng-deep .scallable .ngx-pagination > li span:hover,
+  ::ng-deep .scallable .ngx-pagination > li a:hover,
+  ::ng-deep .scallable .ngx-pagination > li.current span,
+  ::ng-deep .scallable .ngx-pagination > li.current a {
+    font-size: 28px !important;
+  }
+}
+
+.field-input-search {
+
+  min-width: 100px;
+  height: 32px;
+  border-radius: 0 4px 4px 0;
+  border: solid 1px var(--sand-burn);
+  border-left: 0;
+  background-color: var(--white);
+
+  font-family: 'Noto Sans Display';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0px;
+  color: var(--black);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .field-input-search {
+    font-size: 36px;
+    height: 96px;
+    border-radius: 0 10px 10px 0;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .field-input-search {
+    font-size: 28px;
+    height: 64px;
+    border-radius: 0 6px 6px 0;
+  }
+}
+
+.field-input-pre {
+
+  height: 32px;
+  border-radius: 4px 0 0 4px;
+  border: solid 1px var(--sand-burn);
+  border-right: 0;
+  background-color: var(--white);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .field-input-pre {
+    height: 96px;
+    border-radius: 10px 0 0 10px;
+    padding-left: 24px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .field-input-pre {
+    height: 64px;
+    border-radius: 6px 0 0 6px;
+    padding-left: 16px;
+  }
+}
+.field-input-pre-focus {
+
+  height: 32px;
+  border-radius: 4px 0 0 4px;
+  border: solid 1px var(--wine);
+  border-right: 0;
+  background-color: var(--white);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .field-input-pre-focus {
+    height: 96px;
+    border-radius: 10px 0 0 10px;
+    padding-left: 24px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .field-input-pre-focus {
+    height: 64px;
+    border-radius: 6px 0 0 6px;
+    padding-left: 16px;
+  }
+}
+div:not(.disabled-select) .field-search:hover .field-input-search {
+  border-color: var(--ocean);
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.field-search:focus-within .field-input-search {
+  border-color: var(--wine) !important;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  outline: none;
+}
+.disabled-select .field-search .field-input-search {
+  border: solid 1px var(--chrome);
+  background-color: var(--nickel);
+}
+
+div:not(.disabled-select) .field-search:hover .field-input-pre {
+  border-radius: 3px 0 0 3px;
+  border: solid 1px var(--ocean);
+  border-right: 0;
+  background-color: var(--white);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable div:not(.disabled-select) .field-search:hover .field-input-pre {
+    height: 96px;
+    border-radius: 9px 0 0 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable div:not(.disabled-select) .field-search:hover .field-input-pre {
+    height: 64px;
+    border-radius: 6px 0 0 6px;
+  }
+}
+
+.disabled-select .field-search .field-input-pre {
+  border: solid 1px var(--chrome);
+  background-color: var(--nickel);
+}
+
+::ng-deep .icn-search mat-icon,
+::ng-deep .icn-search mat-icon svg{
+  height: 16px !important;
+  width: 16px !important;
+  margin-bottom: 6px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .icn-search mat-icon,
+  ::ng-deep .scallable .icn-search mat-icon svg {
+    height: 49px !important;
+    width: 49px !important;
+    margin-bottom: 9px;
+    margin-top: 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .icn-search mat-icon,
+  ::ng-deep .scallable .icn-search mat-icon svg {
+    height: 32px !important;
+    width: 32px !important;
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+}

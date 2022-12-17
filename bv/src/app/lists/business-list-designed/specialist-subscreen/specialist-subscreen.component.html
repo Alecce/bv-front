@@ -1,0 +1,136 @@
+
+<form [formGroup]="form">
+  <div class="d-flex justify-content-between">
+
+
+
+    <div class="d-flex align-items-end w-100" *ngIf="type == 'add'">
+
+      <div class="mandatory"></div>
+      <div class="field required align-self-stretch d-flex flex-column w-100">
+        <app-text page="profile" default="Specialist name" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="name">
+      </div>
+    </div>
+
+
+    <div class="field align-self-stretch d-flex flex-even flex-column" *ngIf="type == 'claim'">
+      <app-text page="profile" default="Specialist name" class="field-hint"></app-text>
+      <app-superlist-designed [searchApi]="'getFreeSpecialistList'" [pageForSearch]="'profile'"
+                              [placeForSearch]="'select_specialist'" [defaultForSearch]="'Select specialist'"
+                              [getRowName]="getRowNameSpecialists" [chosenItem]="chosenSpecialist"></app-superlist-designed>
+
+      <div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngIf="specialist">
+        <div>
+          <span>{{specialist.name}}</span>
+        </div>
+        <div>
+          <button class="btn m-0 p-0" (click)="removeSpecialist()">
+            <app-icon-bonvino svgIcon="icn-close-bonvine" class="icon-close" link="fill"></app-icon-bonvino>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+
+<!--<form [formGroup]="form">-->
+  <!--<div class="row mx-2 pb-1">-->
+    <!--<div class="col">-->
+
+      <!--<div class="row">-->
+
+        <!--<div class="form-group col" *ngIf="type == 'add'">-->
+          <!--<app-text page="profile" default="Specialist name" class="small text-muted"></app-text>-->
+          <!--<input type="text" class="form-control form-control-sm rounded-0" formControlName="name"-->
+                 <!--[placeholder]="langService.getPlaceholder('profile', '', 'Specialist name')">-->
+        <!--</div>-->
+
+        <!--<div class="col" *ngIf="type == 'claim'">-->
+          <!--<div class="row">-->
+            <!--<div class="col">-->
+              <!--<app-superlist-designed [searchApi]="'getFreeSpecialistList'" [pageForSearch]="'profile'"-->
+                                      <!--[placeForSearch]="'select_specialist'" [defaultForSearch]="'Select specialist'"-->
+                                      <!--[getRowName]="getRowNameSpecialists" [chosenItem]="chosenSpecialist"></app-superlist-designed>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="row" *ngIf="specialist">-->
+            <!--<div class="col">-->
+
+              <!--<div class="row">-->
+                <!--<div class="col">-->
+                  <!--{{specialist.name}}-->
+                <!--</div>-->
+                <!--<div class="col-auto">-->
+                  <!--<button class="btn btn-link btn-sm" (click)="removeSpecialist()">-->
+                    <!--<mat-icon svgIcon="close" class="icon mdi mdi-close"></mat-icon>-->
+                  <!--</button>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="col-auto">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<button class="btn btn-link btn-sm" (click)="removeSpecialist()">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<mat-icon svgIcon="close" class="icon mdi mdi-close"></mat-icon>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash;<div class="form-group col">&ndash;&gt;-->
+          <!--&lt;!&ndash;<app-text page="profile" default="Point system" class="small text-muted"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;<select class="form-control form-control-sm rounded-0" formControlName="pointsystem">&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="select">&ndash;&gt;-->
+              <!--&lt;!&ndash;<app-text page="profile" default="Select"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="20">&ndash;&gt;-->
+              <!--&lt;!&ndash;<app-text page="profile" default="20 points"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="100">&ndash;&gt;-->
+              <!--&lt;!&ndash;<app-text page="profile" default="100 points"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="star">&ndash;&gt;-->
+              <!--&lt;!&ndash;<app-text page="profile" default="Stars"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;</option>&ndash;&gt;-->
+          <!--&lt;!&ndash;</select>&ndash;&gt;-->
+          <!--&lt;!&ndash;<div *ngIf="langService.editable">&ndash;&gt;-->
+            <!--&lt;!&ndash;<app-text page="profile" default="Select"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;<app-text page="profile" default="20 points"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;<app-text page="profile" default="100 points"></app-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;<app-text page="profile" default="Stars"></app-text>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<div class="form-group col-auto">&ndash;&gt;-->
+          <!--&lt;!&ndash;<button class="btn btn-link btn-sm" (click)="removeSpecialist(i)">&ndash;&gt;-->
+            <!--&lt;!&ndash;<mat-icon svgIcon="close" class="icon mdi mdi-close"></mat-icon>&ndash;&gt;-->
+          <!--&lt;!&ndash;</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</form>-->
+
+
+<div class="d-flex justify-content-end" mat-dialog-actions>
+  <div class="my-auto float-right p-2">
+    <!--<button class="btn btn-outline-primary btn-sm" (click)="close()">-->
+
+      <!--<app-text page="specialist_subscreen" default="Cancel"></app-text>-->
+    <!--</button>-->
+
+
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="close()">
+      <app-text page="specialist_subscreen" default="Cancel"></app-text>
+    </button>
+  </div>
+  <div class="my-auto float-right p-2">
+    <!--<button class="btn btn-outline-primary btn-sm" mat-button [mat-dialog-close]="form.value" cdkFocusInitial>-->
+      <!--<app-text page="specialist_subscreen" default="Set"></app-text>-->
+    <!--</button>-->
+    <button class="btn btn-type-1 text-uppercase field-content" mat-button [mat-dialog-close]="form.value" cdkFocusInitial>
+      <app-text page="specialist_subscreen" default="Set"></app-text>
+    </button>
+  </div>
+</div>

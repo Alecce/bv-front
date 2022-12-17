@@ -1,0 +1,290 @@
+::ng-deep .select-list {
+  margin-top: 2px;
+  padding-bottom: 0;
+  max-height: 132px;
+  border-radius: 4px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+  box-shadow: none;
+  max-width: none !important;
+  overflow: hidden;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list,
+  ::ng-deep .scallable.select-list {
+    max-height: 400px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list,
+  ::ng-deep .scallable.select-list {
+    max-height: 300px;
+    border-radius: 8px;
+  }
+}
+::ng-deep .select-list.error {
+  border: solid 1px var(--rising-sun);
+  background-color: var(--white);
+  color: var(--rising-sun);
+}
+::ng-deep .select-list-options-field {
+  max-height: 108px;
+  height: 100%;
+  overflow-y: auto;
+  margin-right: 4px;
+  margin-left: 12px;
+  margin-bottom: 12px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field {
+    max-height: 340px;
+    margin-right: 12px;
+    margin-left: 28px;
+    margin-bottom: 28px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field {
+    max-height: 280px;
+    margin-right: 12px;
+    margin-left: 28px;
+    margin-bottom: 28px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar {
+  width: 7px;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar {
+    width: 16px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar {
+    width: 12px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: rgba(0,0,0,0.1);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-track {
+    border-radius: 8px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-track {
+    border-radius: 6px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar-thumb {
+  height: 33px;
+  border-radius: 4px;
+  background-color: var(--chrome);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-thumb {
+    height: 96px;
+    border-radius: 8px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-list-options-field::-webkit-scrollbar-thumb {
+    height: 64px;
+    border-radius: 6px;
+  }
+}
+::ng-deep .select-list-options-field::-webkit-scrollbar-thumb:hover {
+  background-color: var(--black);
+}
+.dropdown-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/*::ng-deep .btn-option {*/
+  /*width: 100%;*/
+  /*text-align: start;*/
+  /*margin: 0 0 5px 0;*/
+  /*padding: 0;*/
+  /*!*min-height: 17px;*!*/
+  /*font-family: 'Noto Sans Display';*/
+  /*font-size: 14px;*/
+  /*font-weight: normal;*/
+  /*font-stretch: normal;*/
+  /*font-style: normal;*/
+  /*!*line-height: normal;*!*/
+  /*letter-spacing: 0px;*/
+  /*color: var(--ocean);*/
+  /*!*text-transform: capitalize;*!*/
+
+/*}*/
+/*@media (max-width: 1080px) and (min-width: 720px) {*/
+  /*::ng-deep .btn-option {*/
+    /*margin: 0 0 12px 0;*/
+    /*font-size: 36px;*/
+  /*}*/
+/*}*/
+/*::ng-deep .btn-option:hover {*/
+  /*color: var(--wine);*/
+/*}*/
+/*::ng-deep .btn-option:focus {*/
+  /*color: var(--ocean);*/
+  /*outline: 0;*/
+  /*box-shadow: none;*/
+/*}*/
+.btn-select {
+  padding-top: 0;
+  padding-bottom: 0;
+  min-width: 160px;
+  width: 100%;
+  height: 32px;
+  border-radius: 4px;
+  background-color: var(--sand-bright);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .btn-select {
+    min-width: 400px;
+    height: 96px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .btn-select {
+    min-width: 300px;
+    height: 64px;
+    border-radius: 6px;
+  }
+}
+.btn-select:hover {
+  border-radius: 3px;
+  border: solid 1px var(--ocean);
+  background-color: var(--white);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .btn-select:hover {
+    border-radius: 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .btn-select:hover {
+    border-radius: 6px;
+  }
+}
+.btn-select:focus {
+  box-shadow: none;
+}
+.btn-select.btn-select-active {
+  border-radius: 3px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .btn-select.btn-select-active {
+    border-radius: 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .btn-select.btn-select-active {
+    border-radius: 6px;
+  }
+}
+
+.disabled-select .btn-select {
+  border-radius: 3px;
+  border: solid 1px var(--chrome);
+  background-color: var(--nickel);
+  opasity: 1;
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .disabled-select .btn-select {
+    border-radius: 9px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .disabled-select .btn-select {
+    border-radius: 6px;
+  }
+}
+.btn-select.error {
+  border: solid 1px var(--rising-sun);
+  background-color: var(--white);
+  color: var(--rising-sun);
+}
+
+
+.select-text {
+  height: 17px;
+  font-family: 'Noto Sans Display';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0px;
+  color: var(--black);
+  /*text-transform: capitalize;*/
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .select-text {
+    /*padding-top: 16px;*/
+    height: 65px;
+    font-size: 48px;
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .select-text {
+    /*padding-top: 16px;*/
+    height: 34px;
+    font-size: 28px;
+  }
+}
+.disabled-select .select-text {
+  /*background-color: var(--chrome);*/
+  color: var(--chrome);
+}
+
+.dropdown-item:hover {
+  background-color: inherit;
+}
+.dropdown-item:active {
+  background-color: inherit;
+}
+.dropdown-item:focus {
+  background-color: inherit;
+}
+
+.margin-left-16 {
+  margin-left: 16px;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+::ng-deep .reverse-icon-arrow {
+  transform: scaleY(-1) translateY(-23px);
+  /*margin-top: 23px;*/
+}
+@media (max-width: 1080px) and (min-width: 720px) {
+  ::ng-deep .scallable .reverse-icon-arrow {
+    transform: scaleY(-1) translateY(-10px);
+  }
+}
+@media (max-width: 720px) and (min-width: 540px) {
+  ::ng-deep .scallable .reverse-icon-arrow {
+    transform: scaleY(-1) translateY(-16px);
+  }
+}
+.flag-mouse-over:hover .non-mouse-over {
+  display: none;
+}
+
+.flag-mouse-over:not(:hover) .mouse-over {
+  display: none;
+}
+
+.icon-arrow-container {
+  height: 15px;
+}

@@ -1,0 +1,1345 @@
+
+<div class="scallable">
+  <div class="d-flex align-items-start">
+    <div class="d-flex flex-column align-items-start left-bar" *ngIf="!resolutionService.isSmall() && isBigScreen()">
+      <div>
+
+        <app-wine-list-searchbar [isQueryChangeble]="true"></app-wine-list-searchbar>
+      </div>
+    </div>
+    <div class="d-flex flex-column justify-content-between w-100 main-menu"
+         [ngClass]="{
+         'margin-right-32' : isBigScreen(),
+         'margin-left-48 margin-right-16' : !isBigScreen()
+       }">
+      <div class="margin-bottom-12 mr-auto" *ngIf="bengat && !winery && !shop">
+        <app-wine-list-navigation></app-wine-list-navigation>
+      </div>
+      <div class="w-100">
+        <div class="d-flex flex-row justify-content-between align-content-end flex-wrap">
+          <div class="d-flex flex-column justify-content-end" *ngIf="!winery && !shop">
+            <div class="d-flex flex-row justify-content-between" *ngIf="bengat && !specialPage">
+
+              <div>
+
+                <button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.bengatCollection)"
+                        (click)="chooseTab(tabs.bengatCollection)">
+                  <app-text page="wine_list" default="Wine Collection"></app-text>
+                </button>
+              </div>
+
+              <div class="margin-left-64" [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular ml-0 mr-0" [ngClass]="getTabColor(tabs.bengatRating)"
+                        (click)="chooseTab(tabs.bengatRating)">
+                  <app-text page="wine_list" default="Wine Rating"></app-text>
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between" *ngIf="!bengat || specialPage">
+
+              <div>
+
+                <button class="btn btn-menu-first menu-2-regular ml-0 mr-0" [ngClass]="getTabColor(tabs.all)" (click)="chooseTab(tabs.all)"
+                        *ngIf="!specialPage">
+                  <app-text page="wine_list" place="discover" default="Discover"></app-text>
+                </button>
+              </div>
+
+              <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular ml-0 mr-0" [ngClass]="getTabColor(tabs.discoverEvent)" (click)="chooseTab(tabs.discoverEvent)"
+                        *ngIf="specialPage == 'event'">
+                  <app-text page="wine_list" place="discover" default="Discover"></app-text>
+                </button>
+              </div>
+
+              <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.event)" (click)="chooseTab(tabs.event)"
+                        *ngIf="specialPage == 'event'">
+                  <app-text page="wine_list" default="Chosen wines"></app-text>
+                </button>
+              </div>
+
+              <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular ml-0 mr-0" [ngClass]="getTabColor(tabs.discoverShop)" (click)="chooseTab(tabs.discoverShop)"
+                        *ngIf="specialPage == 'shop'">
+                  <app-text page="wine_list" place="discover" default="Discover"></app-text>
+                </button>
+              </div>
+
+              <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.shop)" (click)="chooseTab(tabs.shop)"
+                        *ngIf="specialPage == 'shop'">
+                  <app-text page="wine_list" default="Chosen wines"></app-text>
+                </button>
+              </div>
+
+              <!--<button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.my)" (click)="chooseTab(tabs.my)" *ngIf="!specialPage && accountService.isBusiness()">-->
+              <!--<app-text page="wine_list" default="Our wines"></app-text>-->
+              <!--</button>-->
+
+              <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.iAndWine)" (click)="chooseTab(tabs.iAndWine)"
+                        [disabled]="!accountService.properties.type" *ngIf="!specialPage">
+                  <app-text page="wine_list" default="I and wine"></app-text>
+                </button>
+              </div>
+
+              <div [ngClass]="{ 'margin-left-64' : !isBigScreen() }">
+
+                <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.collection)" (click)="chooseTab(tabs.collection)"
+                        *ngIf="!specialPage && accountService.ifCollector()">
+                  <app-text page="wine_list" place="your_wine_collection" default="Your wine collection"></app-text>
+                </button>
+              </div>
+
+
+              <!--<button class="btn btn-menu-first menu-2-regular mr-0" [disabled]="myRole && myRole.type != 'collector'" [ngClass]="getTabColor(tabs.collection)" (click)="chooseTab(tabs.collection)"-->
+              <!--*ngIf="acco">-->
+              <!--<app-text page="wine_list" default="Collection"></app-text>-->
+              <!--</button>-->
+
+              <!--<button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.my)" (click)="chooseTab(tabs.my)">-->
+              <!--<app-text page="wine_list" place="added_by_you" default="Wines added by you"></app-text>-->
+              <!--</button>-->
+              <!--</button>-->
+
+              <button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.myRates)" (click)="chooseTab(tabs.myRates)"
+                      *ngIf="!specialPage && accountService.ifSpecialist()">
+                <app-text page="wine_list" default="Wines rated by you"></app-text>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-start align-items-end" *ngIf="winery && wineryData">
+            <div class="heading-1 winery-title">
+              <!--{{wineryData.wineryinfo.winery_name}}-->
+
+
+              <span *ngIf="wineryData.wineryinfo.language == langService.getLanguage()">{{wineryData.wineryinfo.winery_name}}</span>
+              <span *ngIf="wineryData.wineryinfo.language != langService.getLanguage()">{{wineryData.wineryinfo.international_name}}</span>
+              <!--<app-text page="wine_list" default="Wines"></app-text>-->
+            </div>
+
+            <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : backToWineryLink()">
+              <app-text page="wine_list" default="Back to winery"></app-text>
+            </a>
+            <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="backToWinery()">-->
+            <!--<app-text page="wine_list" default="Back to winery"></app-text>-->
+            <!--</button>-->
+          </div>
+          <div class="d-flex justify-content-start align-items-end" *ngIf="shop && shopData">
+            <div class="heading-1 winery-title">
+              <!--{{wineryData.wineryinfo.winery_name}}-->
+
+
+              <span *ngIf="shopData.commoninfo.language == langService.getLanguage()">{{shopData.commoninfo.name_national}}</span>
+              <span *ngIf="shopData.commoninfo.language != langService.getLanguage()">{{shopData.commoninfo.name_international}}</span>
+              <!--<app-text page="wine_list" default="Wines"></app-text>-->
+            </div>
+
+            <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : backToShopLink()">
+              <app-text page="wine_list" default="Back to shop"></app-text>
+            </a>
+            <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="backToWinery()">-->
+            <!--<app-text page="wine_list" default="Back to winery"></app-text>-->
+            <!--</button>-->
+          </div>
+          <div class="d-flex flex-column justify-content-end ml-auto margin-top-8" *ngIf="isBigScreen()">
+            <div class="d-flex flex-row justify-content-end align-content-end mb-0">
+              <div class="d-flex flex-column justify-content-end menu-top" [hidden]="schema == 'table'">
+
+                <!--&gt;[hidden]="schema == 'table'"-->
+                <form [formGroup]="wineListSearchbarService.form"  [hidden]="schema == 'table'">
+
+                  <div class="field align-self-end d-flex flex-column mb-0">
+                    <app-text page="wine_list" default="Sort" class="field-hint"></app-text>
+                    <app-select-bonvino formControlName_="order" [form]="wineListSearchbarService.form" #_order>
+                      <div select-title>
+                        <app-text page="wines_common_info" place="id" default="Id" *ngIf="order.value == 'sort'"></app-text>
+                        <app-text page="wines_common_info" default="Add time" *ngIf="order.value == 'addtime'"></app-text>
+                        <app-text page="wines_common_info" default="Add time" *ngIf="order.value == 'addtime_reverse'"></app-text>
+                        <app-text page="wines_common_info" place="name_int" default="Name" *ngIf="order.value == 'name_int'"></app-text>
+                        <app-text page="wines_common_info" place="name_int" default="Name" *ngIf="order.value == 'name_int_reverse'"></app-text>
+                        <app-text page="wines_common_info" place="year" default="Year" *ngIf="order.value == 'year'"></app-text>
+                        <app-text page="wines_common_info" place="year" default="Year" *ngIf="order.value == 'year_reverse'"></app-text>
+                        <app-text page="wines_common_info" place="country" default="Country" *ngIf="order.value == 'country'"></app-text>
+                        <app-text page="wines_common_info" place="country" default="Country" *ngIf="order.value == 'country_reverse'"></app-text>
+
+
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                                  *ngIf="order.value == 'name_int' || order.value == 'name_nat' || order.value == 'year' || order.value == 'country' || order.value == 'addtime'"
+                        ></mat-icon>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"
+                                  *ngIf="order.value == 'name_int_reverse' || order.value == 'name_nat_reverse'
+                                  || order.value == 'year_reverse' || order.value == 'country_reverse' || order.value == 'addtime_reverse'"
+                        ></mat-icon>
+                      </div>
+                      <div options class="d-flex flex-column align-items-start select-list-options">
+                        <!--<button class="btn btn-option" (click)="_order.choose('sort')">-->
+                        <!--<app-text page="wines_common_info" place="id" default="Id"></app-text>-->
+                        <!--</button>-->
+                        <button class="btn btn-option" (click)="_order.choose('addtime')" *ngIf="order.value == 'addtime_reverse'">
+                          <app-text page="wines_common_info" default="Add time"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                        </button>
+                        <button class="btn btn-option" (click)="_order.choose('addtime_reverse')" *ngIf="order.value != 'addtime_reverse'">
+                          <app-text page="wines_common_info" default="Add time"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                        </button>
+                        <button class="btn btn-option" (click)="_order.choose('name_int')" *ngIf="order.value != 'name_int'">
+                          <app-text page="wines_common_info" place="name_int" default="Name"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                        </button>
+                        <button class="btn btn-option" (click)="_order.choose('name_int_reverse')" *ngIf="order.value == 'name_int'">
+                          <app-text page="wines_common_info" place="name_int" default="Name"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                        </button>
+                        <!--<button class="btn btn-option" (click)="_order.choose('name_nat')">-->
+                        <!--<app-text page="wines_common_info" place="name_nat" default="Name"></app-text>-->
+                        <!--<mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>-->
+                        <!--</button>-->
+                        <!--<button class="btn btn-option" (click)="_order.choose('name_nat_reverse')">-->
+                        <!--<app-text page="wines_common_info" place="name_nat" default="Name"></app-text>-->
+                        <!--<mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>-->
+                        <!--</button>-->
+                        <button class="btn btn-option" (click)="_order.choose('year')" *ngIf="order.value != 'year'">
+                          <app-text page="wines_common_info" place="year" default="Year"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                        </button>
+                        <button class="btn btn-option" (click)="_order.choose('year_reverse')" *ngIf="order.value == 'year'">
+                          <app-text page="wines_common_info" place="year" default="Year"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                        </button>
+                        <button class="btn btn-option" (click)="_order.choose('country')" *ngIf="order.value != 'country'">
+                          <app-text page="wines_common_info" place="country" default="Country"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                        </button>
+                        <button class="btn btn-option" (click)="_order.choose('country_reverse')" *ngIf="order.value == 'country'">
+                          <app-text page="wines_common_info" place="country" default="Country"></app-text>
+                          <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                        </button>
+                      </div>
+                    </app-select-bonvino>
+                  </div>
+
+                  <div *ngIf="langService.editable">
+                    <app-text page="wines_common_info" place="name" default="Name"></app-text>
+                    <!--<app-text page="wines_common_info" place="name_reverse" default="Name (reverse order)"></app-text>-->
+                    <app-text page="wines_common_info" place="year" default="Year"></app-text>
+                    <!--<app-text page="wines_common_info" place="year_reverse" default="Year (reverse order)"></app-text>-->
+                    <app-text page="wines_common_info" place="country" default="Country"></app-text>
+                    <!--<app-text page="wines_common_info" place="country_reverse" default="Country (reverse order)"></app-text>-->
+                  </div>
+                </form>
+              </div>
+
+              <div class="d-flex flex-column justify-content-end menu-top"  *ngIf="0 && !accountService.isNoUser()">
+                <div class="schema-block d-flex flex-row justify-content-center">
+                  <div class="schema-button d-flex justify-content-center align-items-center" [ngClass]="schema == 'table' ? 'schema-button-current' : ''"
+                       (mouseover)="paintMouseOver(icnViewList, '#000000')"
+                       (mouseout)="paintMouseOver(icnViewList, '#A2312D')"
+                       (click)="setSchema('table')">
+                    <app-icon-bonvino svgIcon="icn-view-list" class="icn-view-list" #icnViewList></app-icon-bonvino>
+                  </div>
+                  <div class="schema-button d-flex justify-content-center align-items-center" [ngClass]="schema == 'cards' ? 'schema-button-current' : ''"
+                       (mouseover)="paintMouseOver(icnViewThumbs, '#000000')"
+                       (mouseout)="paintMouseOver(icnViewThumbs, '#A2312D')"
+                       (click)="setSchema('cards')">
+                    <app-icon-bonvino svgIcon="icn-view-thumbs" class="icn-view-thumbs" #icnViewThumbs></app-icon-bonvino>
+                  </div>
+                </div>
+
+              </div>
+
+              <!--<div class="d-flex flex-column justify-content-end menu-top" *ngIf="specialPage == 'event'">-->
+              <!--<div class="d-flex flex-column justify-content-end menu-top" *ngIf="specialPage == 'event'">-->
+              <!--<a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : returnToEventLink()">-->
+              <!--<app-text page="wine_list" default="Return to event"></app-text>-->
+              <!--</a>-->
+              <!--&lt;!&ndash;<button class="btn btn-type-1 text-uppercase field-content" (click)="addWines()" *ngIf="!winery">&ndash;&gt;-->
+              <!--&lt;!&ndash;<app-text page="wine_list" default="Add missing wine"></app-text>&ndash;&gt;-->
+              <!--&lt;!&ndash;</button>&ndash;&gt;-->
+              <!--</div>-->
+
+              <div class="d-flex flex-column justify-content-end menu-top" *ngIf="!specialPage && !accountService.isNoUser()" >
+                <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : addWinesLink()" *ngIf="!winery">
+                  <app-text page="wine_list" default="Add missing wine"></app-text>
+                </a>
+                <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="addWines()" *ngIf="!winery">-->
+                <!--<app-text page="wine_list" default="Add missing wine"></app-text>-->
+                <!--</button>-->
+              </div>
+              <div class="d-flex justify-content-end align-items-end" *ngIf="haveRightToEditWines() && !accountService.isNoUser()">
+                <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : addWinesLinkForWinery(winery)">
+                  <app-text page="wine_list" default="Add missing wine"></app-text>
+                </a>
+                <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="backToWinery()">-->
+                <!--<app-text page="wine_list" default="Back to winery"></app-text>-->
+                <!--</button>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div [hidden]="schema != 'cards'">
+        <div class="d-flex flex-wrap cards-block" #cards>
+
+
+          <div class="card-wine d-flex flex-row" *ngFor="let wine of wineList"  [ngStyle]="{'width.px': cardWidth}">
+            <div class="card-image">
+
+              <button class="btn btn-option hyperlink p-0" (click)="viewWine(wine.id)">
+                <img  class="img-fluid max-height-270px" [src]="getImage(wine)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+
+              </button>
+              <!--<a href="wine/{{wine.id}}" >-->
+              <!--<img  class="img-fluid max-height-270px" [src]="getImage(wine)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">-->
+              <!--</a>-->
+            </div>
+            <div class="card-text d-flex flex-column justify-content-start align-content-start w-100">
+              <div class="card-place-of-origin lines-1" *ngIf="wine.country">
+                <!--{{wine.country}}-->
+
+                <app-text page="country_names" place="{{wine.country_id}}" default="{{countriesMap.get(wine.country_id)}}"></app-text>
+              </div>
+              <div class="card-wine-name heading-2">
+                <!--<span *ngIf="wine.language == langService.getLanguage() && wine.name">{{wine.name}}</span>-->
+                <!--<span *ngIf="wine.language != langService.getLanguage() || !wine.name">{{wine.international_wn}}</span>-->
+
+                <app-title [language]="wine.language" [national]="wine.name"
+                           [international]="wine.international_wn" [id]="wine.id" page="wineNames"></app-title>
+
+
+              </div>
+              <div class="card-winery-name">
+                <div class="">
+                  <button class="hyperlink btn p-0 border-0 align-content-start text-align-start" (click)="viewWinery(wine.winery_id)">
+                    <!--<div *ngIf="wine.winery_language == langService.getLanguage() && wine.winery_national" class="winery-name">{{wine.winery_national}}</div>-->
+                    <!--<div *ngIf="wine.winery_language != langService.getLanguage() || !wine.winery_national" class="winery-name">{{wine.winery}}</div>-->
+
+
+                    <app-title [language]="wine.winery_language" [national]="wine.winery_national"
+                               [international]="wine.winery" [id]="wine.winery_id" page="wineryNames"
+                    ></app-title>
+
+                  </button>
+                  <!--<a class="hyperlink" href="winery/{{wine.winery_id}}">-->
+                  <!--<span *ngIf="wine.winery_language == langService.getLanguage()">{{wine.winery_national}}</span>-->
+                  <!--<span *ngIf="wine.winery_language != langService.getLanguage()">{{wine.winery}}</span>-->
+                  <!--</a>-->
+                </div>
+              </div>
+              <div class="card-year lines-1">
+                {{wine.vintage_year}}
+              </div>
+              <div class="card-type lines-1">
+                <!--<app-text *ngIf="!langService.editable && wine.grand_type && wine.grand_type != 'still' && wine.grand_type != 'select'"-->
+                <!--page="wine_list" [place]="wine.grand_type" default="{{wine.grand_type}}"></app-text>-->
+
+                <div *ngFor="let row of grandTypesArr" [hidden]="(!langService.editable && row.value != wine.grand_type) || row.value == 'still'">
+                  <app-text page="wine_list" [place]="row.value" default="{{row.value}}"></app-text>
+
+                </div>
+
+              </div>
+              <div class="card-type lines-1 d-flex flex-row">
+                <div>
+                  <!--<app-text *ngIf="!langService.editable && wine.wine_color != 'nocolor'"-->
+                  <!--page="wine_list" [place]="wine.wine_color" default="{{wine.wine_color}}"></app-text>-->
+
+
+                  <div *ngFor="let row of colorArr" [hidden]="!langService.editable && row.value != wine.wine_color">
+                    <app-text page="wine_list" [place]="row.value" default="{{row.value}}"></app-text>
+
+                  </div>
+
+                </div>
+                <div>
+
+                  <span class="whitespace-pre" *ngIf="wine.wine_color != 'nocolor' &&
+                  ((wine.vinetype_sweetness && wine.vinetype_sweetness != 'select') ||
+                  (wine.champagne_sweetness && wine.champagne_sweetness != 'select'))"> · </span>
+                </div>
+                <div>
+
+                  <div *ngFor="let row of sweetnessArr" [hidden]="(!langService.editable && row.value != wine.vinetype_sweetness)">
+                    <app-text page="wines_one" [place]="row.value" default="{{row.defaultText}}"></app-text>
+
+                  </div>
+
+
+                  <div *ngFor="let row of champagneSweetnessArr" [hidden]="!langService.editable && row.value != wine.champagne_sweetness">
+                    <app-text page="wines_one" default="{{row.defaultText}}"></app-text>
+
+                  </div>
+                </div>
+
+
+                <!--<app-text *ngIf="wine.type" page="wine_list" [place]="wineTypeMap.get(wine.wine_type)"-->
+                <!--default="{{wineTypeMap.get(wine.wine_type)}}"></app-text>-->
+
+                <!--{{wine.vinetype_sweetness}}-->
+                <!--{{wine.champagne_sweetness}}-->
+
+
+
+              </div>
+              <div class="d-flex flex-row justify-content-between w-100 flex-even">
+
+                <div>
+
+                  <div class="card-alcohol lines-1">
+                    <!--<app-text *ngIf="wine.type" page="wine_list" [place]="wineTypeMap.get(wine.wine_type)"-->
+                    <!--default="{{wineTypeMap.get(wine.wine_type)}}"></app-text>-->
+
+                    <div *ngFor="let row of wineTypeList" [hidden]="row.id == 1 || (!langService.editable && row.id != wine.wine_type)">
+
+                      <app-text page="wine_list" [place]="row.type"
+                                [default]="row.type"></app-text>
+                    </div>
+                  </div>
+                  <div class="card-alcohol lines-1">
+                    <span *ngIf="wine.alcohol_percents">{{wine.alcohol_percents}}</span>
+                    <span *ngIf="wine.alcohol_percents">%</span>
+                  </div>
+                  <div class="card-cost heading-2 d-flex flex-wrap">
+                    <div *ngFor="let price of priceList; let i = index"
+                         [hidden]="bengat || (!langService.editable && !wine.priceLevel.has(price.id + ''))">
+                      <app-text page="wine_list" default="{{price.price}}"></app-text>
+                    </div>
+
+                    <!--<span >{{wine.priceCollector}}</span>-->
+                    <div *ngIf="bengat && wine.is_for_sale && tab.value == tabs.bengatCollection">
+
+                      <!--<span >{{wine.priceCollector}}</span>-->
+                      <app-text-complicated page="wines_one" default="*** NIS">
+
+                        <span *appTransclude>{{wine.priceCollector}}</span>
+                      </app-text-complicated>
+                    </div>
+                    <div *ngIf="bengat && tab.value == tabs.bengatRating && wine.user_price">
+
+                      <!--<span >{{wine.priceCollector}}</span>-->
+                      <app-text-complicated page="wines_one" default="*** NIS">
+
+                        <span *appTransclude>{{wine.user_price}}</span>
+                      </app-text-complicated>
+                    </div>
+                    <!--<button class="btn btn-option" *ngFor="let price of priceList; let i = index" (click)="_priceLevel.choose(price.id)">-->
+                    <!--<app-text page="wines_advanced" default="{{price.price}}"></app-text>-->
+                    <!--</button>-->
+                  </div>
+                </div>
+                <div class="card-buttons d-flex flex-column mt-auto">
+                  <div class="mb-auto">
+                    <!--<mat-icon svgIcon="icn-menu" class="icn-menu"></mat-icon>-->
+                    <!--<app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>-->
+
+                    <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right" *ngIf="!accountService.isNoUser()">
+                      <div class="" id="listDropdown" ngbDropdownToggle>
+                        <button class="btn btn-type-1 text-uppercase field-content">
+                          <app-text page="wine_list" default="Actions"></app-text>
+                        </button>
+                        <!--<app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>-->
+                      </div>
+                      <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+                        <div class="d-flex flex-column align-items-start menu-buttons">
+                          <div class="" *ngIf="isAdmin()">
+                            <button class="btn btn-option hyperlink p-0" (click)="findWine(wine.id)">
+                              <app-text page="wine_list" default="Find wine" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="!specialPage && tab.value == 'collection' || tab.value == 'myRates' || tab.value == 'iAndWine'">
+                            <button class="btn btn-option hyperlink p-0" (click)="rateWine(wine.id)">
+                              <app-text page="wine_list" default="Rate" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="isSpecialist() && !specialPage && tab.value == 'collection' || tab.value == 'myRates' || tab.value == 'iAndWine'">
+                            <a [routerLink]="null" class="hyperlink" (click)="describeWine(wine.id)">
+                              <app-text page="wines_one"  default="Describe"></app-text>
+                            </a>
+                          </div>
+                          <!--<div class="">-->
+                          <!--<button class="btn btn-option hyperlink p-0" (click)="viewWine(wine.id)">-->
+                          <!--<app-text page="wine_list" default="View" class=""></app-text>-->
+                          <!--</button>-->
+                          <!--</div>-->
+                          <div class="" *ngIf="isTranslatable()">
+                            <a [routerLink]="langService.editable ? null : viewWineLink(wine.id)" class="hyperlink">
+                              <app-text page="wine_list"  default="View wine"></app-text>
+                            </a>
+                          </div>
+                          <div class=""  *ngIf="!wine.storage && !accountService.isNoUser()">
+                            <button class="btn btn-option hyperlink p-0" (click)="getToPersonStorage(wine)">
+                              <app-text page="wine_list" default="Get wine" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class=""  *ngIf="wine.storage && tab.value == 'all' || tab.value == 'collection' || tab.value == 'myRates' || tab.value == 'iAndWine'">
+                            <button class="btn btn-option hyperlink p-0" (click)="removeFromPersonStorage(wine)">
+                              <app-text page="wine_list" default="Remove wine" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class=""  *ngIf="!specialPage && accountService.ifCollector() && (tab.value == 'collection' || tab.value == 'iAndWine')">
+                            <button class="btn btn-option hyperlink p-0" (click)="storeWine(wine)">
+                              <app-text page="wine_list" default="Collection" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="!specialPage && shop || tab.value == 'iAndWine' && wine.wish == 'buy'">
+                            <button class="btn btn-option hyperlink p-0" (click)="wishToTaste(wine)">
+                              <app-text page="wine_list" default="Wish to buy" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="!specialPage && shop || tab.value == 'iAndWine' && wine.wish == 'taste'">
+                            <button class="btn btn-option hyperlink p-0" (click)="unwish(wine)">
+                              <app-text page="wine_list" default="Wish to taste" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="!specialPage && shop || tab.value == 'iAndWine' && !wine.wish">
+                            <button class="btn btn-option hyperlink p-0" (click)="wishToBuy(wine)">
+                              <app-text page="wine_list" default="No wish" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="specialPage == 'event' && !wine.event">
+                            <button class="btn btn-option hyperlink p-0" (click)="addToEvent(wine)">
+                              <app-text page="wine_list" default="Add to event" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="specialPage == 'event' && wine.event">
+                            <button class="btn btn-option hyperlink p-0" (click)="removeFromEvent(wine)">
+                              <app-text page="wine_list" default="Remove from event" class=""></app-text>
+                            </button>
+                          </div>
+                          <div class="" *ngIf="specialPage == 'shop'">
+                            <button class="btn btn-option hyperlink p-0" (click)="addWineToShop(wine)">
+                              <app-text page="wine_list" default="Add to shop" class=""></app-text>
+                            </button>
+                          </div>
+
+                          <!--<div class="" *ngIf="specialPage == 'shop' && wine.shop">-->
+                          <!--<button class="btn btn-option hyperlink p-0" (click)="removeFromShop(wine)">-->
+                          <!--<app-text page="wine_list" default="Remove from shop" class=""></app-text>-->
+                          <!--</button>-->
+                          <!--</div>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div  *ngIf="false">
+                    <app-icon-bonvino svgIcon="icn-share" class="icn-share" link="stroke"></app-icon-bonvino>
+                  </div>
+                  <div *ngIf="false">
+                    <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div [hidden]="schema != 'table'">
+
+        <table class="table">
+          <thead>
+          <tr class="bonvino-table-head">
+            <th scope="col">
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'name_int' ? 'name_int' : 'name_int_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text page="wine_list_table" default="Wine name" class="lines-2"
+                              [ngClass]="getSortingClass(['name_int', 'name_int_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'name_int' && order.value != 'name_int_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'name_int'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'name_int_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+
+            </th>
+            <th scope="col" *ngIf="!winery">
+
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'winery' ? 'winery' : 'winery_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text page="wine_list_table" default="Winery" class="lines-2"
+                              [ngClass]="getSortingClass(['winery', 'winery_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'winery' && order.value != 'winery_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'winery'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'winery_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </th>
+            <th scope="col" *ngIf="!winery">
+
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto" (click)="orderTableBy(order.value != 'country' ? 'country' : 'country_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text page="wine_list_table" default="Country" class="lines-2"
+                              [ngClass]="getSortingClass(['country', 'country_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'country' && order.value != 'country_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'country'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'country_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </th>
+            <th scope="col">
+
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto"
+                      (click)="orderTableBy(order.value != 'year' ? 'year' : 'year_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <app-text page="wine_list_table" default="Year" class="lines-2"
+                              [ngClass]="getSortingClass(['year', 'year_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'year' && order.value != 'year_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'year'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'year_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+            </th>
+            <th scope="col">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Color" class="lines-2"></app-text>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Type" class="lines-2"></app-text>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Drink window" class="lines-2"></app-text>
+              </div>
+            </th>
+            <th scope="col" *ngIf="!specialPage && tab.value == 'collection' || tab.value == 'myRates' || tab.value == 'iAndWine'">
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto"
+                      (click)="orderTableBy(order.value != 'rating' ? 'rating' : 'rating_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <!--<app-text page="wine_list_table" default="Rating" class="lines-2"></app-text>-->
+                    <app-text page="wine_list_table" default="Rating" class="lines-2"
+                              [ngClass]="getSortingClass(['rating', 'rating_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'rating' && order.value != 'rating_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'rating'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'rating_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+
+
+              <!--<div class="d-flex justify-content-center">-->
+              <!--<app-text page="wine_list_table" default="Rating" class="lines-2"></app-text>-->
+              <!--</div>-->
+            </th>
+            <th scope="col" *ngIf="!specialPage && accountService.ifCollector() && (tab.value == 'collection' || tab.value == 'iAndWine')">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Collection" class="lines-2"></app-text>
+              </div>
+            </th>
+            <th scope="col" *ngIf="!specialPage && shop || tab.value == 'iAndWine'">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Wish" class="lines-2"></app-text>
+              </div>
+            </th>
+
+            <th scope="col" *ngIf="!winery && specialPage != 'grantAward'">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Get" class="lines-2"></app-text>
+              </div>
+            </th>
+
+            <th scope="col" *ngIf="haveRightToEditWines()">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Delete" class="lines-2"></app-text>
+              </div>
+            </th>
+
+            <th scope="col" *ngIf="specialPage == 'event'">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Event" class="lines-2"></app-text>
+              </div>
+            </th>
+
+            <th scope="col" *ngIf="specialPage == 'shop'">
+              <div class="d-flex justify-content-center">
+                <app-text page="wine_list_table" default="Shop" class="lines-2"></app-text>
+              </div>
+            </th>
+
+            <!--<th scope="col" *ngIf="specialPage == 'grantAward'">-->
+            <!--<div class="d-flex justify-content-center">-->
+            <!--<app-text page="wine_list_table" default="Confirmed by winery" class="lines-2"></app-text>-->
+            <!--</div>-->
+            <!--</th>-->
+            <!--<th scope="col" *ngIf="specialPage == 'grantAward'">-->
+            <!--<div class="d-flex justify-content-center">-->
+            <!--<app-text page="wine_list_table" default="Confirmed by competition" class="lines-2"></app-text>-->
+            <!--</div>-->
+            <!--</th>-->
+
+            <th scope="col" *ngIf="specialPage == 'grantAward' && competitionAward.value">
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto"
+                      (click)="orderTableBy(order.value != 'award' ? 'award' : 'award_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <!--<app-text page="wine_list_table" default="Rating" class="lines-2"></app-text>-->
+                    <app-text page="wine_list_table" default="Award" class="lines-2"
+                              [ngClass]="getSortingClass(['award', 'award_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'award' && order.value != 'award_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'award'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'award_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+
+            </th>
+            <th scope="col" *ngIf="specialPage == 'grantAward' && competitionAward.value">
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto"
+                      (click)="orderTableBy(order.value != 'is_confirmed' ? 'is_confirmed' : 'is_confirmed_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <!--<app-text page="wine_list_table" default="Rating" class="lines-2"></app-text>-->
+                    <app-text page="wine_list_table" default="Confirmed by winery" class="lines-2"
+                              [ngClass]="getSortingClass(['is_confirmed', 'is_confirmed_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'is_confirmed' && order.value != 'is_confirmed_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'is_confirmed'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'is_confirmed_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+
+            </th>
+            <th scope="col" *ngIf="specialPage == 'grantAward' && competitionAward.value">
+
+              <button class="btn p-0 border-0 d-flex justify-content-center align-items-center mx-auto"
+                      (click)="orderTableBy(order.value != 'is_confirmed_competition' ? 'is_confirmed_competition' : 'is_confirmed_competition_reverse')">
+                <div class="d-flex justify-content-center align-items-center">
+                  <div>
+                    <!--<app-text page="wine_list_table" default="Rating" class="lines-2"></app-text>-->
+                    <app-text page="wine_list_table" default="Confirmed by competition" class="lines-2"
+                              [ngClass]="getSortingClass(['is_confirmed_competition', 'is_confirmed_competition_reverse'])"></app-text>
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                              *ngIf="order.value != 'is_confirmed_competition' && order.value != 'is_confirmed_competition_reverse'"
+                    ></mat-icon>
+                  </div>
+
+                  <div class="reverse d-flex justify-content-center align-items-center">
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'is_confirmed_competition'"
+                    ></mat-icon>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center">
+
+                    <mat-icon svgIcon="icn-sorting-wine" class="icn-sorting"
+                              *ngIf="order.value == 'is_confirmed_competition_reverse'"
+                    ></mat-icon>
+                  </div>
+                </div>
+              </button>
+
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let wine of wineList; let i = index">
+
+            <td>
+              <div class="lines-1">
+                <!--<a href="wine/{{wine.id}}" >-->
+                <!--<span *ngIf="wine.language == langService.getLanguage() && wine.language != 'english'">{{wine.name}}</span>-->
+                <!--<span *ngIf="wine.language != langService.getLanguage() || wine.language == 'english'">{{wine.international_wn}}</span>-->
+                <!--</a>-->
+
+                <button class="btn btn-option hyperlink p-0" (click)="viewWine(wine.id)">
+                  <!--<span *ngIf="wine.language == langService.getLanguage() && wine.language != 'english'">{{wine.name}}</span>-->
+                  <!--<span *ngIf="wine.language != langService.getLanguage() || wine.language == 'english'">{{wine.international_wn}}</span>-->
+                  <app-title [language]="wine.language" [national]="wine.name"
+                             [international]="wine.international_wn" [id]="wine.id" page="wineNames"></app-title>
+
+
+                </button>
+              </div>
+            </td>
+
+            <td *ngIf="!winery">
+              <div class="lines-1">
+                <a class="hyperlink" href="winery/{{wine.winery_id}}">
+                  <!--<div *ngIf="wine.winery_language == langService.getLanguage() && wine.winery_language != 'english'" class="winery-name">{{wine.winery_national}}</div>-->
+                  <!--<div *ngIf="wine.winery_language != langService.getLanguage() || wine.winery_language == 'english'" class="winery-name">{{wine.winery}}</div>-->
+
+
+                  <app-title [language]="wine.winery_language" [national]="wine.winery_national"
+                             [international]="wine.winery" [id]="wine.winery_id" page="wineryNames"></app-title>
+
+
+                </a>
+
+
+
+              </div>
+            </td>
+
+            <td *ngIf="!winery">
+              <div class="lines-1">
+
+                <app-text page="country_names" place="{{wine.country_id}}" default="{{countriesMap.get(wine.country_id)}}"></app-text>
+                <!--{{wine.country}}-->
+              </div>
+            </td>
+
+            <td>
+              <div class="lines-1">
+                {{wine.vintage_year}}
+              </div>
+            </td>
+
+            <td>
+              <div class="lines-1">
+                <!--<span *ngIf="wine.wine_color != 'nocolor'">{{wine.wine_color}}</span>-->
+                <app-text *ngIf="wine.wine_color != 'nocolor'"
+                          page="wine_list" [place]="wine.wine_color" default="{{wine.wine_color}}"></app-text>
+              </div>
+            </td>
+
+            <td>
+              <div class="lines-1 text-center">
+
+                <app-text *ngIf="wine.grand_type && wine.grand_type != 'still' && wine.grand_type != 'select'"
+                          page="wine_list" [place]="wine.grand_type" default="{{wine.grand_type}}"></app-text>
+                <!--<span *ngIf="wine.grand_type">{{wine.grand_type}}</span>-->
+                <span *ngIf="wine.grand_type && wine.grand_type != 'still' && wine.grand_type != 'select' && (wine.type || wine.vinetype_sparkling)"> - </span>
+                <!--<span *ngIf="wine.type && wine.grand_type == 'still'">{{wine.type}}</span>-->
+
+                <app-text *ngIf="wine.type" page="wine_list" [place]="wineTypeMap.get(wine.wine_type)"
+                          default="{{wineTypeMap.get(wine.wine_type)}}"></app-text>
+
+
+                <app-text *ngIf="wine.vinetype_sparkling && wine.grand_type == 'sparkling'"
+                          page="wine_list" [place]="wine.vinetype_sparkling" default="{{wine.vinetype_sparkling}}"></app-text>
+                <!--<span *ngIf="wine.vinetype_sparkling && wine.grand_type == 'sparkling'">{{wine.vinetype_sparkling}}</span>-->
+              </div>
+            </td>
+
+            <td>
+              <div class="lines-1">
+                <span *ngIf="wine.from">{{wine.from}}</span>
+                <span *ngIf="wine.from && wine.to"> - </span>
+                <span *ngIf="wine.to">{{wine.to}}</span>
+              </div>
+            </td>
+
+            <td *ngIf="!specialPage && tab.value == 'collection' || tab.value == 'myRates' || tab.value == 'iAndWine'">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+                <div class="lines-1" *ngIf="wine.system">
+                  <span>{{wine.points | number:'0.0-2'}}/{{wine.system}}</span>
+                </div>
+                <div class="lines-1">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="rateWine(wine.id)">
+                    <app-text page="wine_list" default="Rate"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td *ngIf="!specialPage && accountService.ifCollector() && (tab.value == 'collection' || tab.value == 'iAndWine')">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="lines-1">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="storeWine(wine.id)">
+                    <app-text page="wine_list" default="Collection"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td *ngIf="!specialPage && shop || tab.value == 'iAndWine'">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+
+                <div class="lines-1" *ngIf="wine.wish == 'buy'">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="wishToTaste(wine)">
+                    <app-text page="wine_list" default="Buy"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="wine.wish == 'taste'">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="unwish(wine)">
+                    <app-text page="wine_list" default="Taste"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="!wine.wish">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="wishToBuy(wine)">
+                    <app-text page="wine_list" default="No"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td *ngIf="!winery && specialPage != 'grantAward'">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+
+                <div class="lines-1" *ngIf="!wine.storage">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="getToPersonStorage(wine)">
+                    <app-text page="wine_list" default="Get"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="wine.storage">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="removeFromPersonStorage(wine)">
+                    <app-text page="wine_list" default="Remove"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td *ngIf="haveRightToEditWines()">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+                <div class="lines-1">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="deleteWine(wine)" *ngIf="!wine.deleted">
+                    <app-text page="wine_list" default="Delete"></app-text>
+                  </button>
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="restoreWine(wine)" *ngIf="wine.deleted">
+                    <app-text page="wine_list" default="Restore"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td *ngIf="specialPage == 'event'">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+
+                <div class="lines-1" *ngIf="!wine.event">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="addToEvent(wine)">
+                    <app-text page="wine_list" default="Add"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="wine.event">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="removeFromEvent(wine)">
+                    <app-text page="wine_list" default="Remove"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td *ngIf="specialPage == 'shop'">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+
+                <div class="lines-1" *ngIf="!wine.shop">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="addToShop(wine)">
+                    <app-text page="wine_list" default="Add"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="wine.shop">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="removeFromShop(wine)">
+                    <app-text page="wine_list" default="Remove"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+
+            <td *ngIf="specialPage == 'grantAward' && competitionAward.value">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+
+
+                <div class="lines-1" *ngIf="!wine.has_award">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="grantAward(wine)">
+                    <app-text page="wine_list" default="Grant"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="wine.has_award">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="removeAward(wine)">
+                    <app-text page="wine_list" default="Remove"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+
+
+            <td *ngIf="specialPage == 'grantAward' && competitionAward.value">
+              <div *ngIf="wine.has_award">
+                <div class="lines-1" *ngIf="wine.is_confirmed">
+                  <app-text page="wine_list" default="Yes"></app-text>
+                </div>
+                <div class="lines-1" *ngIf="!wine.is_confirmed">
+                  <app-text page="wine_list" default="No"></app-text>
+                </div>
+              </div>
+            </td>
+
+
+            <td *ngIf="specialPage == 'grantAward' && competitionAward.value">
+              <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="wine.has_award">
+
+
+                <div class="lines-1" *ngIf="!wine.is_confirmed_competition">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="grantConfirmation(wine)">
+                    <app-text page="wine_list" default="Confirm"></app-text>
+                  </button>
+                </div>
+                <div class="lines-1" *ngIf="wine.is_confirmed_competition">
+                  <button class="btn btn-type-2 text-uppercase field-content" (click)="removeConfirmation(wine)">
+                    <app-text page="wine_list" default="Unconfirm"></app-text>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="isBigScreen()" class="scallable">
+
+  <div class="toolbar-button-container">
+
+    <button class="btn btn-type-3 text-uppercase field-content icn-search-white-mobile" mat-button (click)="openBarEvent()">
+
+      <app-icon-bonvino svgIcon="icn-search-white" class="icn-search-white-mobile"></app-icon-bonvino>
+    </button>
+  </div>
+
+  <mat-sidenav-container>
+    <mat-sidenav-content>
+
+    </mat-sidenav-content>
+
+    <mat-sidenav #sidenav mode="over" [fixedInViewport]="true"  [fixedTopGap]="true" [fixedBottomGap]="true" position="end">
+
+
+      <div class="d-flex justify-content-between align-items-center border-bottom-1"
+           [ngClass]="isTinyScreen() ? 'padding-24' : 'padding-48'" *ngIf="!isBigScreen()">
+        <div>
+
+          <button class="btn m-0 p-0" (click)="closeBarEvent()">
+            <mat-icon svgIcon="icn-close-bonvine" class="icon-close mb-0"></mat-icon>
+          </button>
+        </div>
+        <div>
+
+          <app-text class="heading-4" page="wine_list" default="SEARCH"></app-text>
+
+        </div>
+        <div>
+
+
+          <button class="btn m-0 p-0 hyperlink" (click)="resetSearch()">
+            <app-text page="wine_list" default="Reset"></app-text>
+          </button>
+
+        </div>
+      </div>
+      <div class="search-bar-container">
+
+        <app-wine-list-searchbar [sidenavToggle]="sidenav.toggle" [isQueryChangeble]="true"></app-wine-list-searchbar>
+      </div>
+    </mat-sidenav>
+
+  </mat-sidenav-container>
+</div>
+
+<div [hidden]="true">
+
+  <app-text page="wine_list" place="winery" default="Winery" ></app-text>
+
+  <app-text page="wine_list" place="place_of_origin" default="Place of origin"></app-text>
+  <app-text page="wine_list" default="Select"></app-text>
+
+  <div *ngFor="let row of countries">
+    <app-text page="country_names" [place]="row.id" default="{{row.name}}"></app-text>
+
+  </div>
+
+  <div *ngFor="let row of regiones">
+    <app-text page="country_names" [place]="row.id" default="{{row.name}}"></app-text>
+
+  </div>
+
+  <app-text page="wine_list" default="Type" class="field-hint"></app-text>
+  <app-text page="wines_common_info"  default="Clear input"></app-text>
+  <app-text page="wines_common_info" place="still" default="Still"></app-text>
+  <app-text page="wines_common_info" place="sparkling" default="Sparkling"></app-text>
+  <app-text page="wines_common_info" place="nongrape" default="Nongrape"></app-text>
+
+
+  <app-text page="wine_list" default="Still" class="field-hint"></app-text>
+  <app-text page="wines_common_info" default="Clear input"></app-text>
+  <app-text page="wines_common_info" place="usual" default="Usual"></app-text>
+  <app-text page="wines_common_info" place="fortified" default="Fortified"></app-text>
+  <app-text page="wines_common_info" place="concentrated" default="Concentrated"></app-text>
+
+
+  <app-text page="wine_list" default="Sparkling" class="field-hint"></app-text>
+  <app-text page="wines_common_info" default="Clear input"></app-text>
+  <app-text *ngFor="let type of sparklingSubTypeList; let i = index" page="wines_common_info" default="{{type.name}}"></app-text>
+
+  <app-text page="wine_list" default="Sweetness" class="field-hint"></app-text>
+
+  <app-text page="wines_common_info" default="Clear input"></app-text>
+  <app-text page="wines_common_info" place="dry" default="Dry"></app-text>
+  <app-text page="wines_common_info" place="semi_dry" default="Semi-dry"></app-text>
+  <app-text page="wines_common_info" place="semi_sweet" default="Semi-sweet"></app-text>
+  <app-text page="wines_common_info" place="sweet" default="Sweet"></app-text>
+
+
+
+  <app-text page="wine_list" default="Champagne sweetness" class="field-hint"></app-text>
+  <app-text page="wines_common_info" default="Clear input"></app-text>
+  <app-text page="wines_common_info" default="Extra Brut"></app-text>
+  <app-text page="wines_common_info" default="Brut"></app-text>
+  <app-text page="wines_common_info" default="Extra Dry"></app-text>
+  <app-text page="wines_common_info" default="Sec"></app-text>
+  <app-text page="wines_common_info" default="Demi-Sec"></app-text>
+  <app-text page="wines_common_info" default="Doux"></app-text>
+
+
+  <app-text page="wine_list" default="Gas amount" class="field-hint"></app-text>
+  <app-text page="wines_common_info" default="Clear input"></app-text>
+  <app-text page="wines_common_info" default="Beady"></app-text>
+  <app-text page="wines_common_info" default="Semi-sparkling"></app-text>
+  <app-text page="wines_common_info" default="Sparkling"></app-text>
+
+
+  <app-text page="wine_list" default="Special type" class="field-hint"></app-text>
+  <app-text page="wines_common_info" default="Clear input"></app-text>
+  <app-text *ngFor="let wt of wineTypeList" page="wines_common_info" place="{{wt.type}}"
+            default="{{wt.type}}"></app-text>
+
+
+  <app-text page="wine_list" default="Color" class="field-hint"></app-text>
+  <app-text page="wines_common_info" place="nocolor" default="Clear input"></app-text>
+  <app-text page="wines_common_info" place="white" default="White"></app-text>
+  <app-text page="wines_common_info" place="rose" default="Rose"></app-text>
+  <app-text page="wines_common_info" place="red" default="Red"></app-text>
+  <app-text page="wines_common_info" place="orange" default="Orange"></app-text>
+
+  <app-text page="wine_list" default="Subtype" class="field-hint"></app-text>
+  <app-text page="wines_common_info" *ngFor="let wst of wineSubTypeList" default="{{wst.name}}"></app-text>
+
+  <app-text page="wine_list" default="Nongrape" class="field-hint"></app-text>
+  <app-text *ngFor="let type of nongrapeSubTypeList; let i = index" page="wines_common_info" default="{{type.name}}"></app-text>
+
+  <app-text page="wine_list" default="Price" class="field-hint"></app-text>
+  <app-text page="wines_advanced"  *ngFor="let price of priceList; let i = index" default="{{price.price}}"></app-text>
+
+  <app-text page="wine_list" default="Bottle size" class="field-hint"></app-text>
+  <app-text page="wines_advanced" *ngFor="let wrap of wrappingList" default="{{wrap.size}}"></app-text>
+
+  <app-text page="wines" default="Vintage year" class="field-hint"></app-text>
+
+  <app-text page="wines" default="Alcohol percents" class="field-hint"></app-text>
+
+  <app-text  page="wines" place="grapes" default="Grapes" class="field-hint"></app-text>
+
+  <app-text page="winery_add" default="Kashrut" class="lines-1"></app-text>
+
+  <app-text page="winery_add" default="Biodynamic" ></app-text>
+
+  <app-text page="winery_add" default="Organic" ></app-text>
+
+  <app-text page="winery_add" default="Vegan" ></app-text>
+
+  <app-text page="wine_list" place="show_wines" default="Show wines"></app-text>
+
+  <app-text page="wine_list" place="discover" default="Discover"></app-text>
+
+  <app-text page="wine_list" place="discover" default="Discover"></app-text>
+
+  <app-text page="wine_list" default="Chosen wines"></app-text>
+
+  <app-text page="wine_list" place="discover" default="Discover"></app-text>
+
+  <app-text page="wine_list" default="Chosen wines"></app-text>
+
+  <app-text page="wine_list" default="I and wine"></app-text>
+
+  <app-text page="wine_list" place="your_wine_collection" default="Your wine collection"></app-text>
+
+  <app-text page="wine_list" default="Wines rated by you"></app-text>
+
+  <app-text page="wine_list" default="Back to winery"></app-text>
+
+  <app-text page="wine_list" default="Back to shop"></app-text>
+
+
+  <app-text page="wines_common_info" place="name_int" default="Name"></app-text>
+  <app-text page="wines_common_info" place="year" default="Year"></app-text>
+  <app-text page="wines_common_info" place="country" default="Country"></app-text>
+
+  <app-text page="wine_list" default="Add missing wine"></app-text>
+
+
+  <app-text page="wine_list" default="Rate" class=""></app-text>
+  <app-text page="wine_list" default="View" class=""></app-text>
+  <app-text page="wine_list" default="Get wine" class=""></app-text>
+  <app-text page="wine_list" default="Get wine" class=""></app-text>
+  <app-text page="wine_list" default="Remove wine" class=""></app-text>
+  <app-text page="wine_list" default="Collection" class=""></app-text>
+  <app-text page="wine_list" default="Wish to buy" class=""></app-text>
+  <app-text page="wine_list" default="Wish to taste" class=""></app-text>
+  <app-text page="wine_list" default="No wish" class=""></app-text>
+  <app-text page="wine_list" default="Add to event" class=""></app-text>
+  <app-text page="wine_list" default="Remove from event" class=""></app-text>
+  <app-text page="wine_list" default="Add to shop" class=""></app-text>
+  <app-text page="wine_list" default="Remove from shop" class=""></app-text>
+
+
+  <app-text page="wine_list_table" default="Wine name" class="lines-2"
+            [ngClass]="getSortingClass(['name_int', 'name_int_reverse'])"></app-text>
+
+
+  <app-text page="wine_list_table" default="Winery" class="lines-2"
+            [ngClass]="getSortingClass(['winery', 'winery_reverse'])"></app-text>
+
+  <app-text page="wine_list_table" default="Country" class="lines-2"
+            [ngClass]="getSortingClass(['country', 'country_reverse'])"></app-text>
+
+
+  <app-text page="wine_list_table" default="Year" class="lines-2"
+            [ngClass]="getSortingClass(['year', 'year_reverse'])"></app-text>
+
+  <app-text page="wine_list_table" default="Color" class="lines-2"></app-text>
+  <app-text page="wine_list_table" default="Type" class="lines-2"></app-text>
+  <app-text page="wine_list_table" default="Drink window" class="lines-2"></app-text>
+  <app-text page="wine_list_table" default="Rating" class="lines-2"
+            [ngClass]="getSortingClass(['rating', 'rating_reverse'])"></app-text>
+
+  <app-text page="wine_list_table" default="Collection" class="lines-2"></app-text>
+  <app-text page="wine_list_table" default="Wish" class="lines-2"></app-text>
+  <app-text page="wine_list_table" default="Get" class="lines-2"></app-text>
+  <app-text page="wine_list_table" default="Delete" class="lines-2"></app-text>
+
+</div>

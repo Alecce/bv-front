@@ -1,0 +1,35 @@
+<!--<div class="lines-1">-->
+  <!--<a [routerLink]="'competition/' + competition.id">-->
+    <!--<span *ngIf="competition.language == langService.getLanguage() && competition.name_national">{{competition.name_national}}</span>-->
+    <!--<span *ngIf="competition.language != langService.getLanguage() || !competition.name_national">{{competition.name_national}}</span>-->
+  <!--</a>-->
+
+
+  <!--<div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="d-flex" *ngIf="award">
+  <div *ngIf="award.image">
+
+    <img  class="img-fluid max-size-50px" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+  </div>
+  <div class="lines-1 d-flex flex-column justify-content-center align-items-center">
+
+    <div *ngIf="!noCategory && getCategoryName(award)">
+      <app-text-complicated page="award_one" default="Category: ***" class="font-weight-bold"
+                            #category_>
+
+        <span  *appTransclude>{{getCategoryName(award)}}</span>
+      </app-text-complicated>
+    </div>
+    <div>
+      <app-text-complicated page="award_one" default="Award: ***" class="font-weight-bold"
+                            #award_>
+
+        <span  *appTransclude>{{getName(award)}}</span>
+      </app-text-complicated>
+    </div>
+    <!--<span>{{getName(award)}}</span>-->
+  </div>
+</div>

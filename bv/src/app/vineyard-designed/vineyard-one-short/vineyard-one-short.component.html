@@ -1,0 +1,446 @@
+
+<div class="d-flex flex-column margin-64" *ngIf="vineyardDeleted">
+  <app-winery-deleted [userId]="userId"></app-winery-deleted>
+</div>
+
+<div class="d-flex" *ngIf="vineyardData && !vineyardDeleted">
+  <div class="d-flex w-100"
+       [ngClass]="langService.isRtl() ? 'global-rtl' : 'global-ltr'" *ngIf="vineyardData">
+    <div class="d-flex w-100" [ngClass]="isMobileScreen() ? 'flex-column align-items-center' : 'flex-row'">
+
+      <div class="d-flex flex-column" >
+
+        <div *ngIf="getImage() || !getEmblem()" class=""
+             [ngClass]="isMobileScreen() ? 'max-height-80 margin-top-32 margin-left-52 margin-bottom-32 margin-right-48' : 'image-box margin-top-32 margin-left-36 margin-bottom-32 margin-right-36'"
+        >
+
+          <img class="img-fluid object-fit-contain max-height-100" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+        </div>
+        <div *ngIf="getEmblem()" class=""
+             [ngClass]="isMobileScreen() ? 'margin-top-32 margin-left-52 margin-bottom-32 margin-right-48' : 'image-box margin-top-32 margin-left-36 margin-bottom-32 margin-right-36'"
+        >
+
+          <img class="img-fluid object-fit-contain max-height-100" [src]="getEmblem()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+        </div>
+        <div class="justify-content-center margin-bottom-8" *ngIf="showOptions && isEditable()">
+
+
+          <div class="d-flex justify-content-center">
+
+            <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right" autoClose="outside">
+              <div class="" id="listDropdown" ngbDropdownToggle>
+                <button class="btn btn-type-1 text-uppercase field-content">
+                  <app-text page="vineyard_one" default="Actions"></app-text>
+                </button>
+              </div>
+              <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+                <div class="d-flex flex-column align-items-start menu-buttons">
+
+                  <div class="" *ngIf="isEditable()">
+                    <a [routerLink]="langService.editable ? null : editVineyardLink()" class="hyperlink">
+                      <app-text page="wines_one"  default="Edit vineyard"></app-text>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="hasGeoData()" [ngClass]="isMobileScreen() ? 'margin-top-32 margin-left-52 margin-bottom-32 margin-right-48' : 'image-box margin-top-32 margin-left-36 margin-bottom-32 margin-right-36'"
+        >
+
+          <!--<app-map-google-designed [downloadedData]="downloadedData"></app-map-google-designed>-->
+          <app-map-hidden [downloadedData]="downloadedData"></app-map-hidden>
+        </div>
+
+
+      </div>
+      <div class="d-flex flex-column" [ngClass]="isMobileScreen() ? 'w-100' : ''">
+        <div class="d-flex flex-column"  [ngClass]="isMobileScreen() ? 'w-100' : 'description-box'">
+
+          <div  class="d-flex heading-1 flex-row main-column margin-left-24 justify-content-start" #navigation *ngIf="!isMobileScreen()">
+
+            <div class="text-left">
+              <app-title [language]="vineyardData.commoninfo.language" [national]="vineyardData.commoninfo.name_national"
+                         [international]="vineyardData.commoninfo.name_international" [id]="id" page="vineyardNames"></app-title>
+            </div>
+
+
+
+
+          </div>
+          <div class="d-flex flex-column main-column margin-left-24 margin-right-24 rtl-susceptible">
+
+
+            <div class="lines-1" *ngIf="vineyardData.country">
+              <app-text page="vineyard_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              <app-text page="country_names" place="{{vineyardData.country}}" default="{{countriesMap.get(vineyardData.country)}}"></app-text>
+
+            </div>
+
+
+            <div class="lines-1" *ngIf="vineyardData.regionsForm">
+              <app-text page="vineyard_one" default="Region/Origin" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              <div class="d-inline"  *ngFor="let r of vineyardData.regionsForm; let i = index" >
+                <span *ngIf="i != 0 && r">, </span>
+                <app-text page="country_names" place="{{r}}" default="{{regionesMap.get(r)}}"></app-text>
+              </div>
+
+            </div>
+
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.establish_year">
+              <app-text page="vineyard_one" default="Founded" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              {{vineyardData.commoninfo.establish_year}}
+
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.differentAddress && vineyardData.commoninfo.address && !wineryData.locationAddress">
+              <app-text page="vineyard_one" default="Address" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              {{vineyardData.commoninfo.address}}
+
+            </div>
+            <div class="d-flex lines-1" *ngIf="vineyardData.locationAddress">
+              <app-text page="vineyard_one" default="Address" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span> {{vineyardData.locationAddress}}
+
+            </div>
+
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.owner">
+              <app-text page="vineyard_one" default="Owner" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              {{vineyardData.commoninfo.owner}}
+
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.vintner_national || vineyardData.commoninfo.vintner_national">
+              <app-text page="vineyard_one" default="Head vintner/vine-grower" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+              <span *ngIf="vineyardData.commoninfo.language == langService.getLanguage() && vineyardData.commoninfo.vintner_national"> {{vineyardData.commoninfo.vintner_national}}</span>
+              <span *ngIf="vineyardData.commoninfo.language != langService.getLanguage() || !vineyardData.commoninfo.vintner_national"> {{vineyardData.commoninfo.vintner_international}}</span>
+            </div>
+            <!--<div class="heading-2 border-0 p-0">-->
+            <!--<app-text page="wines_one" default="Certifications"></app-text>-->
+            <!--</div>-->
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.isQuality">
+              <app-text page="vineyard_one" default="Geographical indications/Origin" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+              <app-text page="vineyard_one" default="Yes"></app-text>
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.isKashrut">
+              <app-text page="vineyard_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+              <app-text page="vineyard_one" default="Yes"></app-text>
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.isBiodynamic">
+              <app-text page="vineyard_one" default="Biodynamic" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+              <app-text page="vineyard_one" default="Yes"></app-text>
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.isOrganic">
+              <app-text page="vineyard_one" default="Organic" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+              <app-text page="vineyard_one" default="Yes"></app-text>
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.isVegan">
+              <app-text page="vineyard_one" default="Vegan" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+
+              <app-text page="vineyard_one" default="Yes"></app-text>
+            </div>
+
+
+
+
+
+
+            <div class="lines-1 d-flex justify-content-start"  *ngIf="vineyardGrapeList && vineyardGrapeList.length">
+
+              <div>
+                <app-text page="vineyard_one" default="Grapes" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              </div>
+
+              <div class="d-flex flex-column">
+                <div  class="d-flex flex-column" *ngFor="let g of vineyardGrapeList">
+                  <div>
+
+                    <app-text page="grapes_names" [place]="g.id" [default]="grapeMap.get(g.id * 1)"></app-text>
+
+                    <span *ngIf="g.synonim"> ({{g.synonim}})</span>
+                  </div>
+                  <div class="margin-left-8" *ngIf="getClonesForGrape(g.id).length">
+                    <app-text page="vineyard_one" default="Clones: "></app-text>
+
+                    <span *ngFor="let clone of getClonesForGrape(g.id); let j = index">
+                      <span *ngIf="j" class="whitespace-prewrap">, </span>
+                      <app-text page="grape_clones" [default]="clone"></app-text>
+                    </span>
+                  </div>
+                  <div class="margin-left-8" *ngIf="getUsesForGrape(g.id).length">
+                    <app-text page="vineyard_one" default="Uses: "></app-text>
+
+                    <span *ngFor="let use of getUsesForGrape(g.id); let j = index">
+                      <span *ngIf="j" class="whitespace-prewrap">, </span>
+                      <app-text page="grape_uses" [default]="use"></app-text>
+                    </span>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.square">
+              <app-text page="vineyard_one" default="Area" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              {{vineyardData.commoninfo.square}}
+
+              <span *ngFor="let l of squareUnits">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label" [hidden]="l.value != vineyardData.commoninfo.squareUnit && !langService.editable"></app-text>
+              </span>
+
+
+            </div>
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.altitude_min || vineyardData.commoninfo.altitude_max">
+              <app-text page="vineyard_one" default="Altitude" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              {{vineyardData.commoninfo.altitude_min}} <span class="whitespace-pre" *ngIf="vineyardData.commoninfo.altitude_min && vineyardData.commoninfo.altitude_max"> - </span> {{vineyardData.commoninfo.altitude_max}}
+
+              <span *ngFor="let l of altituteUnits">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label" [hidden]="l.value != vineyardData.commoninfo.altituteUnit && !langService.editable"></app-text>
+              </span>
+
+
+            </div>
+
+
+
+            <!--<div class="lines-1 d-flex justify-content-start"  *ngIf="vineyardData.harvestData && vineyardData.harvestData.length">-->
+
+              <!--<div>-->
+                <!--<app-text page="vineyard_one" default="Harvests" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>-->
+              <!--</div>-->
+
+            <!--</div>-->
+
+            <!--<div class="lines-1 d-flex justify-content-start margin-left-12"  *ngIf="vineyardData.harvestData && vineyardData.harvestData.length">-->
+
+              <!--<div class="d-flex flex-column">-->
+                <!--<div *ngFor="let h of vineyardData.harvestData">-->
+
+                  <!--<span class="font-weight-bold whitespace-pre" *ngIf="h.year">{{h.year}}: </span>-->
+                  <!--<span *ngIf="h.production">{{h.production}} </span>-->
+
+
+                  <!--<span *ngFor="let l of harvestUnits">-->
+                    <!--<app-text page="vineyards" [place]="l.place" [default]="l.label" [hidden]="(l.value != h.unit || !h.production) && !langService.editable"></app-text>-->
+                  <!--</span>-->
+
+                  <!--<span class="whitespace-pre" *ngIf="h.production && h.type"> - </span>-->
+
+                  <!--<span *ngFor="let l of harvestTypes">-->
+                    <!--<app-text page="vineyards" [place]="l.place" [default]="l.label" [hidden]="l.value != h.type && !langService.editable"></app-text>-->
+                  <!--</span>-->
+                <!--</div>-->
+
+
+              <!--</div>-->
+            <!--</div>-->
+
+
+            <div class="lines-1" *ngIf="vineyardData.commoninfo.production">
+              <app-text page="vineyard_one" default="Annual production of grapes" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              {{vineyardData.commoninfo.production}}
+
+              <span *ngFor="let l of productionUnits">
+                <app-text page="vineyards" [place]="l.place" [default]="l.label" [hidden]="l.value != vineyardData.commoninfo.productionUnit && !langService.editable"></app-text>
+              </span>
+
+
+            </div>
+
+
+            <div class="d-flex lines-1" *ngIf="vineyardData.showViews">
+              <div class="responsive-margin-12">
+
+                <mat-icon svgIcon="icn-views" class="icon-views"></mat-icon>
+              </div>
+              <app-text page="wines_full" default="Views" class="font-weight-bold"></app-text><span class="font-weight-bold whitespace-pre">: </span>
+              <span>{{vineyardData.views}}</span>
+            </div>
+
+
+
+            <div [hidden]="!isTabExist('')" class="margin-bottom-16">
+              <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional('')">
+                <app-text page="vineyard_one" default="Additional Information"></app-text>
+              </button>
+            </div>
+            <div *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)" class="margin-bottom-16">
+              <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">
+                <app-text page="subtabs" [default]="tab"></app-text>
+              </button>
+            </div>
+          </div>
+
+
+
+
+          <!--Logo-->
+          <!--Full Name-->
+          <!--Founded - year-->
+          <!--Address: Country, City etc - map coordinate - нужно сделать вывод координат как ссылку дя внешних аппликации, чтобы не платить каждый раз-->
+          <!--Contact us:-->
+          <!--Mobile-->
+          <!--Phone-->
+          <!--eMail-->
+          <!--web-->
+          <!--Networks: icons-->
+          <!--Owner-->
+          <!--Name of head winemaker-->
+          <!--Winemaker-->
+          <!--Certifications-->
+          <!--Geographical indications/Origin-->
+          <!--Kashrut: yes/no-->
+          <!--Biodynamic: yes/no-->
+          <!--Organic: yes/no-->
+          <!--Vegan: yes/no-->
+          <!--Type of winery-->
+          <!--Comercial winery-->
+          <!--Production (Bottles / year)-->
+          <!--Brands-->
+          <!--Grapes-->
+          <!--Vineyards-->
+
+          <!--Facilities for: list-->
+          <!--Visiting hours:-->
+          <!--The visit to the winery is by appointment only. - checkbox-->
+
+          <!--Sales - еще нет-->
+          <!--Selling wine at a winery yes/no-->
+
+          <!--Search-->
+          <!--Name-->
+          <!--Region/Geographical indications/Origin-->
+          <!--)Address: Country, City etc - map coordinate(-->
+          <!--Owner-->
+          <!--Name of head winemaker-->
+          <!--Certifications-->
+          <!--Kashrut: yes/no-->
+          <!--Biodynamic: yes/no-->
+          <!--Organic: yes/no-->
+          <!--Vegan: yes/no-->
+          <!--Production (Bottles / year)-->
+
+          <!--Facilities for: list-->
+          <!--Activities:-->
+          <!--Number of visitors:-->
+          <!--Visiting hours:-->
+          <!--The visit to the winery is by appointment only.-->
+
+          <!--country: 104-->
+          <!--differentAddress: 1-->
+          <!--email: "mail"-->
+          <!--establish_year: 20200-->
+          <!--fax: "fax"-->
+          <!--id: 34805-->
+          <!--isBiodynamic: 1-->
+          <!--isKashrut: 1-->
+          <!--isOrganic: 1-->
+          <!--isQuality: 1-->
+          <!--language: "russian"-->
+          <!--lat: "34.55534940000000000000"-->
+          <!--lng: "69.20748600000000000000"-->
+          <!--mobile: "mobile"-->
+          <!--name_international: "testWineryWithManyOptions"-->
+          <!--name_national: "testWinery"-->
+          <!--noncommercial: 0-->
+          <!--owner: ""-->
+          <!--performance: 0-->
+          <!--phone: "phone"-->
+          <!--regionsForm: (6) [397, null, null, null, null, null]-->
+          <!--web: "web"-->
+          <!--winemaker_international: "qwe"-->
+          <!--winemaker_national: "qwe"-->
+          <!--zip: "zip"-->
+
+
+          <!--<div class="d-flex flex-column main-column margin-left-24 margin-right-24 rtl-susceptible justify-content-center align-items-center">-->
+
+
+          <!--<div class="margin-bottom-16">-->
+          <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="showInformation()">-->
+          <!--<app-text page="vineyard_one" default="Winery Information"></app-text>-->
+          <!--</button>-->
+          <!--</div>-->
+          <!--<div class="margin-bottom-16">-->
+          <!--<a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : '/wine-list'"-->
+          <!--[queryParams]="langService.editable ? null : wineListParams()" (click)="close()">-->
+          <!--<app-text page="home" place="show_wines" default="Show wines"></app-text>-->
+          <!--</a>-->
+          <!--</div>-->
+          <!--<div class="margin-bottom-16">-->
+          <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="showContacts()">-->
+          <!--<app-text page="vineyard_one" default="Visit time"></app-text>-->
+          <!--</button>-->
+          <!--</div>-->
+          <!--<div [hidden]="!isTabExist('')" class="margin-bottom-16">-->
+          <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional('')">-->
+          <!--<app-text page="vineyard_one" default="Additional Information"></app-text>-->
+          <!--</button>-->
+          <!--</div>-->
+          <!--<div *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)" class="margin-bottom-16">-->
+          <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">-->
+          <!--<app-text page="subtabs" [default]="tab"></app-text>-->
+          <!--</button>-->
+          <!--</div>-->
+
+
+
+
+
+
+
+          <!--</div>-->
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+
+  <app-text page="vineyard_one"  default="Edit vineyard"></app-text>
+
+  <app-text page="vineyard_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="vineyard_one" default="Region" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text page="vineyard_one" default="Address" class="font-weight-bold"></app-text>
+
+  <app-text page="vineyard_one" default="Owner" class="font-weight-bold"></app-text>
+
+  <app-text page="vineyard_one" default="Establish year" class="font-weight-bold"></app-text>
+
+  <app-text page="vineyard_one" default="Square" class="font-weight-bold"></app-text>
+
+  <app-text *ngFor="let l of squareUnits" page="vineyards" [place]="l.place" [default]="l.label"></app-text>
+
+  <app-text page="vineyard_one" default="Additional Information"></app-text>
+
+
+
+
+</div>

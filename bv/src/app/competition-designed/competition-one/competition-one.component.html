@@ -1,0 +1,266 @@
+<div class="d-flex align-items-start" *ngIf="competition">
+  <div class="d-flex flex-column align-items-start left-bar">
+    <div  class="heading-1">
+      <div *ngIf="competition.commoninfo.language == langService.getLanguage() && competition.commoninfo.name_national">
+        {{competition.commoninfo.name_national}}
+      </div>
+      <div *ngIf="competition.commoninfo.language != langService.getLanguage() || !competition.commoninfo.name_national">
+        {{competition.commoninfo.name_international}}
+      </div>
+    </div>
+
+
+    <div class="margin-bottom-32">
+
+    </div>
+
+    <div class="lines-1" *ngIf="competition.commoninfo.type">
+      <app-text-complicated page="competition_one" default="Type: ***" class="font-weight-bold"
+                            #type_of_competition__>
+
+        <span  *appTransclude>
+          <app-text *ngFor="let row of competitionTypes" page="competition_one" default="{{row.defaultText}}" [hidden]="row.value != competition.commoninfo.type"></app-text>
+        </span>
+        <!--<app-text *appTransclude page="wines_one" [place]="wineData.commoninfo.color" default="{{wineData.commoninfo.color}}"></app-text>-->
+        <div *ngFor="let row of competitionTypes" translate>
+          <app-text page="competition_one" default="{{row.defaultText}}" [parent]="type_of_competition__.name"></app-text>
+
+        </div>
+      </app-text-complicated>
+    </div>
+
+
+    <div class="lines-1" *ngIf="competition.commoninfo.coordinator">
+      <app-text-complicated page="competition_one" default="Coordinator: ***" class="font-weight-bold"
+                            #coordinator_of_competition__>
+
+        <span  *appTransclude>{{competition.commoninfo.coordinator}}</span>
+        <!--<app-text *appTransclude page="wines_one" [place]="wineData.commoninfo.color" default="{{wineData.commoninfo.color}}"></app-text>-->
+        <!--<div *ngFor="let row of competitionTypes" translate>-->
+          <!--<app-text page="competition_one" default="{{row.defaultText}}" [parent]="type_of_competition__.name"></app-text>-->
+
+        <!--</div>-->
+      </app-text-complicated>
+    </div>
+
+
+    <div class="lines-1" *ngIf="competition.commoninfo.sponsors || competition.commoninfo.sponsors_int">
+      <app-text-complicated page="competition_one" default="Sponsors: ***" class="font-weight-bold"
+                            #sponsors_of_competition__>
+
+        <div class="d-inline" *appTransclude>
+
+          <div class="d-inline" *ngIf="competition.commoninfo.language == langService.getLanguage() || !competition.commoninfo.sponsors_int">
+            {{competition.commoninfo.sponsors}}
+          </div>
+          <div class="d-inline" *ngIf="competition.commoninfo.language != langService.getLanguage() || !competition.commoninfo.sponsors">
+            {{competition.commoninfo.sponsors_int}}
+          </div>
+        </div>
+      </app-text-complicated>
+    </div>
+
+
+    <div class="lines-1" *ngIf="competition.commoninfo.organizers || competition.commoninfo.organizers_int">
+      <app-text-complicated page="competition_one" default="Organizers: ***" class="font-weight-bold"
+                            #organizers_of_competition__>
+
+        <div class="d-inline" *appTransclude>
+
+          <div class="d-inline" *ngIf="competition.commoninfo.language == langService.getLanguage() || !competition.commoninfo.organizers_int">
+            {{competition.commoninfo.organizers}}
+          </div>
+          <div class="d-inline" *ngIf="competition.commoninfo.language != langService.getLanguage() || !competition.commoninfo.organizers">
+            {{competition.commoninfo.organizers_int}}
+          </div>
+        </div>
+      </app-text-complicated>
+    </div>
+
+
+    <div class="lines-1" *ngIf="competition.commoninfo.from">
+      <app-text-complicated page="competition_one" default="From: ***" class="font-weight-bold"
+                            #from_of_competition__>
+
+        <span  *appTransclude>{{competition.commoninfo.from}}</span>
+      </app-text-complicated>
+    </div>
+
+
+    <div class="lines-1" *ngIf="competition.commoninfo.to">
+      <app-text-complicated page="competition_one" default="To: ***" class="font-weight-bold"
+                            #to_of_competition__>
+
+        <span  *appTransclude>{{competition.commoninfo.to}}</span>
+      </app-text-complicated>
+    </div>
+
+
+
+  </div>
+  <div class="d-flex flex-column justify-content-end w-100">
+    <div class="d-flex justify-content-between margin-bottom-32">
+      <div class="d-flex justify-content-between main-menu menu-first">
+        <!--<button class="btn btn-menu-first menu-2-regular ml-0" [ngClass]="getTabColor(tabs.basic)" (click)="chooseTab(tabs.basic)">-->
+        <!--<app-text page="wines_one"  default="Basis info"></app-text>-->
+        <!--</button>-->
+        <!--<button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.advanced)" (click)="chooseTab(tabs.advanced)">-->
+        <!--<app-text page="wines_one"  default="Advanced info"></app-text>-->
+        <!--</button>-->
+      </div>
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : editCompetitionLink()" *ngIf="isEditable()">
+          <app-text page="competition_one"  default="Edit competition"></app-text>
+        </a>
+
+        <a class="btn btn-type-1 text-uppercase field-content margin-right-36" [routerLink]="langService.editable ? null : grantAwardsLink()" *ngIf="isEditable()">
+          <app-text page="competition_one" default="Grant awards"></app-text>
+        </a>
+      </div>
+    </div>
+    <div class="d-flex">
+
+
+      <div class="d-flex flex-column main-column margin-right-36 rtl-susceptible flex-even">
+
+
+        <div class="heading-2 margin-bottom-16">
+          <app-text page="event" default="Possible awards"></app-text>
+        </div>
+
+        <div *ngFor="let p of awards; let i = index">
+
+          <div *ngIf="!i || awards[i].categories_id != awards[i - 1].categories_id" class="margin-bottom-8 margin-top-8">
+            <div *ngIf="p.categories_id">
+              <app-text-complicated page="award_one" default="Category: ***"
+                                    #category_>
+
+                <span  *appTransclude>{{getCategoryName(p)}}</span>
+              </app-text-complicated>
+            </div>
+            <div *ngIf="!p.categories_id">
+              <app-text page="event" default="No category"></app-text>
+            </div>
+          </div>
+          <app-award-one-row [awardIdValue]="p.id" [noCategory]="true"></app-award-one-row>
+        </div>
+
+
+      </div>
+
+
+      <div class="d-flex flex-column main-column margin-right-36 rtl-susceptible flex-even">
+
+
+        <div class="heading-2 margin-bottom-16">
+          <app-text page="event" default="Wines"></app-text>
+        </div>
+
+        <div class="d-flex flex-column wine-in-list" *ngFor="let wine of wines">
+          <div class="d-flex justify-content-between">
+
+            <div class="lines-1 font-weight-bold">
+
+              <a [routerLink]="'/wine/' + wine.id">
+                <span *ngIf="wine.wine_language == langService.getLanguage() && wine.name">
+                  {{wine.name}}
+                </span>
+                <span *ngIf="wine.wine_language != langService.getLanguage() || !wine.name">
+                  {{wine.international_wn}}
+                </span>
+              </a>
+            </div>
+
+            <div class="lines-1">
+            <span>
+              {{wine.vintage_year}}
+            </span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">`
+
+            <div class="lines-1">
+            <span *ngIf="wine.winery_language == langService.getLanguage()">
+              {{wine.winery}},
+            </span>
+              <span *ngIf="wine.winery_language != langService.getLanguage()">
+              {{wine.winery_int}},
+            </span>
+              <app-text page="country_names" place="{{countriesMap.get(wine.country_id * 1)}}" default="{{countriesMap.get(wine.country_id * 1)}}"></app-text>
+            </div>
+
+
+          </div>
+          <div class="d-flex justify-content-between" *ngIf="wine.award">
+
+            <app-award-one-row [awardIdValue]="wine.award"></app-award-one-row>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="d-flex flex-column main-column margin-right-36 rtl-susceptible flex-even">
+
+
+        <div class="heading-2 margin-bottom-16">
+          <app-text page="event" default="Events"></app-text>
+        </div>
+
+        <div class="d-flex wine-in-list" *ngFor="let event of events; let i = index">
+
+
+          <!--<div class="d-inline">-->
+
+            <!---->
+          <!--</div>-->
+          <div class="d-inline" *ngIf="event.from == event.to && event.from">
+            <span>{{(i + 1) + '. '}}</span>
+            <span>{{event.from |  date:'longDate' }}</span>
+            <span> - </span>
+          </div>
+
+
+          <div class="d-inline" *ngIf="event.from != event.to">
+            <span>{{(i + 1) + '. '}}</span>
+            <span>{{event.from |  date:'MMMM d' }} - {{event.to |  date:'longDate' }}</span>
+            <span> - </span>
+          </div>
+          <a [routerLink]="'/event/' + event.id">
+                <span *ngIf="event.language == langService.getLanguage() && event.name">
+                  {{event.name}}
+                </span>
+            <span *ngIf="event.language != langService.getLanguage() || !event.name">
+                  {{event.neutral}}
+                </span>
+          </a>
+        </div>
+
+
+      </div>
+
+
+      <div class="d-flex flex-column main-column margin-right-36 rtl-susceptible flex-even">
+
+        <div class="heading-2 margin-bottom-16">
+          <app-text page="event" default="Additional information"></app-text>
+        </div>
+
+        <div [hidden]="!isTabExist('')">
+          <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional('')">
+            <app-text page="competition_one" default="Additional Information"></app-text>
+          </button>
+        </div>
+        <div *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)">
+          <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">
+            <app-text page="subtabs" [default]="tab"></app-text>
+          </button>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+

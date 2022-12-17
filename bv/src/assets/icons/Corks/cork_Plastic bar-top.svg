@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <defs>
+    <style>.cls-916968{fill:#916968;}.cls-fff{fill:#fff;}</style>
+  </defs>
+  <g id="Type">
+    <path class="cls-916968"
+          d="M20,24.67A29.53,29.53,0,0,1,10,23V32.5c0,4.14,4.48,7.5,10,7.5s10-3.36,10-7.5V23A29.39,29.39,0,0,1,20,24.67Z"/>
+    <path class="cls-916968"
+          d="M20,14.09c-7,0-12.93-1.93-15-4.58v6.93C5,19.74,11.87,23,20,23s15-3.26,15-6.56V9.51C32.93,12.16,27,14.09,20,14.09Z"/>
+    <path class="cls-916968" d="M20,12.63c8.28,0,15-2.83,15-6.31S28.28,0,20,0,5,2.83,5,6.32,11.72,12.63,20,12.63Z"/>
+    <circle class="cls-fff" cx="14" cy="28" r="1"/>
+    <circle class="cls-fff" cx="16.5" cy="34.5" r="0.5"/>
+    <circle class="cls-fff" cx="26.5" cy="26.5" r="0.5"/>
+    <circle class="cls-fff" cx="24.5" cy="35.5" r="0.5"/>
+    <circle class="cls-fff" cx="22" cy="30" r="1"/>
+    <rect class="cls-fff" x="7" y="13.72" width="1" height="4" rx="0.45"/>
+    <rect class="cls-fff" x="12" y="16" width="1" height="4" rx="0.45"/>
+    <rect class="cls-fff" x="17" y="17" width="1" height="4" rx="0.45"/>
+    <rect class="cls-fff" x="22" y="17" width="1" height="4" rx="0.45"/>
+    <rect class="cls-fff" x="27" y="16" width="1" height="4" rx="0.45"/>
+    <rect class="cls-fff" x="32" y="13.72" width="1" height="4" rx="0.45"/>
+  </g>
+</svg>

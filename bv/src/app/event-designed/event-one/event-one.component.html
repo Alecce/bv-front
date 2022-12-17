@@ -1,0 +1,351 @@
+f<div class="d-flex flex-column" *ngIf="eventData">
+  <div class="d-flex">
+    <div class="bg-image flex-fill d-flex justify-content-between align-items-end" [ngStyle]="{'background':image}">
+      <div class="w-100 d-flex justify-content-between align-items-end bg-gradient">
+
+        <div class="title-name">
+        <!--<span *ngIf="eventData.commoninfo.language == langService.getLanguage()">-->
+          <!--{{eventData.commoninfo.name_national}}-->
+        <!--</span>-->
+          <!--<span *ngIf="eventData.commoninfo.language != langService.getLanguage()">-->
+          <!--{{eventData.commoninfo.name_international}}-->
+        <!--</span>-->
+
+          <app-title [language]="eventData.commoninfo.language" [national]="eventData.commoninfo.name_national"
+                     [international]="eventData.commoninfo.name_international" [id]="id" page="eventNames"></app-title>
+        </div>
+        <div class="button-edit" *ngIf="isEditable()">
+
+          <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : editLink()">
+            <app-text page="event_one" default="Edit"></app-text>
+          </a>
+          <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="edit()" *ngIf="routeData.available">-->
+            <!--<app-text page="winery_one" default="Edit"></app-text>-->
+          <!--</button>-->
+
+          <!--<button class="btn btn-sm btn-info" (click)="edit()" *ngIf="routeData.available">-->
+          <!--<app-text page="winery_one" default="Edit"></app-text>-->
+
+          <!--</button>-->
+        </div>
+      </div>
+    </div>
+    <div>
+
+      <app-map-open-layers [downloadedData]="downloadedData"></app-map-open-layers>
+      <!--<app-map-google-designed [downloadedData]="downloadedData"></app-map-google-designed>-->
+    </div>
+  </div>
+  <div class="d-flex margin-64 justify-content-around">
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-1" *ngIf="eventData.commoninfo.from == eventData.commoninfo.to">
+
+        <span>{{eventData.commoninfo.from |  date:'longDate' }}</span>
+      </div>
+
+
+      <div class="heading-1" *ngIf="eventData.commoninfo.from != eventData.commoninfo.to">
+
+        <span>{{eventData.commoninfo.from |  date:'MMMM d' }} - {{eventData.commoninfo.to |  date:'longDate' }}</span>
+      </div>
+
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.start_time">
+        <app-text page="event" default="Starts" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{eventData.commoninfo.start_time}}
+
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.end_time">
+        <app-text page="event" default="Ends" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{eventData.commoninfo.end_time}}
+
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.city || eventData.commoninfo.country || eventData.commoninfo.address">
+        <app-text page="event" default="Location" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+        <app-text page="country_names" place="{{countriesMap.get(eventData.commoninfo.country * 1)}}" default="{{countriesMap.get(eventData.commoninfo.country * 1)}}"></app-text>
+        <span *ngIf="(eventData.commoninfo.city || eventData.commoninfo.address) && eventData.commoninfo.country">, </span>
+
+        <span>{{eventData.commoninfo.city}}</span><span *ngIf="eventData.commoninfo.city && eventData.commoninfo.address">, </span>
+        <span>{{eventData.commoninfo.address}}</span>
+
+      </div>
+
+
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.competition">
+        <app-text page="event" default="Competition" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+        <div class="d-flex flex-fill justify-content-between" *ngIf="eventData.commoninfo.competition">
+
+          <app-competition-one-row [competitionIdValue]="eventData.commoninfo.competition"></app-competition-one-row>
+
+
+        </div>
+
+      </div>
+
+
+      <div class="margin-top-20" [hidden]="!isTabExist('')">
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional('')">
+          <app-text page="shop_one" default="Additional Information"></app-text>
+        </button>
+      </div>
+      <div class="margin-top-20" *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)">
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">
+          <app-text page="subtabs" [default]="tab"></app-text>
+        </button>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-2">
+        <app-text page="event" default="Details"></app-text>
+      </div>
+
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.fee">
+        <app-text page="event" default="Fee" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{eventData.commoninfo.fee}}
+
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.age_restriction">
+        <app-text page="event" default="Age restriction" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+        <app-text page="event_one" default="{{eventData.commoninfo.age_restriction}}" class="font-weight-bold"></app-text>
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.details">
+        <app-text page="event" default="Details" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+      </div>
+      <div class="lines-1" *ngIf="eventData.commoninfo.details">
+        {{eventData.commoninfo.details}}
+
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-2">
+        <app-text page="event" default="Wine list"></app-text>
+      </div>
+
+      <div class="d-flex flex-column wine-in-list" *ngFor="let wine of eventData.winelist.wine_list">
+        <div class="d-flex justify-content-between">
+
+          <div class="lines-1 font-weight-bold">
+
+            <app-title [language]="wine.wine_language" [national]="wine.name"
+                       [international]="wine.international_wn" [id]="wine.id" page="wineNames"></app-title>
+
+
+            <!--<span *ngIf="wine.wine_language == langService.getLanguage()">-->
+              <!--{{wine.name}}-->
+            <!--</span>-->
+            <!--<span *ngIf="wine.wine_language != langService.getLanguage()">-->
+              <!--{{wine.international_wn}}-->
+            <!--</span>-->
+          </div>
+
+          <div class="lines-1">
+            <span>
+              {{wine.vintage_year}}
+            </span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+
+          <div class="lines-1">
+            <!--<span *ngIf="wine.winery_language == langService.getLanguage()">-->
+              <!--{{wine.winery}},-->
+            <!--</span>-->
+            <!--<span *ngIf="wine.winery_language != langService.getLanguage()">-->
+              <!--{{wine.winery_int}},-->
+            <!--</span>-->
+
+            <app-title [language]="wine.winery_language" [national]="wine.winery"
+                       [international]="wine.winery_int" [id]="wine.winery_id" page="wineryNames"
+            ></app-title>
+            <span class="whitespace-prewrap">, </span>
+            <app-text page="country_names" place="{{countriesMap.get(wine.country_id * 1)}}" default="{{countriesMap.get(wine.country_id * 1)}}"></app-text>
+          </div>
+
+
+          <div>
+            <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+              <div class="" id="listDropdown" ngbDropdownToggle>
+                <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+              </div>
+              <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+                <div class="d-flex flex-column align-items-start menu-buttons">
+
+                  <a class="" [routerLink]="langService.editable ? null : '/wine/' + wine.id">
+                    <button class="btn btn-option hyperlink p-0">
+                      <app-text page="wine_list" default="View" class=""></app-text>
+                    </button>
+                  </a>
+                  <div class="" *ngIf="wine.storage || accountService.ifSpecialist()">
+                    <button class="btn btn-option hyperlink p-0" (click)="rateWine(wine.id)">
+                      <app-text page="wine_list" default="Rate" class=""></app-text>
+                    </button>
+                  </div>
+                  <div class=""  *ngIf="!wine.storage">
+                    <button class="btn btn-option hyperlink p-0" (click)="getToPersonStorage(wine)">
+                      <app-text page="wine_list" default="Get wine" class=""></app-text>
+                    </button>
+                  </div>
+                  <div class=""  *ngIf="wine.storage">
+                    <button class="btn btn-option hyperlink p-0" (click)="removeFromPersonStorage(wine)">
+                      <app-text page="wine_list" default="Remove wine" class=""></app-text>
+                    </button>
+                  </div>
+                  <div class=""  *ngIf="accountService.ifCollector()">
+                    <button class="btn btn-option hyperlink p-0" (click)="storeWine(wine.id)">
+                      <app-text page="wine_list" default="Collection" class=""></app-text>
+                    </button>
+                  </div>
+                  <div class="" *ngIf="wine.wish == 'buy'">
+                    <button class="btn btn-option hyperlink p-0" (click)="wishToTaste(wine)">
+                      <app-text page="wine_list" default="Wish to buy" class=""></app-text>
+                    </button>
+                  </div>
+                  <div class="" *ngIf="wine.wish == 'taste'">
+                    <button class="btn btn-option hyperlink p-0" (click)="unwish(wine)">
+                      <app-text page="wine_list" default="Wish to taste" class=""></app-text>
+                    </button>
+                  </div>
+                  <div class="" *ngIf="!wine.wish">
+                    <button class="btn btn-option hyperlink p-0" (click)="wishToBuy(wine)">
+                      <app-text page="wine_list" default="No wish" class=""></app-text>
+                    </button>
+                  </div>
+                  <!--<div class="" *ngIf="isEditable() && eventData.commoninfo.competition">-->
+                    <!--<button class="btn btn-option hyperlink p-0" (click)="openAwardSelect(wine)">-->
+                      <!--<app-text page="wine_list" default="Grant prize" class=""></app-text>-->
+                    <!--</button>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="d-flex justify-content-between" *ngIf="wine.form">-->
+
+          <!--<app-award-one-row [awardIdFormControl]="wine.form.get('award')"></app-award-one-row>-->
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-even">
+
+      <div class="heading-2">
+        <app-text page="event" default="Organizer"></app-text>
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.user">
+        <app-text page="event" default="Hosted by" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+        <span class="hyperlink">
+          <a href="profile/{{eventData.user}}">{{eventData.user_login}}</a>
+        </span>
+
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.phone">
+        <app-text page="event" default="Phone" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+        <span>{{eventData.commoninfo.phone}}</span>
+
+      </div>
+
+      <!--<div class="lines-1" *ngIf="eventData.commoninfo.phone">-->
+        <!--<app-text page="event" default="Phone: *** some test text" [complicated]="true" class="font-weight-bold">-->
+
+          <!--<span  *appTransclude>{{eventData.commoninfo.phone}}</span>-->
+        <!--</app-text>-->
+
+      <!--</div>-->
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.fax">
+        <app-text page="event" default="Fax" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+        <span>{{eventData.commoninfo.fax}}</span>
+
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.email">
+        <app-text page="event" default="Email" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+        <span>{{eventData.commoninfo.email}}</span>
+
+      </div>
+
+      <div class="lines-1" *ngIf="eventData.commoninfo.web">
+        <app-text page="event" default="Web" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+        <span>{{eventData.commoninfo.web}}</span>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="winery_one" default="Edit"></app-text>
+
+  <app-text page="event" default="Starts" class="font-weight-bold"></app-text>
+
+  <app-text page="event" default="Ends" class="font-weight-bold"></app-text>
+
+  <app-text page="event" default="Location" class="font-weight-bold"></app-text>
+
+  <div *ngFor="let row of countries">
+    <app-text page="country_names" [place]="row.id" default="{{row.name}}"></app-text>
+
+  </div>
+
+  <app-text page="shop_one" default="Additional Information"></app-text>
+
+  <div class="margin-top-20" *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)">
+    <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">
+      <app-text page="subtabs" [default]="tab"></app-text>
+    </button>
+  </div>
+
+  <app-text page="event" default="Details"></app-text>
+
+  <app-text page="event" default="Wine list"></app-text>
+
+  <app-text page="wine_list" default="View" class=""></app-text>
+
+  <app-text page="wine_list" default="Rate" class=""></app-text>
+
+  <app-text page="wine_list" default="Get wine" class=""></app-text>
+
+  <app-text page="wine_list" default="Remove wine" class=""></app-text>
+
+  <app-text page="wine_list" default="Collection" class=""></app-text>
+
+  <app-text page="wine_list" default="Wish to buy" class=""></app-text>
+
+  <app-text page="wine_list" default="Wish to taste" class=""></app-text>
+
+  <app-text page="wine_list" default="No wish" class=""></app-text>
+
+  <app-text page="event" default="Organizer"></app-text>
+
+  <app-text page="event" default="Hosted by" class="font-weight-bold"></app-text>
+
+  <app-text page="event" default="Phone" class="font-weight-bold"></app-text>
+
+  <app-text page="event" default="Fax" class="font-weight-bold"></app-text>
+
+  <app-text page="event" default="Email" class="font-weight-bold"></app-text>
+
+  <app-text page="event" default="Web" class="font-weight-bold"></app-text>
+
+</div>

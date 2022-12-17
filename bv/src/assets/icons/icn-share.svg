@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>icn-share</title>
+    <desc>Created with Sketch.</desc>
+    <g id="UI-Kit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="translate(-1088.000000, -864.000000)" id="icn-share" stroke="#000000" stroke-width="2" class="changeFillHere">
+            <g transform="translate(1089.000000, 865.000000)">
+                <polyline id="Path" points="14 10 14 14 0 14 0 0 4 0"></polyline>
+                <polyline id="Path" points="9 0 14 0 14 5"></polyline>
+                <line x1="14" y1="0" x2="5.5" y2="8.5" id="Path"></line>
+            </g>
+        </g>
+    </g>
+</svg>

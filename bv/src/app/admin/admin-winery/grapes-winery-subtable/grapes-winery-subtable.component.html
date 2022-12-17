@@ -1,0 +1,38 @@
+<form [formGroup]="form">
+
+  <div class="form-group row">
+    <label class="col text-center my-auto">
+      <app-text page="winery_grapes" place="chosen_grapes" default="Chosen grapes:"></app-text>
+    </label>
+  </div>
+  <div *ngFor="let grape of grapeList" formGroupName="grapes">
+    <div  class="form-group row">
+      <div class="col-4 offset-2 text-right my-auto">
+
+        <label>{{grape.name}}:</label>
+        <input type="checkbox" formControlName="{{grape.id}}" (click)="uncheck(grape.id)">
+      </div>
+      <div class="col-4">
+
+        <label>Synonym:</label>
+        <input class="my-auto" type="text" [value]="grape.synonym || ''" (input)="grape.synonym = $event.target.value">
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <app-superlist [tableCols]="tableCols" [api]="api" [addCheckbox]="true"></app-superlist>
+  </div>
+</form>
+
+
+
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

@@ -1,0 +1,320 @@
+<div class="d-flex align-items-start">
+  <div class="d-flex flex-column align-items-start left-bar">
+    <form [formGroup]="form"  class="w-100">
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="winery_list" default="Which winery are you looking for?" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="searchInternationalName">
+      </div>
+
+
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-text page="winery_list" default="Country" class="field-hint"></app-text>-->
+        <!--<app-select-bonvino formControlName_="searchCountry" [form]="form" #_searchCountry>-->
+          <!--<div select-title>-->
+            <!--&lt;!&ndash;<app-text page="event" default="Select" [hidden]="searchCountry.value != '0'"></app-text>&ndash;&gt;-->
+            <!--<app-text *ngFor="let c of countries; let i = index" page="country_names" place="{{c.name}}" default="{{c.name}}" [hidden]="c.id != searchCountry.value"></app-text>-->
+          <!--</div>-->
+          <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+            <!--<button class="btn btn-option" (click)="_searchCountry.choose('0')">-->
+              <!--<app-text page="winery_list" default="Clear input"></app-text>-->
+            <!--</button>-->
+            <!--<button *ngFor="let c of countries; let i = index" class="btn btn-option" (click)="_searchCountry.choose(c.id)">-->
+              <!--<app-text page="country_names" place="{{c.name}}" default="{{c.name}}"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</app-select-bonvino>-->
+        <!--<div *ngIf="langService.editable">-->
+          <!--<app-text page="event" default="Clear input"></app-text>-->
+          <!--<app-text *ngFor="let c of countries; let i = index" page="country_names" place="{{c.name}}" default="{{c.name}}"></app-text>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+
+      <div  class="heading-1">
+        <app-text page="wine_list" place="place_of_origin" default="Place of origin"></app-text>
+      </div>
+
+      <div>
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="openPlaceOfOrigin()">
+          <app-text page="wine_list" default="Select"></app-text>
+        </button>
+      </div>
+
+
+      <div class="lines-1 place-of-origin-text">
+        <div class="d-inline">
+          <app-text page="country_names" place="{{country.value}}" default="{{countriesMap.get(country.value)}}"></app-text>
+        </div>
+        <div class="d-inline" *ngFor="let region of regionsForm.value; let i = index">
+          <span *ngIf="region"> > </span>
+          <app-text page="country_names" place="{{region * 1}}"
+                    default="{{regionesMap.get(region * 1)}}"  *ngIf="region"></app-text>
+        </div>
+      </div>
+
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-text page="winery_list" default="Has wine series" class="field-hint"></app-text>-->
+        <!--<input type="text" class="field-input align-self-stretch" formControlName="series">-->
+      <!--</div>-->
+
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-text page="winery_list" default="Foundation year" class="field-hint"></app-text>-->
+        <!--<input type="text" class="field-input align-self-stretch" formControlName="year">-->
+      <!--</div>-->
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-text page="event" default="City" class="field-hint"></app-text>-->
+        <!--<input type="text" class="field-input align-self-stretch" formControlName="searchCity">-->
+      <!--</div>-->
+
+
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-text page="event" default="From" class="field-hint"></app-text>-->
+        <!--<input type="date" class="field-input align-self-stretch" formControlName="from">-->
+      <!--</div>-->
+
+
+
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+        <!--<app-text page="event" default="To" class="field-hint"></app-text>-->
+        <!--<input type="date" class="field-input align-self-stretch" formControlName="to">-->
+      <!--</div>-->
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="winery_list" default="Owner" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="owner">
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="winery_list" default="Name of head winemaker" class="field-hint"></app-text>
+        <input type="text" class="field-input align-self-stretch" formControlName="winemaker">
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="isKashrut" [form]="form" #_isKashrut>
+          <app-text page="winery_add" default="Kashrut" (click)="_isKashrut.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+      <!--<div class="field align-self-stretch d-flex flex-column">-->
+      <!--<app-checkbox-bonvino formControlName_="isQuality" [form]="form" #_isQuality>-->
+      <!--<app-text page="winery_add" default="Quality" (click)="_isQuality.check()"></app-text>-->
+      <!--</app-checkbox-bonvino>-->
+      <!--</div>-->
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="isBiodynamic" [form]="form" #_isBiodynamic>
+          <app-text page="winery_add" default="Biodynamic" (click)="_isBiodynamic.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="isOrganic" [form]="form" #_isOrganic>
+          <app-text page="winery_add" default="Organic" (click)="_isOrganic.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="isVegan" [form]="form" #_isVegan>
+          <app-text page="winery_add" default="Vegan" (click)="_isVegan.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-text page="wine_list" default="Production (Bottles / year)" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="performance" [form]="form" #_performance>
+          <div select-title>
+
+            <app-text *ngFor="let p of performanceArr" page="winery_add" [place]="p.place" [default]="p.defaultValue" [hidden]="performance.value != p.value"></app-text>
+
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button class="btn btn-option" (click)="_performance.choose('0')">
+              <app-text page="winery_add" place="select" default="Select"></app-text>
+            </button>
+            <button *ngFor="let p of performanceArr" class="btn btn-option" (click)="_performance.choose(p.value)">
+              <app-text page="winery_add" [place]="p.place" [default]="p.defaultValue"></app-text>
+            </button>
+          </div>
+        </app-select-bonvino>
+      </div>
+
+
+      <div>
+        <app-additional-search-schema [structureData]="additionalStructure"></app-additional-search-schema>
+      </div>
+
+
+      <div>
+        <button class="btn btn-type-1 text-uppercase field-content" (click)="filterEvents()">
+          <app-text page="winery_list" default="Show wineries"></app-text>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="d-flex flex-column justify-content-between w-100 main-menu">
+    <div class="w-100">
+      <div class="d-flex flex-row justify-content-between align-content-end flex-wrap">
+        <div class="d-flex flex-column justify-content-end">
+          <div class="menu-first d-flex flex-row justify-content-between">
+
+            <button class="btn btn-menu-first menu-2-regular ml-0 mr-0" [ngClass]="getTabColor(tabs.all)" (click)="chooseTab(tabs.all)">
+              <app-text page="winery_list" place="discover" default="Discover"></app-text>
+            </button>
+
+            <!--<button class="btn btn-menu-first menu-2-regular" [ngClass]="getTabColor(tabs.interesting)" (click)="chooseTab(tabs.interesting)"  *ngIf="!accountService.isNoUser()">-->
+              <!--<app-text page="event_list" default="Events you interested in"></app-text>-->
+            <!--</button>-->
+
+            <!--<button class="btn btn-menu-first menu-2-regular mr-0" [ngClass]="getTabColor(tabs.my)" (click)="chooseTab(tabs.my)" *ngIf="!accountService.isNoUser()">-->
+              <!--<app-text page="event_list" default="Events you organised"></app-text>-->
+            <!--</button>-->
+
+          </div>
+        </div>
+        <div class="d-flex flex-column justify-content-end ml-auto margin-top-8">
+          <div class="d-flex flex-row justify-content-between align-content-end mb-0">
+            <div class="d-flex flex-column justify-content-end menu-top">
+              <form [formGroup]="form">
+
+                <div class="field align-self-end d-flex flex-column mb-0">
+                  <app-text page="winery_list" default="Sort" class="field-hint"></app-text>
+                  <app-select-bonvino formControlName_="order" [form]="form" #_order>
+                    <div select-title>
+                      <app-text page="winery_list" place="id" default="Id" *ngIf="order.value == 'sort'"></app-text>
+                      <app-text page="winery_list" place="name_int" default="International name" *ngIf="order.value == 'name_int'"></app-text>
+                      <app-text page="winery_list" place="name_int" default="International name" *ngIf="order.value == 'name_int_reverse'"></app-text>
+                      <app-text page="winery_list" place="name_nat" default="Name" *ngIf="order.value == 'name_nat'"></app-text>
+                      <app-text page="winery_list" place="name_nat" default="Name" *ngIf="order.value == 'name_nat_reverse'"></app-text>
+                      <app-text page="winery_list" place="date" default="Date" *ngIf="order.value == 'date'"></app-text>
+                      <app-text page="winery_list" place="date" default="Date" *ngIf="order.value == 'date_reverse'"></app-text>
+                      <app-text page="winery_list" place="country" default="Country" *ngIf="order.value == 'country'"></app-text>
+                      <app-text page="winery_list" place="country" default="Country" *ngIf="order.value == 'country_reverse'"></app-text>
+
+
+                      <mat-icon svgIcon="icn-sorting" class="icn-sorting"
+                                *ngIf="order.value == 'name_int' || order.value == 'name_nat' || order.value == 'date' || order.value == 'country'"></mat-icon>
+                      <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"
+                                *ngIf="order.value == 'name_int_reverse' || order.value == 'name_nat_reverse' || order.value == 'date_reverse' || order.value == 'country_reverse'"></mat-icon>
+                    </div>
+                    <div options class="d-flex flex-column align-items-start select-list-options">
+                      <!--<button class="btn btn-option" (click)="_order.choose('sort')">-->
+                      <!--<app-text page="wines_common_info" place="id" default="Id"></app-text>-->
+                      <!--</button>-->
+                      <button class="btn btn-option" (click)="_order.choose('name_int')">
+                        <app-text page="winery_list" place="name_int" default="International name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('name_int_reverse')">
+                        <app-text page="winery_list" place="name_int" default="International name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('name_nat')">
+                        <app-text page="winery_list" place="name_nat" default="Name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('name_nat_reverse')">
+                        <app-text page="winery_list" place="name_nat" default="Name"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                      <!--<button class="btn btn-option" (click)="_order.choose('date')">-->
+                        <!--<app-text page="event_list" place="date" default="Date"></app-text>-->
+                        <!--<mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>-->
+                      <!--</button>-->
+                      <!--<button class="btn btn-option" (click)="_order.choose('date_reverse')">-->
+                        <!--<app-text page="event_list" place="date" default="Date"></app-text>-->
+                        <!--<mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>-->
+                      <!--</button>-->
+                      <button class="btn btn-option" (click)="_order.choose('country')">
+                        <app-text page="winery_list" place="country" default="Country"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting"></mat-icon>
+                      </button>
+                      <button class="btn btn-option" (click)="_order.choose('country_reverse')">
+                        <app-text page="winery_list" place="country" default="Country"></app-text>
+                        <mat-icon svgIcon="icn-sorting" class="icn-sorting reverse"></mat-icon>
+                      </button>
+                    </div>
+                  </app-select-bonvino>
+                </div>
+
+                <div *ngIf="langService.editable">
+                  <app-text page="winery_list" place="name_int" default="International name"></app-text>
+                  <app-text page="winery_list" place="name_nat" default="Name"></app-text>
+                  <!--<app-text page="event_list" place="date" default="Date"></app-text>-->
+                  <app-text page="winery_list" place="country" default="Country"></app-text>
+                </div>
+              </form>
+            </div>
+
+            <!--<div class="d-flex flex-column justify-content-end menu-top" *ngIf="!accountService.isNoUser()">-->
+              <!--<a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : addEventLink()">-->
+                <!--<app-text page="winery_list" default="Add new winery"></app-text>-->
+              <!--</a>-->
+              <!--&lt;!&ndash;<button class="btn btn-type-1 text-uppercase field-content" (click)="addEvent()">&ndash;&gt;-->
+              <!--&lt;!&ndash;<app-text page="event_list" default="Add an event"></app-text>&ndash;&gt;-->
+              <!--&lt;!&ndash;</button>&ndash;&gt;-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="d-flex flex-wrap cards-block" #cards>
+        <div class="card-event d-flex flex-column" *ngFor="let winery of wineryList" [ngStyle]="{'width.px': cardWidth}">
+          <div class="card-event-image">
+            <button class="btn btn-option hyperlink p-0" (click)="viewWinery(winery.id)">
+              <img  class="img-fluid" [src]="getImage(winery)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+
+            </button>
+            <!--<a href="winery/{{winery.id}}" >-->
+              <!--<img  class="img-fluid" [src]="getImage(winery)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">-->
+            <!--</a>-->
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center">
+            <div  class="card-event-emblem" *ngIf="winery.emblem">
+              <img  class="img-fluid" [src]="getEmblem(winery)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+            </div>
+            <div>
+              <div class="heading-1">
+
+                <span *ngIf="winery.language == langService.getLanguage() && winery.name">
+                  {{winery.name}}
+                </span>
+                <span *ngIf="winery.language != langService.getLanguage() || !winery.name">
+                  {{winery.name_international}}
+                </span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+
+
+
+</div>
+
+
+

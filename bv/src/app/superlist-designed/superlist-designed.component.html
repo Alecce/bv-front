@@ -1,0 +1,63 @@
+<form [formGroup]="form">
+  <!--<div class="row my-2 py-1">-->
+    <!--<div class="form-group col">-->
+      <!--<div ngbDropdown #searchDropdown="ngbDropdown" display="dynamic" placement="bottom-left">-->
+        <!--<button class="btn btn-outline-secondary rounded-0 btn-sm btn-block winery-item" id="listDropdown"-->
+                <!--ngbDropdownToggle>-->
+          <!--<app-text [page]="pageForSearch" [place]="placeForSearch" [default]="defaultForSearch"></app-text>-->
+        <!--</button>-->
+        <!--<div ngbDropdownMenu aria-labelledby="listDropdown">-->
+          <!--<div>-->
+            <!--<input type="text" class="form-control form-control-sm rounded-0" formControlName="search"-->
+                   <!--[placeholder]="langService.getPlaceholder('superlist', 'search', 'Search')">-->
+          <!--</div>-->
+          <!--<div ngbDropdownItem class="p-0" *ngFor="let option of searchList">-->
+            <!--<button class="btn btn-outline-primary rounded-0 btn-sm btn-block border-0 winery-item"-->
+                    <!--(click)="selectOption(option); searchDropdown.close();">-->
+              <!--<span>{{getRowName(option)}}</span>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <div class="d-flex flex-column">
+
+    <div class="field align-self-stretch d-flex flex-column mb-0">
+      <app-select-search-bonvino formControlName_="search" [form]="form" #_option>
+        <!--<div select-title>-->
+          <!--<app-text [page]="pageForSearch" [place]="placeForSearch" [default]="defaultForSearch"></app-text>-->
+        <!--</div>-->
+        <div options class="d-flex flex-column align-items-start select-list-options-full">
+          <button *ngFor="let option of searchList | paginate: { id: 'pagination-option', itemsPerPage: 10, currentPage: page, totalItems: optionTotal}"
+                  class="btn btn-option"
+                  (click)="selectOption(option); _option.close();">
+            <span>{{getRowName(option)}}</span>
+          </button>
+          <pagination-controls class="text-center hyperlink" [directionLinks]="false" maxSize="5" [autoHide]="true" id="pagination-option" (pageChange)="setPage($event)"></pagination-controls>
+
+        </div>
+      </app-select-search-bonvino>
+    </div>
+
+
+    <!--<div class="lines-1 place-of-origin-text d-flex justify-content-between" *ngIf="chosenWinery">-->
+      <!--<div>-->
+        <!--<span>{{getWineryName(chosenWinery)}}</span>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<button class="btn m-0 p-0" (click)="selectWinery('')">-->
+          <!--<mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  </div>
+
+
+
+
+
+</form>

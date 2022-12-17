@@ -1,0 +1,181 @@
+<form [formGroup]="form">
+  <div class="d-flex"
+       [ngClass]="isBigScreen() ? 'w-50' : 'w-100'">
+    <div class="d-flex flex-column flex-even">
+
+      <div  class="heading-2 left-bold-border">
+        <app-text page="wines" default="Serving tips"></app-text>
+      </div>
+
+      <div class="d-flex flex-row w-100">
+        <div class="field align-self-stretch d-flex flex-column flex-even margin-right-16">
+          <app-text page="wines" default="Drink from" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="from">
+        </div>
+
+
+        <div class="field align-self-stretch d-flex flex-column flex-even margin-left-16">
+          <app-text page="wines" default="Drink to" class="field-hint"></app-text>
+          <input type="text" class="field-input align-self-stretch" formControlName="to">
+        </div>
+      </div>
+
+
+      <div class="field align-self-stretch d-flex flex-column">
+        <app-checkbox-bonvino formControlName_="needDecanter" [form]="form" #_needDecanter>
+          <app-text page="wines" default="Need decanter" (click)="_needDecanter.check()" class="lines-1"></app-text>
+        </app-checkbox-bonvino>
+      </div>
+
+
+
+      <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+        <app-text page="wines" default="Serving tempereture" class="field-hint"></app-text>
+        <app-select-bonvino formControlName_="servingTemperature" [form]="form" #_servingTemperature>
+          <div select-title>
+            <span *ngFor="let st of servingTemperaturesList" [hidden]="servingTemperature.value != st.value || servingTemperature.value == 0">{{st.name}}</span>
+          </div>
+          <div options class="d-flex flex-column align-items-start select-list-options">
+            <button *ngFor="let st of servingTemperaturesList" class="btn btn-option" (click)="_servingTemperature.choose(st.value)">
+              <span *ngIf="st.value != 0">{{st.name}}</span>
+              <app-text page="wines" default="Clear input" *ngIf="st.value == 0"></app-text>
+            </button>
+
+
+          </div>
+        </app-select-bonvino>
+      </div>
+
+
+      <!--<div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">-->
+        <!--<app-text page="wines" default="Drinking time" class="field-hint"></app-text>-->
+        <!--<app-select-bonvino formControlName_="drinkingTime" [form]="form" #_drinkingTime>-->
+          <!--<div select-title>-->
+            <!--&lt;!&ndash;<app-text page="wines" default="Select"&ndash;&gt;-->
+                      <!--&lt;!&ndash;[hidden]="drinkingTime.value != ''"></app-text>&ndash;&gt;-->
+            <!--<app-text page="wines" default="Day"-->
+                      <!--[hidden]="drinkingTime.value != 'day'"></app-text>-->
+            <!--<app-text page="wines" default="Evening"-->
+                      <!--[hidden]="drinkingTime.value != 'evening'"></app-text>-->
+
+          <!--</div>-->
+          <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+            <!--<button class="btn btn-option" (click)="_drinkingTime.choose('')">-->
+              <!--<app-text page="wines" default="Clear input"></app-text>-->
+            <!--</button>-->
+            <!--<button class="btn btn-option" (click)="_drinkingTime.choose('day')">-->
+              <!--<app-text page="wines" default="Day"></app-text>-->
+            <!--</button>-->
+            <!--<button class="btn btn-option" (click)="_drinkingTime.choose('evening')">-->
+              <!--<app-text page="wines" default="Evening"></app-text>-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</app-select-bonvino>-->
+        <!--<div *ngIf="langService.editable">-->
+          <!--<app-text page="wines" default="Clear input"></app-text>-->
+          <!--<app-text page="wines" default="Day"></app-text>-->
+          <!--<app-text page="wines" default="Evening"></app-text>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+      <div class="field align-self-stretch d-flex justify-content-start align-items-center flex-even">
+        <div>
+          <app-text page="wines" default="Glass:" class="lines-1 margin-right-8"></app-text>
+        </div>
+
+
+
+        <!--<div class="col-auto p-1" *ngFor="let g of glasses; let i=index">-->
+          <!--<input id="glass_{{g}}" type="radio" value="{{g}}" formControlName="glass">-->
+          <!--<img class="glass-1" src="../../../assets/images/G{{g}}.png">-->
+        <!--</div>-->
+        <div>
+
+          <app-radio-bonvino formControlName_="glass" [form]="form" value_="0" #_radio>
+
+            <mat-icon svgIcon="icn-close-bonvine" class="icon-close margin-x-4"></mat-icon>
+            <!--<app-text page="wines_votes" place="{{langService.morphStr(option.name)}}" default="{{option.name}}" (click)="_radio.check()" class="lines-1 margin-left-8"></app-text>-->
+          </app-radio-bonvino>
+          <!--<input id="glass_0" type="radio" value="0" formControlName="glass">-->
+          <!--<mat-icon svgIcon="close"  class="icon mdi mdi-close"></mat-icon>-->
+        </div>
+        <div *ngFor="let g of glasses; let i=index">
+
+          <app-radio-bonvino formControlName_="glass" [form]="form" value_="{{g.id}}" #_radio>
+
+            <!--<img class="glass margin-x-4" src="../../../assets/images/glasses-croped.png" [ngStyle]="{'width': g.width, 'object-position': g.op}">-->
+
+            <mat-icon [svgIcon]="g.icon" [class]="g.iconClass"></mat-icon>
+            <!--<img class="glass margin-x-4" src="../../../assets/icons/glasses.svg" [ngStyle]="{'width': g.width, 'object-position': g.op}">-->
+            <!--<app-text page="wines_votes" place="{{langService.morphStr(option.name)}}" default="{{option.name}}" (click)="_radio.check()" class="lines-1 margin-left-8"></app-text>-->
+          </app-radio-bonvino>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</form>
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="wines" default="Serving tips"></app-text>
+
+  <app-text page="wines" default="Drink from" class="field-hint"></app-text>
+
+  <app-text page="wines" default="Drink to" class="field-hint"></app-text>
+
+  <app-text page="wines" default="Need decanter" (click)="_needDecanter.check()" class="lines-1"></app-text>
+
+  <app-text page="wines" default="Serving tempereture" class="field-hint"></app-text>
+
+  <app-text page="wines" default="Clear input"></app-text>
+
+  <app-text page="wines" default="Glass:" class="lines-1 margin-right-8"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

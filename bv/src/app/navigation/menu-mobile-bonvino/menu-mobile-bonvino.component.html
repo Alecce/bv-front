@@ -1,0 +1,210 @@
+
+<div class="field align-self-stretch d-flex flex-column">
+
+  <div class="flag-mouse-over">
+    <button class="btn-0" mat-button [matMenuTriggerFor]="afterMenu"
+            #container
+            [ngClass]=""
+            (menuOpened)="onMenuOpened()"
+            (menuClosed)="onMenuClosed()">
+
+
+      <app-icon-bonvino svgIcon="icn-menu-wine" class="icn-menu-mobile"></app-icon-bonvino>
+      <!--<app-text *ngFor="let language of languageArr; let i = index" page="language" [default]="language.code"-->
+                <!--[hidden]="language.value != getLanguage()" class="language-emblem text-uppercase margin-right-8"></app-text>-->
+      <!--<app-icon-bonvino svgIcon="arrow-1-up-black" class="icon-arrow-language"></app-icon-bonvino>-->
+    </button>
+
+    <mat-menu #afterMenu="matMenu" xPosition="after" class="no-max-width max-height-90vh" overlapTrigger="true">
+      <div class="d-flex flex-column align-items-start menu-buttons max-heigth-400px">
+
+        <div *ngFor="let nav of getListOfPages(); let i = index" [hidden]="!(cookies | async).id && nav.onlyLogged" class="noclass w-100">
+          <button class="lang-row w-100 btn-0 p-0 menu-mobile-row" (click)="nav.clickFunction()" mat-menu-item>
+
+            <a class="no-text-decoration w-100 d-block" [routerLink]="langService.editable ? null : nav.query"
+               [queryParams]="nav.params">
+
+              <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+                <div class="d-flex align-items-center">
+
+
+                  <div class="menu-mobile-emblem-container margin-right-44">
+
+                    <app-icon-bonvino svgIcon="icn-wines" class="icn-wine-mobile"></app-icon-bonvino>
+
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <app-text page="navigation" [place]="nav.place" [default]="nav.label" class="menu-mobile-text-1"></app-text>
+
+                </div>
+
+
+              </div>
+
+
+            </a>
+          </button>
+        </div>
+
+
+        <div class="noclass w-100 d-flex align-items-center border-top-1 menu-mobile-lang-container">
+
+          <button class="lang-row w-100 h-100 btn-0 p-0 menu-mobile-row" (click)="$event.stopPropagation(); switchLanguageList()" mat-menu-item>
+
+            <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+              <div class="d-flex align-items-center margin-right-44">
+
+
+                <app-text *ngFor="let language of languageArr; let i = index" page="language" [default]="language.code"
+                          [hidden]="language.value != getLanguage()" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+                <!--<div class="menu-mobile-emblem-container margin-right-44 align-items-center">-->
+
+
+                <!--</div>-->
+              </div>
+              <div class="d-flex align-items-center">
+                <app-text *ngFor="let language of languageArr; let i = index" page="language" [default]="language.name"
+                          [hidden]="language.value != getLanguage()" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+              </div>
+
+
+            </div>
+          </button>
+        </div>
+
+        <div class="noclass w-100 border-top-1 menu-mobile-emblem-container" *ngIf="languagesOpen">
+
+          <div class="noclass w-100 menu-mobile-lang-container" *ngFor="let language of languageArr; let i = index"
+               [hidden]="!language.ispublic && accountService.isTranslator()" class="noclass w-100">
+
+            <button class="lang-row w-100 h-100 btn-0 p-0 menu-mobile-row" (click)="changeLanguage(language.value)" mat-menu-item>
+
+              <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+                <div class="d-flex align-items-center margin-right-44">
+
+
+                  <app-text page="language" [default]="language.code"
+                            class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+                </div>
+                <div class="d-flex align-items-center">
+                  <app-text page="language" [default]="language.name" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+                </div>
+
+
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="noclass w-100 d-flex align-items-center border-top-1 menu-mobile-lang-container" *ngIf="(cookies | async).id">
+
+          <button class="lang-row w-100 btn-0 p-0 menu-mobile-row" (click)="$event.stopPropagation(); switchProfileList()" mat-menu-item>
+
+            <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+              <div class="d-flex align-items-center">
+
+
+                <div class="menu-mobile-emblem-container margin-right-44">
+
+                  <img height="30" width="30" class="profile-image" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <app-text page="navigation" default="Profile options" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+              </div>
+
+
+            </div>
+          </button>
+        </div>
+
+
+        <div class="noclass w-100 border-top-1 menu-mobile-emblem-container" *ngIf="profileOpen && (cookies | async).id">
+
+          <div class="noclass w-100 menu-mobile-lang-container" class="noclass w-100">
+
+            <button class="lang-row w-100 h-100 btn-0 p-0 menu-mobile-row" (click)="routeTo('profile-edit/' + cookieService.get('myId'))" mat-menu-item>
+
+              <a [routerLink]="langService.editable ? null : 'profile-edit/' + cookieService.get('myId')" class="no-text-decoration w-100 d-block">
+                <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+                  <div class="d-flex align-items-center menu-mobile-lang-container">
+
+
+                    <app-text page="navigation" place="my_profile" default="My profile" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+                  </div>
+                  <!--<div class="d-flex align-items-center">-->
+                    <!--<app-text page="language" [default]="language.name" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>-->
+
+                  <!--</div>-->
+
+
+                </div>
+              </a>
+
+            </button>
+          </div>
+          <div class="noclass w-100 menu-mobile-lang-container" class="noclass w-100" *ngIf="cookieService.get('sequrity') && cookieService.get('sequrity') != '1'  && (cookies | async).id">
+
+            <button class="lang-row w-100 h-100 btn-0 p-0 menu-mobile-row" (click)="routeTo('my-business/' + cookieService.get('myId'))" mat-menu-item>
+
+              <a [routerLink]="langService.editable ? null : 'my-business/' + cookieService.get('myId')" class="no-text-decoration w-100 d-block">
+                <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+                  <div class="d-flex align-items-center menu-mobile-lang-container">
+
+
+                    <app-text page="navigation" default="My business" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+                  </div>
+                  <!--<div class="d-flex align-items-center">-->
+                  <!--<app-text page="language" [default]="language.name" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>-->
+
+                  <!--</div>-->
+
+
+                </div>
+              </a>
+
+            </button>
+          </div>
+          <div class="noclass w-100 menu-mobile-lang-container" class="noclass w-100" *ngIf="cookieService.get('sequrity') && cookieService.get('sequrity') != '1' && (cookies | async).id">
+
+            <button class="lang-row w-100 h-100 btn-0 p-0 menu-mobile-row" (click)="logout()" mat-menu-item>
+
+              <div class="margin-left-64 margin-right-44 d-flex flex-row">
+
+                <div class="d-flex align-items-center menu-mobile-lang-container">
+
+
+                  <app-text page="navigation" place="logout" default="Logout" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>
+
+                </div>
+                <!--<div class="d-flex align-items-center">-->
+                <!--<app-text page="language" [default]="language.name" class="menu-mobile-text-2 text-uppercase margin-right-8"></app-text>-->
+
+                <!--</div>-->
+
+
+              </div>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-menu>
+  </div>
+
+
+</div>

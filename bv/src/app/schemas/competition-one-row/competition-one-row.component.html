@@ -1,0 +1,6 @@
+<div class="lines-1" *ngIf="competition">
+  <a [routerLink]="'/competition/' + competition.id">
+    <span *ngIf="competition.language == langService.getLanguage() && competition.name_national">{{competition.name_national}}</span>
+    <span *ngIf="competition.language != langService.getLanguage() || !competition.name_national">{{competition.name_international}}</span>
+  </a>
+</div>

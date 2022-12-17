@@ -1,0 +1,16 @@
+
+.scroll-title {
+  cursor: pointer;
+}
+.margin-left-16 {
+  margin-left: 16px;
+}
+.slow-appearing {
+  transition: width 2s, height 4s;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
+::ng-deep .icon-arrow-scroll svg {
+  margin-bottom: 10px;
+}

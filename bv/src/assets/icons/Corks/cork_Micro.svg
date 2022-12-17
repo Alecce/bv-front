@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <defs>
+    <style>.cls-916968{fill:#916968;}.cls-fff{fill:#fff;}</style>
+  </defs>
+  <g id="Type">
+    <path class="cls-916968"
+          d="M20,8C15.44,8,11.54,6.88,9.86,5.27L9,7V35l2,3.3A21,21,0,0,0,20,40a20.81,20.81,0,0,0,9-1.71L31,35V7l-.86-1.76C28.45,6.86,24.54,8,20,8Z"/>
+    <circle class="cls-fff" cx="16.98" cy="13" r="0.5"/>
+    <circle class="cls-fff" cx="19.5" cy="10.5" r="0.5"/>
+    <circle class="cls-fff" cx="14.5" cy="15.5" r="0.5"/>
+    <circle class="cls-fff" cx="24.5" cy="12.5" r="0.5"/>
+    <circle class="cls-fff" cx="28.48" cy="10.5" r="0.5"/>
+    <circle class="cls-fff" cx="30.48" cy="14.5" r="0.5"/>
+    <circle class="cls-fff" cx="24.48" cy="18.5" r="0.5"/>
+    <circle class="cls-fff" cx="29.5" cy="19.5" r="0.5"/>
+    <circle class="cls-fff" cx="26.48" cy="15.5" r="0.5"/>
+    <circle class="cls-fff" cx="27.48" cy="22.5" r="0.5"/>
+    <circle class="cls-fff" cx="18.48" cy="17.5" r="0.5"/>
+    <circle class="cls-fff" cx="22.5" cy="15.5" r="0.5"/>
+    <circle class="cls-fff" cx="10.48" cy="18.5" r="0.5"/>
+    <circle class="cls-fff" cx="11.5" cy="12.5" r="0.5"/>
+    <circle class="cls-fff" cx="13.5" cy="9.5" r="0.5"/>
+    <circle class="cls-fff" cx="17.48" cy="23.5" r="0.5"/>
+    <circle class="cls-fff" cx="15.48" cy="20.5" r="0.5"/>
+    <circle class="cls-fff" cx="12.5" cy="23.5" r="0.5"/>
+    <circle class="cls-fff" cx="9.5" cy="26.5" r="0.5"/>
+    <circle class="cls-fff" cx="12.48" cy="28.5" r="0.5"/>
+    <circle class="cls-fff" cx="15.5" cy="31.5" r="0.5"/>
+    <circle class="cls-fff" cx="22.5" cy="22.5" r="0.5"/>
+    <circle class="cls-fff" cx="10.5" cy="32.5" r="0.5"/>
+    <circle class="cls-fff" cx="20.5" cy="32.5" r="0.5"/>
+    <circle class="cls-fff" cx="17.5" cy="38.5" r="0.5"/>
+    <circle class="cls-fff" cx="25.5" cy="36.5" r="0.5"/>
+    <circle class="cls-fff" cx="23.48" cy="26.5" r="0.5"/>
+    <circle class="cls-fff" cx="25.48" cy="30.5" r="0.5"/>
+    <circle class="cls-fff" cx="29.48" cy="26.5" r="0.5"/>
+    <circle class="cls-fff" cx="28.5" cy="32.5" r="0.5"/>
+    <circle class="cls-fff" cx="21.48" cy="36.5" r="0.5"/>
+    <circle class="cls-fff" cx="16.48" cy="27.5" r="0.5"/>
+    <circle class="cls-fff" cx="14.5" cy="36.5" r="0.5"/>
+    <ellipse class="cls-916968" cx="19.98" cy="3.28" rx="9" ry="3.28"/>
+  </g>
+</svg>

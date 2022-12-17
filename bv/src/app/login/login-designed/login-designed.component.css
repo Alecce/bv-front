@@ -1,0 +1,36 @@
+.width-150px{
+  min-width: 150px;
+}
+.border-right-login {
+  border-right: solid 1px var(--ocean);
+  padding-right: 2px;
+  margin-right: 2px;
+}
+.log-in-pop-up {
+  min-width: 256px;
+  height: 288px;
+  top: 224px !important;
+  left: 70px !important;
+}
+.login-heading {
+  margin-top: 36px;
+  margin-left: 32px;
+}
+.login-email {
+  margin-top: 20px;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+.login-password {
+  margin-top: 16px;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+.login-buttons {
+  margin-top: 24px;
+  margin-left: 32px;
+  margin-right: 32px;
+}
+.field-input {
+  width: 100%;
+}

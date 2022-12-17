@@ -1,0 +1,194 @@
+
+<div class="d-flex">
+
+  <form [formGroup]="form" class="w-100">
+    <div class="d-flex flex-even w-100">
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="competition_basic" default="Categories"></app-text>
+        </div>
+
+        <div formArrayName="categories">
+
+          <div class="d-flex flex-column margin-bottom-20 w-100" *ngFor="let p of categories.controls; let i = index" formGroupName="{{i}}">
+
+            <div class="d-flex flex-fill justify-content-between w-100">
+
+              <div class="d-flex flex-column justify-content-start w-100">
+
+                <div class="field d-flex flex-column margin-right-20">
+                  <app-text page="competition_basic" default="Category name" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="name">
+                </div>
+
+
+                <div class="field d-flex flex-column margin-right-20">
+                  <app-text page="competition_basic" default="Category name in english" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="name_int">
+                </div>
+
+
+                <div class="field d-flex flex-column margin-right-20">
+                  <app-text page="competition_basic" default="Year" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="year">
+                </div>
+              </div>
+
+
+              <div>
+                <button class="btn m-0 p-0" (click)="removeCategory(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex flex-fill justify-content-between w-100">
+
+
+              <div class="field align-self-stretch d-flex flex-column w-100">
+                <app-text page="competition_basic" default="Description"  class="field-hint"></app-text>
+                <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="description"></textarea>
+              </div>
+
+
+            </div>
+
+            <div class="d-flex flex-fill justify-content-between w-100">
+
+
+              <div class="field align-self-stretch d-flex flex-column w-100">
+                <app-text page="competition_basic" default="Description (english)"  class="field-hint"></app-text>
+                <textarea type="textarea" class="form-control field-input align-self-stretch"  rows="10" formControlName="description_int"></textarea>
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+
+        <div class="d-flex margin-bottom-32 justify-content-center">
+          <button class="btn m-0 p-0" (click)="addCategory(null)">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </button>
+        </div>
+
+
+
+
+
+
+      </div>
+      <div class="d-flex flex-column flex-even margin-right-36">
+
+
+        <div  class="heading-2 left-bold-border">
+          <app-text page="competition_basic" default="Prizes and trophies"></app-text>
+        </div>
+
+
+
+
+        <div formArrayName="prizes">
+
+          <div class="d-flex flex-column margin-bottom-20" *ngFor="let p of prizes.controls; let i = index" formGroupName="{{i}}">
+
+            <div class="d-flex flex-fill justify-content-between w-100">
+
+              <div class="d-flex flex-column justify-content-start">
+
+                <div class="field d-flex flex-column margin-right-20">
+                  <app-text page="competition_basic" default="Prize name" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="name">
+                </div>
+
+
+                <div class="field d-flex flex-column margin-right-20">
+                  <app-text page="competition_basic" default="Prize name in english" class="field-hint"></app-text>
+                  <input type="text" class="field-input align-self-stretch" formControlName="name_int">
+                </div>
+
+
+
+                <div class="field align-self-stretch d-flex flex-column margin-right-20">
+                  <app-text page="competition_basic" default="Category" class="field-hint"></app-text>
+                  <app-select-bonvino formControlName_="category" [form]="this.prizes.at(i)" #_category>
+                    <div select-title>
+                      <!--<app-text *ngFor="let l of categories.controls" page="competition_basic" [default]="l.name" [hidden]="l.value != language.value"></app-text>-->
+                      <span  *ngFor="let l of categories.controls; let j = index" [hidden]="l.value.timestamp != this.prizes.at(i).value.category">{{getCategoryName(j)}}</span>
+                    </div>
+                    <div options class="d-flex flex-column align-items-start select-list-options">
+                      <button class="btn btn-option" (click)="_category.choose('')">
+                        <app-text page="competition_basic" default="Clear input"></app-text>
+                      </button>
+                      <button *ngFor="let l of categories.controls; let j = index" class="btn btn-option" (click)="_category.choose(l.value.timestamp)">
+                        {{getCategoryName(j)}}
+                      </button>
+                    </div>
+                  </app-select-bonvino>
+                </div>
+              </div>
+
+
+              <div>
+
+                <div class="d-flex flex-wrap">
+                  <div *ngIf="!fileToUpload(i) && imageLink(i)" class="margin-right-20">
+                    <img class="cover-image" [src]="getImage(i)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+                  </div>
+                  <div *ngIf="fileToUpload(i)" class="margin-right-20">
+                    <img  class="cover-image" [src]="url(i)">
+                  </div>
+                  <div class="d-flex flex-column">
+                    <div class="d-flex">
+                      <div>
+                        <input hidden="true" id="image_{{i}}" type='file' (change)="onSelectFile($event, i)" formControlName="image">
+
+                        <label class="btn btn-type-2 text-uppercase field-content  margin-right-36" [for]="langService.editable ? null : 'image_' + i">
+                          <app-text page="competition_basic" default="Select"></app-text>
+                        </label>
+                      </div>
+                      <div *ngIf="fileToUpload(i) || imageLink(i)">
+                        <button class="btn btn-type-2 text-uppercase field-content" (click)="deleteImage(i)">
+                          <app-text page="competition_basic" place="delete" default="Delete image"></app-text>
+                        </button>
+                      </div>
+                    </div>
+                    <div *ngIf="fileToUpload(i)" class="lines-1 place-of-origin-text margin-left-16">
+                      <span>{{fileToUpload(i).name}}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div>
+                <button class="btn m-0 p-0" (click)="removePrize(i)">
+                  <mat-icon svgIcon="icn-close-bonvine" class="icon-close"></mat-icon>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+
+        <div class="d-flex margin-bottom-32 justify-content-center">
+          <button class="btn m-0 p-0" (click)="addPrize(null)">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+</div>

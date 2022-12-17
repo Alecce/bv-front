@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-body">
+    <!--<form [formGroup]="form">-->
+      <!--<div class="form-group row">-->
+        <!--<label class="col-4 text-right my-auto" for="type">-->
+          <!--&lt;!&ndash;Type:&ndash;&gt;-->
+          <!--<app-text page="registration" place="type" default="Type:"></app-text>-->
+        <!--</label>-->
+        <!--<select id="type" name="type" formControlName="type">-->
+          <!--<option value="personal" [selected]="true">-->
+            <!--&lt;!&ndash;Personal&ndash;&gt;-->
+            <!--<app-text page="registration" place="personal" default="Personal"></app-text>-->
+          <!--</option>-->
+          <!--<option value="business">-->
+            <!--&lt;!&ndash;Business&ndash;&gt;-->
+            <!--<app-text page="registration" place="business" default="Business"></app-text>-->
+          <!--</option>-->
+        <!--</select>-->
+        <!--<div *ngIf="langService.editable">-->
+          <!--<app-text page="registration" place="personal" default="Personal"></app-text>-->
+          <!--<app-text page="registration" place="business" default="Business"></app-text>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<app-registration-person *ngIf="type.value != 'business'"></app-registration-person>-->
+      <!--<app-registration-business *ngIf="type.value == 'business'"></app-registration-business>-->
+    <!--</form>-->
+    <app-registration-person *ngIf="type.value != 'business'"></app-registration-person>
+  </div>
+</div>

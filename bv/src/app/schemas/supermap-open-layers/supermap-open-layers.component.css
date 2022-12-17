@@ -1,0 +1,10 @@
+
+/*.map {*/
+  /*height: 100vh;*/
+  /*width: 100vw;*/
+/*}*/
+.map-container {
+  width: inherit;
+  height: inherit;
+  z-index: 1;
+}

@@ -1,0 +1,43 @@
+.dropdown-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.select-text {
+  height: 17px;
+  font-family: 'Noto Sans Display';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0px;
+  color: var(--black);
+  text-transform: capitalize;
+}
+::ng-deep .icon-arrow-language mat-icon{
+  margin-bottom: 10px;
+  height: 8px;
+  width: 12px;
+}
+.dropdown-item:hover {
+  background-color: inherit;
+}
+.dropdown-item:active {
+  background-color: inherit;
+}
+.dropdown-item:focus {
+  background-color: inherit;
+}
+.lang-row:hover {
+  background-color: rgba(162, 49, 45, 0.1);
+  cursor: pointer;
+}
+.lang-row .lines-1{
+  line-height: 25px !important;
+}
+.lang-row .language-emblem-mobile{
+  line-height: 42px !important;
+}
+.language-emblem-container {
+  min-width: 32px;
+}

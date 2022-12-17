@@ -1,0 +1,11 @@
+
+::ng-deep .bonvino-table-head th {
+  height: 40px !important;
+  border-top: none !important;
+  border-bottom: solid 1px var(--black) !important;
+}
+::ng-deep .bonvino-table-row tr {
+  height: 40px !important;
+  border-top: none !important;
+  border-bottom: solid 1px var(--chrome) !important;
+}

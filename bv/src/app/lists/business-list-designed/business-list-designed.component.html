@@ -1,0 +1,527 @@
+<div class="d-flex flex-column">
+  <div class="d-flex margin-64 justify-content-around">
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-1">
+        <app-text page="my_business" default="My wineries"></app-text>
+      </div>
+
+
+      <div class="lines-1 place-of-origin-text d-flex justify-content-start"  *ngFor="let winery of wineryList; let i = index">
+        <div class="lines-1">
+          <span *ngIf="langService.getLanguage() == winery.language">{{i + 1}}. {{winery.name}}</span>
+          <span *ngIf="langService.getLanguage() != winery.language">{{i + 1}}. {{winery.nameInt}}</span>
+
+        </div>
+        <div class="ml-auto">
+
+
+          <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+            <div class="" id="listDropdown" ngbDropdownToggle>
+              <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+            </div>
+            <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+              <div class="d-flex flex-column align-items-start menu-buttons">
+                <div class="hyperlink">
+
+                  <a href="winery-edit/{{winery.id}}">
+                    <app-text page="my_business" default="Edit"></app-text>
+                  </a>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="openBusinessRelations(i, wineryList[i].id, 'winery')">
+                    <app-text page="my_business" default="Edit relations" class=""></app-text>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="lines-1 d-flex margin-top-32 justify-content-between">
+        <div>
+          <app-text page="my_business" default="Add one more winery"></app-text>
+        </div>
+
+        <div>
+          <a href="winery-add">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-1">
+        <app-text page="my_business" default="My vineyards"></app-text>
+      </div>
+
+
+      <div class="lines-1 place-of-origin-text d-flex justify-content-start"  *ngFor="let vineyard of vineyardList; let i = index">
+        <div class="lines-1">
+          <span *ngIf="langService.getLanguage() == vineyard.language">{{i + 1}}. {{vineyard.name}}</span>
+          <span *ngIf="langService.getLanguage() != vineyard.language">{{i + 1}}. {{vineyard.nameInt}}</span>
+
+        </div>
+        <div class="ml-auto">
+
+
+          <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+            <div class="" id="listDropdown" ngbDropdownToggle>
+              <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+            </div>
+            <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+              <div class="d-flex flex-column align-items-start menu-buttons">
+                <div class="hyperlink">
+
+                  <a href="vineyard-edit/{{vineyard.id}}">
+                    <app-text page="my_business" default="Edit"></app-text>
+                  </a>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="openBusinessRelations(i, vineyardList[i].id, 'vineyard')">
+                    <app-text page="my_business" default="Edit relations" class=""></app-text>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="lines-1 d-flex margin-top-32 justify-content-between">
+        <div>
+          <app-text page="my_business" default="Add one more vineyard"></app-text>
+        </div>
+
+        <div>
+          <a href="vineyard-add">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-1">
+        <app-text page="my_business" default="My competitions"></app-text>
+      </div>
+
+
+      <div class="lines-1 place-of-origin-text d-flex justify-content-start"  *ngFor="let competition of competitionList; let i = index">
+        <div class="lines-1">
+          <span *ngIf="langService.getLanguage() == competition.language">{{i + 1}}. {{competition.name}}</span>
+          <span *ngIf="langService.getLanguage() != competition.language">{{i + 1}}. {{competition.nameInt}}</span>
+
+        </div>
+        <div class="ml-auto">
+
+
+          <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+            <div class="" id="listDropdown" ngbDropdownToggle>
+              <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+            </div>
+            <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+              <div class="d-flex flex-column align-items-start menu-buttons">
+                <div class="hyperlink">
+
+                  <a href="competition-edit/{{competition.id}}">
+                    <app-text page="my_business" default="Edit"></app-text>
+                  </a>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="openBusinessRelations(i, competitionList[i].id, 'competition')">
+                    <app-text page="my_business" default="Edit relations" class=""></app-text>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="lines-1 d-flex margin-top-32 justify-content-between">
+        <div>
+          <app-text page="my_business" default="Add one more competition"></app-text>
+        </div>
+
+        <div>
+          <a href="competition-add">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-even margin-right-36">
+
+      <div class="heading-1">
+        <app-text page="my_business" default="My shops"></app-text>
+      </div>
+
+      <div class="lines-1 place-of-origin-text d-flex justify-content-start"  *ngFor="let shop of shopList; let i = index">
+        <div class="lines-1">
+          <span *ngIf="langService.getLanguage() == shop.language">{{i + 1}}. {{shop.name}}</span>
+          <span *ngIf="langService.getLanguage() != shop.language">{{i + 1}}. {{shop.nameInt}}</span>
+        </div>
+        <div class="ml-auto">
+
+
+          <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+            <div class="" id="listDropdown" ngbDropdownToggle>
+              <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+            </div>
+            <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+              <div class="d-flex flex-column align-items-start menu-buttons">
+                <div class="hyperlink">
+
+                  <a href="shop/{{shop.id}}">
+                    <app-text page="my_business" default="Show"></app-text>
+                  </a>
+                </div>
+                <div class="hyperlink">
+
+                  <a href="shop-edit/{{shop.id}}">
+                    <app-text page="my_business" default="Edit"></app-text>
+                  </a>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="openBusinessRelations(i, shopList[i].id, 'shop')">
+                    <app-text page="my_business" default="Edit relations" class=""></app-text>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+      <div class="lines-1 d-flex margin-top-32 justify-content-between">
+        <div>
+          <app-text page="my_business" default="Add one more shop"></app-text>
+        </div>
+
+        <div>
+          <a href="shop-add">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="d-flex flex-column flex-even margin-right-36">-->
+
+      <!--<div class="heading-1">-->
+        <!--<app-text page="my_business" default="My specialists"></app-text>-->
+      <!--</div>-->
+
+
+      <!--<div class="lines-1 place-of-origin-text d-flex justify-content-start"  *ngFor="let specialist of specialistList; let i = index">-->
+        <!--<div class="lines-1">-->
+          <!--<span>{{i + 1}}. {{specialist.name}}</span>-->
+        <!--</div>-->
+
+        <!--<div class="ml-auto d-flex">-->
+
+
+
+          <!--<div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">-->
+            <!--<div class="" id="listDropdown" ngbDropdownToggle>-->
+              <!--<app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>-->
+            <!--</div>-->
+            <!--<div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">-->
+              <!--<div class="d-flex flex-column align-items-start menu-buttons">-->
+                <!--<div class="">-->
+                  <!--<button class="btn btn-option hyperlink p-0" (click)="openSpecialist(i, 'add')">-->
+                    <!--<app-text page="my_business" default="Edit" class="hyperlink"></app-text>-->
+                  <!--</button>-->
+                <!--</div>-->
+                <!--<div class="" *ngIf="cookieService.get('sequrity') && cookieService.get('sequrity') != '1'">-->
+                  <!--<button class="btn btn-option hyperlink p-0" (click)="deleteSpecialist(i, 'delete')">-->
+                    <!--<app-text page="my_business" default="Delete" class=""></app-text>-->
+                  <!--</button>-->
+                <!--</div>-->
+                <!--<div>-->
+                  <!--<button class="btn btn-option hyperlink p-0" (click)="deleteSpecialist(i, 'unclaim')">-->
+                    <!--<app-text page="my_business" default="Unclaim" class="hyperlink"></app-text>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
+        <!--</div>-->
+      <!--</div>-->
+
+
+
+      <!--<div class="lines-1 d-flex margin-top-32 justify-content-between">-->
+        <!--<div>-->
+          <!--<app-text page="my_business" default="Add one more specialist"></app-text>-->
+        <!--</div>-->
+
+        <!--<div>-->
+          <!--<button class="btn btn-option hyperlink p-0" (click)="openSpecialist(-1, 'add')">-->
+            <!--<app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="lines-1 d-flex justify-content-between">-->
+        <!--<div>-->
+          <!--<app-text page="my_business" default="Claim as you one more specialist"></app-text>-->
+        <!--</div>-->
+
+        <!--<div>-->
+          <!--<button class="btn btn-option hyperlink p-0" (click)="openSpecialist(-1, 'claim')">-->
+            <!--<app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <div class="d-flex flex-column flex-even">
+
+      <div class="heading-1">
+        <app-text page="my_business" default="My business"></app-text>
+      </div>
+
+
+      <div class="lines-1 place-of-origin-text d-flex justify-content-start" *ngFor="let business of businessList; let i = index">
+        <div class="lines-1">
+          <span>{{i + 1}}. {{business.name}} - </span><app-text page="business" default="{{business.type}}"></app-text>
+        </div>
+        <div class="ml-auto">
+
+
+          <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right">
+            <div class="" id="listDropdown" ngbDropdownToggle>
+              <app-icon-bonvino svgIcon="icn-menu" class="icn-menu" link="fill"></app-icon-bonvino>
+            </div>
+            <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+              <div class="d-flex flex-column align-items-start menu-buttons">
+                <div class="">
+                  <a class="btn btn-option hyperlink p-0" [routerLink]="langService.editable ? null : [getLinkBusiness(i)]">
+                    <app-text page="my_business" default="View"></app-text>
+                  </a>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="openBusiness(i)">
+                    <app-text page="my_business" default="Edit"></app-text>
+                  </button>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="openBusinessRelations(i, businessList[i].id, 'business')">
+                    <app-text page="my_business" default="Edit relations" class=""></app-text>
+                  </button>
+                </div>
+                <div class="">
+                  <button class="btn btn-option hyperlink p-0" (click)="deleteBusiness(i)">
+                    <app-text page="my_business" default="Delete" class=""></app-text>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="lines-1 d-flex margin-top-32 justify-content-between">
+        <div>
+          <app-text page="my_business" default="Add one more business"></app-text>
+        </div>
+
+        <div>
+          <button class="btn btn-option hyperlink p-0" (click)="openBusiness(-1)">
+            <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill"></app-icon-bonvino>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="px-2">-->
+  <!--<div class="row mt-2">-->
+    <!--<div class="col">-->
+      <!--<h5>-->
+        <!--<app-text page="my_business" default="My wineries" class="text-muted"></app-text>-->
+      <!--</h5>-->
+    <!--</div>-->
+    <!--<div class="col">-->
+      <!--<a href="winery-add">Add one more winery</a>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="row" *ngFor="let winery of wineryList; let i = index">-->
+    <!--<div class="col">-->
+      <!--<div class="row">-->
+        <!--<div class="col-auto">-->
+          <!--{{i + 1}}-->
+        <!--</div>-->
+        <!--<div class="col" *ngIf="langService.getLanguage() == winery.language">-->
+          <!--<a href="winery-edit/{{winery.id}}">{{winery.name}}</a>-->
+
+        <!--</div>-->
+        <!--<div class="col" *ngIf="langService.getLanguage() != winery.language">-->
+          <!--<a href="winery-edit/{{winery.id}}">{{winery.nameInt}}</a>-->
+        <!--</div>-->
+
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-info btn-sm" (click)="openBusinessRelations(i, wineryList[i].id, 'winery')">-->
+            <!--Edit relations-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <!--<div class="row mt-2">-->
+    <!--<div class="col">-->
+      <!--<h5>-->
+        <!--<app-text page="my_business" default="My shops" class="text-muted"></app-text>-->
+      <!--</h5>-->
+    <!--</div>-->
+    <!--<div class="col">-->
+      <!--<a href="shop-add">Add one more shop</a>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="row" *ngFor="let shop of shopList; let i = index">-->
+    <!--<div class="col">-->
+      <!--<div class="row">-->
+        <!--<div class="col-auto">-->
+          <!--{{i + 1}}.-->
+        <!--</div>-->
+        <!--<div class="col" *ngIf="langService.getLanguage() == shop.language">-->
+          <!--<a href="shop-edit/{{shop.id}}">{{shop.name}}</a>-->
+
+        <!--</div>-->
+        <!--<div class="col" *ngIf="langService.getLanguage() != shop.language">-->
+          <!--<a href="shop-edit/{{shop.id}}">{{shop.nameInt}}</a>-->
+        <!--</div>-->
+
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-info btn-sm" (click)="openBusinessRelations(i, shopList[i].id, 'shop')">-->
+            <!--Edit relations-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <!--<div class="row mt-2">-->
+    <!--<div class="col">-->
+      <!--<h5>-->
+        <!--<app-text page="my_business" default="My specialist" class="text-muted"></app-text>-->
+      <!--</h5>-->
+    <!--</div>-->
+    <!--<div class="col">-->
+      <!--<button class="btn btn-link btn-sm" (click)="openSpecialist(-1, 'add')">-->
+        <!--Add one more specialist-->
+      <!--</button>-->
+    <!--</div>-->
+    <!--<div class="col">-->
+      <!--<button class="btn btn-link btn-sm" (click)="openSpecialist(-1, 'claim')">-->
+        <!--Claim as you one more specialist-->
+      <!--</button>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="row py-1" *ngFor="let specialist of specialistList; let i = index">-->
+    <!--<div class="col">-->
+      <!--<div class="row py-1">-->
+        <!--<div class="col-auto">-->
+          <!--{{i + 1}}.-->
+        <!--</div>-->
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-link btn-sm" (click)="openSpecialist(i, 'add')">-->
+            <!--{{specialist.name}}-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-danger btn-sm" (click)="deleteSpecialist(i, 'delete')">-->
+            <!--Delete-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-danger btn-sm" (click)="deleteSpecialist(i, 'unclaim')">-->
+            <!--Unclaim-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="col" *ngIf="langService.getLanguage() == shop.language">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="shop-edit/{{shop.id}}">{{shop.name}}</a>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col" *ngIf="langService.getLanguage() != winery.language">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="shop-edit/{{shop.id}}">{{shop.nameInt}}</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+
+  <!--<div class="row mt-2">-->
+    <!--<div class="col">-->
+      <!--<h5>-->
+        <!--<app-text page="my_business" default="My business" class="text-muted"></app-text>-->
+      <!--</h5>-->
+    <!--</div>-->
+    <!--<div class="col">-->
+      <!--<button class="btn btn-link btn-sm" (click)="openBusiness(-1)">-->
+        <!--Add one more business-->
+      <!--</button>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="row py-1" *ngFor="let business of businessList; let i = index">-->
+    <!--<div class="col">-->
+      <!--<div class="row py-1">-->
+        <!--<div class="col-auto">-->
+          <!--{{i + 1}}.-->
+        <!--</div>-->
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-link btn-sm" (click)="openBusiness(i)">-->
+            <!--{{business.name}} - <app-text page="business" default="{{business.type}}"></app-text>-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-info btn-sm" (click)="openBusinessRelations(i, businessList[i].id, 'business')">-->
+            <!--Edit relations-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="col">-->
+
+          <!--<button class="btn btn-danger btn-sm" (click)="deleteBusiness(i)">-->
+            <!--Delete-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<div class="col" *ngIf="langService.getLanguage() == shop.language">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="shop-edit/{{shop.id}}">{{shop.name}}</a>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col" *ngIf="langService.getLanguage() != winery.language">&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="shop-edit/{{shop.id}}">{{shop.nameInt}}</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

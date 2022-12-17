@@ -1,0 +1,188 @@
+<form [formGroup]="form">
+
+  <div class="col-12 container">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">
+          <app-text page="wines_grapes" place="grape" default="Grape"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" place="percent" default="Percent"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" place="vineyard" default="Vineyard"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" place="age" default="Age"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" place="date_of_harvest" default="Date of harvest"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" place="brix" default="Brix (°Bx)"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" default="Night harvest"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" default="Hand picked"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" default="Main"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" default="Clone"></app-text>
+        </th>
+        <th scope="col">
+          <app-text page="wines_grapes" place="remove_row" default="Remove row"></app-text>
+        </th>
+      </tr>
+      </thead>
+      <tbody formArrayName="grapesData">
+      <tr *ngFor="let grape of grapesData.controls; let i = index" formGroupName="{{i}}">
+        <th scope="row">
+          <select formControlName="grape">
+            <option value="0" [selected]="true">
+              <app-text page="wines_grapes" place="select" default="Select"></app-text>
+            </option>
+            <option *ngFor="let availableGrape of availableGrapes()" value="{{availableGrape.id}}">{{availableGrape.name}}</option>
+          </select>
+          <div *ngIf="langService.editable">
+            <app-text page="wines_grapes" place="select" default="Select"></app-text>
+          </div>
+        </th>
+        <td>
+          <input id="percent" type="text" class="form-control" formControlName="percent">
+        </td>
+        <th scope="row">
+          <select formControlName="vineyard">
+            <option value="0" [selected]="true">
+              <app-text page="wines_grapes" place="select" default="Select"></app-text>
+            </option>
+            <option *ngFor="let availableVineyard of availableVineyards()" value="{{availableVineyard.id}}">{{availableVineyard.name}}</option>
+          </select>
+          <div *ngIf="langService.editable">
+            <app-text page="wines_grapes" place="select" default="Select"></app-text>
+          </div>
+        </th>
+        <!--<td>-->
+          <!--<input id="age" type="text" class="form-control" formControlName="age">-->
+        <!--</td>-->
+        <th scope="row">
+          <select formControlName="age">
+            <option value="0">
+              <app-text page="wines_grapes" place="select" default="Select"></app-text>
+            </option>
+            <option *ngFor="let a of ageList" value="{{a.name}}">{{a.name}}</option>
+          </select>
+        </th>
+        <td>
+          <input id="harvestDate" type="date" class="form-control" formControlName="gharvest_date">
+        </td>
+        <td>
+          <input type="text" class="form-control" formControlName="brix">
+        </td>
+        <td>
+          <input type="checkbox" class="form-control" formControlName="nightHarvest">
+        </td>
+        <td>
+          <input type="checkbox" class="form-control" formControlName="handPicked">
+        </td>
+        <td>
+          <input type="checkbox" class="form-control" formControlName="main">
+        </td>
+        <th scope="row">
+          <select formControlName="clone">
+            <option value="0">
+              <app-text page="wines_grapes" place="select" default="Select"></app-text>
+            </option>
+            <option *ngFor="let clone of getClones(grapesData.at(i).get('grape').value)" value="{{grapesData.at(i).get('grape').value + clone.name}}">{{clone.name}}</option>
+          </select>
+        </th>
+        <td>
+          <input type="text" class="form-control" formControlName="clone">
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="removeGrapeData(i)">
+            <app-text page="wines_grapes" place="remove" default="Remove"></app-text>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" (click)="addGrapeData(null)">
+      <app-text page="wines_grapes" place="add_range" default="Add range"></app-text>
+    </button>
+  </div>
+
+
+
+  <div>
+    <div class="form-group row">
+      <label class="col text-center my-auto">
+        <app-text page="wines_grapes" place="winery_grapes" default="Winery grapes:"></app-text>
+      </label>
+    </div>
+    <div *ngFor="let grape of grapeList" formGroupName="grapes">
+      <div  class="form-group row">
+
+        <div class="col-4 offset-2 text-right my-auto">
+
+          <label>{{grape.name}}:</label>
+          <button class="btn btn-danger btn-sm"  (click)="uncheckGrape(grape.id)">
+            <app-text page="wines_grapes" place="delete_grape_from_winery" default="Delete from winery"></app-text>
+          </button>
+        </div>
+        <div class="col-4">
+
+          <label>Synonym:</label>
+          <input class="my-auto" type="text" [value]="grape.synonym || ''" (input)="grape.synonym = $event.target.value">
+        </div>
+        <!--<label class="col-4 offset-4 text-right my-auto">{{grape.name}}</label>-->
+        <!--<input class="my-auto" type="checkbox" formControlName="{{grape.id}}" (click)="uncheckGrape(grape.id)">-->
+
+      </div>
+    </div>
+
+    <div>
+      <app-superlist [tableCols]="tableColsGrapes" [api]="apiGrapes" [addCheckbox]="true"></app-superlist>
+    </div>
+
+
+    <div class="form-group row">
+      <label class="col text-center my-auto">
+        <app-text page="wines_grapes" place="winery_vineyards" default="Winery vineyards:"></app-text>
+      </label>
+    </div>
+    <div *ngFor="let vineyard of vineyardList" formGroupName="vineyards">
+      <div  class="form-group row">
+
+        <label class="col-4 offset-4 text-right my-auto">{{vineyard.name}}</label>
+        <!--<input class="my-auto" type="checkbox" formControlName="{{vineyard.id}}" (click)="uncheckVineyard(vineyard.id)">-->
+        <button class="btn btn-danger btn-sm"  (click)="uncheckVineyard(vineyard.id)">
+          <app-text page="wines_grapes" place="delete_vineyard_from_winery" default="Delete from winery"></app-text>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <app-superlist [tableCols]="tableColsVineyards" [api]="apiVineyards" [addCheckbox]="true"></app-superlist>
+    </div>
+  </div>
+
+
+</form>
+
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

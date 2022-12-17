@@ -1,0 +1,49 @@
+<form [formGroup]="form">
+
+  <div class="form-group row">
+    <label class="col-4 text-right my-auto" for="name">
+      <app-text page="kashrut" place="name" default="Name:"></app-text>
+    </label>
+    <input id="name" type="text" class="form-control col-4" formControlName="name">
+  </div>
+
+  <app-superimage [storage]="STORAGE" [downloadedData]="downloadedData"></app-superimage>
+
+  <div class="row" *ngIf="langService.editable || routeData.editable && routeData.available">
+    <div class="col-4 offset-4">
+      <button class="btn btn-success btn-block" (click)="submit()">
+        <app-text page="kashrut" place="submit" default="Submit"></app-text>
+
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="langService.editable || !routeData.editable && routeData.available">
+    <div class="col-4 offset-4">
+      <button class="btn btn-success btn-block" (click)="edit()">
+        <app-text page="kashrut" place="edit" default="Edit"></app-text>
+
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="langService.editable || !routeData.editable && routeData.available">
+    <div class="col-4 offset-4">
+      <button class="btn btn-success btn-block" (click)="delete()">
+        <app-text page="kashrut" place="delete" default="Delete"></app-text>
+
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="langService.editable || routeData.editable && routeData.download">
+    <div class="row">
+      <div class="col-4 offset-4">
+        <button class="btn btn-success btn-block" (click)="returnBack()">
+          <app-text page="kashrut" place="return_back" default="Return back"></app-text>
+
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

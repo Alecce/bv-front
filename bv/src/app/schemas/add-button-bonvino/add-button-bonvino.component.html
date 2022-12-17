@@ -1,0 +1,15 @@
+<div
+  (mouseover)="paintOceanColor()"
+  (mouseout)="paintBlackColor()"
+  (mousedown)="paintBlackColor()"
+  (mouseup)="paintOceanColor()" class="hyperlink align-items-baseline d-flex flex-row">
+  <div>
+
+    <app-icon-bonvino svgIcon="icn-add" class="icn-add" link="fill" [colorRegular]="'#ff7800'" [colorPointed]="'#a2312d'"></app-icon-bonvino>
+  </div>
+
+  <div>
+
+    <app-text page="any" default="Add" class="margin-left-12"></app-text>
+  </div>
+</div>

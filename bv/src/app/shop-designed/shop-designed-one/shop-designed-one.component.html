@@ -1,0 +1,82 @@
+<div class="d-flex flex-column" *ngIf="shopData">
+  <div class="d-flex">
+    <div class="bg-image flex-fill d-flex justify-content-between align-items-end" [ngStyle]="{'background':image}">
+
+      <div class="w-100 d-flex justify-content-between align-items-end bg-gradient">
+
+        <div class="title-name">
+          <span *ngIf="shopData.commoninfo.language == langService.getLanguage()">
+            {{shopData.commoninfo.name_national}}
+          </span>
+            <span *ngIf="shopData.commoninfo.language != langService.getLanguage()">
+            {{shopData.commoninfo.name_international}}
+          </span>
+        </div>
+        <div class="button-edit" *ngIf="isEditable()">
+
+          <a class="btn btn-type-1 text-uppercase field-content"
+             [routerLink]="langService.editable ? null : editLink()">
+            <app-text page="shop_one" default="Edit"></app-text>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex margin-64 justify-content-around">
+    <div>
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showInformation()">
+        <app-text page="shop_one" default="Shop Information"></app-text>
+      </button>
+    </div>
+    <div>
+      <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : '/wine-list'" [queryParams]="langService.editable ? null : wineListParams()">
+        <app-text page="shop_one" place="show_wines" default="Show wines"></app-text>
+      </a>
+    </div>
+    <div>
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showContacts()">
+        <app-text page="shop_one" default="Contact us"></app-text>
+      </button>
+    </div>
+    <div [hidden]="!isTabExist('')">
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional('')">
+        <app-text page="shop_one" default="Additional Information"></app-text>
+      </button>
+    </div>
+    <div *ngFor="let tab of tabs; let i = index" [hidden]="!isTabExist(tab)">
+      <button class="btn btn-type-1 text-uppercase field-content" (click)="showAdditional(tab)">
+        <app-text page="subtabs" [default]="tab"></app-text>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="shop_one" default="Edit"></app-text>
+
+  <app-text page="shop_one" default="Shop Information"></app-text>
+
+  <app-text page="shop_one" place="show_wines" default="Show wines"></app-text>
+
+  <app-text page="shop_one" default="Contact us"></app-text>
+
+  <app-text page="shop_one" default="Additional Information"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

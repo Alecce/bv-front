@@ -1,0 +1,2458 @@
+<div class="d-flex scrollbar height-600px margin-top-16 margin-bottom-4 margin-right-16" [ngClass]="langService.isRtl() ? 'global-rtl' : 'global-ltr'" *ngIf="wineData">
+  <div class="image-box h-100 margin-top-32 margin-left-36 margin-bottom-32 margin-right-36">
+    <div class="">
+      <img  class="img-fluid" [src]="getImage()" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-column description-box">
+
+      <div  class="d-flex heading-1 flex-row main-column margin-left-24 justify-content-between" #navigation>
+        <div>
+
+
+          <app-title [language]="wineData.basic_designed.language" [national]="wineData.commoninfo.name_national"
+                     [international]="wineData.commoninfo.name_international" [id]="id" page="wineNames"></app-title>
+
+        </div>
+
+        <div class="flex-even justify-content-end margin-bottom-8 margin-right-36" *ngIf="showOptions">
+
+
+          <div class="d-flex justify-content-end">
+
+            <div ngbDropdown class="d-inline-block" display="dynamic" placement="bottom-right" autoClose="outside">
+              <div class="" id="listDropdown" ngbDropdownToggle>
+                <button class="btn btn-type-1 text-uppercase field-content">
+                  <app-text page="wines" default="Actions"></app-text>
+                </button>
+              </div>
+              <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+                <div class="d-flex flex-column align-items-start menu-buttons">
+
+                  <div class="">
+                    <a [routerLink]="null" class="hyperlink" (click)="rateWine()">
+                      <app-text page="wines_one"  default="Rate"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="isEditable()">
+                    <a [routerLink]="langService.editable ? null : editWineLink()" class="hyperlink">
+                      <app-text page="wines_one"  default="Edit wine"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="!wineData.storage">
+                    <a [routerLink]="null" class="hyperlink" (click)="getWine(wineData)">
+                      <app-text page="wines_one"  default="Get"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="wineData.storage">
+                    <a [routerLink]="null" class="hyperlink" (click)="removeWine(wineData)">
+                      <app-text page="wines_one"  default="Remove"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="accountService.ifCollector()">
+                    <a [routerLink]="null" class="hyperlink" (click)="storeWine()">
+                      <app-text page="wines_one"  default="Add to collection"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="wineData.wish == 'buy'">
+                    <a [routerLink]="null" class="hyperlink" (click)="wishToTaste(wineData)">
+                      <app-text page="wines_one"  default="Wish to buy"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="wineData.wish == 'taste'">
+                    <a [routerLink]="null" class="hyperlink" (click)="unwish(wineData)">
+                      <app-text page="wines_one"  default="Wish to taste"></app-text>
+                    </a>
+                  </div>
+                  <div class="" *ngIf="!wineData.wish && accountService.me.name">
+                    <a [routerLink]="null" class="hyperlink" (click)="wishToBuy(wineData)">
+                      <app-text page="wines_one"  default="No wish"></app-text>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column main-column margin-left-24 margin-right-24 rtl-susceptible">
+
+
+
+
+
+        <div class="lines-1" *ngIf="wineData.regionInfo.country">
+
+          <app-text-complicated page="wines_one" default="Country: ***" class="font-weight-bold"
+                                #country__>
+
+            <!--<span  *appTransclude>{{eventData.commoninfo.phone}}</span>-->
+            <app-text *appTransclude page="country_names" place="{{wineData.regionInfo.country}}" default="{{countriesMap.get(wineData.regionInfo.country)}}"></app-text>
+          </app-text-complicated>
+
+        </div>
+        <div class="lines-1" *ngIf="wineData.regionInfo.regionsForm">
+
+
+          <app-text-complicated page="wines_one" default="Region: ***" class="font-weight-bold"
+                                #region__>
+
+            <div class="d-inline" *appTransclude>
+              <div class="d-inline"  *ngFor="let r of wineData.regionInfo.regionsForm; let i = index" >
+                <span *ngIf="i != 0 && r">, </span>
+                <app-text page="country_names" place="{{r}}" default="{{regionesMap.get(r)}}"></app-text>
+              </div>
+            </div>
+          </app-text-complicated>
+
+        </div>
+
+
+
+        <div class="hyperlink h-auto">
+          <a [routerLink]="'winery/' + wineData.wineryinfo.id"
+             *ngIf="!langService.editable">
+            <app-title [language]="wineData.wineryinfo.language" [national]="wineData.wineryinfo.winery_name"
+                       [international]="wineData.wineryinfo.international_name" [id]="wineData.wineryinfo.id" page="wineryNames"></app-title>
+          </a>
+
+          <app-title [language]="wineData.wineryinfo.language" [national]="wineData.wineryinfo.winery_name"
+                     [international]="wineData.wineryinfo.international_name" [id]="wineData.wineryinfo.id" page="wineryNames"
+                     *ngIf="langService.editable"></app-title>
+
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.year">
+          <app-text-complicated page="wines_one" place="year_of_wimne" default="***" class="font-weight-bold"
+                                #year_of_wine__>
+
+            <span  *appTransclude>{{wineData.commoninfo.year}}</span>
+          </app-text-complicated>
+        </div>
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.grand_type && wineData.basic_designed.grand_type != 'select' && wineData.basic_designed.grand_type != 'still'">
+
+          <app-text-complicated page="wines_one" place="grand_type_of_wine" default="***" class="font-weight-bold"
+                                #grand_type_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.grand_type" default="{{wineData.basic_designed.grand_type}}"></app-text>
+            <div *ngFor="let row of grandTypesArr" translate>
+              <app-text page="wines_one" place="{{row.defaultText}}" default="{{row.defaultText}}" [parent]="grand_type_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.color && wineData.commoninfo.color != 'nocolor'">
+
+          <app-text-complicated page="wines_one" place="color_of_wine" default="***" class="font-weight-bold"
+                                #color_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.commoninfo.color" default="{{wineData.commoninfo.color}}"></app-text>
+            <div *ngFor="let row of colorArr" translate>
+              <app-text page="wines_one" place="{{row.value}}" default="{{row.value}}" [parent]="color_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.still && wineData.basic_designed.still != 'select' && wineData.basic_designed.still != 'usual'">
+
+          <app-text-complicated page="wines_one" place="still_of_wine" default="***" class="font-weight-bold"
+                                #still_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.still" default="{{wineData.basic_designed.still}}"></app-text>
+            <div *ngFor="let row of stillArr" translate>
+              <app-text page="wines_one" place="{{row.defaultText}}" default="{{row.defaultText}}" [parent]="still_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.sparkling && wineData.basic_designed.sparkling != 'select'">
+
+          <app-text-complicated page="wines_one" place="sparkling_of_wine" default="***" class="font-weight-bold"
+                                #sparkling_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.sparkling" default="{{wineData.basic_designed.sparkling}}"></app-text>
+            <div *ngFor="let row of sparklingSubTypeList" translate>
+              <app-text page="wines_one" place="{{row.name}}" default="{{row.name}}" [parent]="sparkling_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.method && wineData.basic_designed.method != 'select'">
+
+          <app-text-complicated page="wines_one" place="method_of_wine" default="***" class="font-weight-bold"
+                                #method_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.method" default="{{wineData.basic_designed.method}}"></app-text>
+            <div *ngFor="let row of methodArr" translate>
+              <app-text page="wines_one" default="{{row.defaultText}}" [parent]="method_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.sweetness && wineData.basic_designed.sweetness != 'select'">
+
+          <app-text-complicated page="wines_one" place="sweetness_of_wine" default="***" class="font-weight-bold"
+                                #sweetness_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.sweetness" default="{{wineData.basic_designed.sweetness}}"></app-text>
+            <div *ngFor="let row of sweetnessArr" translate>
+              <app-text page="wines_one" default="{{row.defaultText}}" [parent]="sweetness_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.champagne_sweetness && wineData.basic_designed.champagne_sweetness != 'select'">
+
+          <app-text-complicated page="wines_one" place="champagne_sweetness_of_wine" default="***" class="font-weight-bold"
+                                #champagne_sweetness_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.champagne_sweetness" default="{{wineData.basic_designed.champagne_sweetness | titlecase }}"></app-text>
+            <div *ngFor="let row of champagneSweetnessArr" translate>
+              <app-text page="wines_one" default="{{row.defaultText}}" [parent]="champagne_sweetness_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.gas && wineData.basic_designed.gas != 'select'">
+
+          <app-text-complicated page="wines_one" place="gas_of_wine" default="***" class="font-weight-bold"
+                                #gas_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.gas" default="{{wineData.basic_designed.gas}}"></app-text>
+            <div *ngFor="let row of gasArr" translate>
+              <app-text page="wines_one" default="{{row.defaultText}}" [parent]="gas_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.type && wineData.basic_designed.type != 'select' && wineData.basic_designed.type != '0'">
+
+
+          <app-text-complicated page="wines_one" place="type_of_wine" default="***" class="font-weight-bold"
+                                #type_of_wine__>
+
+            <app-text *appTransclude page="wines_one"
+                      default="{{wineTypeMap.get(wineData.basic_designed.type) }}"></app-text>
+            <div *ngFor="let row of wineTypeList" translate>
+              <app-text page="wines_one" default="{{row.type}}" [parent]="type_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.special && wineData.basic_designed.special != 'select' && wineData.basic_designed.special != '0'">
+
+
+          <app-text-complicated page="wines_one" place="specialtype_of_wine" default="***" class="font-weight-bold"
+                                #specialtype_of_wine__>
+
+            <app-text *appTransclude page="wines_one"
+                      default="{{wineSubTypeMap.get(wineData.basic_designed.special) }}"></app-text>
+            <div *ngFor="let row of wineSubTypeList" translate>
+              <app-text page="wines_one" default="{{row.name}}" [parent]="specialtype_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+        <div class="lines-1" *ngIf="wineData.basic_designed.nongrape && wineData.basic_designed.nongrape != 'select'">
+
+          <app-text-complicated page="wines_one" place="nongrape_of_wine" default="***" class="font-weight-bold"
+                                #nongrape_of_wine__>
+
+            <app-text *appTransclude page="wines_one" [place]="wineData.basic_designed.nongrape" default="{{wineData.basic_designed.nongrape  }}"></app-text>
+            <div *ngFor="let row of nongrapeSubTypeList" translate>
+              <app-text page="wines_one" default="{{row.name}}" [parent]="nongrape_of_wine__.name"></app-text>
+
+            </div>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.alc_percent">
+
+          <app-text-complicated page="wines_one" default="Alcohol: ***%" class="font-weight-bold"
+                                #alcohol_of_wine__>
+
+            <span  *appTransclude>{{wineData.commoninfo.alc_percent | number:'1.0-2'}}</span>
+          </app-text-complicated>
+        </div>
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.maker_national && (wineData.basic_designed.language == langService.getLanguage() || !wineData.commoninfo.maker_international)">
+
+          <app-text-complicated page="wines_one" default="Wine maker: ***" class="font-weight-bold"
+                                #winemaker_of_wine__>
+
+            <span  *appTransclude>{{wineData.commoninfo.maker_national}}</span>
+          </app-text-complicated>
+        </div>
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.maker_international && (wineData.basic_designed.language != langService.getLanguage() || !wineData.commoninfo.maker_national)">
+
+          <app-text-complicated page="wines_one" default="Wine maker: ***" class="font-weight-bold"
+                                #winemaker_of_wine__>
+
+            <span  *appTransclude>{{wineData.commoninfo.maker_international}}</span>
+          </app-text-complicated>
+        </div>
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.consultant_national && (wineData.basic_designed.language == langService.getLanguage() || !wineData.commoninfo.consultant_international)">
+
+          <app-text-complicated page="wines_one" default="Wine maker consultant: ***" class="font-weight-bold"
+                                #winemaker_consultant_of_wine__>
+
+            <span  *appTransclude>{{wineData.commoninfo.consultant_national}}</span>
+          </app-text-complicated>
+        </div>
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.consultant_international && (wineData.basic_designed.language != langService.getLanguage() || !wineData.commoninfo.consultant_national)">
+
+          <app-text-complicated page="wines_one" default="Wine maker consultant: ***" class="font-weight-bold"
+                                #winemaker_consultant_of_wine__>
+
+            <span  *appTransclude>{{wineData.commoninfo.consultant_international}}</span>
+          </app-text-complicated>
+        </div>
+
+
+
+        <div class="lines-1" *ngIf="wineData.commoninfo.barrel_aged">
+
+          <app-text-complicated page="wines_one" default="Barrel months: ***" class="font-weight-bold"
+                                #barrel_month_of_wine>
+
+            <span  *appTransclude>{{wineData.commoninfo.barrel_aged_range | number:'1.0-0'}}</span>
+          </app-text-complicated>
+        </div>
+
+        <div class="d-flex flex-column" *ngIf="wineData.grapes && wineData.grapes.length">
+
+          <div class="lines-1">
+            <app-text page="wines_one" default="Grapes" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+          </div>
+          <div class="lines-1" *ngFor="let grape of wineData.grapes" [hidden]="!(grapeMap.get(grape.grape * 1))">
+            <app-text page="grapes_names" [place]="grape.grape" [default]="grapeMap.get(grape.grape * 1)"></app-text><span *ngIf="grape.percent"> - {{grape.percent}} %</span>
+          </div>
+        </div>
+
+
+
+
+        <div class="d-flex flex-column" *ngIf="wineData.wrapping && wineData.wrapping.length">
+
+          <div class="lines-1">
+            <app-text page="wines_one" default="Bottles" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+          </div>
+          <div class="lines-1" *ngFor="let wrap of wineData.wrapping" [hidden]="!(wrap.size * 1)">
+            <app-text page="bottle_size" default="{{wrappingMap.get(wrap.size * 1)}}"></app-text>
+          </div>
+        </div>
+
+
+
+
+
+
+        <div *ngIf="wineData.menu.analysis">
+
+          <div class="lines-1" *ngIf="wineData.commoninfo.volatile_acidity">
+            <app-text page="wines_full" default="Volitile acidity g/l" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineData.commoninfo.volatile_acidity}}
+
+          </div>
+
+
+          <div class="lines-1" *ngIf="wineData.commoninfo.ph">
+            <app-text page="wines_full" default="pH" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>{{wineData.commoninfo.ph}}
+
+          </div>
+
+
+          <div class="lines-1" *ngIf="wineData.commoninfo.sugar">
+            <app-text page="wines_full" default="Sugar g/l" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineData.commoninfo.sugar}}
+
+          </div>
+
+          <div class="lines-1" *ngIf="wineData.commoninfo.energy">
+            <app-text page="wines_full" default="Energy kkal/100g" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineData.commoninfo.energy}}
+
+          </div>
+
+          <div class="lines-1" *ngIf="wineData.advanced_designed.total_dry_extract">
+            <app-text page="wines_full" default="Total dry extract g/l" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineData.advanced_designed.total_dry_extract}}
+
+          </div>
+
+
+          <div class="lines-1" *ngIf="wineData.advanced.nonfiltered">
+            <app-text page="wines_one" default="Nonfiltered" class="font-weight-bold"></app-text>
+
+          </div>
+
+
+          <div class="lines-1" *ngIf="wineData.advanced.lightfiltered">
+            <app-text page="wines_one" default="Light filtered" class="font-weight-bold"></app-text>
+
+          </div>
+
+
+          <div class="lines-1" *ngIf="wineData.advanced_designed.filtration">
+            <app-text page="wines_one" default="Filtration" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+            <app-text page="wines_one" default="{{wineData.advanced.filtration}}"></app-text>
+
+          </div>
+
+          <div class="lines-1" *ngIf="wineData.advanced.sulfurDioxide">
+            <app-text page="wines_one" default="Contain SO2" class="font-weight-bold"  *ngIf="wineData.advanced.sulfurDioxide == 1"></app-text>
+            <app-text page="wines_one" default="No SO2" class="font-weight-bold"  *ngIf="wineData.advanced.sulfurDioxide == 2"></app-text>
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="d-flex flex-column main-column line-height-2 margin-right-12 margin-left-12"
+           *ngIf="wineData.menu.certification || wineData.menu.crushing || wineData.menu.maceration_fermentation
+                  || wineData.menu.ageing || wineData.menu.pressing || wineData.menu.grape || wineData.menu.analysis || wineData.menu.series">
+
+        <app-scroll-bonvino *ngIf="wineData.menu.certification" [trigger]="trigger" scrollName="certification" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Certifitcates AOP/Kosher/Organic etc"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+
+
+            <div class="lines-1" *ngIf="wineData.advanced.passover">
+              <app-text page="wines_one" default="Passover" class="font-weight-bold"></app-text>
+
+            </div>
+
+            <div class="lines-1" *ngIf="wineData.advanced.mevushal">
+              <app-text page="wines_one" default="Mevushal" class="font-weight-bold"></app-text>
+
+            </div>
+
+            <div class="d-flex flex-column" *ngIf="wineData.advanced_designed.kashrut">
+              <div class="lines-1 d-flex" *ngIf="wineData.advanced_designed.kashrut && !wineData.kashrutsWine.length">
+                <div class="d-flex checkbox-bonvino align-items-start">
+                  <mat-icon svgIcon="checkmark" class="checkmark d-flex align-items-start"></mat-icon>
+                </div>
+                <div>
+                  <app-text page="wines_one" default="Kashrut" class="font-weight-bold"></app-text>
+                </div>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.kashrut && wineData.kashrutsWine.length">
+                <app-text page="wines_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+              <div class="lines-1" *ngFor="let kashrut of wineData.kashrutsWine">
+
+                <app-title [language]="'hebrew'" [national]="kashrut.hebrew"
+                           [international]="kashrut.int_name" [id]="'noId'" page="noPage"></app-title>
+
+              </div>
+            </div>
+
+
+
+            <div class="d-flex flex-column" *ngIf="wineData.advanced_designed.quality">
+              <div class="lines-1 d-flex" *ngIf="wineData.advanced_designed.quality && !wineData.qualitiesWine.length">
+                <div class="d-flex checkbox-bonvino align-items-start">
+                  <mat-icon svgIcon="checkmark" class="checkmark d-flex align-items-start"></mat-icon>
+                </div>
+                <div>
+                  <app-text page="wines_one" default="Quality" class="font-weight-bold"></app-text>
+                </div>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.quality && wineData.qualitiesWine.length">
+                <app-text page="wines_one" default="Quality" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+              <div class="lines-1" *ngFor="let quality of wineData.qualitiesWine">
+            <span>
+              {{quality.name}}
+            </span>
+              </div>
+            </div>
+
+
+
+            <div class="d-flex flex-column" *ngIf="wineData.advanced_designed.biodynamic">
+              <div class="lines-1 d-flex" *ngIf="wineData.advanced_designed.biodynamic && !wineData.biodynamicWine.length">
+                <div class="d-flex checkbox-bonvino align-items-start">
+                  <mat-icon svgIcon="checkmark" class="checkmark d-flex align-items-start"></mat-icon>
+                </div>
+                <div>
+                  <app-text page="wines_one" default="Biodynamic" class="font-weight-bold"></app-text>
+                </div>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.biodynamic && wineData.biodynamicWine.length">
+                <app-text page="wines_one" default="Biodynamic" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+              <div class="lines-1" *ngFor="let biodynamic of wineData.biodynamicWine">
+            <span>
+              {{biodynamic.name}}
+            </span>
+              </div>
+            </div>
+
+
+
+            <div class="d-flex flex-column" *ngIf="wineData.advanced_designed.organic">
+              <div class="lines-1 d-flex" *ngIf="wineData.advanced_designed.organic && !wineData.organicWine.length">
+                <div class="d-flex checkbox-bonvino align-items-start">
+                  <mat-icon svgIcon="checkmark" class="checkmark d-flex align-items-start"></mat-icon>
+                </div>
+                <div>
+                  <app-text page="wines_one" default="Organic" class="font-weight-bold"></app-text>
+                </div>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.organic && wineData.organicWine.length">
+                <app-text page="wines_one" default="Organic" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+              <div class="lines-1" *ngFor="let organic of wineData.organicWine">
+            <span>
+              {{organic.name}}
+            </span>
+              </div>
+            </div>
+
+
+
+
+            <div class="d-flex flex-column" *ngIf="wineData.advanced_designed.vegan">
+              <div class="lines-1 d-flex" *ngIf="wineData.advanced_designed.vegan && !wineData.veganWine.length">
+                <div class="d-flex checkbox-bonvino align-items-start">
+                  <mat-icon svgIcon="checkmark" class="checkmark d-flex align-items-start"></mat-icon>
+                </div>
+                <div>
+                  <app-text page="wines_one" default="Vegan" class="font-weight-bold"></app-text>
+                </div>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.vegan && wineData.veganWine.length">
+                <app-text page="wines_one" default="Vegan" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+              <div class="lines-1" *ngFor="let vegan of wineData.veganWine">
+            <span>
+              {{vegan.name}}
+            </span>
+              </div>
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.crushing || wineData.menu.maceration_fermentation
+                  || wineData.menu.ageing || wineData.menu.pressing" [trigger]="trigger" scrollName="vinification" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Vinification - Winemaking"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+            <div *ngIf="wineData.menu.crushing">
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.destemming != 0">
+
+                <app-text-complicated page="wines_one" default="Destemming: ***" class="font-weight-bold"
+                                      #destemming_of_wine__>
+
+                  <!--<span  *appTransclude>{{eventData.commoninfo.phone}}</span>-->
+                  <app-text *appTransclude page="wines_one" default="{{wineData.advanced_designed.destemming}}"></app-text>
+                  <div translate>
+                    <app-text page="wines_one" default="Mechanical" [parent]="destemming_of_wine__.name"></app-text>
+                    <app-text page="wines_one" default="Manual" [parent]="destemming_of_wine__.name"></app-text>
+
+                  </div>
+                </app-text-complicated>
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.sorting">
+                <app-text page="wines_one" default="Sorted" class="font-weight-bold"></app-text>
+
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.sorting_manual">
+                <app-text page="wines_one" default="Manual sorting" class="font-weight-bold"></app-text>
+
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.sorting_optic">
+                <app-text page="wines_one" default="Optic sorting" class="font-weight-bold"></app-text>
+
+              </div>
+
+              <app-text-complicated page="wines_one" default="Crushing: ***" class="font-weight-bold"  *ngIf="wineData.advanced_designed.crushing != 0"
+                                    #crushing_of_wine__>
+
+                <app-text *appTransclude page="wines_one" default="{{wineData.advanced_designed.crushing}}"></app-text>
+                <div translate>
+                  <app-text page="wines_one" default="Without" [parent]="crushing_of_wine__.name"></app-text>
+                  <app-text page="wines_one" default="Gently squeezed" [parent]="crushing_of_wine__.name"></app-text>
+
+                </div>
+              </app-text-complicated>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.transfer">
+                <app-text page="wines_one" default="Transfer by gravity ow" class="font-weight-bold"></app-text>
+
+              </div>
+
+            </div>
+            <div *ngIf="wineData.menu.maceration_fermentation">
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.maceration_range">
+
+
+                <app-text-complicated page="wines_one" default="Maceration: ***" class="font-weight-bold"
+                                      #maceration_range_of_wine__>
+
+                  <span  *appTransclude>
+
+                    <span>
+                      {{wineData.advanced_designed.maceration_range}}
+                    </span>
+                    <span>
+                      <app-text page="wines_full" default="day" *ngIf="langService.editable || wineData.advanced_designed.maceration_range=='1' && wineData.advanced_designed.maceration_type=='day'"></app-text>
+                      <app-text page="wines_full" default="days" *ngIf="langService.editable || wineData.advanced_designed.maceration_range!='1' && wineData.advanced_designed.maceration_type=='day'"></app-text>
+                      <app-text page="wines_full" default="hour" *ngIf="langService.editable || wineData.advanced_designed.maceration_range=='1' && wineData.advanced_designed.maceration_type=='hour'"></app-text>
+                      <app-text page="wines_full" default="hours" *ngIf="langService.editable || wineData.advanced_designed.maceration_range!='1' && wineData.advanced_designed.maceration_type=='hour'"></app-text>
+                    </span>
+
+                  </span>
+                  <div translate>
+
+                    <app-text page="wines_full" default="days" [parent]="maceration_range_of_wine__.name"></app-text>
+                    <app-text page="wines_full" default="hour" [parent]="maceration_range_of_wine__.name"></app-text>
+
+                  </div>
+                </app-text-complicated>
+              </div>
+
+
+              <div class="lines-1 margin-bottom-32" *ngIf="wineData.advanced_designed.maceration_temperature">
+                <app-text page="wines_full" default="Maceration temperature" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+                <span>{{wineData.advanced_designed.maceration_temperature}} °C / {{celsiusToFahrenheit(wineData.advanced_designed.maceration_temperature)}} °F</span>
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.maceration_carbonic">
+                <app-text page="wines_full" default="Carbonic maceration" class="font-weight-bold"></app-text>
+
+              </div>
+
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fermentation_range">
+                <app-text page="wines_one" default="Fermentation days" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{wineData.advanced_designed.fermentation_range}}
+
+                <app-text-complicated page="wines_one" default="Fermentation days: ***" class="font-weight-bold"
+                                      #fermentation_range_of_wine__>
+
+                  <span  *appTransclude>{{wineData.advanced_designed.fermentation_range}}</span>
+                </app-text-complicated>
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fermentation_temperature">
+                <app-text page="wines_full" default="Temperature" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+                <span>{{wineData.advanced_designed.fermentation_temperature}} °C / {{celsiusToFahrenheit(wineData.advanced_designed.fermentation_temperature)}} °F</span>
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fermentation_type=='inox'">
+                <app-text page="wines_full" default="Inox" class="font-weight-bold"></app-text>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fermentation_type=='barriques'">
+                <app-text page="wines_full" default="Barriques" class="font-weight-bold"></app-text>
+
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fermentation_tank != 0">
+
+                <app-text-complicated page="wines_one" default="Fermentation tank: ***" class="font-weight-bold"
+                                      #fermentation_tank_of_wine__>
+
+                  <app-text *appTransclude page="wines_one" default="{{wineData.advanced_designed.fermentation_tank}}"></app-text>
+                  <div translate>
+
+                    <app-text page="wines_one" default="Vertical" [parent]="fermentation_tank_of_wine__.name"></app-text>
+                    <app-text page="wines_one" default="Horizontal" [parent]="fermentation_tank_of_wine__.name"></app-text>
+                  </div>
+                </app-text-complicated>
+
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fermentation_yeast != 0">
+
+                <app-text-complicated page="wines_one" default="Yeast: ***" class="font-weight-bold"
+                                      #fermentation_yeast_of_wine__>
+
+                  <app-text *appTransclude page="wines_one" default="{{wineData.advanced_designed.fermentation_yeast}}"></app-text>
+                  <div translate>
+
+                    <app-text page="wines_one" default="Natural" [parent]="fermentation_yeast_of_wine__.name"></app-text>
+                    <app-text page="wines_one" default="Cultural" [parent]="fermentation_yeast_of_wine__.name"></app-text>
+
+
+                  </div>
+                </app-text-complicated>
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.maceration_carbonic">
+                <app-text page="wines_full" default="Open-top fermentation" class="font-weight-bold"></app-text>
+
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.malolactic_fermentation">
+                <app-text page="wines_full" default="Malolactic fermentation" class="font-weight-bold"></app-text>
+
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.malolactic_partial">
+                <app-text page="wines_full" default="Partial malolactic fermentation" class="font-weight-bold"></app-text>
+
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.malolactic_fermentation_type=='inox'">
+                <app-text page="wines_full" default="Inox" class="font-weight-bold"></app-text>
+
+              </div>
+              <div class="lines-1" *ngIf="wineData.advanced_designed.malolactic_fermentation_type=='barriques'">
+                <app-text page="wines_full" default="Barriques" class="font-weight-bold"></app-text>
+
+              </div>
+
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.batonnage">
+                <app-text page="wines_full" default="Batonnage" class="font-weight-bold"></app-text>
+
+              </div>
+            </div>
+            <div *ngIf="wineData.menu.ageing">
+
+
+              <div class="d-flex flex-column" *ngFor="let b of wineData.barrels; let i = index">
+                <div class="lines-1" *ngIf="b.stuff != 'not chosen' && b.type == 'not chosen'">
+
+                  <app-text-complicated page="wines_one" default="Barrel stuff: ***" class="font-weight-bold"
+                                        #barrel_stuff_of_wine__>
+
+                    <span  *appTransclude>
+
+                      <app-text page="wines_common_info" place="caly" default="Clay" *ngIf="b.stuff=='clay'"></app-text>
+                      <app-text page="wines_common_info" place="stainless_steel_tank" default="Stainless steel tank" *ngIf="b.stuff=='stainless steel tank'"></app-text>
+                      <app-text page="wines_common_info" place="wood_oak" default="Wood oak" *ngIf="b.stuff=='wood oak'"></app-text>
+                      <app-text page="wines_common_info" default="Cement (concrete) tanks" *ngIf="b.stuff=='Cement (concrete) tanks'"></app-text>
+                      <app-text page="wines_common_info" default="Plastic tanks" *ngIf="b.stuff=='Plastic tanks'"></app-text>
+                      <app-text page="wines_common_info" default="Glass" *ngIf="b.stuff=='Glass'"></app-text>
+
+                    </span>
+                    <div translate>
+
+                      <app-text page="wines_common_info" place="caly" default="Clay" [parent]="barrel_stuff_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" place="stainless_steel_tank" default="Stainless steel tank" [parent]="barrel_stuff_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" place="wood_oak" default="Wood oak" [parent]="barrel_stuff_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" default="Cement (concrete) tanks" [parent]="barrel_stuff_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" default="Plastic tanks" [parent]="barrel_stuff_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" default="Glass" [parent]="barrel_stuff_of_wine__.name"></app-text>
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.type != 'not chosen'">
+
+                  <app-text-complicated page="wines_one" default="Barrel type: ***" class="font-weight-bold"
+                                        #barrel_type_of_wine__>
+
+                    <span  *appTransclude>
+                      <app-text *ngFor="let bt of barrelTypeList" page="wines_common_info" place="{{bt.name}}" default="{{bt.name}}"
+                                [hidden]="bt.id != b.type"></app-text>
+                    </span>
+                    <div *ngFor="let bt of barrelTypeList" translate>
+                      <app-text page="wines_common_info" place="{{bt.name}}" default="{{bt.name}}" [parent]="barrel_type_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.month">
+
+                  <app-text-complicated page="wines_one" default="Months: ***" class="font-weight-bold"
+                                        #barrel_month_of_wine__>
+
+                    <span  *appTransclude>{{b.month}}</span>
+
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.percent">
+
+
+                  <app-text-complicated page="wines_one" default="Percent of wine: ***" class="font-weight-bold"
+                                        #barrel_percent_of_wine__>
+
+                    <span  *appTransclude>{{b.percent}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.use != 'not chosen'">
+
+
+                  <app-text-complicated page="wines_one" default="Use: ***" class="font-weight-bold"
+                                        #barrel_use_of_wine__>
+
+                    <span  *appTransclude>
+
+                      <app-text page="wines_common_info" place="new" default="New" *ngIf="b.use=='new'"></app-text>
+                      <app-text page="wines_common_info" place="used" default="Used" *ngIf="b.use=='neutral'"></app-text>
+                      <app-text page="wines_common_info" place="neutral" default="Neutral" *ngIf="b.use=='used'"></app-text>
+                    </span>
+                    <div translate>
+
+                      <app-text page="wines_common_info" place="new" default="New" [parent]="barrel_use_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" place="used" default="Used" [parent]="barrel_use_of_wine__.name"></app-text>
+                      <app-text page="wines_common_info" place="neutral" default="Neutral" [parent]="barrel_use_of_wine__.name"></app-text>
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.size != 'not chosen'">
+                  <app-text page="wines_advanced" default="Size" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+                  <app-text *ngFor="let bt of barrelSizeList" page="wines_common_info" place="{{bt.value}}" default="{{bt.name}}"
+                            [hidden]="bt.value != b.size"></app-text>
+
+
+                  <app-text-complicated page="wines_one" default="Size: ***" class="font-weight-bold"
+                                        #barrel_size_of_wine__>
+
+                    <span  *appTransclude>
+
+                      <app-text *ngFor="let bt of barrelSizeList" page="wines_common_info" place="{{bt.value}}" default="{{bt.name}}"
+                                [hidden]="bt.value != b.size"></app-text>
+                    </span>
+                    <div *ngFor="let bt of barrelSizeList" translate>
+                      <app-text page="wines_common_info" place="{{bt.value}}" default="{{bt.name}}" [parent]="barrel_size_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+
+                <div class="lines-1" *ngIf="b.sur_lie">
+                  <app-text page="wines_common_info" default="Sur lie" class="font-weight-bold"></app-text>
+
+                </div>
+                <div class="margin-bottom-8"></div>
+              </div>
+
+              <div class="lines-1" *ngIf="wineData.advanced_designed.fining">
+
+
+                <app-text-complicated page="wines_one" default="Fining: ***" class="font-weight-bold"
+                                      #fining_of_wine__>
+
+                  <app-text *appTransclude page="wines_one" default="{{wineData.advanced_designed.fining}}"></app-text>
+                  <div *ngFor="let f of finingArr" translate>
+                    <app-text page="wines_one" default="{{f.name}}" [parent]="fining_of_wine__.name"></app-text>
+
+                  </div>
+                </app-text-complicated>
+
+              </div>
+
+            </div>
+            <div *ngIf="wineData.menu.pressing">
+
+
+              <div class="d-flex flex-column" *ngFor="let p of wineData.pressing; let i = index">
+
+
+                <div class="lines-1" *ngIf="p.type">
+
+                  <app-text-complicated page="wines_one" default="Pressing type: ***" class="font-weight-bold"
+                                        #pressing_type_of_wine__>
+
+                    <app-text *appTransclude page="wines_one" default="{{p.type}}"></app-text>
+                    <div translate>
+
+                      <app-text page="wines_one" default="Free-run" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="‬Grape stomping" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Pneumatic (bladder)" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Basket" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Moving head" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Membrane" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Screw" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Impulse" [parent]="pressing_type_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="Belt" [parent]="pressing_type_of_wine__.name"></app-text>
+                    </div>
+                  </app-text-complicated>
+                </div>
+
+                <div class="lines-1" *ngIf="p.gently">
+                  <app-text page="wines_one" default="Gently pressed" class="font-weight-bold"></app-text>
+
+                </div>
+
+                <div class="lines-1" *ngIf="p.order ">
+                  <app-text page="wines_one" default="{{p.order}}"></app-text>
+
+                  <app-text-complicated page="wines_one" place="pressing_order_of_wine" default="***" class="font-weight-bold"
+                                        #pressing_order_of_wine__>
+
+                    <app-text *appTransclude page="wines_one" default="{{p.order}}"></app-text>
+                    <div translate>
+
+                      <app-text page="wines_one" default="Free-run‫" [parent]="pressing_order_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="1st Pressing" [parent]="pressing_order_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="2st Pressing" [parent]="pressing_order_of_wine__.name"></app-text>
+                      <app-text page="wines_one" default="3st Pressing" [parent]="pressing_order_of_wine__.name"></app-text>
+                    </div>
+                  </app-text-complicated>
+                </div>
+
+                <div class="lines-1" *ngIf="p.percent">
+
+                  <app-text-complicated page="wines_one" place="pressing_percent_of_wine" default="***%" class="font-weight-bold"
+                                        #pressing_percent_of_wine__>
+
+                    <span  *appTransclude>{{p.percent}}</span>
+                  </app-text-complicated>
+                </div>
+
+
+
+                <div class="margin-bottom-8"></div>
+              </div>
+
+            </div>
+
+
+
+
+            <div class="lines-1" *ngIf="wineData.advanced_designed.bottled_by && wineData.advanced_designed.bottled_by!='not chosen'">
+              <app-text page="wines_full" default="Bottled by" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              <app-text page="wines_full" default="Mobile line" *ngIf="wineData.commoninfo.bottled_by=='mobile line'"></app-text>
+              <app-text page="wines_full" default="Estate" *ngIf="wineData.commoninfo.bottled_by=='estate'"></app-text>
+            </div>
+
+            <div class="lines-1" *ngIf="wineData.advanced_designed.bottled_date && wineData.advanced_designed.bottled_date != 'not chosen' && wineData.advanced_designed.bottled_date != '0000-01-01'">
+              <app-text page="wines_full" default="Date" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              <span>{{wineData.commoninfo.bottled_date}}</span>
+            </div>
+
+
+          </div>
+
+
+        </app-scroll-bonvino>
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.grape" [trigger]="trigger" scrollName="harvest" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Harvest—Grapes/Vineyards"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+
+            <div class="d-flex flex-column" *ngFor="let g of wineData.grapes; let i = index" [hidden]="!g.grape">
+              <div class="lines-1">
+                <app-text page="grapes_names" [place]="g.grape" [default]="grapeMap.get(g.grape * 1)"></app-text>
+                <span *ngIf="g.percent"> {{g.percent}} % </span>
+              </div>
+
+              <div class="lines-1" *ngIf="g.vineyard">
+                <app-text page="wines_full" default="Vineyard" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+                <app-title [language]="vineyardMap.get(g.vineyard * 1).language" [national]="vineyardMap.get(g.vineyard * 1).name"
+                           [international]="vineyardMap.get(g.vineyard * 1).international" [id]="'noId'" page="noPage"></app-title>
+
+              </div>
+              <div class="lines-1" *ngIf="g.gharvest_date">
+
+
+                <app-text-complicated page="wines_one" default="Date of harvest: ***" class="font-weight-bold"
+                                      #gharvest_date_of_wine__>
+
+                  <span  *appTransclude>{{g.gharvest_date}}</span>
+                </app-text-complicated>
+              </div>
+              <div class="lines-1" *ngIf="g.brix">
+
+
+                <app-text-complicated page="wines_one" default="Brix: ***" class="font-weight-bold"
+                                      #brix_of_wine__>
+
+                  <span  *appTransclude>{{g.brix}}</span>
+                </app-text-complicated>
+              </div>
+              <div class="lines-1" *ngIf="g.age">
+
+
+                <app-text-complicated page="wines_one" default="Age: ***" class="font-weight-bold"
+                                      #age_of_wine__>
+
+                  <span  *appTransclude>{{g.age}}</span>
+                </app-text-complicated>
+              </div>
+              <div class="lines-1" *ngIf="g.handPicked">
+                <app-text page="wines_one" default="Hand picked" class="font-weight-bold"></app-text>
+              </div>
+              <div class="lines-1" *ngIf="g.nightHarvest">
+                <app-text page="wines_one" default="Night harvest" class="font-weight-bold"></app-text>
+              </div>
+              <div class="margin-bottom-8"></div>
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.analysis" [trigger]="trigger" scrollName="analysis" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Analytics"></app-text>
+            </div>
+          </div>
+          <div scroll>
+
+
+
+            <div class="lines-1" *ngIf="wineData.commoninfo.volatile_acidity">
+
+              <app-text-complicated page="wines_one" default="Volitile acidity g/l: ***" class="font-weight-bold"
+                                    #volatile_acidity_of_wine__>
+
+                <span  *appTransclude>{{wineData.commoninfo.volatile_acidity}}</span>
+              </app-text-complicated>
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.commoninfo.ph">
+
+              <app-text-complicated page="wines_one" default="pH: ***" class="font-weight-bold"
+                                    #ph_of_wine__>
+
+                <span  *appTransclude>{{wineData.commoninfo.ph}}</span>
+              </app-text-complicated>
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.commoninfo.sugar">
+
+              <app-text-complicated page="wines_one" default="Sugar g/l: ***" class="font-weight-bold"
+                                    #sugar_of_wine__>
+
+                <span  *appTransclude>{{wineData.commoninfo.sugar}}</span>
+              </app-text-complicated>
+            </div>
+
+            <div class="lines-1" *ngIf="wineData.commoninfo.energy">
+
+              <app-text-complicated page="wines_one" default="Energy kkal/100g: ***" class="font-weight-bold"
+                                    #energy_of_wine__>
+
+                <span  *appTransclude>{{wineData.commoninfo.energy}}</span>
+              </app-text-complicated>
+            </div>
+
+            <div class="lines-1" *ngIf="wineData.advanced_designed.total_dry_extract">
+
+              <app-text-complicated page="wines_one" default="Total dry extract g/l: ***" class="font-weight-bold"
+                                    #total_dry_extract_of_wine__>
+
+                <span  *appTransclude> {{wineData.advanced_designed.total_dry_extract}}</span>
+              </app-text-complicated>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="lines-1" *ngIf="wineData.advanced.nonfiltered">
+              <app-text page="wines_one" default="Nonfiltered" class="font-weight-bold"></app-text>
+
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.advanced.lightfiltered">
+              <app-text page="wines_one" default="Light filtered" class="font-weight-bold"></app-text>
+
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.advanced_designed.filtration != 0">
+
+
+              <app-text-complicated page="wines_one" default="Filtration: ***" class="font-weight-bold"
+                                    #filtration_of_wine__>
+
+                <app-text *appTransclude page="wines_one" default="{{wineData.advanced_designed.filtration}}"></app-text>
+                <div *ngFor="let f of filtrationArr" translate>
+                  <app-text page="wines_one" default="{{f.name}}" [parent]="filtration_of_wine__.name"></app-text>
+
+                </div>
+              </app-text-complicated>
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.advanced.sulfurDioxide">
+
+              <app-text-complicated page="wines_one" place="sulfurDioxide_of_wine" default="***" class="font-weight-bold"
+                                    #sulfurDioxide_of_wine__>
+
+                <div class="d-inline"  *appTransclude>
+
+                  <app-text page="wines_one" default="Contain SO2" class="font-weight-bold"  *ngIf="wineData.advanced.sulfurDioxide == 1"></app-text>
+                  <app-text page="wines_one" default="No SO2" class="font-weight-bold"  *ngIf="wineData.advanced.sulfurDioxide == 2"></app-text>
+                </div>
+                <div translate>
+
+                  <app-text page="wines_one" default="Contain SO2" class="font-weight-bold" [parent]="sulfurDioxide_of_wine__.name"></app-text>
+                  <app-text page="wines_one" default="No SO2" class="font-weight-bold" [parent]="sulfurDioxide_of_wine__.name"></app-text>
+                </div>
+              </app-text-complicated>
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+        <app-scroll-bonvino *ngIf="wineData.menu.series  && wineData.series" [trigger]="trigger" scrollName="series" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Series"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+
+            <div class="lines-1" *ngIf="wineData.series">
+
+              <app-text-complicated page="wines_one" default="Series name: ***" class="font-weight-bold"
+                                    #volatile_acidity_of_wine__>
+
+                <span  *appTransclude>{{getSeriesName(wineData.series, wineData.wineryinfo.language)}}</span>
+              </app-text-complicated>
+            </div>
+
+
+
+            <div class="d-flex flex-column" *ngIf="wineData.series.description || wineData.series.int_description">
+
+              <div class="lines-1">
+                <app-text page="wines_one" default="Series description" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+              <div class="lines-1">
+                <span>
+                  {{getSeriesDescription(wineData.series, wineData.wineryinfo.language)}}
+                </span>
+              </div>
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.series.amount">
+
+              <app-text-complicated page="wines_one" default="Amount: ***" class="font-weight-bold"
+                                    #series_amount_of_wine__>
+
+                <div class="d-inline"  *appTransclude>{{wineData.series.amount}}
+                  <app-text *ngFor="let row of brandAmountTypes" page="wines_one" default="{{row.defaultText}}"
+                            [hidden]="wineData.series.amount_type != row.value"></app-text>
+                </div>
+                <div *ngFor="let row of brandAmountTypes" translate>
+                  <app-text page="wines_one" default="{{row.defaultText}}" [parent]="series_amount_of_wine__.name"></app-text>
+
+                </div>
+              </app-text-complicated>
+            </div>
+
+            <div class="lines-1" *ngIf="wineData.series.bottle_price != 0">
+
+              <app-text-complicated page="wines_one" default="Approximate bottle price: ***" class="font-weight-bold"
+                                    #priceLevel_of_wine__>
+
+                <app-text *appTransclude page="wines_advanced" default="{{priceMap.get(wineData.series.bottle_price * 1)}}"></app-text>
+                <div *ngFor="let price of priceList" translate>
+                  <app-text page="wines_advanced" default="{{price.price}}" [parent]="priceLevel_of_wine__.name"></app-text>
+
+                </div>
+              </app-text-complicated>
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+      </div>
+
+      <div class="d-flex flex-column main-column line-height-2 margin-right-12 margin-left-12"
+           *ngIf="wineData.menu.serving || wineData.menu.description || wineData.menu.full_description || wineData.menu.rating_description
+            || wineData.menu.awards || wineData.menu.professional_points || wineData.menu.bottle || wineData.menu.pallet">
+
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.serving" [trigger]="trigger" scrollName="serving" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Serving"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+
+            <div class="lines-1" *ngIf="wineData.instruction.from && wineData.instruction.to">
+              <app-text page="wines_full" default="Recomendation drinking time" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              <span>{{wineData.instruction.from}} - {{wineData.instruction.to}}</span>
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.instruction.needDecanter">
+              <app-text page="wines_full" default="Need decanter" class="font-weight-bold"></app-text>
+            </div>
+
+
+            <div class="lines-1" *ngIf="wineData.instruction.servingTemperature">
+              <app-text page="wines_full" default="Serving temperature" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              <span *ngFor="let st of servingTemperaturesList" [hidden]="st.value != wineData.instruction.servingTemperature">{{st.name}}</span>
+            </div>
+
+
+            <div class="lines-1 d-flex justify-content-start align-items-end" *ngIf="wineData.instruction.glass">
+              <app-text page="wines_full" default="Glass" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              <div class="d-inline-block" *ngFor="let g of glasses; let i=index">
+                <img class="glass margin-x-4" src="../../../assets/images/glasses-croped.png" *ngIf="g.id == wineData.instruction.glass"
+                     [ngStyle]="{'width': g.width, 'object-position': g.op}">
+              </div>
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.description || wineData.menu.full_description || wineData.menu.rating_description || hasProfessionalDescription()" [trigger]="trigger" scrollName="description" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Description"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+
+            <div *ngIf="wineData.menu.description && (wineData.description.description || wineData.description.description_int)">
+
+              <div class="lines-1 whitespace-prewrap" *ngIf="wineData.description.description && (wineData.basic_designed.language == langService.getLanguage() || !wineData.description.description_int)">
+                {{wineData.description.description}}
+              </div>
+              <div class="lines-1 whitespace-prewrap" *ngIf="wineData.description.description_int && (wineData.basic_designed.language != langService.getLanguage() || !wineData.description.description)">
+                {{wineData.description.description_int}}
+              </div>
+
+            </div>
+            <div *ngIf="wineData.menu.rating_description && wineData.hasGradeDescription">
+
+              <app-description-grades-view [downloadedData]="wineData.gradeDescription"></app-description-grades-view>
+
+            </div>
+            <div *ngIf="wineData.menu.full_description && (autodescriptionsMap.get(langService.getLanguage()) || !autodescriptionsMap.get(langService.getLanguage()))" class="margin-bottom-8">
+
+              <div class="lines-1 font-weight-bold" *ngIf="autodescriptionsMap.get(langService.getLanguage()) || !autodescriptionsMap.get(langService.getLanguage())">
+                <app-text page="wines_one" default="Winery description" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+              </div>
+
+              <div class="lines-1" *ngIf="autodescriptionsMap.get(langService.getLanguage())">
+                <span class="whitespace-prewrap">
+                  {{autodescriptionsMap.get(langService.getLanguage())}}
+                </span>
+              </div>
+
+              <div class="lines-1" *ngIf="!autodescriptionsMap.get(langService.getLanguage())">
+                <span class="whitespace-prewrap">
+                  {{autodescriptionsMap.get(langService.english)}}
+                </span>
+              </div>
+
+
+
+            </div>
+
+
+            <div *ngIf="hasProfessionalDescription()">
+
+              <div *ngFor="let d of wineData.professionalDescriptionDB; let i = index" [hidden]="!d.confirmation || d.language != langService.getLanguage()">
+
+                <div class="lines-1 font-weight-bold">
+                  <span class="whitespace-prewrap">
+                    <span class="font-weight-bold">{{d.specialistName}}: </span>
+                  </span>
+                </div>
+                <div class="lines-1 margin-bottom-8">
+                  <span class="whitespace-prewrap">
+                    {{d.text}}
+                  </span>
+                </div>
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.awards || wineData.menu.professional_points" [trigger]="trigger" scrollName="awards" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Awards and Points"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+
+            <div *ngIf="wineData.menu.awards">
+
+              <div class="d-flex flex-column" *ngFor="let c of wineData.competition">
+                <div *ngIf="c.is_confirmed">
+                  <div class="lines-1">
+                    <app-text page="wines_one" default="Competition" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+                  </div>
+                  <div class="lines-1">
+
+                    <app-competition-one-row [competitionIdValue]="c.competition * 1"></app-competition-one-row>
+                  </div>
+                  <div class="lines-1" *ngIf="c.event">
+
+                    <a [routerLink]="'/event/' + c.event">
+                      <span>Event link</span>
+                    </a>
+                  </div>
+                  <div class="lines-1">
+                    <app-text page="wines_one" default="Award" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+                  </div>
+                  <div class="lines-1">
+
+                    <app-award-one-row [awardIdValue]="c.award * 1"></app-award-one-row>
+                  </div>
+
+
+                  <div class="lines-1" *ngIf="c.year">
+
+                    <app-text-complicated page="wines_one" default="Year: ***" class="font-weight-bold"
+                                          #year_of_wine__>
+
+                      <span  *appTransclude>{{c.year}}</span>
+                    </app-text-complicated>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div *ngIf="wineData.menu.professional_points">
+
+              <div class="d-flex flex-column" *ngFor="let p of wineData.profPointsDB; let i = index">
+                <div class="lines-1">
+                  <span class="font-weight-bold">{{p.specialistName}}</span><span class="font-weight-bold">: </span>
+                  <span>{{p.points | number:'1.0-2'}} / {{p.system}}</span>
+                </div>
+                <div class="margin-bottom-32"></div>
+              </div>
+            </div>
+
+          </div>
+        </app-scroll-bonvino>
+
+
+        <app-scroll-bonvino *ngIf="wineData.menu.bottle || wineData.menu.pallet || wineData.advanced_designed.screwcap != 0" [trigger]="trigger" scrollName="packaging" [scrollGroup]="viewWineOptions">
+          <div select-title>
+
+            <div class="heading-2 border-0 p-0">
+              <app-text page="wines_one" default="Packaging"></app-text>
+            </div>
+          </div>
+          <div class="margin-right-12 margin-left-12" scroll>
+
+            <div *ngIf="wineData.menu.bottle">
+
+
+
+
+
+              <div class="d-flex flex-column" *ngFor="let b of wineData.wrapping; let i = index">
+                <div class="lines-1" *ngIf="b.type && b.type != 'Glass bottle'">
+
+
+                  <app-text-complicated page="wines_one" default="Bottle type: ***" class="font-weight-bold"
+                                        #wrap_type_of_wine__>
+
+                    <span  *appTransclude>
+
+                      <app-text page="bottle_type" default="{{wrap.text}}" *ngFor="let wrap of wrappingTypeList" [hidden]="b.type != wrap.id"></app-text>
+                    </span>
+                    <div *ngFor="let wrap of wrappingTypeList" translate>
+                      <app-text page="bottle_type" default="{{wrap.text}}" [parent]="wrap_type_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.size">
+
+                  <app-text-complicated page="wines_one" default="Bottle size: ***" class="font-weight-bold"
+                                        #wrap_size_of_wine__>
+
+                    <app-text *appTransclude page="bottle_size" default="{{wrappingMap.get(b.size * 1)}}"></app-text>
+                    <div *ngFor="let wrap of wrappingList" translate>
+                      <app-text page="bottle_size" default="{{wrap.size}}" [parent]="wrap_size_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.total_bottles">
+
+                  <app-text-complicated page="wines_one" default="Batch: ***" class="font-weight-bold"
+                                        #total_bottles_of_wine__>
+
+                    <span  *appTransclude>{{b.total_bottles}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.count_in_pack">
+
+                  <app-text-complicated page="wines_one" default="Pack: ***" class="font-weight-bold"
+                                        #count_in_pack_of_wine__>
+
+                    <span  *appTransclude>{{b.count_in_pack}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.barcode_bottles">
+
+                  <app-text-complicated page="wines_one" default="Barcode: ***" class="font-weight-bold"
+                                        #barcode_bottles_of_wine__>
+
+                    <span  *appTransclude>{{b.barcode_bottles}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.priceLevel != 0">
+
+                  <app-text-complicated page="wines_one" default="Price: ***" class="font-weight-bold"
+                                        #priceLevel_of_wine__>
+
+                    <app-text *appTransclude page="wines_advanced" default="{{priceMap.get(b.priceLevel * 1)}}"></app-text>
+                    <div *ngFor="let price of priceList" translate>
+                      <app-text page="wines_advanced" default="{{price.price}}" [parent]="priceLevel_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+
+
+                <div class="lines-1" *ngIf="b.wine_on_tap">
+                  <app-text page="wines_full" default="Wine on tap" class="font-weight-bold"></app-text>
+
+                </div>
+                <div class="lines-1" *ngIf="b.paper">
+                  <app-text page="wines_full" default="The bottle is wrapped in paper" class="font-weight-bold"></app-text>
+
+                </div>
+                <div class="lines-1" *ngIf="b.material">
+                  <app-text page="wines_full" default="Box material" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+                  <span *ngFor="let material of boxMaterialList" [hidden]="b.material != material.id">
+                    <app-text page="box_material" default="{{material.text}}"></app-text>
+                  </span>
+
+                  <app-text-complicated page="wines_one" default="Box material: ***" class="font-weight-bold"
+                                        #material_of_wine__>
+
+                    <span  *appTransclude>
+
+                      <app-text *ngFor="let material of boxMaterialList" page="box_material" default="{{material.text}}" [hidden]="b.material != material.id"></app-text>
+                    </span>
+                    <div *ngFor="let material of boxMaterialList" translate>
+                      <app-text page="box_material" default="{{material.text}}" [parent]="material_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.position">
+
+                  <app-text-complicated page="wines_one" default="Position: ***" class="font-weight-bold"
+                                        #position_of_wine__>
+
+                    <span  *appTransclude>
+
+                      <app-text *ngFor="let position of boxPositionList" [hidden]="b.position != position.id" page="bottle_type" default="{{position.text}}"></app-text>
+                    </span>
+                    <div *ngFor="let position of boxPositionList" translate>
+                      <app-text page="bottle_type" default="{{position.text}}" [parent]="position_of_wine__.name"></app-text>
+
+                    </div>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.barcode_box">
+
+                  <app-text-complicated page="wines_one" default="Box barcode: ***" class="font-weight-bold"
+                                        #barcode_box_of_wine__>
+
+                    <span  *appTransclude>{{b.barcode_box}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.weight">
+
+                  <app-text-complicated page="wines_one" default="Weight (kg/lb): ***" class="font-weight-bold"
+                                        #box_weight_of_wine__>
+
+                    <span  *appTransclude>{{b.weight}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.lengths">
+
+                  <app-text-complicated page="wines_one" default="Dimensions (l/w/h) - m/ft: ***" class="font-weight-bold"
+                                        #box_lengths_of_wine__>
+
+                    <span  *appTransclude>{{b.lengths}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="margin-bottom-8"></div>
+              </div>
+
+
+
+            </div>
+            <div *ngIf="wineData.menu.pallet">
+
+              <div class="d-flex flex-column" *ngFor="let b of wineData.pallet; let i = index">
+                <div class="lines-1" *ngIf="b.total_bottles">
+
+                  <app-text-complicated page="wines_one" default="Total bottles: ***" class="font-weight-bold"
+                                        #box_total_bottles_of_wine__>
+
+                    <span  *appTransclude>{{b.total_bottles}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.total_boxes">
+
+                  <app-text-complicated page="wines_one" default="Total boxes: ***" class="font-weight-bold"
+                                        #packing_total_boxes_of_wine__>
+
+                    <span  *appTransclude>{{b.total_boxes}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.barcode">
+
+                  <app-text-complicated page="wines_one" default="Pallet barcode: ***" class="font-weight-bold"
+                                        #pallet_barcode_of_wine__>
+
+                    <span  *appTransclude>{{b.barcode}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.weight">
+
+                  <app-text-complicated page="wines_one" default="Weight: ***" class="font-weight-bold"
+                                        #pallet_weight_of_wine__>
+
+                    <span  *appTransclude>{{b.weight}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="lines-1" *ngIf="b.lengths">
+
+                  <app-text-complicated page="wines_one" default="Dimensions (l/w/h): ***" class="font-weight-bold"
+                                        #pallet_lengths_of_wine__>
+
+                    <span  *appTransclude>{{b.lengths}}</span>
+                  </app-text-complicated>
+                </div>
+                <div class="margin-bottom-8"></div>
+              </div>
+
+            </div>
+
+            <div *ngIf="wineData.advanced_designed.screwcap && wineData.advanced_designed.screwcap != '0'">
+
+              <div class="lines-1">
+
+
+                <app-text-complicated page="wines_one" place="cork_of_wine" default="***" class="font-weight-bold"
+                                      #cork_of_wine__>
+
+
+                  <div  *appTransclude>
+
+                    <div *ngFor="let cork of corkList; let i = index" [hidden]="wineData.advanced_designed.screwcap != cork.name">
+
+                      <div class="d-flex flex-column margin-top-8 justify-content-start font-weight-bold">
+                        <div *ngIf="cork.image" class="margin-bottom-8">
+                          <img class="cork-image" [src]="getCorkImage(cork)" onError="this.src='../../../assets/icons/placeholder-wine.svg'">
+                        </div>
+                        <div>
+                          <app-text page="wines_one" default="{{cork.name}}"></app-text>
+                        </div>
+                        <div *ngIf="cork.corkscrew">
+                          <img class="corkscrew-image" src="../../../assets/images/corkscrew.png">
+                        </div>
+                        <div *ngIf="!cork.corkscrew">
+                          <img class="corkscrew-image" src="../../../assets/images/nocorkscrew.png">
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngFor="let cork of corkList; let i = index" translate>
+                    <app-text page="wines_one" default="{{cork.name}}" [parent]="cork_of_wine__.name"></app-text>
+
+                  </div>
+                </app-text-complicated>
+              </div>
+
+            </div>
+          </div>
+        </app-scroll-bonvino>
+
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="wines_one"  default="Rate"></app-text>
+
+  <app-text page="wines_one"  default="Edit wine"></app-text>
+
+  <app-text page="wines_one"  default="Get"></app-text>
+
+  <app-text page="wines_one"  default="Remove"></app-text>
+
+  <app-text page="wines_one"  default="Add to collection"></app-text>
+
+  <app-text page="wines_one"  default="Wish to buy"></app-text>
+
+  <app-text page="wines_one"  default="Wish to taste"></app-text>
+
+  <app-text page="wines_one"  default="No wish"></app-text>
+
+
+
+
+  <app-text-complicated page="wines_one" default="Country: ***" class="font-weight-bold"
+                        #country__>
+
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" default="Region: ***" class="font-weight-bold"
+                        #region__>
+
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" place="year_of_wimne" default="***" class="font-weight-bold"
+                        #year_of_wine__>
+
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="grand_type_of_wine" default="***" class="font-weight-bold"
+                        #grand_type_of_wine__>
+
+    <div *ngFor="let row of grandTypesArr" translate>
+      <app-text page="wines_one" place="{{row.defaultText}}" default="{{row.defaultText}}" [parent]="grand_type_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="color_of_wine" default="***" class="font-weight-bold"
+                        #color_of_wine__>
+
+    <div *ngFor="let row of colorArr" translate>
+      <app-text page="wines_one" place="{{row.value}}" default="{{row.value}}" [parent]="color_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+
+
+
+
+
+  <app-text-complicated page="wines_one" place="still_of_wine" default="***" class="font-weight-bold"
+                        #still_of_wine__>
+
+    <div *ngFor="let row of stillArr" translate>
+      <app-text page="wines_one" place="{{row.defaultText}}" default="{{row.defaultText}}" [parent]="still_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" place="sparkling_of_wine" default="***" class="font-weight-bold"
+                        #sparkling_of_wine__>
+
+    <div *ngFor="let row of sparklingSubTypeList" translate>
+      <app-text page="wines_one" place="{{row.name}}" default="{{row.name}}" [parent]="sparkling_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="method_of_wine" default="***" class="font-weight-bold"
+                        #method_of_wine__>
+
+    <div *ngFor="let row of methodArr" translate>
+      <app-text page="wines_one" default="{{row.defaultText}}" [parent]="method_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="sweetness_of_wine" default="***" class="font-weight-bold"
+                        #sweetness_of_wine__>
+
+    <div *ngFor="let row of sweetnessArr" translate>
+      <app-text page="wines_one" default="{{row.defaultText}}" [parent]="sweetness_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" place="champagne_sweetness_of_wine" default="***" class="font-weight-bold"
+                        #champagne_sweetness_of_wine__>
+
+    <div *ngFor="let row of champagneSweetnessArr" translate>
+      <app-text page="wines_one" default="{{row.defaultText}}" [parent]="champagne_sweetness_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="gas_of_wine" default="***" class="font-weight-bold"
+                        #gas_of_wine__>
+
+    <div *ngFor="let row of gasArr" translate>
+      <app-text page="wines_one" default="{{row.defaultText}}" [parent]="gas_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" place="type_of_wine" default="***" class="font-weight-bold"
+                        #type_of_wine__>
+
+    <div *ngFor="let row of wineTypeList" translate>
+      <app-text page="wines_one" default="{{row.type}}" [parent]="type_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="specialtype_of_wine" default="***" class="font-weight-bold"
+                        #specialtype_of_wine__>
+
+    <div *ngFor="let row of wineSubTypeList" translate>
+      <app-text page="wines_one" default="{{row.name}}" [parent]="specialtype_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" place="nongrape_of_wine" default="***" class="font-weight-bold"
+                        #nongrape_of_wine__>
+
+    <div *ngFor="let row of nongrapeSubTypeList" translate>
+      <app-text page="wines_one" default="{{row.name}}" [parent]="nongrape_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Alcohol: ***%" class="font-weight-bold"
+                        #alcohol_of_wine__>
+
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Wine maker: ***" class="font-weight-bold"
+                        #winemaker_of_wine__>
+
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" default="Wine maker: ***" class="font-weight-bold"
+                        #winemaker_of_wine__>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Wine maker consultant: ***" class="font-weight-bold"
+                        #winemaker_consultant_of_wine__>
+
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" default="Wine maker consultant: ***" class="font-weight-bold"
+                        #winemaker_consultant_of_wine__>
+
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" default="Barrel months: ***" class="font-weight-bold"
+                        #barrel_month_of_wine>
+
+  </app-text-complicated>
+
+
+
+
+
+
+
+  <div *ngFor="let row of grandTypesArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of colorArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of stillArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+
+
+  </div>
+
+
+  <div *ngFor="let row of sparklingSubTypeList">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of methodArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of sweetnessArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of champagneSweetnessArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of gasArr">
+    <app-text page="wines_one" default="{{row.value}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of wineTypeList">
+    <app-text page="wines_one" place="{{row.type}}" default="{{row.type}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of wineSubTypeList">
+    <app-text page="wines_one" place="{{row.name}}" default="{{row.name}}"></app-text>
+
+  </div>
+
+
+  <div *ngFor="let row of nongrapeSubTypeList">
+    <app-text page="wines_one" place="{{row.name}}" default="{{row.name}}"></app-text>
+
+  </div>
+
+
+
+  <app-text page="wines_one" default="Certifitcates AOP/Kosher/Organic etc"></app-text>
+
+  <app-text page="wines_one" default="Passover" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Mevushal" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Kashrut" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Kashrut" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Quality" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Quality" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Biodynamic" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Biodynamic" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Organic" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Organic" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Vegan" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Vegan" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Vinification - Winemaking"></app-text>
+
+
+  <app-text-complicated page="wines_one" default="Destemming: ***" class="font-weight-bold"
+                        #destemming_of_wine__>
+
+    <div translate>
+      <app-text page="wines_one" default="Mechanical" [parent]="destemming_of_wine__.name"></app-text>
+      <app-text page="wines_one" default="Manual" [parent]="destemming_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+  <app-text page="wines_one" default="Mechanical"></app-text>
+  <app-text page="wines_one" default="Manual"></app-text>
+
+  <app-text page="wines_one" default="Sorted" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Manual sorting" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Optic sorting" class="font-weight-bold"></app-text>
+
+
+  <app-text-complicated page="wines_one" default="Crushing: ***" class="font-weight-bold"
+                        #crushing_of_wine__>
+
+    <div translate>
+      <app-text page="wines_one" default="Without" [parent]="crushing_of_wine__.name"></app-text>
+      <app-text page="wines_one" default="Gently squeezed" [parent]="crushing_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+  <app-text page="wines_one" default="Without"></app-text>
+  <app-text page="wines_one" default="Gently squeezed"></app-text>
+
+  <app-text page="wines_one" default="Transfer by gravity ow" class="font-weight-bold"></app-text>
+
+
+  <app-text-complicated page="wines_one" default="Maceration: ***" class="font-weight-bold"
+                        #maceration_range_of_wine__>
+
+    <div translate>
+
+      <app-text page="wines_full" default="days" [parent]="maceration_range_of_wine__.name"></app-text>
+      <app-text page="wines_full" default="hour" [parent]="maceration_range_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+  <app-text page="wines_full" default="Maceration temperature" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Carbonic maceration" class="font-weight-bold"></app-text>
+
+
+  <app-text-complicated page="wines_one" default="Fermentation days: ***" class="font-weight-bold"
+                        #fermentation_range_of_wine__>
+
+  </app-text-complicated>
+
+  <app-text page="wines_full" default="Temperature" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_full" default="Inox" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Barriques" class="font-weight-bold"></app-text>
+
+
+
+  <app-text-complicated page="wines_one" default="Fermentation tank: ***" class="font-weight-bold"
+                        #fermentation_tank_of_wine__>
+
+    <div translate>
+
+      <app-text page="wines_one" default="Vertical" [parent]="fermentation_tank_of_wine__.name"></app-text>
+      <app-text page="wines_one" default="Horizontal" [parent]="fermentation_tank_of_wine__.name"></app-text>
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Yeast: ***" class="font-weight-bold"
+                        #fermentation_yeast_of_wine__>
+
+    <div translate>
+
+      <app-text page="wines_one" default="Natural" [parent]="fermentation_yeast_of_wine__.name"></app-text>
+      <app-text page="wines_one" default="Cultural" [parent]="fermentation_yeast_of_wine__.name"></app-text>
+
+
+    </div>
+  </app-text-complicated>
+
+  <app-text page="wines_full" default="Open-top fermentation" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Malolactic fermentation" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Partial malolactic fermentation" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Inox" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Barriques" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Batonnage" class="font-weight-bold"></app-text>
+
+
+  <app-text-complicated page="wines_one" default="Barrel stuff: ***" class="font-weight-bold"
+                        #barrel_stuff_of_wine__>
+    <div translate>
+
+      <app-text page="wines_common_info" place="caly" default="Clay" [parent]="barrel_stuff_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" place="stainless_steel_tank" default="Stainless steel tank" [parent]="barrel_stuff_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" place="wood_oak" default="Wood oak" [parent]="barrel_stuff_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" default="Cement (concrete) tanks" [parent]="barrel_stuff_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" default="Plastic tanks" [parent]="barrel_stuff_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" default="Glass" [parent]="barrel_stuff_of_wine__.name"></app-text>
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Barrel type: ***" class="font-weight-bold"
+                        #barrel_type_of_wine__>
+    <div *ngFor="let bt of barrelTypeList" translate>
+      <app-text page="wines_common_info" place="{{bt.name}}" default="{{bt.name}}" [parent]="barrel_type_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Months: ***" class="font-weight-bold"
+                        #barrel_month_of_wine__>
+
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Percent of wine: ***" class="font-weight-bold"
+                        #barrel_percent_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Use: ***" class="font-weight-bold"
+                        #barrel_use_of_wine__>
+    <div translate>
+
+      <app-text page="wines_common_info" place="new" default="New" [parent]="barrel_use_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" place="used" default="Used" [parent]="barrel_use_of_wine__.name"></app-text>
+      <app-text page="wines_common_info" place="neutral" default="Neutral" [parent]="barrel_use_of_wine__.name"></app-text>
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Size: ***" class="font-weight-bold"
+                        #barrel_size_of_wine__>
+    <div *ngFor="let bt of barrelSizeList" translate>
+      <app-text page="wines_common_info" place="{{bt.value}}" default="{{bt.name}}" [parent]="barrel_size_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text page="wines_common_info" default="Sur lie" class="font-weight-bold"></app-text>
+
+
+
+  <app-text-complicated page="wines_one" default="Fining: ***" class="font-weight-bold"
+                        #fining_of_wine__>
+
+    <div *ngFor="let f of finingArr" translate>
+      <app-text page="wines_one" default="{{f.name}}" [parent]="fining_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text page="wines_one" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Free-run"></app-text>
+  <app-text page="wines_one" default="‬Grape stomping"></app-text>
+  <app-text page="wines_one" default="Pneumatic (bladder)"></app-text>
+  <app-text page="wines_one" default="Basket"></app-text>
+  <app-text page="wines_one" default="Moving head"></app-text>
+  <app-text page="wines_one" default="Membrane"></app-text>
+  <app-text page="wines_one" default="Screw"></app-text>
+  <app-text page="wines_one" default="Impulse"></app-text>
+  <app-text page="wines_one" default="Belt"></app-text>
+
+  <app-text page="wines_one" default="Gently pressed" class="font-weight-bold"></app-text>
+
+
+  <app-text page="wines_one" default="Free-run‫"></app-text>
+  <app-text page="wines_one" default="1st Pressing"></app-text>
+  <app-text page="wines_one" default="2st Pressing"></app-text>
+  <app-text page="wines_one" default="3st Pressing"></app-text>
+
+
+
+
+
+  <app-text-complicated page="wines_one" default="Bottled by: ***" class="font-weight-bold"
+                        #bottled_by_of_wine__>
+    <div translate>
+
+      <app-text page="wines_full" default="Mobile line" [parent]="bottled_by_of_wine__.name"></app-text>
+      <app-text page="wines_full" default="Estate" [parent]="bottled_by_of_wine__.name"></app-text>
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Date: ***" class="font-weight-bold"
+                        #bottled_date_of_wine__>
+
+  </app-text-complicated>
+
+  <app-text page="wines_one" default="Harvest—Grapes/Vineyards"></app-text>
+
+
+  <app-text page="wines_full" default="Vineyard" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+
+
+  <app-text-complicated page="wines_one" default="Date of harvest: ***" class="font-weight-bold"
+                        #gharvest_date_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Brix: ***" class="font-weight-bold"
+                        #brix_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Age: ***" class="font-weight-bold"
+                        #age_of_wine__>
+  </app-text-complicated>
+
+  <app-text page="wines_one" default="Hand picked" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Night harvest" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Analytics"></app-text>
+
+
+
+  <app-text-complicated page="wines_one" default="Volitile acidity g/l: ***" class="font-weight-bold"
+                        #volatile_acidity_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="pH: ***" class="font-weight-bold"
+                        #ph_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Sugar g/l: ***" class="font-weight-bold"
+                        #sugar_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Energy kkal/100g: ***" class="font-weight-bold"
+                        #energy_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Total dry extract g/l: ***" class="font-weight-bold"
+                        #total_dry_extract_of_wine__>
+  </app-text-complicated>
+
+  <app-text page="wines_one" default="Nonfiltered" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_one" default="Light filtered" class="font-weight-bold"></app-text>
+
+
+
+  <app-text-complicated page="wines_one" default="Filtration: ***" class="font-weight-bold"
+                        #filtration_of_wine__>
+
+    <div *ngFor="let f of filtrationArr" translate>
+      <app-text page="wines_one" default="{{f.name}}" [parent]="filtration_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" place="sulfurDioxide_of_wine" default="***" class="font-weight-bold"
+                        #sulfurDioxide_of_wine__>
+    <div translate>
+
+      <app-text page="wines_one" default="Contain SO2" class="font-weight-bold" [parent]="sulfurDioxide_of_wine__.name"></app-text>
+      <app-text page="wines_one" default="No SO2" class="font-weight-bold" [parent]="sulfurDioxide_of_wine__.name"></app-text>
+    </div>
+  </app-text-complicated>
+
+
+  <app-text page="wines_one" default="Series"></app-text>
+
+
+  <app-text-complicated page="wines_one" default="Series name: ***" class="font-weight-bold"
+                        #volatile_acidity_of_wine__>
+  </app-text-complicated>
+
+  <app-text page="wines_one" default="Series description" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text-complicated page="wines_one" default="Amount: ***" class="font-weight-bold"
+                        #series_amount_of_wine__>
+    <div *ngFor="let row of brandAmountTypes" translate>
+      <app-text page="wines_one" default="{{row.defaultText}}" [parent]="series_amount_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+  <app-text-complicated page="wines_one" default="Approximate bottle price: ***" class="font-weight-bold"
+                        #priceLevel_of_wine__>
+    <div *ngFor="let price of priceList" translate>
+      <app-text page="wines_advanced" default="{{price.price}}" [parent]="priceLevel_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <app-text page="wines_one" default="Serving"></app-text>
+
+  <app-text page="wines_full" default="Recomendation drinking time" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_full" default="Need decanter" class="font-weight-bold"></app-text>
+
+  <app-text page="wines_full" default="Serving temperature" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_full" default="Glass" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="wines_one" default="Description"></app-text>
+
+  <app-text page="wines_one" default="Awards and Points"></app-text>
+
+
+
+  <app-text-complicated page="wines_one" default="Competition: ***" class="font-weight-bold"
+                        #competition_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Year: ***" class="font-weight-bold"
+                        #year_of_wine__>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Award: ***" class="font-weight-bold"
+                        #award_of_wine__>
+  </app-text-complicated>
+
+  <app-text page="wines_one" default="Packaging"></app-text>
+
+
+
+  <app-text-complicated page="wines_one" default="Bottle type: ***" class="font-weight-bold"
+                        #wrap_type_of_wine__>
+    <div *ngFor="let wrap of wrappingTypeList" translate>
+      <app-text page="bottle_type" default="{{wrap.text}}" [parent]="wrap_type_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+
+  <app-text-complicated page="wines_one" default="Bottle size: ***" class="font-weight-bold"
+                        #wrap_size_of_wine__>
+    <div *ngFor="let wrap of wrappingList" translate>
+      <app-text page="bottle_size" default="{{wrap.size}}" [parent]="wrap_size_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Batch: ***" class="font-weight-bold"
+                        #total_bottles_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Pack: ***" class="font-weight-bold"
+                        #count_in_pack_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Barcode: ***" class="font-weight-bold"
+                        #barcode_bottles_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Price: ***" class="font-weight-bold"
+                        #priceLevel_of_wine__>
+    <div *ngFor="let price of priceList" translate>
+      <app-text page="wines_advanced" default="{{price.price}}" [parent]="priceLevel_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Box material: ***" class="font-weight-bold"
+                        #material_of_wine__>
+    <div *ngFor="let material of boxMaterialList" translate>
+      <app-text page="box_material" default="{{material.text}}" [parent]="material_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Position: ***" class="font-weight-bold"
+                        #position_of_wine__>
+    <div *ngFor="let position of boxPositionList" translate>
+      <app-text page="bottle_type" default="{{position.text}}" [parent]="position_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+
+
+
+
+  <app-text-complicated page="wines_one" default="Box barcode: ***" class="font-weight-bold"
+                        #barcode_box_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Weight (kg/lb): ***" class="font-weight-bold"
+                        #box_weight_of_wine__>
+  </app-text-complicated>
+
+
+
+
+  <app-text-complicated page="wines_one" default="Dimensions (l/w/h) - m/ft: ***" class="font-weight-bold"
+                        #box_lengths_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Total bottles: ***" class="font-weight-bold"
+                        #box_total_bottles_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Total boxes: ***" class="font-weight-bold"
+                        #packing_total_boxes_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Pallet barcode: ***" class="font-weight-bold"
+                        #pallet_barcode_of_wine__>
+  </app-text-complicated>
+
+
+
+  <app-text-complicated page="wines_one" default="Weight: ***" class="font-weight-bold"
+                        #pallet_weight_of_wine__>
+  </app-text-complicated>
+
+
+  <app-text-complicated page="wines_one" default="Dimensions (l/w/h): ***" class="font-weight-bold"
+                        #pallet_lengths_of_wine__>
+  </app-text-complicated>
+
+
+
+
+  <app-text-complicated page="wines_one" place="cork_of_wine" default="***" class="font-weight-bold"
+                        #cork_of_wine__>
+    <div *ngFor="let cork of corkList; let i = index" translate>
+      <app-text page="wines_one" default="{{cork.name}}" [parent]="cork_of_wine__.name"></app-text>
+
+    </div>
+  </app-text-complicated>
+</div>

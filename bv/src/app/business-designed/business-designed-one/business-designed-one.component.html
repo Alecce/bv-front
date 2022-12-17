@@ -1,0 +1,155 @@
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-between margin-x-64">
+
+    <div  class="heading-1">
+      <span>{{businessName}} - {{businessType}}</span>
+
+    </div>
+
+    <div>
+      <a class="btn btn-type-1 text-uppercase field-content" [routerLink]="langService.editable ? null : [getLink()]">
+        <app-text [page]="'business_' + type" default="Edit"></app-text>
+      </a>
+    </div>
+  </div>
+  <div class="d-flex margin-64 justify-content-around">
+    <div class="d-flex flex-column flex-even" *ngFor="let col of structure; let i = index"
+         [ngClass]="structure.length == (i + 1) ? '' : 'margin-right-36'">
+
+      <div *ngFor="let inp of col; let j = index" class="w-100">
+
+        <div class="heading-2 left-bold-border" *ngIf="j == 0 || col[j].block_name != col[j - 1].block_name">
+          <app-text [page]="'business_' + type" [default]="inp.block_name"></app-text>
+        </div>
+
+
+        <div class="lines-1" *ngIf="inp.input_type == 1 && form.get(inp.controlName).value">
+          <app-text [page]="'business_' + type" [default]="inp.title_name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+          <span>{{form.get(inp.controlName).value}}</span>
+
+        </div>
+
+
+        <!--<div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 1">-->
+
+          <!--<div class="field align-self-stretch d-flex flex-column w-100">-->
+            <!--<app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>-->
+            <!--<input type="text" class="field-input align-self-stretch" [formControlName]="inp.controlName">-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+        <div class="lines-1" *ngIf="inp.input_type == 2 && form.get(inp.controlName).value !== null && form.get(inp.controlName).value !== '' ">
+          <app-text [page]="'business_' + type" [default]="inp.title_name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+          <span>{{form.get(inp.controlName).value}}</span>
+
+        </div>
+
+        <!--<div class="d-flex align-items-end w-100" *ngIf="inp.input_type == 2">-->
+
+          <!--<div class="field align-self-stretch d-flex flex-column w-100">-->
+            <!--<app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>-->
+            <!--<input type="number" class="field-input align-self-stretch" [formControlName]="inp.controlName">-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+        <div class="lines-1" *ngIf="(inp.input_type == 3 || inp.input_type == 5) && form.get(inp.controlName).value">
+          <app-text [page]="'business_' + type" [default]="inp.title_name" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+          <app-text [page]="'business_' + type" default="{{form.get(inp.controlName).value}}"></app-text>
+
+        </div>
+
+        <!--<div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 3">-->
+          <!--<app-text [page]="'business_' + type" [default]="inp.title_name" class="field-hint"></app-text>-->
+          <!--<app-select-bonvino [formControlName_]="inp.controlName" [form]="form" #_select>-->
+            <!--<div select-title>-->
+              <!--<div *ngFor="let opt of inp.select_options">-->
+                <!--<app-text [page]="'business_' + type" default="{{opt.id}}" *ngIf="opt.id == form.get(inp.controlName).value"></app-text>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div options class="d-flex flex-column align-items-start select-list-options">-->
+              <!--<button class="btn btn-option" (click)="_select.choose('')">-->
+                <!--<app-text page="shop_add" default="Clear input"></app-text>-->
+              <!--</button>-->
+              <!--<button class="btn btn-option" *ngFor="let opt of inp.select_options" (click)="_select.choose(opt.id)">-->
+                <!--<app-text [page]="'business_' + type" default="{{opt.id}}"></app-text>-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</app-select-bonvino>-->
+        <!--</div>-->
+
+
+        <div class="lines-1" *ngIf="inp.input_type == 4 && form.get(inp.controlName).value">
+          <app-text [page]="'business_' + type" [default]="inp.title_name" class="font-weight-bold"></app-text>
+
+        </div>
+
+        <!--<div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 4">-->
+          <!--<app-checkbox-bonvino [formControlName_]="inp.controlName" [form]="form" #_check>-->
+            <!--<app-text [page]="'business_' + type" [default]="inp.title_name" (click)="_check.check()" class="lines-1"></app-text>-->
+          <!--</app-checkbox-bonvino>-->
+        <!--</div>-->
+
+
+        <!--<div class="field align-self-stretch d-flex flex-column" *ngIf="inp.input_type == 5">-->
+
+
+          <!--<app-text [page]="'business_' + type" [default]="inp.title_name" class="lines-1"></app-text>-->
+          <!--<app-radio-bonvino *ngFor="let opt of inp.select_options" class="margin-bottom-4" [formControlName_]="inp.controlName"-->
+                             <!--[form]="form" value_="{{opt.id}}" #_radio>-->
+            <!--<app-text [page]="'business_' + type" default="{{opt.id}}"-->
+                      <!--(click)="_radio.check()" class="lines-1 margin-left-8"></app-text>-->
+          <!--</app-radio-bonvino>-->
+
+        <!--</div>-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+
+  <app-text [page]="'business_' + type" default="Edit"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

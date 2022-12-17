@@ -1,0 +1,14 @@
+
+::ng-deep agm-map
+{
+  width: 640px !important;
+  height: 480px !important;
+  margin: auto;
+}
+
+
+::ng-deep agm-map>div
+{
+  width: 640px !important;
+  height: 480px !important;
+}

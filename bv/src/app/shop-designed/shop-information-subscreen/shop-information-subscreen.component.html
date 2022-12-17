@@ -1,0 +1,240 @@
+<div class="d-flex padding-32 " *ngIf="shopData">
+  <div class="d-flex flex-column align-items-start flex-even" >
+    <div class="heading-2">
+      <app-text page="shop_one" default="Shop information"></app-text>
+    </div>
+    <div class="lines-1" *ngIf="shopData.commoninfo.country">
+      <app-text page="shop_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="country_names" place="{{shopData.commoninfo.country}}" default="{{countriesMap.get(shopData.commoninfo.country)}}"></app-text>
+      <!--<span> {{getCountry(wineryData.commoninfo.country)}}</span>-->
+
+    </div>
+    <div class="lines-1" *ngIf="shopData.commoninfo.regionsForm">
+      <app-text page="shop_one" default="Region" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span><span> {{getRegion(shopData.commoninfo.regionsForm)}}</span>
+
+    </div>
+    <div class="lines-1" *ngIf="shopData.commoninfo.owner">
+      <app-text page="shop_one" default="Owner" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      {{shopData.commoninfo.owner}}
+
+    </div>
+  </div>
+  <div class="d-flex flex-column align-items-start flex-even">
+
+    <div class="heading-2">
+      <app-text page="shop_one" default="Secondary information"></app-text>
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.parking">
+      <app-text page="shop_one" default="Have parking" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopTypesMap.get(shopData.commoninfo.type)">
+      <app-text page="shop_one" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="shop_add" [default]="shopTypesMap.get(shopData.commoninfo.type).defaultText"></app-text>
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.branch">
+      <app-text page="shop_one" default="Part of branch" class="font-weight-bold"></app-text>
+
+    </div>
+
+
+    <div class="lines-1" *ngIf="shopUniqueBottlesMap.get(shopData.commoninfo.unique)">
+      <app-text page="shop_one" default="Unique bottles" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="shop_add" [default]="shopUniqueBottlesMap.get(shopData.commoninfo.unique).defaultText"></app-text>
+    </div>
+
+    <div class="lines-1" *ngIf="shopRefrigeratorMap.get(shopData.commoninfo.refrigerator)">
+      <app-text page="shop_one" default="Refrigerator" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="shop_add" [default]="shopRefrigeratorMap.get(shopData.commoninfo.refrigerator).defaultText"></app-text>
+    </div>
+
+    <div class="lines-1" *ngIf="shopAreaMap.get(shopData.commoninfo.area)">
+      <app-text page="shop_one" default="Store area" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="shop_add" [default]="shopAreaMap.get(shopData.commoninfo.area).defaultText"></app-text>
+    </div>
+
+    <div class="lines-1" *ngIf="shopQualityMap.get(shopData.commoninfo.quality)">
+      <app-text page="shop_one" default="Wines" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <app-text page="shop_add" [default]="shopQualityMap.get(shopData.commoninfo.quality).defaultText"></app-text>
+    </div>
+
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.tasting">
+      <app-text page="shop_one" default="Have tasting place" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.venue">
+      <app-text page="shop_one" default="Have venue" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.consultant">
+      <app-text page="shop_one" default="Have consultant" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1"  *ngIf="shopData.commoninfo.delivery == 'purchase' || shopData.commoninfo.delivery == 'cost' && shopData.commoninfo.delivery_cost">
+      <app-text page="shop_one" default="Purchase cost" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span> {{shopData.commoninfo.delivery_cost}}</span>
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.delivery == 'purchase' && shopData.commoninfo.delivery_upon_purchase">
+      <app-text page="shop_one" default="Upon purchase" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+      <span> {{shopData.commoninfo.delivery_upon_purchase}}</span>
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.delivery == 'free'">
+      <app-text page="shop_one" default="Free purchase" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.strongAlcohol">
+      <app-text page="shop_one" default="Strong alcohol" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.beer">
+      <app-text page="shop_one" default="Beer" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.tobacco">
+      <app-text page="shop_one" default="Tobacco" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.cheese">
+      <app-text page="shop_one" default="Cheese" class="font-weight-bold"></app-text>
+
+    </div>
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.meat">
+      <app-text page="shop_one" default="Meat" class="font-weight-bold"></app-text>
+
+    </div>
+
+
+    <div class="lines-1" *ngIf="shopData.commoninfo.bread">
+      <app-text page="shop_one" default="Bread" class="font-weight-bold"></app-text>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text page="shop_one" default="Shop information"></app-text>
+
+  <app-text page="shop_one" default="Country" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text *ngFor="let c of countries; let i = index" page="any" place="{{c.name}}" default="{{c.name}}"></app-text>
+
+  <app-text page="shop_one" default="Region" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span><span> {{getRegion(shopData.commoninfo.regionsForm)}}</span>
+
+  <app-text page="shop_one" default="Owner" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="shop_one" default="Secondary information"></app-text>
+
+  <app-text page="shop_one" default="Have parking" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Type" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text *ngFor="let c of shopTypes; let i = index" page="any" place="{{c.defaultText}}" default="{{c.defaultText}}"></app-text>
+
+  <app-text page="shop_one" default="Unique bottles" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text *ngFor="let c of shopUniqueBottles; let i = index" page="any" place="{{c.defaultText}}" default="{{c.defaultText}}"></app-text>
+
+  <app-text page="shop_one" default="Refrigerator" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text *ngFor="let c of shopRefrigerator; let i = index" page="any" place="{{c.defaultText}}" default="{{c.defaultText}}"></app-text>
+
+  <app-text page="shop_one" default="Store area" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text *ngFor="let c of shopArea; let i = index" page="any" place="{{c.defaultText}}" default="{{c.defaultText}}"></app-text>
+
+  <app-text page="shop_one" default="Wines" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+  <app-text *ngFor="let c of shopQuality; let i = index" page="any" place="{{c.defaultText}}" default="{{c.defaultText}}"></app-text>
+
+  <app-text *ngFor="let c of shopPurchase; let i = index" page="any" place="{{c.defaultText}}" default="{{c.defaultText}}"></app-text>
+
+  <app-text page="shop_one" default="Part of branch" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Have tasting place" class="font-weight-bold"></app-text>
+
+
+  <app-text page="shop_one" default="Have venue" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Have consultant" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Purchase cost" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="shop_one" default="Upon purchase" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span>
+
+  <app-text page="shop_one" default="Free purchase" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Strong alcohol" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Beer" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Tobacco" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Cheese" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Meat" class="font-weight-bold"></app-text>
+
+  <app-text page="shop_one" default="Bread" class="font-weight-bold"></app-text>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,114 @@
+.max-heigth-400px {
+  max-height: 400px;
+}
+.dropdown-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/*.btn-option {*/
+  /*text-align: start;*/
+  /*width: 100%;*/
+  /*margin: 0;*/
+  /*padding: 0;*/
+  /*height: 17px;*/
+  /*font-family: 'Noto Sans Display';*/
+  /*font-size: 14px;*/
+  /*font-weight: normal;*/
+  /*font-stretch: normal;*/
+  /*font-style: normal;*/
+  /*line-height: normal;*/
+  /*letter-spacing: 0px;*/
+  /*color: var(--ocean);*/
+  /*text-transform: capitalize;*/
+
+/*}*/
+/*.btn-option:hover {*/
+  /*color: var(--wine);*/
+/*}*/
+/*.btn-option:focus {*/
+  /*color: var(--ocean);*/
+  /*outline: 0;*/
+  /*box-shadow: none;*/
+/*}*/
+.btn-select {
+  padding-top: 0;
+  padding-bottom: 0;
+  min-width: 160px;
+  height: 32px;
+  border-radius: 4px;
+  background-color: var(--sand-bright);
+}
+.btn-select:hover {
+  height: 32px;
+  border-radius: 3px;
+  border: solid 1px var(--ocean);
+  background-color: var(--white);
+}
+.btn-select:focus {
+  box-shadow: none;
+}
+.btn-select.btn-select-active {
+  height: 32px;
+  border-radius: 3px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+}
+.select-text {
+  height: 17px;
+  font-family: 'Noto Sans Display';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0px;
+  color: var(--black);
+  text-transform: capitalize;
+}
+::ng-deep .icon-arrow-language mat-icon{
+  margin-bottom: 10px;
+  height: 8px;
+  width: 12px;
+}
+.dropdown-item:hover {
+  background-color: inherit;
+}
+.dropdown-item:active {
+  background-color: inherit;
+}
+.dropdown-item:focus {
+  background-color: inherit;
+}
+.lang-row:hover {
+  background-color: rgba(162, 49, 45, 0.1);
+  color: var(--wine);
+  cursor: pointer;
+}
+.cdk-focused {
+  background-color: rgba(162, 49, 45, 0.1);
+  color: var(--wine);
+  /*cursor: pointer;*/
+}
+.cdk-keyboard-focused {
+  background-color: rgba(162, 49, 45, 0.1) !important;
+  color: var(--wine);
+  /*cursor: pointer;*/
+}
+.lang-row {
+  line-height: 25px !important;
+}
+.lang-row .lines-1{
+  line-height: 25px !important;
+}
+.lang-row .language-emblem{
+  line-height: 25px !important;
+}
+.language-emblem-container {
+  min-width: 32px;
+}
+.mat-menu-content {
+  padding: 0;
+}
+.mat-menu-item {
+  height: auto;
+}

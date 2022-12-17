@@ -1,0 +1,62 @@
+.glass-button-text {
+  width: 9px;
+  height: 12px;
+  font-family: 'Noto Sans Display';
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+
+  padding-top: 13px;
+  padding-left: 21px;
+  padding-right: 9px;
+  position: absolute;
+}
+::ng-deep .width-440 {
+  min-width: 440px !important;
+  width: 440px !important;
+  max-width: 440px !important;
+}
+
+::ng-deep .glass-border-bottom-1 {
+  border-bottom: solid 1px #e5e5e5;
+}
+::ng-deep .vertical-align-bottom {
+  vertical-align: bottom;
+}
+::ng-deep .glass-circle-background {
+  width: 22px;
+  height: 22px;
+  background-color: #ba9d9c;
+  border-radius: 11px;
+  font-family: 'Noto Sans Display';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+}
+.glass-bleak-text {
+  font-family: 'Noto Sans Display';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #e5e5e5;
+}
+
+/*::ng-deep .height-194 {*/
+  /*min-height: 194px !important;*/
+  /*height: 194px !important;*/
+  /*max-height: 194px !important;*/
+/*}*/

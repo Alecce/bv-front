@@ -1,0 +1,45 @@
+<div class="flag-mouse-over">
+  <button class="btn-0" mat-button [matMenuTriggerFor]="afterMenu"
+          #container
+          [ngClass]=""
+          (menuOpened)="onMenuOpened()"
+          (menuClosed)="onMenuClosed()">
+
+
+    <app-text *ngFor="let language of languageArr; let i = index" page="language" [default]="language.code"
+              [hidden]="language.value != getLanguage()" class="language-emblem text-uppercase margin-right-8"></app-text>
+    <app-icon-bonvino svgIcon="arrow-1-up-black" class="icon-arrow-language"></app-icon-bonvino>
+  </button>
+
+  <mat-menu #afterMenu="matMenu" xPosition="after" class="">
+    <div class="d-flex flex-column align-items-start menu-buttons max-heigth-400px">
+
+      <div *ngFor="let language of languageArr; let i = index"
+           [hidden]="!language.ispublic && accountService.isTranslator()" class="noclass w-100">
+        <button class="lang-row w-100 btn-0 p-0" (click)="changeLanguage(language.value)" mat-menu-item>
+
+          <div class="margin-left-16 margin-right-16 d-flex flex-row ">
+
+            <div class="">
+
+
+              <div class="language-emblem-container margin-right-12">
+
+                <app-text page="language" [default]="language.code" class="language-emblem text-uppercase"></app-text>
+
+              </div>
+            </div>
+            <div>
+              <app-text page="language" [default]="language.name" class="lines-1"></app-text>
+
+            </div>
+
+
+          </div>
+        </button>
+      </div>
+
+
+    </div>
+  </mat-menu>
+</div>

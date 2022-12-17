@@ -1,0 +1,11 @@
+
+.menu-dropdown {
+  min-width: 96px;
+  border-radius: 4px;
+  border: solid 1px var(--ocean);
+  background-color: var(--sand-bright);
+  white-space: nowrap;
+}
+.menu-buttons {
+  margin: 8px 16px 16px 16px;
+}

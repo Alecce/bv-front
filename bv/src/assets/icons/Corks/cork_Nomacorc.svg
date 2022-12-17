@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <defs>
+    <style>.cls-916968{fill:#916968;}.cls-fff{fill:#fff;}</style>
+  </defs>
+  <g id="Type">
+    <path class="cls-916968"
+          d="M22.23,9.92h-.12l-.94.05L20,10h0c-4.92,0-9.15-1.11-11-2.7V36c0,2.21,5,4,11,4s11-1.79,11-4V7.3C29.42,8.64,26.17,9.64,22.23,9.92Z"/>
+    <ellipse class="cls-916968" cx="19.98" cy="4" rx="10.97" ry="4"/>
+    <rect class="cls-fff" x="25.98" y="14" width="1" height="5" rx="0.5"/>
+    <rect class="cls-fff" x="19.48" y="15" width="1" height="5" rx="0.5"/>
+    <rect class="cls-fff" x="25.98" y="30" width="1" height="3" rx="0.39"/>
+    <circle class="cls-fff" cx="19.98" cy="25.5" r="0.5"/>
+    <circle class="cls-fff" cx="19.98" cy="32.5" r="0.5"/>
+    <circle class="cls-fff" cx="26.48" cy="23.5" r="0.5"/>
+    <circle class="cls-fff" cx="26.48" cy="26.5" r="0.5"/>
+  </g>
+</svg>

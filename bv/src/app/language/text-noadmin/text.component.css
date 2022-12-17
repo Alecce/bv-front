@@ -1,0 +1,15 @@
+.painted {
+  border: solid 3px #a2312d;
+}
+
+::ng-deep .mat-tooltip {
+  white-space: pre-line;
+}
+
+.border-green {
+  border-color: #64dc64;
+}
+
+.border-blue {
+  border-color: #6464dc;
+}

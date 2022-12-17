@@ -1,0 +1,38 @@
+<form [formGroup]="form">
+  <div class="d-flex flex-fill justify-content-between">
+
+    <div class="field align-self-stretch d-flex flex-column flex-even margin-right-20">
+      <app-text [page]="'business_' + type" [default]="schemaData.title_name" class="field-hint"></app-text>
+      <input type="text" class="field-input align-self-stretch" formControlName="temperature" *ngIf="is_fahrenheit.value == '0'">
+      <input type="text" class="field-input align-self-stretch" formControlName="temperature_f" *ngIf="is_fahrenheit.value == '1'">
+    </div>
+
+
+    <div class="field align-self-stretch d-flex flex-column flex-even">
+      <app-text page="wines" default="System" class="field-hint"></app-text>
+      <app-select-bonvino formControlName_="is_fahrenheit" [form]="form" #_is_fahrenheit>
+        <div select-title>
+          <app-text page="wines" default="Celsius"
+                    [hidden]="is_fahrenheit.value != '0'"></app-text>
+          <app-text page="wines" default="Fahrenheit"
+                    [hidden]="is_fahrenheit.value != '1'"></app-text>
+
+        </div>
+        <div options class="d-flex flex-column align-items-start select-list-options">
+          <button class="btn btn-option" (click)="_is_fahrenheit.choose('0')">
+            <app-text page="wines" default="Celsius"></app-text>
+          </button>
+          <button class="btn btn-option" (click)="_is_fahrenheit.choose('1')">
+            <app-text page="wines" default="Fahrenheit"></app-text>
+          </button>
+        </div>
+      </app-select-bonvino>
+      <div *ngIf="langService.editable">
+        <app-text page="wines" default="Celsius"></app-text>
+        <app-text page="wines" default="Fahrenheit"></app-text>
+      </div>
+    </div>
+
+  </div>
+
+</form>

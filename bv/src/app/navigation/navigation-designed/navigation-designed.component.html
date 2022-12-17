@@ -1,0 +1,253 @@
+
+
+<div [hidden]="resolutionService.isSmall()" #navigation>
+  <nav class="navbar d-flex align-items-end justify-content-between m-0 p-0 nav-border-bottom-1">
+
+    <div *ngIf="isBigScreen()" class="d-flex align-items-end"
+        [ngClass]="isBigScreen() ? '' : 'flex-even'">
+
+      <div id="logo-place" class="nav-item float-left" routerLinkActive="active">
+        <a id="logo-bonvino-link" [routerLink]="logoLink()"  class="nav-link p-0">
+          <mat-icon id="logo-bonvono" svgIcon="logo-bonvono"></mat-icon>
+        </a>
+      </div>
+
+      <div class="nav-item float-left nav-item-list nav-border-bottom-2" routerLinkActive="active"
+           [ngClass]="classForRouteButtons('/wine-list', '')">
+        <a class="nav-link p-0" [routerLink]="langService.editable ? null : 'wine-list'"
+           [queryParams]="{}" (click)="routeToWinelist()">
+          <div class="container flex-column p-0">
+            <div class="row main-menu-icon ">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <mat-icon #iconwine svgIcon="icn-wines" class="icon-menu" (click)="iconClick(iconwine)"></mat-icon>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <app-text page="navigation" place="wines_list" default="Wines" class="nav-name my-auto menu-main"></app-text>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+
+
+      <div class="nav-item float-left nav-item-list nav-border-bottom-2" routerLinkActive="active"
+           [ngClass]="classForRouteButtons('/wine-list', 'collection')"  *ngIf="(cookies | async).id && !variables.open">
+        <a class="nav-link p-0" [routerLink]="langService.editable ? null : 'wine-list'"
+           [queryParams]="{tab: 'collection'}" (click)="routeToWinelistCollection()">
+          <div class="container flex-column p-0">
+            <div class="row main-menu-icon ">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <mat-icon #iconwine svgIcon="icn-wines" class="icon-menu" (click)="iconClick(iconwine)"></mat-icon>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <app-text page="navigation" place="wines_collection" default="Wine collection" class="nav-name my-auto menu-main"></app-text>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+
+      <div class="nav-item float-left nav-item-list nav-border-bottom-2" routerLinkActive="active"
+           [ngClass]="classForRouteButtons('/wine-list', 'myRates')" *ngIf="(cookies | async).id && !variables.open">
+        <a class="nav-link p-0" [routerLink]="langService.editable ? null : 'wine-list'"
+           [queryParams]="{tab: 'myRates'}" (click)="routeToWinelistRates()">
+          <div class="container flex-column p-0">
+            <div class="row main-menu-icon">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <mat-icon #iconwine svgIcon="icn-wines" class="icon-menu" (click)="iconClick(iconwine)"></mat-icon>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <app-text page="navigation" place="wines_tasting" default="Wine tasting notes" class="nav-name my-auto menu-main"></app-text>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+
+      <div class="nav-item float-left nav-item-list nav-border-bottom-2" routerLinkActive="active"
+           [ngClass]="classForRouteButtons('/winery-list', '')" *ngIf="!variables.bengat">
+        <a class="nav-link p-0" [routerLink]="langService.editable ? null : 'winery-list'" (click)="routeToWinerylist()">
+          <div class="container flex-column p-0">
+            <div class="row main-menu-icon">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <mat-icon #iconwine svgIcon="icn-wines" class="icon-menu" (click)="iconClick(iconwine)"></mat-icon>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <app-text page="navigation" place="wineries" default="Wineries" class="nav-name my-auto menu-main"></app-text>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-item float-left nav-item-list nav-border-bottom-2" routerLinkActive="active"
+           [ngClass]="routerUrl == '/event-list' ? 'nav-item-list-current' : ''" *ngIf="!variables.bengat">
+        <a class="nav-link p-0" [routerLink]="langService.editable ? null : 'event-list'" (click)="routeToEventlist()">
+          <div class="container flex-column p-0">
+            <div class="row main-menu-icon">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <mat-icon svgIcon="icn-events" class="icon-menu"></mat-icon>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-flex flex-column justify-content-center align-items-center">
+                <app-text page="navigation" place="event_list" default="Events" class="nav-name my-auto menu-main"></app-text>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+    <div *ngIf="!isBigScreen()" class="d-flex align-items-end">
+
+      <div id="logo-place-low" class="nav-item float-left" routerLinkActive="active">
+        <a id="logo-bonvino-link-low" [routerLink]="logoLink()"  class="nav-link p-0">
+          <mat-icon id="logo-bonvono-low" svgIcon="logo-bonvono"></mat-icon>
+        </a>
+      </div>
+    </div>
+
+
+    <!--<div *ngIf="!isBigScreen()" class="flex-even d-flex justify-content-center">-->
+
+      <!--<div ngbDropdown class="d-inline-block justify-content-center margin-top-12" display="dynamic" placement="bottom-right">-->
+        <!--<div class="" id="listDropdown" ngbDropdownToggle>-->
+          <!--<div  class="heading-1">-->
+            <!--<div class="whitespace-nowrap">-->
+
+              <!--<app-text page="navigation" [place]="getCurrentPageName().place" [default]="getCurrentPageName().label" class="margin-right-4"></app-text>-->
+              <!--<app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" #icon1></app-icon-bonvino>-->
+
+            <!--</div>-->
+
+          <!--</div>-->
+
+        <!--</div>-->
+        <!--<div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">-->
+          <!--<div class="d-flex flex-column align-items-start menu-buttons" *ngIf="!variables.bengat">-->
+
+            <!--<div class="" *ngFor="let nav of navigationPages; let i = index" [hidden]="!(cookies | async).id && nav.onlyLogged">-->
+              <!--<a [routerLink]="langService.editable ? null : nav.query" [queryParams]="nav.params" class="hyperlink"-->
+                 <!--(click)="setPage(nav.query); dropdown.close(); nav.clickFunction()">-->
+                <!--<app-text page="navigation" [place]="nav.place" [default]="nav.label"></app-text>-->
+              <!--</a>-->
+            <!--</div>-->
+
+          <!--</div>-->
+          <!--<div class="d-flex flex-column align-items-start menu-buttons" *ngIf="variables.bengat">-->
+
+            <!--<div class="" *ngFor="let nav of navigationPagesBengat; let i = index" [hidden]="!(cookies | async).id && nav.onlyLogged">-->
+              <!--<a [routerLink]="langService.editable ? null : nav.query" [queryParams]="nav.params" class="hyperlink"-->
+                 <!--(click)="setPage(nav.query); dropdown.close(); nav.clickFunction()">-->
+                <!--<app-text page="navigation" [place]="nav.place" [default]="nav.label"></app-text>-->
+              <!--</a>-->
+            <!--</div>-->
+
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+    <!--</div>-->
+
+
+    <!--<div  class="d-flex justify-content-end margin-left-64 margin-top-12" *ngIf="bengat">-->
+      <!--<button class="btn btn-type-1 text-uppercase field-content" (click)="openBengatContacts()">-->
+        <!--<app-text page="wine_list" default="Contacts"></app-text>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div *ngIf="isBigScreen()" class="d-flex justify-content-end margin-left-64"
+         [ngClass]="isBigScreen() ? '' : 'flex-even'">
+
+
+      <div class="nav-item nav-item-language d-flex align-items-center"
+           [ngClass]="isBigScreen() ? '' : 'low-width'">
+        <app-language-navigate></app-language-navigate>
+      </div>
+
+      <div class="nav-item nav-item-accaunt" *ngIf="(cookies | async).id"
+           [ngClass]="isBigScreen() ? '' : 'low-width'">
+        <app-accaunt-designed></app-accaunt-designed>
+      </div>
+
+      <!--<div class="nav-item nav-item-login" *ngIf="!(cookies | async).id"-->
+           <!--[ngClass]="isBigScreen() ? '' : 'low-width'">-->
+        <!--<app-login-designed></app-login-designed>-->
+      <!--</div>-->
+
+    </div>
+
+    <div *ngIf="!isBigScreen()" class="d-flex justify-content-end">
+
+
+      <div class="nav-item nav-item-menu-mobile">
+        <app-menu-mobile-bonvino [navigationPages]="navigationPages" [navigationPagesBengat]="navigationPagesBengat"></app-menu-mobile-bonvino>
+      </div>
+
+
+    </div>
+
+
+    <!--<div *ngIf="!isBigScreen()" class="toolbar-button-container">-->
+
+
+      <!--<app-menu-mobile-bonvino [navigationPages]="navigationPages" [navigationPagesBengat]="navigationPagesBengat"></app-menu-mobile-bonvino>-->
+
+
+    <!--</div>-->
+
+  </nav>
+</div>
+<div [hidden]="!resolutionService.isSmall()">
+  <nav class="navbar d-flex m-0 p-0 navbar-mobile justify-content-between">
+
+
+    <!--<div class="w-64px">-->
+
+    <!--</div>-->
+    <div ngbDropdown class="d-inline-block justify-content-center margin-top-12" display="dynamic" placement="bottom-right">
+      <div class="" id="listDropdown" ngbDropdownToggle>
+        <div  class="heading-1">
+          <div class="whitespace-nowrap">
+
+            <app-text page="navigation" [place]="getCurrentPageName().place" [default]="getCurrentPageName().label" class="margin-right-4"></app-text>
+            <app-icon-bonvino svgIcon="arrow-1-up" class="icon-arrow" #icon1></app-icon-bonvino>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div ngbDropdownMenu aria-labelledby="listDropdown" class="menu-dropdown p-0">
+        <div class="d-flex flex-column align-items-start menu-buttons">
+
+          <div class="" *ngFor="let nav of navigationPages; let i = index">
+            <a [routerLink]="langService.editable ? null : nav.query" class="hyperlink" (click)="setPage(nav.query); dropdown.close()">
+              <app-text page="navigation" [place]="nav.place" [default]="nav.label"></app-text>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end">
+
+      <div class="nav-item nav-item-accaunt" *ngIf="(cookies | async).id">
+        <app-accaunt-designed></app-accaunt-designed>
+      </div>
+
+    </div>
+
+  </nav>
+</div>

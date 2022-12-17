@@ -1,0 +1,21 @@
+
+.icn-sorting {
+  margin-left: 4px;
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+}
+::ng-deep .icn-sorting svg {
+  display: block !important;
+}
+.reverse {
+  transform: scaleY(-1);
+}
+
+.max-height-200px{
+  max-height: 200px;
+}
+
+.width-200px {
+  width: 200px;
+}

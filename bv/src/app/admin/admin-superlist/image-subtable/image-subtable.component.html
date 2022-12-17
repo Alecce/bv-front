@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+  <div class="form-group row" *ngIf="!isImageChanged">
+    <div class="offset-4 col-4 text-center my-auto">
+      <img  class="img-fluid" [src]="currentImage" onError="this.src='../../../assets/images/no-image.png'">
+    </div>
+  </div>
+  <div>
+
+    <div class="form-group row">
+      <div class="offset-4 col-4 text-right my-auto">
+        <img  class="img-fluid" [src]="url" *ngIf="isImageChanged"  onError="this.src='../../../assets/images/no-image.png'">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-4 text-right my-auto" for="image">
+        <app-text page="wines_image" place="choose_file" default="Choose file:"></app-text>
+      </label>
+      <!--<input id="count" type="text" class="form-control col-4" formControlName="count">-->
+      <input id="image" type='file' (change)="onSelectFile($event)" formControlName="image">
+    </div>
+    <div class="col-4 offset-4">
+      <button class="btn btn-danger btn-block" (click)="deleteImage()">
+        <app-text page="wines_image" place="delete" default="Delete image"></app-text>
+      </button>
+    </div>
+  </div>
+
+  <!--<input type='file' (change)="onSelectFile($event)">-->
+</form>
+
+<div mat-dialog-actions class="row">
+
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button (click)="close()">Back</button>
+  </div>
+  <div class="col my-auto">
+    <button class="btn btn-success btn-block" mat-button [mat-dialog-close]="getResults()" cdkFocusInitial>Save</button>
+  </div>
+</div>

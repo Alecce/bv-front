@@ -1,0 +1,15 @@
+<div *ngIf="timeData">
+  <div class="lines-1" *ngFor="let vt of visitTime; let i = index" [hidden]="!vt.text">
+    <app-text page="winery_one" default="{{vt.day}}" class="font-weight-bold"></app-text><span class="font-weight-bold">: </span> {{vt.text}}
+
+  </div>
+</div>
+
+<!--Words for translater-->
+
+<div [hidden]="true">
+
+  <app-text  *ngFor="let vt of visitTime; let i = index" page="winery_one" default="{{vt.day}}" class="font-weight-bold"></app-text>
+
+
+</div>
